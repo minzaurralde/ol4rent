@@ -114,6 +114,15 @@ namespace OL4RENT.Controllers
             // TODO Implementar la vista de Mapa
             return View();
         }
+
+        //
+        // POST: /Bien/Buscar
+        [HttpPost]
+        public ActionResult Buscar(string query)
+        {
+            return View();
+        }
+
         //
         // POST: /Bien/Delete/5
 
