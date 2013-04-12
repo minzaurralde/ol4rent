@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <div>
+                <!-- Vista de bienes populares -->
+                @Html.Partial("../Bien/Populares")
+            </div>
+            <div>
+                <!-- Mapa -->
+                @Html.Partial("../Bien/Mapa")
+            </div>
+            <div>
+                <!-- Novedades -->
+                @Html.Partial("../Novedad/List")
+            </div>
+        </div>
+    </section>
+}
