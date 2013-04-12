@@ -103,12 +103,15 @@ namespace OL4RENT.Controllers
         // GET: /Bien/Populares
         public ActionResult Populares()
         {
-            return View();
+            // TODO Mandar a Configuracion este valor
+            int maximaCantidadPopulares = 10;
+            return View(db.UserProfiles.OrderByDescending(bien => bien.CantidadLikes).Take(maximaCantidadPopulares).ToList());
         }
         //
         // GET: /Bien/Mapa
         public ActionResult Mapa()
         {
+            // TODO Implementar la vista de Mapa
             return View();
         }
         //

@@ -1,8 +1,19 @@
-﻿<h2>Bienes Populares</h2>
+﻿@model IEnumerable<OL4RENT.Models.Bien>
+
+@{
+    ViewBag.Title = "Populares";
+}
+<h2>Bienes Populares</h2>
 <ul>
-    <li><!-- Parcial de una vista reducida del bien -->Bien1</li>
-    <li>Bien2</li>
-    <li>Bien3</li>
-    <li>Bien4</li>
-    <li>Bien5</li>
+@foreach (var item in Model) {
+    <li>
+        <div>
+            @Html.ActionLink(item.Nombre, "Details", new { id=item.Id })
+        </div>
+        <div>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </div>
+    </li>
+}
+
 </ul>

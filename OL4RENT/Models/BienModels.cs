@@ -24,6 +24,22 @@ namespace OL4RENT.Models
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
+        [MaxLength(128)]
         public string Nombre { get; set; }
+        [MaxLength(1024)]
+        public string Descripcion { get; set; }
+        public int CantidadLikes { get; set; }
+
+        public Bien()
+        {
+            CantidadLikes = 0;
+        }
+
+        public Bien(string nombre, string descripcion)
+        {
+            Nombre = nombre;
+            Descripcion = descripcion;
+            CantidadLikes = 0;
+        }
     }
 }
