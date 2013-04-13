@@ -13,20 +13,27 @@ namespace OL4RENT.Controllers
     {
         private BienContext db = new BienContext();
 
+        internal List<Bien> BienesPopulares
+        {
+            get
+            {
+                int maximaCantidadPopulares = 10;
+                return db.Bienes.OrderByDescending(bien => bien.CantidadLikes).Take(maximaCantidadPopulares).ToList();
+            }
+        }
+
         //
         // GET: /Bien/
-
         public ActionResult Index()
         {
-            return View(db.UserProfiles.ToList());
+            return View(db.Bienes.ToList());
         }
 
         //
         // GET: /Bien/Details/5
-
         public ActionResult Details(long id = 0)
         {
-            Bien bien = db.UserProfiles.Find(id);
+            Bien bien = db.Bienes.Find(id);
             if (bien == null)
             {
                 return HttpNotFound();
@@ -36,7 +43,6 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Bien/Create
-
         public ActionResult Create()
         {
             return View();
@@ -44,13 +50,12 @@ namespace OL4RENT.Controllers
 
         //
         // POST: /Bien/Create
-
         [HttpPost]
         public ActionResult Create(Bien bien)
         {
             if (ModelState.IsValid)
             {
-                db.UserProfiles.Add(bien);
+                db.Bienes.Add(bien);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -60,10 +65,9 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Bien/Edit/5
-
         public ActionResult Edit(long id = 0)
         {
-            Bien bien = db.UserProfiles.Find(id);
+            Bien bien = db.Bienes.Find(id);
             if (bien == null)
             {
                 return HttpNotFound();
@@ -73,7 +77,6 @@ namespace OL4RENT.Controllers
 
         //
         // POST: /Bien/Edit/5
-
         [HttpPost]
         public ActionResult Edit(Bien bien)
         {
@@ -88,10 +91,9 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Bien/Delete/5
-
         public ActionResult Delete(long id = 0)
         {
-            Bien bien = db.UserProfiles.Find(id);
+            Bien bien = db.Bienes.Find(id);
             if (bien == null)
             {
                 return HttpNotFound();
@@ -104,9 +106,9 @@ namespace OL4RENT.Controllers
         public ActionResult Populares()
         {
             // TODO Mandar a Configuracion este valor
-            int maximaCantidadPopulares = 10;
-            return View(db.UserProfiles.OrderByDescending(bien => bien.CantidadLikes).Take(maximaCantidadPopulares).ToList());
+            return View(BienesPopulares);
         }
+
         //
         // GET: /Bien/Mapa
         public ActionResult Mapa()
@@ -125,12 +127,11 @@ namespace OL4RENT.Controllers
 
         //
         // POST: /Bien/Delete/5
-
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-            Bien bien = db.UserProfiles.Find(id);
-            db.UserProfiles.Remove(bien);
+            Bien bien = db.Bienes.Find(id);
+            db.Bienes.Remove(bien);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OL4RENT.Models.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,7 +12,7 @@ namespace OL4RENT.Models
     public class UsersContext : DbContext
     {
         public UsersContext()
-            : base("DefaultConnection")
+            : base(DBHelper.Connection)
         {
         }
 

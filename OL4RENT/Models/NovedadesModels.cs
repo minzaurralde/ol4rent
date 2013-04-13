@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OL4RENT.Models.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,7 +12,7 @@ namespace OL4RENT.Models
     public class NovedadContext : DbContext
     {
         public NovedadContext()
-            : base("DefaultConnection")
+            : base(DBHelper.Connection)
         {
         }
 
@@ -24,6 +25,7 @@ namespace OL4RENT.Models
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
+        [MaxLength(128)]
         public string Nombre { get; set; }
     }
 }

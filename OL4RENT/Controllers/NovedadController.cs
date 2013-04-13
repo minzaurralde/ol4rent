@@ -13,9 +13,17 @@ namespace OL4RENT.Controllers
     {
         private NovedadContext db = new NovedadContext();
 
+        internal List<Novedad> ListaNovedades
+        {
+            get
+            {
+                int maximaCantidadNovedadesHome = 6;
+                return db.Novedades.Take(maximaCantidadNovedadesHome).ToList();
+            }
+        }
+
         //
         // GET: /Novedad/
-
         public ActionResult Index()
         {
             return View(db.Novedades.ToList());
@@ -23,14 +31,13 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Novedad/List
-
         public ActionResult List()
         {
-            return View(db.Novedades.ToList());
+            return View(ListaNovedades);
         }
+
         //
         // GET: /Novedad/Details/5
-
         public ActionResult Details(long id = 0)
         {
             Novedad novedad = db.Novedades.Find(id);
@@ -43,7 +50,6 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Novedad/Create
-
         public ActionResult Create()
         {
             return View();
@@ -51,7 +57,6 @@ namespace OL4RENT.Controllers
 
         //
         // POST: /Novedad/Create
-
         [HttpPost]
         public ActionResult Create(Novedad novedad)
         {
@@ -67,7 +72,6 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Novedad/Edit/5
-
         public ActionResult Edit(long id = 0)
         {
             Novedad novedad = db.Novedades.Find(id);
@@ -80,7 +84,6 @@ namespace OL4RENT.Controllers
 
         //
         // POST: /Novedad/Edit/5
-
         [HttpPost]
         public ActionResult Edit(Novedad novedad)
         {
@@ -95,7 +98,6 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Novedad/Delete/5
-
         public ActionResult Delete(long id = 0)
         {
             Novedad novedad = db.Novedades.Find(id);
@@ -108,7 +110,6 @@ namespace OL4RENT.Controllers
 
         //
         // POST: /Novedad/Delete/5
-
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {

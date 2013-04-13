@@ -1,21 +1,22 @@
-﻿@{
+﻿@model OL4RENT.ViewModels.IndexViewModel
+@{
     ViewBag.Title = "Home Page";
 }
 @section featured {
-    <section class="featured">
         <div class="content-wrapper">
-            <div>
+            <div class="float-left">
                 <!-- Vista de bienes populares -->
-                @Html.Partial("../Bien/Populares")
+                @Html.Partial("../Bien/Populares", Model.BienesPopulares)
             </div>
-            <div>
-                <!-- Mapa -->
-                @Html.Partial("../Bien/Mapa")
-            </div>
-            <div>
-                <!-- Novedades -->
-                @Html.Partial("../Novedad/List")
+            <div class="float-right">
+                <div>
+                    <!-- Mapa -->
+                    @Html.Partial("../Bien/Mapa")
+                </div>
+                <div>
+                    <!-- Novedades -->
+                    @Html.Partial("../Novedad/List", Model.ListaNovedades)
+                </div>
             </div>
         </div>
-    </section>
 }

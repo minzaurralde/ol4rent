@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OL4RENT.Models;
+using OL4RENT.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,9 +12,10 @@ namespace OL4RENT.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            return View();
+            IndexViewModel viewModel = new IndexViewModel();
+            viewModel.BienesPopulares = new BienController().BienesPopulares;
+            viewModel.ListaNovedades = new NovedadController().ListaNovedades;
+            return View(viewModel);
         }
 
         public ActionResult About()

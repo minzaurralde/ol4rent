@@ -111,6 +111,15 @@ namespace OL4RENT.Controllers
             return RedirectToAction("Index");
         }
 
+        //
+        // GET: /Sitio/Logo
+
+        [HttpGet]
+        public ActionResult Logo()
+        {
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

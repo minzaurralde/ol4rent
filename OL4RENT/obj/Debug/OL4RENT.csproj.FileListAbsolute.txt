@@ -44,6 +44,6 @@ c:\users\martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\bin\DotNet
 c:\users\martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\bin\DotNetOpenAuth.OAuth.xml
 c:\users\martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\bin\DotNetOpenAuth.OpenId.xml
 c:\users\martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-c:\users\martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\obj\Debug\OL4RENT.csprojResolveAssemblyReference.cache
 c:\users\martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\obj\Debug\OL4RENT.dll
 c:\users\martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\obj\Debug\OL4RENT.pdb
+C:\Users\Martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\obj\Debug\OL4RENT.csprojResolveAssemblyReference.cache

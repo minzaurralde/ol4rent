@@ -42,6 +42,10 @@ mark {
     padding-right: 5px;
 }
 
+.header {
+    text-align: center;
+}
+
 .float-left {
     float: left;
 }

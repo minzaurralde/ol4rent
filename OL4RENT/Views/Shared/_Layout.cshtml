@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>Ol4RENT - @ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
@@ -11,13 +11,15 @@
     <body>
         <header>
             <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                <div class="header">
+                    @Html.Partial("_HeaderPartial")
                 </div>
-                <div class="float-right">
+                <div class="float-left">
                     <section id="login">
                         @Html.Partial("_LoginPartial")
                     </section>
+                </div>
+                <div class="float-right">
                     <!-- Form de Busqueda -->
                     @using (Html.BeginForm("Buscar", "Bien")) {
                         @Html.ValidationSummary(true)

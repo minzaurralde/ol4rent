@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OL4RENT.Models.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,11 +12,11 @@ namespace OL4RENT.Models
     public class BienContext : DbContext
     {
         public BienContext()
-            : base("DefaultConnection")
+            : base(DBHelper.Connection)
         {
         }
 
-        public DbSet<Bien> UserProfiles { get; set; }
+        public DbSet<Bien> Bienes { get; set; }
     }
 
     [Table("Bien")]
