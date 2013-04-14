@@ -42,6 +42,11 @@ mark {
     padding-right: 5px;
 }
 
+.busqueda-avanzada {
+    text-align:right;
+    font-size:8px;
+}
+
 .header {
     text-align: center;
 }

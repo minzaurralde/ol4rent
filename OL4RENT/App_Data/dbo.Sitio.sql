@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Sitio]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY, 
+    [Nombre] NVARCHAR(128) NOT NULL
+)

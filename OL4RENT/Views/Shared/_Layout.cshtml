@@ -21,13 +21,16 @@
                 </div>
                 <div class="float-right">
                     <!-- Form de Busqueda -->
+                    <div>
                     @using (Html.BeginForm("Buscar", "Bien")) {
                         @Html.ValidationSummary(true)
-                        <div>
-                            <input type="text" value="" name="query" id="query" />
-                            <input type="submit" value="Buscar" name="Buscar" id="buscar" />
-                        </div>
+                        @Html.TextBox("query")
+                        <input type="submit" value="Buscar" name="Buscar" id="buscar" />
                     }
+                    </div>
+                    <div class="busqueda-avanzada">
+                        @Html.ActionLink("Búsqueda avanzada", "BusquedaAvanzada", "Bien")
+                    </div>
                 </div>
             </div>
         </header>

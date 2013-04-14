@@ -1,0 +1,18 @@
+﻿@model OL4RENT.Models.Bien
+@{
+    ViewBag.Title = "BusquedaAvanzada";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>BusquedaAvanzada</h2>
+@using (Html.BeginForm()) {
+    <div>
+        @Html.LabelFor(model => model.Nombre)
+        @Html.TextBox("Nombre")
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Descripcion)
+        @Html.TextBox("Descripcion")
+    </div>
+    <input type="submit" value="Buscar" />
+}

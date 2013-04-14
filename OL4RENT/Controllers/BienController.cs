@@ -109,6 +109,7 @@ namespace OL4RENT.Controllers
             return View(BienesPopulares);
         }
 
+
         //
         // GET: /Bien/Mapa
         public ActionResult Mapa()
@@ -122,7 +123,39 @@ namespace OL4RENT.Controllers
         [HttpPost]
         public ActionResult Buscar(string query)
         {
-            return View();
+            List<Bien> resultadosBusqueda = new List<Bien>();
+            if (query != null)
+            {
+                resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(query) || b.Nombre.Contains(query)).ToList();
+            }
+            return View(resultadosBusqueda);
+        }
+
+        //
+        // GET: /Bien/BusquedaAvanzada
+        public ActionResult BusquedaAvanzada()
+        {
+            return View(new Bien());
+        }
+
+        //
+        // POST: /Bien/BusquedaAvanzada/5
+        [HttpPost]
+        public ActionResult BusquedaAvanzada(Bien templateBien)
+        {
+            List<Bien> resultadosBusqueda = new List<Bien>();
+            if (templateBien.Descripcion != null && templateBien.Nombre != null) {
+                resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion) && b.Nombre.Contains(templateBien.Nombre)).ToList();
+            }
+            else if (templateBien.Nombre != null)
+            {
+                resultadosBusqueda = db.Bienes.Where(b => b.Nombre.Contains(templateBien.Nombre)).ToList();
+            }
+            else if (templateBien.Descripcion != null)
+            {
+                resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion)).ToList();
+            }
+            return View("Buscar", resultadosBusqueda);
         }
 
         //
