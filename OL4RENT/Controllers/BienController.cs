@@ -65,6 +65,7 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Bien/Edit/5
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Edit(long id = 0)
         {
             Bien bien = db.Bienes.Find(id);
@@ -77,6 +78,7 @@ namespace OL4RENT.Controllers
 
         //
         // POST: /Bien/Edit/5
+        [Authorize(Roles="ADMIN")]
         [HttpPost]
         public ActionResult Edit(Bien bien)
         {

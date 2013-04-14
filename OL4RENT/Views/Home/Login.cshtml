@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+@using (Html.BeginForm("Login", "Home")) {
+    @Html.Hidden("ReturnURL", System.Web.HttpContext.Current.Request["ReturnURL"])
+    @Html.Label("Nombre de Usuario")
+    @Html.TextBox("username")
+    @Html.Label("Contraseña")
+    @Html.TextBox("password")
+    <input type="submit" name="Login" value="Login" />
+}
