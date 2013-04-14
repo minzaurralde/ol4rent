@@ -117,7 +117,7 @@ namespace OL4RENT.Controllers
         public ActionResult Mapa()
         {
             // TODO Implementar la vista de Mapa
-            return View();
+            return View(BienesPopulares);
         }
 
         //
