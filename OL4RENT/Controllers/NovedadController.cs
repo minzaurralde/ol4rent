@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OL4RENT.Models;
+using System.Collections;
 
 namespace OL4RENT.Controllers
 {
@@ -22,6 +23,15 @@ namespace OL4RENT.Controllers
             }
         }
 
+        internal List<Novedad> ListaNovedadesRSS
+        {            
+            get
+            {
+                Funciones.ManejoRSS mj = new Funciones.ManejoRSS();
+                return mj.LecturaRSS("http://blog.orcare.com/rss");
+            }
+        }  
+
         //
         // GET: /Novedad/
         public ActionResult Index()
@@ -34,6 +44,21 @@ namespace OL4RENT.Controllers
         public ActionResult List()
         {
             return View(ListaNovedades);
+        }
+
+        //
+        // GET: /Novedad/List
+        public ActionResult NovedadesTwitter()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Novedad/List
+        public ActionResult NovedadesRSS()
+        {
+
+            return View(ListaNovedadesRSS);
         }
 
         //

@@ -17,6 +17,7 @@ namespace OL4RENT.Controllers
             IndexViewModel viewModel = new IndexViewModel();
             viewModel.BienesPopulares = new BienController().BienesPopulares;
             viewModel.ListaNovedades = new NovedadController().ListaNovedades;
+            viewModel.ListaNovedadesRSS = new NovedadController().ListaNovedadesRSS;
             return View(viewModel);
         }
 

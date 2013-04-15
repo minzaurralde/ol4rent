@@ -10,5 +10,6 @@ namespace OL4RENT.ViewModels
     {
         public List<Bien> BienesPopulares { get; set; }
         public List<Novedad> ListaNovedades { get; set; }
+        public List<Novedad> ListaNovedadesRSS { get; set; }
     }
 }

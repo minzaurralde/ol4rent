@@ -17,6 +17,14 @@
                     <!-- Novedades -->
                     @Html.Partial("../Novedad/List", Model.ListaNovedades)
                 </div>
+                <div>
+                    <!-- Novedades Twitter -->
+                    @Html.Partial("../Novedad/NovedadesTwitter")
+                </div>
+                <div>
+                    <!-- Novedades RSS -->
+                    @Html.Partial("../Novedad/NovedadesRSS", Model.ListaNovedadesRSS)
+                </div>
             </div>
         </div>
 }
