@@ -184,6 +184,7 @@
     <Compile Include="ViewModels\IndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Bundles\register-validations.js" />
     <Content Include="Images\logo.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
