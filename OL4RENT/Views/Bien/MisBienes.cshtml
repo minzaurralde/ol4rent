@@ -1,0 +1,18 @@
+﻿@model IEnumerable<OL4RENT.Models.Bien>
+@{
+    ViewBag.Title = "MisBienes";
+}
+
+<h2>MisBienes</h2>
+<ul>
+@foreach (var item in Model) {
+    <li>
+        <div>
+            @Html.ActionLink(item.Nombre, "Details", "Bien", new { id=item.Id }, null)
+        </div>
+        <div>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </div>
+    </li>
+}
+</ul>

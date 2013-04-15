@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
 using OL4RENT.Models;
+using System.Web.Security;
 
 namespace OL4RENT.Filters
 {
@@ -39,6 +40,19 @@ namespace OL4RENT.Filters
                     }
 
                     WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+
+                    if (!Roles.RoleExists(Rol.PUBLIC_USER.ToString()))
+                    {
+                        Roles.CreateRole(Rol.PUBLIC_USER.ToString());
+                    }
+                    if (!Roles.RoleExists(Rol.SITE_ADMIN.ToString()))
+                    {
+                        Roles.CreateRole(Rol.SITE_ADMIN.ToString());
+                    }
+                    if (!Roles.RoleExists(Rol.SUPER_ADMIN.ToString()))
+                    {
+                        Roles.CreateRole(Rol.SUPER_ADMIN.ToString());
+                    }
                 }
                 catch (Exception ex)
                 {

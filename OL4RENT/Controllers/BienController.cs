@@ -171,6 +171,18 @@ namespace OL4RENT.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Wishlist()
+        {
+            // TODO Implementar
+            return View(BienesPopulares);
+        }
+
+        public ActionResult MisBienes()
+        {
+            // TODO Implementar
+            return View(BienesPopulares);
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

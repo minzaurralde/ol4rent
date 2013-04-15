@@ -71,7 +71,7 @@ namespace OL4RENT.Controllers
             {
                 ViewBag.Message = "El usuario no es valido";
             }
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }

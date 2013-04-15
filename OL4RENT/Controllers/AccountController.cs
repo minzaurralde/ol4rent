@@ -40,8 +40,7 @@ namespace OL4RENT.Controllers
                 return RedirectToLocal(returnUrl);
             }
 
-            // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "El nombre de usuario o la contraseña son incorrectos.");
             return View(model);
         }
 
@@ -81,6 +80,7 @@ namespace OL4RENT.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
+                    Roles.AddUserToRole(model.UserName, Rol.PUBLIC_USER.ToString());
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -128,9 +128,9 @@ namespace OL4RENT.Controllers
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Su contraseña ha sido reestablecida."
+                : message == ManageMessageId.SetPasswordSuccess ? "Se ha guardado su contraseña."
+                : message == ManageMessageId.RemoveLoginSuccess ? "El usuario ha sido eliminado."
                 : "";
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
@@ -168,7 +168,7 @@ namespace OL4RENT.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                        ModelState.AddModelError("", "La contraseña actual no es correcta o la nueva no es válida.");
                     }
                 }
             }
