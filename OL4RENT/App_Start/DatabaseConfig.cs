@@ -44,18 +44,26 @@ namespace OL4RENT.App_Start
             Bien bien = new Bien();
             bien.Nombre = "Casa en Piriapolis";
             bien.Descripcion = bien.Nombre;
+            bien.Latitud = -34.900574;
+            bien.Longitud = -56.172409;
             contexto.Bienes.Add(bien);
             bien = new Bien();
             bien.Nombre = "Casa en Pueblo Ansina";
             bien.Descripcion = bien.Nombre;
+            bien.Latitud = -34.887057;
+            bien.Longitud = -56.171036;
             contexto.Bienes.Add(bien);
             bien = new Bien();
             bien.Nombre = "Casa en Cerro Chato";
             bien.Descripcion = bien.Nombre;
+            bien.Latitud = -34.851002;
+            bien.Longitud = -56.206055;
             contexto.Bienes.Add(bien);
             bien = new Bien();
             bien.Nombre = "Casa en San Bautista";
             bien.Descripcion = bien.Nombre;
+            bien.Latitud = -34.839168;
+            bien.Longitud = -56.15387;
             contexto.Bienes.Add(bien);
             contexto.SaveChanges();
         }

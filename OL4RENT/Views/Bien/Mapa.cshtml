@@ -11,8 +11,8 @@
     function initialize() {
 
         var mapOptions = {
-            center: new google.maps.LatLng(-34.397+.4, 150.644+.4),
-            zoom: 8,
+        center: new google.maps.LatLng(-34.887057, -56.171036),
+            zoom: 10,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
@@ -22,6 +22,8 @@
     google.maps.event.addDomListener(window, 'load', initialize);
 
     function addM(lat, lng, titulo, link) {
+        lat = lat.replace(",", ".");
+        lng = lng.replace(",", ".");
         var myLL = new google.maps.LatLng(lat, lng);
         var marker = new google.maps.Marker({
             position: myLL,
@@ -37,12 +39,16 @@
     function addMarkers() {
         var lat = -34.397;
         var lng = 150.644;
-    @foreach (var item in Model)
+        @foreach (var item in Model)
     {
         <text>
+        @if(item.Latitud!=0){
+            <text>lat = '@item.Latitud' ;</text>
+        }
+         @if(item.Longitud!=0){
+            <text>lng = '@item.Longitud' ;</text>
+        }
         addM(lat, lng, '@item.Nombre', '/Bien/Details/@item.Id');
-        lat = lat + .1;
-        lng = lng + .1;
         </text>
     }
 

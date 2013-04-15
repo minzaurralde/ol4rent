@@ -30,6 +30,8 @@ namespace OL4RENT.Models
         [MaxLength(1024)]
         public string Descripcion { get; set; }
         public int CantidadLikes { get; set; }
+        public double Latitud { get; set; }
+        public double Longitud { get; set; }
 
         public Bien()
         {
