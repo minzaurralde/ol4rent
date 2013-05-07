@@ -34,13 +34,14 @@
         </ol>
         <input type="submit" value="Iniciar sesión" />
     </fieldset>
-    <p>
-        @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-    </p>
-    <p>
-        @Html.ActionLink("Registrarse", "Register") si no poses una cuenta.
-    </p>
 }
+<h2>O utilice una cuenta externa.</h2>
+<p>
+    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+</p>
+<p>
+    @Html.ActionLink("Registrese", "Register") si no posee una cuenta.
+</p>
 </section>
 
 @section Scripts {

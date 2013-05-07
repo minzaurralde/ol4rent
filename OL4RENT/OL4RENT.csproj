@@ -170,16 +170,14 @@
     <Compile Include="Controllers\NovedadController.cs" />
     <Compile Include="Controllers\SitioController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Filters\SelectorSitioFilterAttribute.cs" />
     <Compile Include="Funciones\ManejoRSS.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\BienModels.cs" />
     <Compile Include="Models\Helpers\DBHelper.cs" />
-    <Compile Include="Models\NovedadesModels.cs" />
     <Compile Include="Models\Rol.cs" />
-    <Compile Include="Models\SitiosModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
   </ItemGroup>
@@ -335,6 +333,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ol4RentAPI\Ol4RentAPI.csproj">
+      <Project>{519c0d15-3fb5-418e-bd48-53bbafeca19e}</Project>
+      <Name>Ol4RentAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

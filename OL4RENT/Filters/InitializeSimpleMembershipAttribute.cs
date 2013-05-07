@@ -41,17 +41,17 @@ namespace OL4RENT.Filters
 
                     WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
 
-                    if (!Roles.RoleExists(Rol.PUBLIC_USER.ToString()))
+                    if (!Roles.RoleExists(RolEnum.PUBLIC_USER.ToString()))
                     {
-                        Roles.CreateRole(Rol.PUBLIC_USER.ToString());
+                        Roles.CreateRole(RolEnum.PUBLIC_USER.ToString());
                     }
-                    if (!Roles.RoleExists(Rol.SITE_ADMIN.ToString()))
+                    if (!Roles.RoleExists(RolEnum.SITE_ADMIN.ToString()))
                     {
-                        Roles.CreateRole(Rol.SITE_ADMIN.ToString());
+                        Roles.CreateRole(RolEnum.SITE_ADMIN.ToString());
                     }
-                    if (!Roles.RoleExists(Rol.SUPER_ADMIN.ToString()))
+                    if (!Roles.RoleExists(RolEnum.SUPER_ADMIN.ToString()))
                     {
-                        Roles.CreateRole(Rol.SUPER_ADMIN.ToString());
+                        Roles.CreateRole(RolEnum.SUPER_ADMIN.ToString());
                     }
                 }
                 catch (Exception ex)

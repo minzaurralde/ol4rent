@@ -1,11 +1,10 @@
 ﻿@model OL4RENT.Models.RegisterModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Registrarse";
 }
 
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Crear nueva cuenta.</h2>
+    <h1>@ViewBag.Title</h1>
 </hgroup>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new {name = "RegisterForm", id = "RegisterForm"})) {
@@ -28,7 +27,7 @@
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </li>
         </ol>
-        <input type="submit" value="Register" />
+        <input type="submit" value="Registrarse" />
     </fieldset>
 }
 

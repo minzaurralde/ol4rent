@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using OL4RENT.Filters;
+using System.Web;
 using System.Web.Mvc;
 
 namespace OL4RENT
@@ -8,6 +9,7 @@ namespace OL4RENT
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new SelectorSitioFilterAttribute());
         }
     }
 }
