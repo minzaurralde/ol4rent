@@ -1,3 +1,9 @@
 OL4RENT/bin/*
 OL4RENT/obj/*
+OL4RENTBackOffice/bin/*
+OL4RENTBackOffice/obj/*
+Ol4RentAPI/bin/*
+Ol4RentAPI/obj/*
+DatosExternosDACAPI/bin/*
+DatosExternosDACAPI/obj/*
 *.suo

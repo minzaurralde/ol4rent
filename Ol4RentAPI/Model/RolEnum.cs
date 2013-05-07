@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OL4RENT.Models
 {
-    public enum Rol
+    public enum RolEnum
     {
         PUBLIC_USER,
         SITE_ADMIN,

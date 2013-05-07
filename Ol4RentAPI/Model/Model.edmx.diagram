@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ccef8fb11add489e974cbbcd7d1af882" Name="Diagram1" ZoomLevel="86" >
+        <EntityTypeShape EntityType="Model.Sitio" Width="2.125" PointX="11.125" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OrigenDatos" Width="1.5" PointX="18.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TipoBien" Width="1.5" PointX="10.75" PointY="14.25" IsExpanded="true" />
+        <InheritanceConnector EntityType="Model.TipoBien" />
+        <EntityTypeShape EntityType="Model.Caracteristica" Width="1.5" PointX="13.25" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Novedad" Width="1.5" PointX="16.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Bien" Width="1.5" PointX="10.5" PointY="20.375" IsExpanded="true" />
+        <AssociationConnector Association="Model.TipoBienSitio" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="Model.TipoBienCaracteristica" />
+        <EntityTypeShape EntityType="Model.Contenido" Width="1.5" PointX="8.25" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Adjunto" Width="1.5" PointX="6" PointY="22.375" IsExpanded="true" />
+        <AssociationConnector Association="Model.ContenidoBien" />
+        <AssociationConnector Association="Model.AdjuntoContenido" />
+        <EntityTypeShape EntityType="Model.Usuario" Width="1.5" PointX="6" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ConfiguracionOrigenDatos" Width="1.75" PointX="14" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="Model.SitioSitioOrigenDatos" />
+        <AssociationConnector Association="Model.SitioOrigenDatosOrigenDato" />
+        <AssociationConnector Association="Model.NovedadSitioOrigenDatos" />
+        <EntityTypeShape EntityType="Model.Rol" Width="1.5" PointX="2.875" PointY="15" IsExpanded="true" />
+        <AssociationConnector Association="Model.UsuarioRol" />
+        <AssociationConnector Association="Model.UsuarioSitio" />
+        <EntityTypeShape EntityType="Model.HabilitacionUsuario" Width="2.125" PointX="8.25" PointY="7.25" IsExpanded="true" />
+        <AssociationConnector Association="Model.UsuarioHabilitacionUsuarioSitio" />
+        <AssociationConnector Association="Model.HabilitacionUsuarioSitioSitio" />
+        <AssociationConnector Association="Model.BienTipoBien" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="Model.BienUsuario" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="Model.BuzonMensajes" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
+        <AssociationConnector Association="Model.UsuarioBuzonMensajes" />
+        <EntityTypeShape EntityType="Model.Mensaje" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
+        <AssociationConnector Association="Model.MensajeBuzonMensaje" />
+        <AssociationConnector Association="Model.MensajeUsuario" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="Model.EspecificacionBien" Width="1.75" PointX="8.25" PointY="14.125" IsExpanded="true" />
+        <AssociationConnector Association="Model.UsuarioWishList" />
+        <AssociationConnector Association="Model.EspecificacionBienTipoBien" />
+        <EntityTypeShape EntityType="Model.ValorCaracteristica" Width="1.75" PointX="10.75" PointY="17.375" IsExpanded="true" />
+        <AssociationConnector Association="Model.EspecificacionBienValorCaracteristicaEspecificacion" />
+        <AssociationConnector Association="Model.ValorCaracteristicaEspecificacionCaracteristica" />
+        <EntityTypeShape EntityType="Model.MeGusta" Width="1.5" PointX="8.25" PointY="19.625" IsExpanded="true" />
+        <AssociationConnector Association="Model.MeGustaBien" />
+        <AssociationConnector Association="Model.UsuarioMeGusta" />
+        <AssociationConnector Association="Model.ContenidoUsuario" />
+        <EntityTypeShape EntityType="Model.Atributo" Width="1.5" PointX="18.25" PointY="5.625" IsExpanded="true" />
+        <AssociationConnector Association="Model.AtributoOrigenDatos" />
+        <EntityTypeShape EntityType="Model.ValorAtributo" Width="1.5" PointX="13.625" PointY="5.75" IsExpanded="true" />
+        <AssociationConnector Association="Model.AtributoValorAtributoNovedad" />
+        <AssociationConnector Association="Model.ValorAtributoNovedadSitioOrigenDatos" />
+        <EntityTypeShape EntityType="Model.Sesion" Width="1.5" PointX="3.75" PointY="9.25" />
+        <AssociationConnector Association="Model.SesionUsuario" />
+        <AssociationConnector Association="Model.ValorCaracteristicaBien" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

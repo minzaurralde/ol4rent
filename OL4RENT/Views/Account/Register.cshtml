@@ -1,14 +1,13 @@
 ﻿@model OL4RENT.Models.RegisterModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Registrarse";
 }
 
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
+    <h1>@ViewBag.Title</h1>
 </hgroup>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new {name = "RegisterForm", id = "RegisterForm"})) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
 
@@ -28,10 +27,11 @@
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </li>
         </ol>
-        <input type="submit" value="Register" />
+        <input type="submit" value="Registrarse" />
     </fieldset>
 }
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/jquery.validate.js")
+    @Scripts.Render("~/Bundles/register-validations.js")
 }

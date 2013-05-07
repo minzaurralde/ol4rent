@@ -58,34 +58,37 @@ namespace OL4RENT.Models
 
     public class LoginModel
     {
-        [Required]
-        [Display(Name = "User name")]
+        [Required(ErrorMessage = "El nombre de usuario es un campo obligatorio")]
+        [Display(Name = "Nombre de usuario")]
+        [StringLength(64, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.", MinimumLength = 1)]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "La contraseña es un campo obligatorio")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [StringLength(100, ErrorMessage = "La {0} debe tener como máximo {1} caracteres.", MinimumLength = 6)]
+        [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Recordar?")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterModel
     {
-        [Required]
-        [Display(Name = "User name")]
+        [Required(ErrorMessage="El nombre de usuario es un campo obligatorio")]
+        [Display(Name = "Nombre de usuario")]
+        [StringLength(64, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.", MinimumLength = 1)]
         public string UserName { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage="La contraseña es un campo obligatorio")]
+        [StringLength(100, ErrorMessage = "La {0} debe tener como máximo {1} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirmar contraseña")]
+        [Compare("Password", ErrorMessage = "La contraseña no coincide con su confirmación.")]
         public string ConfirmPassword { get; set; }
     }
 

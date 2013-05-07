@@ -80,7 +80,7 @@ namespace OL4RENT.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
-                    Roles.AddUserToRole(model.UserName, Rol.PUBLIC_USER.ToString());
+                    Roles.AddUserToRole(model.UserName, RolEnum.PUBLIC_USER.ToString());
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
