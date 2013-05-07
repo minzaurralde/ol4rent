@@ -58,13 +58,13 @@
     <Compile Include="Model\Bien.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\BuzonMensaje.cs">
+    <Compile Include="Model\BuzonMensajes.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Caracteristica.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\CaracteristicaBien.cs">
+    <Compile Include="Model\ConfiguracionOrigenDatos.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Contenido.cs">
@@ -73,7 +73,7 @@
     <Compile Include="Model\EspecificacionBien.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\HabilitacionUsuarioSitio.cs">
+    <Compile Include="Model\HabilitacionUsuario.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MeGusta.cs">
@@ -106,10 +106,10 @@
     <Compile Include="Model\Rol.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Sitio.cs">
+    <Compile Include="Model\Sesion.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\SitioOrigenDatos.cs">
+    <Compile Include="Model\Sitio.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TipoAdjunto.cs">
@@ -124,10 +124,10 @@
     <Compile Include="Model\Usuario.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ValorAtributoNovedad.cs">
+    <Compile Include="Model\ValorAtributo.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ValorCaracteristicaEspecificacion.cs">
+    <Compile Include="Model\ValorCaracteristica.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
