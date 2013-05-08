@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Ol4RentAPI.Facades
 {
-    public interface ISitioFacade
+    public interface INovedadFacade
     {
-        List<Sitio> Todos { get; }
-        Sitio Obtener(int id);
-        Sitio Crear(Sitio sitio);
-        Sitio Editar(Sitio sitio);
+        List<Novedad> Todas { get; }
+        Novedad Obtener(int id);
+        Novedad Crear(Novedad novedad);
+        Novedad Editar(Novedad novedad);
         void Eliminar(int id);
-        byte[] Logo(int id);
+        List<Novedad> ListaNovedades();
     }
 }

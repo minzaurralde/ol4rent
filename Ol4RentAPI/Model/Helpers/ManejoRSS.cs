@@ -7,7 +7,7 @@ using System.Xml;
 using System.Collections;
 using Ol4RentAPI.Model;
 
-namespace OL4RENT.Funciones
+namespace Ol4RentAPI.Model.Helpers
 {
 
     public class ManejoRSS
