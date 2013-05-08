@@ -39,6 +39,7 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,9 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Facades\BienFacadeImpl.cs" />
     <Compile Include="Facades\CreadorDatosDummyImpl.cs" />
+    <Compile Include="Facades\IBienFacade.cs" />
     <Compile Include="Facades\ICreadorDatosDummyFacade.cs" />
+    <Compile Include="Facades\ISitioFacade.cs" />
     <Compile Include="Facades\ServiceFacadeFactory.cs" />
+    <Compile Include="Facades\SitioFacadeImpl.cs" />
+    <Compile Include="Model\AccountModels.cs" />
     <Compile Include="Model\Adjunto.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -76,6 +82,7 @@
     <Compile Include="Model\HabilitacionUsuario.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Helpers\DBHelper.cs" />
     <Compile Include="Model\MeGusta.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -106,6 +113,7 @@
     <Compile Include="Model\Rol.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\RolEnum.cs" />
     <Compile Include="Model\Sesion.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -151,6 +159,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Model\Model.edmx.sql" />
     <Content Include="Model\Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>

@@ -4,146 +4,844 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="ModelTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="Sitios" EntityType="Model.Store.Sitios" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrigenesDatos" EntityType="Model.Store.OrigenesDatos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Caracteristicas" EntityType="Model.Store.Caracteristicas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Novedades" EntityType="Model.Store.Novedades" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Bienes" EntityType="Model.Store.Bienes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TiposBienes" EntityType="Model.Store.TiposBienes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Contenidos" EntityType="Model.Store.Contenidos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Adjuntos" EntityType="Model.Store.Adjuntos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Usuarios" EntityType="Model.Store.Usuarios" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ConfiguracionesOrigenesDatos" EntityType="Model.Store.ConfiguracionesOrigenesDatos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="Model.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HabilitacionesUsuarios" EntityType="Model.Store.HabilitacionesUsuarios" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BuzonesMensajes" EntityType="Model.Store.BuzonesMensajes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Mensajes" EntityType="Model.Store.Mensajes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EspecificacionesBienes" EntityType="Model.Store.EspecificacionesBienes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ValoresCaracteristicas" EntityType="Model.Store.ValoresCaracteristicas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MeGusta" EntityType="Model.Store.MeGusta" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Atributos" EntityType="Model.Store.Atributos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ValoresAtributos" EntityType="Model.Store.ValoresAtributos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Sesiones" EntityType="Model.Store.Sesiones" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UsuarioRol" EntityType="Model.Store.UsuarioRol" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="TipoBienSitio" Association="Model.Store.TipoBienSitio">
+      <End Role="TipoBien" EntitySet="TiposBienes" />
+      <End Role="Sitio" EntitySet="Sitios" />
+    </AssociationSet>
+    <AssociationSet Name="TipoBienCaracteristica" Association="Model.Store.TipoBienCaracteristica">
+      <End Role="TipoBien" EntitySet="TiposBienes" />
+      <End Role="Caracteristica" EntitySet="Caracteristicas" />
+    </AssociationSet>
+    <AssociationSet Name="ContenidoBien" Association="Model.Store.ContenidoBien">
+      <End Role="Contenido" EntitySet="Contenidos" />
+      <End Role="Bien" EntitySet="Bienes" />
+    </AssociationSet>
+    <AssociationSet Name="AdjuntoContenido" Association="Model.Store.AdjuntoContenido">
+      <End Role="Adjunto" EntitySet="Adjuntos" />
+      <End Role="Contenido" EntitySet="Contenidos" />
+    </AssociationSet>
+    <AssociationSet Name="SitioSitioOrigenDatos" Association="Model.Store.SitioSitioOrigenDatos">
+      <End Role="Sitio" EntitySet="Sitios" />
+      <End Role="SitioOrigenDatos" EntitySet="ConfiguracionesOrigenesDatos" />
+    </AssociationSet>
+    <AssociationSet Name="SitioOrigenDatosOrigenDato" Association="Model.Store.SitioOrigenDatosOrigenDato">
+      <End Role="SitioOrigenDatos" EntitySet="ConfiguracionesOrigenesDatos" />
+      <End Role="OrigenDato" EntitySet="OrigenesDatos" />
+    </AssociationSet>
+    <AssociationSet Name="NovedadSitioOrigenDatos" Association="Model.Store.NovedadSitioOrigenDatos">
+      <End Role="Novedad" EntitySet="Novedades" />
+      <End Role="SitioOrigenDatos" EntitySet="ConfiguracionesOrigenesDatos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioRol_Usuario" Association="Model.Store.FK_UsuarioRol_Usuario">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioRol_Rol" Association="Model.Store.FK_UsuarioRol_Rol">
+      <End Role="Rol" EntitySet="Roles" />
+      <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioSitio" Association="Model.Store.UsuarioSitio">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Sitio" EntitySet="Sitios" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioHabilitacionUsuarioSitio" Association="Model.Store.UsuarioHabilitacionUsuarioSitio">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="HabilitacionUsuarioSitio" EntitySet="HabilitacionesUsuarios" />
+    </AssociationSet>
+    <AssociationSet Name="HabilitacionUsuarioSitioSitio" Association="Model.Store.HabilitacionUsuarioSitioSitio">
+      <End Role="HabilitacionUsuarioSitio" EntitySet="HabilitacionesUsuarios" />
+      <End Role="Sitio" EntitySet="Sitios" />
+    </AssociationSet>
+    <AssociationSet Name="BienTipoBien" Association="Model.Store.BienTipoBien">
+      <End Role="Bien" EntitySet="Bienes" />
+      <End Role="TipoBien" EntitySet="TiposBienes" />
+    </AssociationSet>
+    <AssociationSet Name="BienUsuario" Association="Model.Store.BienUsuario">
+      <End Role="Bien" EntitySet="Bienes" />
+      <End Role="Usuario" EntitySet="Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioBuzonMensajes" Association="Model.Store.UsuarioBuzonMensajes">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="BuzonMensajes" EntitySet="BuzonesMensajes" />
+    </AssociationSet>
+    <AssociationSet Name="MensajeBuzonMensaje" Association="Model.Store.MensajeBuzonMensaje">
+      <End Role="Mensaje" EntitySet="Mensajes" />
+      <End Role="BuzonMensaje" EntitySet="BuzonesMensajes" />
+    </AssociationSet>
+    <AssociationSet Name="MensajeUsuario" Association="Model.Store.MensajeUsuario">
+      <End Role="Mensaje" EntitySet="Mensajes" />
+      <End Role="Usuario" EntitySet="Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioWishList" Association="Model.Store.UsuarioWishList">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="WishList" EntitySet="EspecificacionesBienes" />
+    </AssociationSet>
+    <AssociationSet Name="EspecificacionBienTipoBien" Association="Model.Store.EspecificacionBienTipoBien">
+      <End Role="EspecificacionBien" EntitySet="EspecificacionesBienes" />
+      <End Role="TipoBien" EntitySet="TiposBienes" />
+    </AssociationSet>
+    <AssociationSet Name="EspecificacionBienValorCaracteristicaEspecificacion" Association="Model.Store.EspecificacionBienValorCaracteristicaEspecificacion">
+      <End Role="EspecificacionBien" EntitySet="EspecificacionesBienes" />
+      <End Role="ValorCaracteristicaEspecificacion" EntitySet="ValoresCaracteristicas" />
+    </AssociationSet>
+    <AssociationSet Name="ValorCaracteristicaEspecificacionCaracteristica" Association="Model.Store.ValorCaracteristicaEspecificacionCaracteristica">
+      <End Role="ValorCaracteristicaEspecificacion" EntitySet="ValoresCaracteristicas" />
+      <End Role="Caracteristica" EntitySet="Caracteristicas" />
+    </AssociationSet>
+    <AssociationSet Name="MeGustaBien" Association="Model.Store.MeGustaBien">
+      <End Role="MeGusta" EntitySet="MeGusta" />
+      <End Role="Bien" EntitySet="Bienes" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioMeGusta" Association="Model.Store.UsuarioMeGusta">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="MeGusta" EntitySet="MeGusta" />
+    </AssociationSet>
+    <AssociationSet Name="ContenidoUsuario" Association="Model.Store.ContenidoUsuario">
+      <End Role="Contenido" EntitySet="Contenidos" />
+      <End Role="Usuario" EntitySet="Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="AtributoOrigenDatos" Association="Model.Store.AtributoOrigenDatos">
+      <End Role="Atributo" EntitySet="Atributos" />
+      <End Role="OrigenDatos" EntitySet="OrigenesDatos" />
+    </AssociationSet>
+    <AssociationSet Name="AtributoValorAtributoNovedad" Association="Model.Store.AtributoValorAtributoNovedad">
+      <End Role="Atributo" EntitySet="Atributos" />
+      <End Role="ValorAtributoNovedad" EntitySet="ValoresAtributos" />
+    </AssociationSet>
+    <AssociationSet Name="ValorAtributoNovedadSitioOrigenDatos" Association="Model.Store.ValorAtributoNovedadSitioOrigenDatos">
+      <End Role="ValorAtributoNovedad" EntitySet="ValoresAtributos" />
+      <End Role="SitioOrigenDatos" EntitySet="ConfiguracionesOrigenesDatos" />
+    </AssociationSet>
+    <AssociationSet Name="SesionUsuario" Association="Model.Store.SesionUsuario">
+      <End Role="Sesion" EntitySet="Sesiones" />
+      <End Role="Usuario" EntitySet="Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="ValorCaracteristicaBien" Association="Model.Store.ValorCaracteristicaBien">
+      <End Role="ValorCaracteristica" EntitySet="ValoresCaracteristicas" />
+      <End Role="Bien" EntitySet="Bienes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Sitios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Descripcion" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Logo" Type="varbinary(max)" Nullable="false" />
+    <Property Name="CSS" Type="varbinary(max)" Nullable="false" />
+    <Property Name="MailAdmin" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="URL" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="CantBienesPopulares" Type="smallint" Nullable="false" />
+    <Property Name="CantMarcasXCont" Type="smallint" Nullable="false" />
+    <Property Name="CantContBloqXUsu" Type="smallint" Nullable="false" />
+    <Property Name="UsuarioSitio_Sitio_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrigenesDatos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Manejador" Type="varbinary(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Caracteristicas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Tipo" Type="int" Nullable="false" />
+    <Property Name="TipoBienCaracteristica_Caracteristica_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Novedades">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Titulo" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Contenido" Type="nvarchar" Nullable="false" MaxLength="4000" />
+    <Property Name="FechaHora" Type="datetime" Nullable="false" />
+    <Property Name="Configuracion_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Bienes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Titulo" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Foto" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Latitud" Type="decimal" Nullable="false" />
+    <Property Name="Longitud" Type="decimal" Nullable="false" />
+    <Property Name="Direccion" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Normas" Type="nvarchar" Nullable="false" MaxLength="4000" />
+    <Property Name="Capacidad" Type="smallint" Nullable="false" />
+    <Property Name="Precio" Type="decimal" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" Nullable="false" MaxLength="4000" />
+    <Property Name="FechaAlquiler" Type="datetime" Nullable="false" />
+    <Property Name="DuracionAlquiler" Type="smallint" Nullable="false" />
+    <Property Name="TipoBien_Id" Type="int" Nullable="false" />
+    <Property Name="Usuario_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TiposBienes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Sitio_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Contenidos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Mensaje" Type="nvarchar" Nullable="false" MaxLength="1024" />
+    <Property Name="CantMarcas" Type="smallint" Nullable="false" />
+    <Property Name="ContenidoBien_Contenido_Id" Type="int" Nullable="false" />
+    <Property Name="Usuario_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Adjuntos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Data" Type="varbinary(max)" Nullable="false" />
+    <Property Name="NombreArchivo" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Formato" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Tipo" Type="int" Nullable="false" />
+    <Property Name="AdjuntoContenido_Adjunto_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Apellido" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Mail" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="NombreUsuario" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Contraseña" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="UsuarioFacebook" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="UsuarioTwitter" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="ConfiguracionesOrigenesDatos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Sitio_Id" Type="int" Nullable="false" />
+    <Property Name="OrigenDatos_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="HabilitacionesUsuarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CantContBloq" Type="smallint" Nullable="false" />
+    <Property Name="Habilitado" Type="bit" Nullable="false" />
+    <Property Name="Usuario_Id" Type="int" Nullable="false" />
+    <Property Name="Sitio_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BuzonesMensajes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsuarioBuzonMensajes_BuzonMensajes_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Mensajes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Texto" Type="nvarchar" Nullable="false" MaxLength="4000" />
+    <Property Name="FechaHora" Type="datetime" Nullable="false" />
+    <Property Name="Leido" Type="bit" Nullable="false" />
+    <Property Name="MensajeBuzonMensaje_Mensaje_Id" Type="int" Nullable="false" />
+    <Property Name="Remitente_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EspecificacionesBienes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Latitud" Type="decimal" Nullable="false" />
+    <Property Name="Longitud" Type="decimal" Nullable="false" />
+    <Property Name="Direccion" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Rango" Type="smallint" Nullable="false" />
+    <Property Name="Usuario_Id" Type="int" Nullable="false" />
+    <Property Name="TipoBien_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ValoresCaracteristicas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Valor" Type="nvarchar" Nullable="false" MaxLength="1024" />
+    <Property Name="EspecificacionBienValorCaracteristicaEspecificacion_ValorCaracteristicaEspecificacion_Id" Type="int" Nullable="true" />
+    <Property Name="Caracteristica_Id" Type="int" Nullable="false" />
+    <Property Name="ValorCaracteristicaBien_ValorCaracteristica_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="MeGusta">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+    <Property Name="Bien_Id" Type="int" Nullable="false" />
+    <Property Name="Usuario_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Atributos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="AtributoOrigenDatos_Atributo_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ValoresAtributos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Valor" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Atributo_Id" Type="int" Nullable="false" />
+    <Property Name="ValorAtributoNovedadSitioOrigenDatos_ValorAtributoNovedad_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sesiones">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FechaConexion" Type="datetime" Nullable="false" />
+    <Property Name="UltimoUso" Type="datetime" Nullable="false" />
+    <Property Name="FechaCierre" Type="datetime" Nullable="false" />
+    <Property Name="SesionID" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="Usuario_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsuarioRol">
+    <Key>
+      <PropertyRef Name="UsuarioRol_Rol_Id" />
+      <PropertyRef Name="Roles_Id" />
+    </Key>
+    <Property Name="UsuarioRol_Rol_Id" Type="int" Nullable="false" />
+    <Property Name="Roles_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="TipoBienSitio">
+    <End Role="TipoBien" Type="Model.Store.TiposBienes" Multiplicity="*" />
+    <End Role="Sitio" Type="Model.Store.Sitios" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Sitio">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TipoBien">
+        <PropertyRef Name="Sitio_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TipoBienCaracteristica">
+    <End Role="TipoBien" Type="Model.Store.TiposBienes" Multiplicity="1" />
+    <End Role="Caracteristica" Type="Model.Store.Caracteristicas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoBien">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Caracteristica">
+        <PropertyRef Name="TipoBienCaracteristica_Caracteristica_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ContenidoBien">
+    <End Role="Contenido" Type="Model.Store.Contenidos" Multiplicity="*" />
+    <End Role="Bien" Type="Model.Store.Bienes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Bien">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Contenido">
+        <PropertyRef Name="ContenidoBien_Contenido_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AdjuntoContenido">
+    <End Role="Adjunto" Type="Model.Store.Adjuntos" Multiplicity="*" />
+    <End Role="Contenido" Type="Model.Store.Contenidos" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Contenido">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Adjunto">
+        <PropertyRef Name="AdjuntoContenido_Adjunto_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SitioSitioOrigenDatos">
+    <End Role="Sitio" Type="Model.Store.Sitios" Multiplicity="1" />
+    <End Role="SitioOrigenDatos" Type="Model.Store.ConfiguracionesOrigenesDatos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sitio">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SitioOrigenDatos">
+        <PropertyRef Name="Sitio_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SitioOrigenDatosOrigenDato">
+    <End Role="SitioOrigenDatos" Type="Model.Store.ConfiguracionesOrigenesDatos" Multiplicity="*" />
+    <End Role="OrigenDato" Type="Model.Store.OrigenesDatos" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="OrigenDato">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SitioOrigenDatos">
+        <PropertyRef Name="OrigenDatos_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="NovedadSitioOrigenDatos">
+    <End Role="Novedad" Type="Model.Store.Novedades" Multiplicity="*" />
+    <End Role="SitioOrigenDatos" Type="Model.Store.ConfiguracionesOrigenesDatos" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="SitioOrigenDatos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Novedad">
+        <PropertyRef Name="Configuracion_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioSitio">
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <End Role="Sitio" Type="Model.Store.Sitios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sitio">
+        <PropertyRef Name="UsuarioSitio_Sitio_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioHabilitacionUsuarioSitio">
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <End Role="HabilitacionUsuarioSitio" Type="Model.Store.HabilitacionesUsuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HabilitacionUsuarioSitio">
+        <PropertyRef Name="Usuario_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HabilitacionUsuarioSitioSitio">
+    <End Role="HabilitacionUsuarioSitio" Type="Model.Store.HabilitacionesUsuarios" Multiplicity="*" />
+    <End Role="Sitio" Type="Model.Store.Sitios" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Sitio">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HabilitacionUsuarioSitio">
+        <PropertyRef Name="Sitio_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BienTipoBien">
+    <End Role="Bien" Type="Model.Store.Bienes" Multiplicity="*" />
+    <End Role="TipoBien" Type="Model.Store.TiposBienes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="TipoBien">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bien">
+        <PropertyRef Name="TipoBien_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BienUsuario">
+    <End Role="Bien" Type="Model.Store.Bienes" Multiplicity="*" />
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bien">
+        <PropertyRef Name="Usuario_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioBuzonMensajes">
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <End Role="BuzonMensajes" Type="Model.Store.BuzonesMensajes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BuzonMensajes">
+        <PropertyRef Name="UsuarioBuzonMensajes_BuzonMensajes_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MensajeBuzonMensaje">
+    <End Role="Mensaje" Type="Model.Store.Mensajes" Multiplicity="*" />
+    <End Role="BuzonMensaje" Type="Model.Store.BuzonesMensajes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="BuzonMensaje">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Mensaje">
+        <PropertyRef Name="MensajeBuzonMensaje_Mensaje_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MensajeUsuario">
+    <End Role="Mensaje" Type="Model.Store.Mensajes" Multiplicity="*" />
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Mensaje">
+        <PropertyRef Name="Remitente_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioWishList">
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <End Role="WishList" Type="Model.Store.EspecificacionesBienes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WishList">
+        <PropertyRef Name="Usuario_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EspecificacionBienTipoBien">
+    <End Role="EspecificacionBien" Type="Model.Store.EspecificacionesBienes" Multiplicity="*" />
+    <End Role="TipoBien" Type="Model.Store.TiposBienes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="TipoBien">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EspecificacionBien">
+        <PropertyRef Name="TipoBien_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EspecificacionBienValorCaracteristicaEspecificacion">
+    <End Role="EspecificacionBien" Type="Model.Store.EspecificacionesBienes" Multiplicity="0..1" />
+    <End Role="ValorCaracteristicaEspecificacion" Type="Model.Store.ValoresCaracteristicas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EspecificacionBien">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ValorCaracteristicaEspecificacion">
+        <PropertyRef Name="EspecificacionBienValorCaracteristicaEspecificacion_ValorCaracteristicaEspecificacion_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ValorCaracteristicaEspecificacionCaracteristica">
+    <End Role="ValorCaracteristicaEspecificacion" Type="Model.Store.ValoresCaracteristicas" Multiplicity="*" />
+    <End Role="Caracteristica" Type="Model.Store.Caracteristicas" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Caracteristica">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ValorCaracteristicaEspecificacion">
+        <PropertyRef Name="Caracteristica_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MeGustaBien">
+    <End Role="MeGusta" Type="Model.Store.MeGusta" Multiplicity="*" />
+    <End Role="Bien" Type="Model.Store.Bienes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Bien">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MeGusta">
+        <PropertyRef Name="Bien_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioMeGusta">
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <End Role="MeGusta" Type="Model.Store.MeGusta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MeGusta">
+        <PropertyRef Name="Usuario_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ContenidoUsuario">
+    <End Role="Contenido" Type="Model.Store.Contenidos" Multiplicity="*" />
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Contenido">
+        <PropertyRef Name="Usuario_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AtributoOrigenDatos">
+    <End Role="Atributo" Type="Model.Store.Atributos" Multiplicity="*" />
+    <End Role="OrigenDatos" Type="Model.Store.OrigenesDatos" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="OrigenDatos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Atributo">
+        <PropertyRef Name="AtributoOrigenDatos_Atributo_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AtributoValorAtributoNovedad">
+    <End Role="Atributo" Type="Model.Store.Atributos" Multiplicity="1" />
+    <End Role="ValorAtributoNovedad" Type="Model.Store.ValoresAtributos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Atributo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ValorAtributoNovedad">
+        <PropertyRef Name="Atributo_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ValorAtributoNovedadSitioOrigenDatos">
+    <End Role="ValorAtributoNovedad" Type="Model.Store.ValoresAtributos" Multiplicity="*" />
+    <End Role="SitioOrigenDatos" Type="Model.Store.ConfiguracionesOrigenesDatos" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="SitioOrigenDatos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ValorAtributoNovedad">
+        <PropertyRef Name="ValorAtributoNovedadSitioOrigenDatos_ValorAtributoNovedad_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SesionUsuario">
+    <End Role="Sesion" Type="Model.Store.Sesiones" Multiplicity="*" />
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sesion">
+        <PropertyRef Name="Usuario_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ValorCaracteristicaBien">
+    <End Role="ValorCaracteristica" Type="Model.Store.ValoresCaracteristicas" Multiplicity="*" />
+    <End Role="Bien" Type="Model.Store.Bienes" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Bien">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ValorCaracteristica">
+        <PropertyRef Name="ValorCaracteristicaBien_ValorCaracteristica_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioRol_Usuario">
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <End Role="UsuarioRol" Type="Model.Store.UsuarioRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UsuarioRol">
+        <PropertyRef Name="UsuarioRol_Rol_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioRol_Rol">
+    <End Role="UsuarioRol" Type="Model.Store.UsuarioRol" Multiplicity="*" />
+    <End Role="Rol" Type="Model.Store.Roles" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UsuarioRol">
+        <PropertyRef Name="Roles_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="ModelContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="SitioSet1" EntityType="Model.Sitio" />
-          <EntitySet Name="OrigenDatosSet" EntityType="Model.OrigenDatos" />
-          <EntitySet Name="CaracteristicaSet1" EntityType="Model.Caracteristica" />
-          <EntitySet Name="NovedadSet" EntityType="Model.Novedad" />
-          <EntitySet Name="BienSet1" EntityType="Model.Bien" />
-          <EntitySet Name="TipoBienSet" EntityType="Model.TipoBien" />
+          <EntitySet Name="Sitios" EntityType="Model.Sitio" />
+          <EntitySet Name="OrigenesDatos" EntityType="Model.OrigenDatos" />
+          <EntitySet Name="Caracteristicas" EntityType="Model.Caracteristica" />
+          <EntitySet Name="Novedades" EntityType="Model.Novedad" />
+          <EntitySet Name="Bienes" EntityType="Model.Bien" />
+          <EntitySet Name="TiposBienes" EntityType="Model.TipoBien" />
           <AssociationSet Name="TipoBienSitio" Association="Model.TipoBienSitio">
-            <End Role="TipoBien" EntitySet="TipoBienSet" />
-            <End Role="Sitio" EntitySet="SitioSet1" />
+            <End Role="TipoBien" EntitySet="TiposBienes" />
+            <End Role="Sitio" EntitySet="Sitios" />
           </AssociationSet>
           <AssociationSet Name="TipoBienCaracteristica" Association="Model.TipoBienCaracteristica">
-            <End Role="TipoBien" EntitySet="TipoBienSet" />
-            <End Role="Caracteristica" EntitySet="CaracteristicaSet1" />
+            <End Role="TipoBien" EntitySet="TiposBienes" />
+            <End Role="Caracteristica" EntitySet="Caracteristicas" />
           </AssociationSet>
-          <EntitySet Name="ContenidoSet" EntityType="Model.Contenido" />
-          <EntitySet Name="AdjuntoSet" EntityType="Model.Adjunto" />
+          <EntitySet Name="Contenidos" EntityType="Model.Contenido" />
+          <EntitySet Name="Adjuntos" EntityType="Model.Adjunto" />
           <AssociationSet Name="ContenidoBien" Association="Model.ContenidoBien">
-            <End Role="Contenido" EntitySet="ContenidoSet" />
-            <End Role="Bien" EntitySet="BienSet1" />
+            <End Role="Contenido" EntitySet="Contenidos" />
+            <End Role="Bien" EntitySet="Bienes" />
           </AssociationSet>
           <AssociationSet Name="AdjuntoContenido" Association="Model.AdjuntoContenido">
-            <End Role="Adjunto" EntitySet="AdjuntoSet" />
-            <End Role="Contenido" EntitySet="ContenidoSet" />
+            <End Role="Adjunto" EntitySet="Adjuntos" />
+            <End Role="Contenido" EntitySet="Contenidos" />
           </AssociationSet>
-          <EntitySet Name="UsuarioSet" EntityType="Model.Usuario" />
-          <EntitySet Name="ConfiguracionOrigenDatosSet" EntityType="Model.ConfiguracionOrigenDatos" />
+          <EntitySet Name="Usuarios" EntityType="Model.Usuario" />
+          <EntitySet Name="ConfiguracionesOrigenesDatos" EntityType="Model.ConfiguracionOrigenDatos" />
           <AssociationSet Name="SitioSitioOrigenDatos" Association="Model.SitioSitioOrigenDatos">
-            <End Role="Sitio" EntitySet="SitioSet1" />
-            <End Role="SitioOrigenDatos" EntitySet="ConfiguracionOrigenDatosSet" />
+            <End Role="Sitio" EntitySet="Sitios" />
+            <End Role="SitioOrigenDatos" EntitySet="ConfiguracionesOrigenesDatos" />
           </AssociationSet>
           <AssociationSet Name="SitioOrigenDatosOrigenDato" Association="Model.SitioOrigenDatosOrigenDato">
-            <End Role="SitioOrigenDatos" EntitySet="ConfiguracionOrigenDatosSet" />
-            <End Role="OrigenDato" EntitySet="OrigenDatosSet" />
+            <End Role="SitioOrigenDatos" EntitySet="ConfiguracionesOrigenesDatos" />
+            <End Role="OrigenDato" EntitySet="OrigenesDatos" />
           </AssociationSet>
           <AssociationSet Name="NovedadSitioOrigenDatos" Association="Model.NovedadSitioOrigenDatos">
-            <End Role="Novedad" EntitySet="NovedadSet" />
-            <End Role="SitioOrigenDatos" EntitySet="ConfiguracionOrigenDatosSet" />
+            <End Role="Novedad" EntitySet="Novedades" />
+            <End Role="SitioOrigenDatos" EntitySet="ConfiguracionesOrigenesDatos" />
           </AssociationSet>
-          <EntitySet Name="RolSet" EntityType="Model.Rol" />
+          <EntitySet Name="Roles" EntityType="Model.Rol" />
           <AssociationSet Name="UsuarioRol" Association="Model.UsuarioRol">
-            <End Role="Usuario" EntitySet="UsuarioSet" />
-            <End Role="Rol" EntitySet="RolSet" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Rol" EntitySet="Roles" />
           </AssociationSet>
           <AssociationSet Name="UsuarioSitio" Association="Model.UsuarioSitio">
-            <End Role="Usuario" EntitySet="UsuarioSet" />
-            <End Role="Sitio" EntitySet="SitioSet1" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Sitio" EntitySet="Sitios" />
           </AssociationSet>
-          <EntitySet Name="HabilitacionUsuarioSet" EntityType="Model.HabilitacionUsuario" />
+          <EntitySet Name="HabilitacionesUsuarios" EntityType="Model.HabilitacionUsuario" />
           <AssociationSet Name="UsuarioHabilitacionUsuarioSitio" Association="Model.UsuarioHabilitacionUsuarioSitio">
-            <End Role="Usuario" EntitySet="UsuarioSet" />
-            <End Role="HabilitacionUsuarioSitio" EntitySet="HabilitacionUsuarioSet" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="HabilitacionUsuarioSitio" EntitySet="HabilitacionesUsuarios" />
           </AssociationSet>
           <AssociationSet Name="HabilitacionUsuarioSitioSitio" Association="Model.HabilitacionUsuarioSitioSitio">
-            <End Role="HabilitacionUsuarioSitio" EntitySet="HabilitacionUsuarioSet" />
-            <End Role="Sitio" EntitySet="SitioSet1" />
+            <End Role="HabilitacionUsuarioSitio" EntitySet="HabilitacionesUsuarios" />
+            <End Role="Sitio" EntitySet="Sitios" />
           </AssociationSet>
           <AssociationSet Name="BienTipoBien" Association="Model.BienTipoBien">
-            <End Role="Bien" EntitySet="BienSet1" />
-            <End Role="TipoBien" EntitySet="TipoBienSet" />
+            <End Role="Bien" EntitySet="Bienes" />
+            <End Role="TipoBien" EntitySet="TiposBienes" />
           </AssociationSet>
           <AssociationSet Name="BienUsuario" Association="Model.BienUsuario">
-            <End Role="Bien" EntitySet="BienSet1" />
-            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="Bien" EntitySet="Bienes" />
+            <End Role="Usuario" EntitySet="Usuarios" />
           </AssociationSet>
-          <EntitySet Name="BuzonMensajesSet" EntityType="Model.BuzonMensajes" />
+          <EntitySet Name="BuzonesMensajes" EntityType="Model.BuzonMensajes" />
           <AssociationSet Name="UsuarioBuzonMensajes" Association="Model.UsuarioBuzonMensajes">
-            <End Role="Usuario" EntitySet="UsuarioSet" />
-            <End Role="BuzonMensajes" EntitySet="BuzonMensajesSet" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="BuzonMensajes" EntitySet="BuzonesMensajes" />
           </AssociationSet>
-          <EntitySet Name="MensajeSet" EntityType="Model.Mensaje" />
+          <EntitySet Name="Mensajes" EntityType="Model.Mensaje" />
           <AssociationSet Name="MensajeBuzonMensaje" Association="Model.MensajeBuzonMensaje">
-            <End Role="Mensaje" EntitySet="MensajeSet" />
-            <End Role="BuzonMensaje" EntitySet="BuzonMensajesSet" />
+            <End Role="Mensaje" EntitySet="Mensajes" />
+            <End Role="BuzonMensaje" EntitySet="BuzonesMensajes" />
           </AssociationSet>
           <AssociationSet Name="MensajeUsuario" Association="Model.MensajeUsuario">
-            <End Role="Mensaje" EntitySet="MensajeSet" />
-            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="Mensaje" EntitySet="Mensajes" />
+            <End Role="Usuario" EntitySet="Usuarios" />
           </AssociationSet>
-          <EntitySet Name="EspecificacionBienSet" EntityType="Model.EspecificacionBien" />
+          <EntitySet Name="EspecificacionesBienes" EntityType="Model.EspecificacionBien" />
           <AssociationSet Name="UsuarioWishList" Association="Model.UsuarioWishList">
-            <End Role="Usuario" EntitySet="UsuarioSet" />
-            <End Role="WishList" EntitySet="EspecificacionBienSet" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="WishList" EntitySet="EspecificacionesBienes" />
           </AssociationSet>
           <AssociationSet Name="EspecificacionBienTipoBien" Association="Model.EspecificacionBienTipoBien">
-            <End Role="EspecificacionBien" EntitySet="EspecificacionBienSet" />
-            <End Role="TipoBien" EntitySet="TipoBienSet" />
+            <End Role="EspecificacionBien" EntitySet="EspecificacionesBienes" />
+            <End Role="TipoBien" EntitySet="TiposBienes" />
           </AssociationSet>
-          <EntitySet Name="ValorCaracteristicaSet" EntityType="Model.ValorCaracteristica" />
+          <EntitySet Name="ValoresCaracteristicas" EntityType="Model.ValorCaracteristica" />
           <AssociationSet Name="EspecificacionBienValorCaracteristicaEspecificacion" Association="Model.EspecificacionBienValorCaracteristicaEspecificacion">
-            <End Role="EspecificacionBien" EntitySet="EspecificacionBienSet" />
-            <End Role="ValorCaracteristicaEspecificacion" EntitySet="ValorCaracteristicaSet" />
+            <End Role="EspecificacionBien" EntitySet="EspecificacionesBienes" />
+            <End Role="ValorCaracteristicaEspecificacion" EntitySet="ValoresCaracteristicas" />
           </AssociationSet>
           <AssociationSet Name="ValorCaracteristicaEspecificacionCaracteristica" Association="Model.ValorCaracteristicaEspecificacionCaracteristica">
-            <End Role="ValorCaracteristicaEspecificacion" EntitySet="ValorCaracteristicaSet" />
-            <End Role="Caracteristica" EntitySet="CaracteristicaSet1" />
+            <End Role="ValorCaracteristicaEspecificacion" EntitySet="ValoresCaracteristicas" />
+            <End Role="Caracteristica" EntitySet="Caracteristicas" />
           </AssociationSet>
-          <EntitySet Name="MeGustaSet" EntityType="Model.MeGusta" />
+          <EntitySet Name="MeGusta" EntityType="Model.MeGusta" />
           <AssociationSet Name="MeGustaBien" Association="Model.MeGustaBien">
-            <End Role="MeGusta" EntitySet="MeGustaSet" />
-            <End Role="Bien" EntitySet="BienSet1" />
+            <End Role="MeGusta" EntitySet="MeGusta" />
+            <End Role="Bien" EntitySet="Bienes" />
           </AssociationSet>
           <AssociationSet Name="UsuarioMeGusta" Association="Model.UsuarioMeGusta">
-            <End Role="Usuario" EntitySet="UsuarioSet" />
-            <End Role="MeGusta" EntitySet="MeGustaSet" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="MeGusta" EntitySet="MeGusta" />
           </AssociationSet>
           <AssociationSet Name="ContenidoUsuario" Association="Model.ContenidoUsuario">
-            <End Role="Contenido" EntitySet="ContenidoSet" />
-            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="Contenido" EntitySet="Contenidos" />
+            <End Role="Usuario" EntitySet="Usuarios" />
           </AssociationSet>
-          <EntitySet Name="AtributoSet" EntityType="Model.Atributo" />
+          <EntitySet Name="Atributos" EntityType="Model.Atributo" />
           <AssociationSet Name="AtributoOrigenDatos" Association="Model.AtributoOrigenDatos">
-            <End Role="Atributo" EntitySet="AtributoSet" />
-            <End Role="OrigenDatos" EntitySet="OrigenDatosSet" />
+            <End Role="Atributo" EntitySet="Atributos" />
+            <End Role="OrigenDatos" EntitySet="OrigenesDatos" />
           </AssociationSet>
-          <EntitySet Name="ValorAtributoSet" EntityType="Model.ValorAtributo" />
+          <EntitySet Name="ValoresAtributos" EntityType="Model.ValorAtributo" />
           <AssociationSet Name="AtributoValorAtributoNovedad" Association="Model.AtributoValorAtributoNovedad">
-            <End Role="Atributo" EntitySet="AtributoSet" />
-            <End Role="ValorAtributoNovedad" EntitySet="ValorAtributoSet" />
+            <End Role="Atributo" EntitySet="Atributos" />
+            <End Role="ValorAtributoNovedad" EntitySet="ValoresAtributos" />
           </AssociationSet>
           <AssociationSet Name="ValorAtributoNovedadSitioOrigenDatos" Association="Model.ValorAtributoNovedadSitioOrigenDatos">
-            <End Role="ValorAtributoNovedad" EntitySet="ValorAtributoSet" />
-            <End Role="SitioOrigenDatos" EntitySet="ConfiguracionOrigenDatosSet" />
+            <End Role="ValorAtributoNovedad" EntitySet="ValoresAtributos" />
+            <End Role="SitioOrigenDatos" EntitySet="ConfiguracionesOrigenesDatos" />
           </AssociationSet>
-          <EntitySet Name="SesionSet" EntityType="Model.Sesion" />
+          <EntitySet Name="Sesiones" EntityType="Model.Sesion" />
           <AssociationSet Name="SesionUsuario" Association="Model.SesionUsuario">
-            <End Role="Sesion" EntitySet="SesionSet" />
-            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="Sesion" EntitySet="Sesiones" />
+            <End Role="Usuario" EntitySet="Usuarios" />
           </AssociationSet>
           <AssociationSet Name="ValorCaracteristicaBien" Association="Model.ValorCaracteristicaBien">
-            <End Role="ValorCaracteristica" EntitySet="ValorCaracteristicaSet" />
-            <End Role="Bien" EntitySet="BienSet1" />
+            <End Role="ValorCaracteristica" EntitySet="ValoresCaracteristicas" />
+            <End Role="Bien" EntitySet="Bienes" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Sitio">
@@ -152,12 +850,12 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="TipoBien" Relationship="Model.TipoBienSitio" FromRole="Sitio" ToRole="TipoBien" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
-          <Property Type="String" Name="Descripcion" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="128" />
           <Property Type="Binary" Name="Logo" Nullable="false" />
           <Property Type="Binary" Name="CSS" Nullable="false" />
-          <Property Type="String" Name="MailAdmin" Nullable="false" />
-          <Property Type="String" Name="URL" Nullable="false" />
+          <Property Type="String" Name="MailAdmin" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="URL" Nullable="false" MaxLength="256" />
           <Property Type="Int16" Name="CantBienesPopulares" Nullable="false" />
           <Property Type="Int16" Name="CantMarcasXCont" Nullable="false" />
           <Property Type="Int16" Name="CantContBloqXUsu" Nullable="false" />
@@ -168,7 +866,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Atributos" Relationship="Model.AtributoOrigenDatos" FromRole="OrigenDatos" ToRole="Atributo" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
           <Property Type="Binary" Name="Manejador" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoBien">
@@ -178,14 +876,14 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Sitio" Relationship="Model.TipoBienSitio" FromRole="TipoBien" ToRole="Sitio" />
           <NavigationProperty Name="Caracteristicas" Relationship="Model.TipoBienCaracteristica" FromRole="TipoBien" ToRole="Caracteristica" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
         </EntityType>
         <EntityType Name="Caracteristica">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
           <Property Type="Model.TipoDato" Name="Tipo" Nullable="false" />
         </EntityType>
         <EntityType Name="Novedad">
@@ -194,8 +892,8 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Configuracion" Relationship="Model.NovedadSitioOrigenDatos" FromRole="Novedad" ToRole="SitioOrigenDatos" />
-          <Property Type="String" Name="Titulo" Nullable="false" />
-          <Property Type="String" Name="Contenido" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Contenido" Nullable="false" MaxLength="4000" />
           <Property Type="DateTime" Name="FechaHora" Nullable="false" />
         </EntityType>
         <EntityType Name="Bien">
@@ -206,15 +904,15 @@
           <NavigationProperty Name="Contenidos" Relationship="Model.ContenidoBien" FromRole="Bien" ToRole="Contenido" />
           <NavigationProperty Name="TipoBien" Relationship="Model.BienTipoBien" FromRole="Bien" ToRole="TipoBien" />
           <NavigationProperty Name="Usuario" Relationship="Model.BienUsuario" FromRole="Bien" ToRole="Usuario" />
-          <Property Type="String" Name="Titulo" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="false" MaxLength="64" />
           <Property Type="Binary" Name="Foto" Nullable="false" />
           <Property Type="Decimal" Name="Latitud" Nullable="false" />
           <Property Type="Decimal" Name="Longitud" Nullable="false" />
-          <Property Type="String" Name="Direccion" Nullable="false" />
-          <Property Type="String" Name="Normas" Nullable="false" />
+          <Property Type="String" Name="Direccion" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="Normas" Nullable="false" MaxLength="4000" />
           <Property Type="Int16" Name="Capacidad" Nullable="false" />
           <Property Type="Decimal" Name="Precio" Nullable="false" />
-          <Property Type="String" Name="Descripcion" Nullable="false" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="4000" />
           <Property Type="DateTime" Name="FechaAlquiler" Nullable="false" />
           <Property Type="Int16" Name="DuracionAlquiler" Nullable="false" />
           <NavigationProperty Name="ValoresCaracteristicas" Relationship="Model.ValorCaracteristicaBien" FromRole="Bien" ToRole="ValorCaracteristica" />
@@ -234,7 +932,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Adjuntos" Relationship="Model.AdjuntoContenido" FromRole="Contenido" ToRole="Adjunto" />
           <NavigationProperty Name="Usuario" Relationship="Model.ContenidoUsuario" FromRole="Contenido" ToRole="Usuario" />
-          <Property Type="String" Name="Mensaje" Nullable="false" />
+          <Property Type="String" Name="Mensaje" Nullable="false" MaxLength="1024" />
           <Property Type="Int16" Name="CantMarcas" Nullable="false" />
         </EntityType>
         <EntityType Name="Adjunto">
@@ -243,8 +941,8 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Binary" Name="Data" Nullable="false" />
-          <Property Type="String" Name="NombreArchivo" Nullable="false" />
-          <Property Type="String" Name="Formato" Nullable="false" />
+          <Property Type="String" Name="NombreArchivo" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Formato" Nullable="false" MaxLength="64" />
           <Property Type="Model.TipoAdjunto" Name="Tipo" Nullable="false" />
         </EntityType>
         <Association Name="ContenidoBien">
@@ -263,13 +961,13 @@
           <NavigationProperty Name="Roles" Relationship="Model.UsuarioRol" FromRole="Usuario" ToRole="Rol" />
           <NavigationProperty Name="SitiosAdministrados" Relationship="Model.UsuarioSitio" FromRole="Usuario" ToRole="Sitio" />
           <NavigationProperty Name="BuzonesMensajes" Relationship="Model.UsuarioBuzonMensajes" FromRole="Usuario" ToRole="BuzonMensajes" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
-          <Property Type="String" Name="Apellido" Nullable="false" />
-          <Property Type="String" Name="Mail" Nullable="false" />
-          <Property Type="String" Name="NombreUsuario" Nullable="false" />
-          <Property Type="String" Name="Contraseña" Nullable="false" />
-          <Property Type="String" Name="UsuarioFacebook" Nullable="false" />
-          <Property Type="String" Name="UsuarioTwitter" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Apellido" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Mail" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="NombreUsuario" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Contraseña" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="UsuarioFacebook" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="UsuarioTwitter" Nullable="false" MaxLength="128" />
         </EntityType>
         <EntityType Name="ConfiguracionOrigenDatos">
           <Key>
@@ -297,7 +995,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
         </EntityType>
         <Association Name="UsuarioRol">
           <End Type="Model.Usuario" Role="Usuario" Multiplicity="*" />
@@ -350,7 +1048,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Remitente" Relationship="Model.MensajeUsuario" FromRole="Mensaje" ToRole="Usuario" />
-          <Property Type="String" Name="Texto" Nullable="false" />
+          <Property Type="String" Name="Texto" Nullable="false" MaxLength="4000" />
           <Property Type="DateTime" Name="FechaHora" Nullable="false" />
           <Property Type="Boolean" Name="Leido" Nullable="false" />
         </EntityType>
@@ -372,7 +1070,7 @@
           <NavigationProperty Name="ValoresCaracteristicas" Relationship="Model.EspecificacionBienValorCaracteristicaEspecificacion" FromRole="EspecificacionBien" ToRole="ValorCaracteristicaEspecificacion" />
           <Property Type="Decimal" Name="Latitud" Nullable="false" />
           <Property Type="Decimal" Name="Longitud" Nullable="false" />
-          <Property Type="String" Name="Direccion" Nullable="false" />
+          <Property Type="String" Name="Direccion" Nullable="false" MaxLength="128" />
           <Property Type="Int16" Name="Rango" Nullable="false" />
         </EntityType>
         <Association Name="UsuarioWishList">
@@ -389,7 +1087,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Caracteristica" Relationship="Model.ValorCaracteristicaEspecificacionCaracteristica" FromRole="ValorCaracteristicaEspecificacion" ToRole="Caracteristica" />
-          <Property Type="String" Name="Valor" Nullable="false" />
+          <Property Type="String" Name="Valor" Nullable="false" MaxLength="1024" />
         </EntityType>
         <Association Name="EspecificacionBienValorCaracteristicaEspecificacion">
           <End Type="Model.EspecificacionBien" Role="EspecificacionBien" Multiplicity="0..1" />
@@ -425,7 +1123,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
         </EntityType>
         <Association Name="AtributoOrigenDatos">
           <End Type="Model.Atributo" Role="Atributo" Multiplicity="*" />
@@ -481,13 +1179,435 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="Model" />
-        <Alias Key="Target" Value="Model.Store" />
-        <EntityContainerMapping CdmEntityContainer="ModelContainer" StorageEntityContainer="ModelTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ModelContainer">
+    <EntitySetMapping Name="Sitios">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Sitio)">
+        <MappingFragment StoreEntitySet="Sitios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Logo" ColumnName="Logo" />
+          <ScalarProperty Name="CSS" ColumnName="CSS" />
+          <ScalarProperty Name="MailAdmin" ColumnName="MailAdmin" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="CantBienesPopulares" ColumnName="CantBienesPopulares" />
+          <ScalarProperty Name="CantMarcasXCont" ColumnName="CantMarcasXCont" />
+          <ScalarProperty Name="CantContBloqXUsu" ColumnName="CantContBloqXUsu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrigenesDatos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.OrigenDatos)">
+        <MappingFragment StoreEntitySet="OrigenesDatos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Manejador" ColumnName="Manejador" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Caracteristicas">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Caracteristica)">
+        <MappingFragment StoreEntitySet="Caracteristicas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Novedades">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Novedad)">
+        <MappingFragment StoreEntitySet="Novedades">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+          <ScalarProperty Name="Contenido" ColumnName="Contenido" />
+          <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bienes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Bien)">
+        <MappingFragment StoreEntitySet="Bienes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+          <ScalarProperty Name="Foto" ColumnName="Foto" />
+          <ScalarProperty Name="Latitud" ColumnName="Latitud" />
+          <ScalarProperty Name="Longitud" ColumnName="Longitud" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Normas" ColumnName="Normas" />
+          <ScalarProperty Name="Capacidad" ColumnName="Capacidad" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="FechaAlquiler" ColumnName="FechaAlquiler" />
+          <ScalarProperty Name="DuracionAlquiler" ColumnName="DuracionAlquiler" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TiposBienes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.TipoBien)">
+        <MappingFragment StoreEntitySet="TiposBienes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contenidos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Contenido)">
+        <MappingFragment StoreEntitySet="Contenidos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="CantMarcas" ColumnName="CantMarcas" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Adjuntos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Adjunto)">
+        <MappingFragment StoreEntitySet="Adjuntos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="NombreArchivo" ColumnName="NombreArchivo" />
+          <ScalarProperty Name="Formato" ColumnName="Formato" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Usuario)">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+          <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+          <ScalarProperty Name="UsuarioFacebook" ColumnName="UsuarioFacebook" />
+          <ScalarProperty Name="UsuarioTwitter" ColumnName="UsuarioTwitter" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConfiguracionesOrigenesDatos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.ConfiguracionOrigenDatos)">
+        <MappingFragment StoreEntitySet="ConfiguracionesOrigenesDatos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Rol)">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HabilitacionesUsuarios">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.HabilitacionUsuario)">
+        <MappingFragment StoreEntitySet="HabilitacionesUsuarios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CantContBloq" ColumnName="CantContBloq" />
+          <ScalarProperty Name="Habilitado" ColumnName="Habilitado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BuzonesMensajes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.BuzonMensajes)">
+        <MappingFragment StoreEntitySet="BuzonesMensajes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mensajes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Mensaje)">
+        <MappingFragment StoreEntitySet="Mensajes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Texto" ColumnName="Texto" />
+          <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+          <ScalarProperty Name="Leido" ColumnName="Leido" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EspecificacionesBienes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.EspecificacionBien)">
+        <MappingFragment StoreEntitySet="EspecificacionesBienes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Latitud" ColumnName="Latitud" />
+          <ScalarProperty Name="Longitud" ColumnName="Longitud" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Rango" ColumnName="Rango" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ValoresCaracteristicas">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.ValorCaracteristica)">
+        <MappingFragment StoreEntitySet="ValoresCaracteristicas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MeGusta">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.MeGusta)">
+        <MappingFragment StoreEntitySet="MeGusta">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Atributos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Atributo)">
+        <MappingFragment StoreEntitySet="Atributos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ValoresAtributos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.ValorAtributo)">
+        <MappingFragment StoreEntitySet="ValoresAtributos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sesiones">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Sesion)">
+        <MappingFragment StoreEntitySet="Sesiones">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FechaConexion" ColumnName="FechaConexion" />
+          <ScalarProperty Name="UltimoUso" ColumnName="UltimoUso" />
+          <ScalarProperty Name="FechaCierre" ColumnName="FechaCierre" />
+          <ScalarProperty Name="SesionID" ColumnName="SesionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="TipoBienSitio" TypeName="Model.TipoBienSitio" StoreEntitySet="TiposBienes">
+      <EndProperty Name="Sitio">
+        <ScalarProperty Name="Id" ColumnName="Sitio_Id" />
+      </EndProperty>
+      <EndProperty Name="TipoBien">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TipoBienCaracteristica" TypeName="Model.TipoBienCaracteristica" StoreEntitySet="Caracteristicas">
+      <EndProperty Name="TipoBien">
+        <ScalarProperty Name="Id" ColumnName="TipoBienCaracteristica_Caracteristica_Id" />
+      </EndProperty>
+      <EndProperty Name="Caracteristica">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ContenidoBien" TypeName="Model.ContenidoBien" StoreEntitySet="Contenidos">
+      <EndProperty Name="Bien">
+        <ScalarProperty Name="Id" ColumnName="ContenidoBien_Contenido_Id" />
+      </EndProperty>
+      <EndProperty Name="Contenido">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AdjuntoContenido" TypeName="Model.AdjuntoContenido" StoreEntitySet="Adjuntos">
+      <EndProperty Name="Contenido">
+        <ScalarProperty Name="Id" ColumnName="AdjuntoContenido_Adjunto_Id" />
+      </EndProperty>
+      <EndProperty Name="Adjunto">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SitioSitioOrigenDatos" TypeName="Model.SitioSitioOrigenDatos" StoreEntitySet="ConfiguracionesOrigenesDatos">
+      <EndProperty Name="Sitio">
+        <ScalarProperty Name="Id" ColumnName="Sitio_Id" />
+      </EndProperty>
+      <EndProperty Name="SitioOrigenDatos">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SitioOrigenDatosOrigenDato" TypeName="Model.SitioOrigenDatosOrigenDato" StoreEntitySet="ConfiguracionesOrigenesDatos">
+      <EndProperty Name="OrigenDato">
+        <ScalarProperty Name="Id" ColumnName="OrigenDatos_Id" />
+      </EndProperty>
+      <EndProperty Name="SitioOrigenDatos">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="NovedadSitioOrigenDatos" TypeName="Model.NovedadSitioOrigenDatos" StoreEntitySet="Novedades">
+      <EndProperty Name="SitioOrigenDatos">
+        <ScalarProperty Name="Id" ColumnName="Configuracion_Id" />
+      </EndProperty>
+      <EndProperty Name="Novedad">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UsuarioRol" TypeName="Model.UsuarioRol" StoreEntitySet="UsuarioRol">
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="Id" ColumnName="UsuarioRol_Rol_Id" />
+      </EndProperty>
+      <EndProperty Name="Rol">
+        <ScalarProperty Name="Id" ColumnName="Roles_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UsuarioSitio" TypeName="Model.UsuarioSitio" StoreEntitySet="Sitios">
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="Id" ColumnName="UsuarioSitio_Sitio_Id" />
+      </EndProperty>
+      <EndProperty Name="Sitio">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UsuarioHabilitacionUsuarioSitio" TypeName="Model.UsuarioHabilitacionUsuarioSitio" StoreEntitySet="HabilitacionesUsuarios">
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="Id" ColumnName="Usuario_Id" />
+      </EndProperty>
+      <EndProperty Name="HabilitacionUsuarioSitio">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HabilitacionUsuarioSitioSitio" TypeName="Model.HabilitacionUsuarioSitioSitio" StoreEntitySet="HabilitacionesUsuarios">
+      <EndProperty Name="Sitio">
+        <ScalarProperty Name="Id" ColumnName="Sitio_Id" />
+      </EndProperty>
+      <EndProperty Name="HabilitacionUsuarioSitio">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="BienTipoBien" TypeName="Model.BienTipoBien" StoreEntitySet="Bienes">
+      <EndProperty Name="TipoBien">
+        <ScalarProperty Name="Id" ColumnName="TipoBien_Id" />
+      </EndProperty>
+      <EndProperty Name="Bien">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="BienUsuario" TypeName="Model.BienUsuario" StoreEntitySet="Bienes">
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="Id" ColumnName="Usuario_Id" />
+      </EndProperty>
+      <EndProperty Name="Bien">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UsuarioBuzonMensajes" TypeName="Model.UsuarioBuzonMensajes" StoreEntitySet="BuzonesMensajes">
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="Id" ColumnName="UsuarioBuzonMensajes_BuzonMensajes_Id" />
+      </EndProperty>
+      <EndProperty Name="BuzonMensajes">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MensajeBuzonMensaje" TypeName="Model.MensajeBuzonMensaje" StoreEntitySet="Mensajes">
+      <EndProperty Name="BuzonMensaje">
+        <ScalarProperty Name="Id" ColumnName="MensajeBuzonMensaje_Mensaje_Id" />
+      </EndProperty>
+      <EndProperty Name="Mensaje">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MensajeUsuario" TypeName="Model.MensajeUsuario" StoreEntitySet="Mensajes">
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="Id" ColumnName="Remitente_Id" />
+      </EndProperty>
+      <EndProperty Name="Mensaje">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UsuarioWishList" TypeName="Model.UsuarioWishList" StoreEntitySet="EspecificacionesBienes">
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="Id" ColumnName="Usuario_Id" />
+      </EndProperty>
+      <EndProperty Name="WishList">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EspecificacionBienTipoBien" TypeName="Model.EspecificacionBienTipoBien" StoreEntitySet="EspecificacionesBienes">
+      <EndProperty Name="TipoBien">
+        <ScalarProperty Name="Id" ColumnName="TipoBien_Id" />
+      </EndProperty>
+      <EndProperty Name="EspecificacionBien">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EspecificacionBienValorCaracteristicaEspecificacion" TypeName="Model.EspecificacionBienValorCaracteristicaEspecificacion" StoreEntitySet="ValoresCaracteristicas">
+      <EndProperty Name="EspecificacionBien">
+        <ScalarProperty Name="Id" ColumnName="EspecificacionBienValorCaracteristicaEspecificacion_ValorCaracteristicaEspecificacion_Id" />
+      </EndProperty>
+      <EndProperty Name="ValorCaracteristicaEspecificacion">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="EspecificacionBienValorCaracteristicaEspecificacion_ValorCaracteristicaEspecificacion_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ValorCaracteristicaEspecificacionCaracteristica" TypeName="Model.ValorCaracteristicaEspecificacionCaracteristica" StoreEntitySet="ValoresCaracteristicas">
+      <EndProperty Name="Caracteristica">
+        <ScalarProperty Name="Id" ColumnName="Caracteristica_Id" />
+      </EndProperty>
+      <EndProperty Name="ValorCaracteristicaEspecificacion">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MeGustaBien" TypeName="Model.MeGustaBien" StoreEntitySet="MeGusta">
+      <EndProperty Name="Bien">
+        <ScalarProperty Name="Id" ColumnName="Bien_Id" />
+      </EndProperty>
+      <EndProperty Name="MeGusta">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UsuarioMeGusta" TypeName="Model.UsuarioMeGusta" StoreEntitySet="MeGusta">
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="Id" ColumnName="Usuario_Id" />
+      </EndProperty>
+      <EndProperty Name="MeGusta">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ContenidoUsuario" TypeName="Model.ContenidoUsuario" StoreEntitySet="Contenidos">
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="Id" ColumnName="Usuario_Id" />
+      </EndProperty>
+      <EndProperty Name="Contenido">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AtributoOrigenDatos" TypeName="Model.AtributoOrigenDatos" StoreEntitySet="Atributos">
+      <EndProperty Name="OrigenDatos">
+        <ScalarProperty Name="Id" ColumnName="AtributoOrigenDatos_Atributo_Id" />
+      </EndProperty>
+      <EndProperty Name="Atributo">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AtributoValorAtributoNovedad" TypeName="Model.AtributoValorAtributoNovedad" StoreEntitySet="ValoresAtributos">
+      <EndProperty Name="Atributo">
+        <ScalarProperty Name="Id" ColumnName="Atributo_Id" />
+      </EndProperty>
+      <EndProperty Name="ValorAtributoNovedad">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ValorAtributoNovedadSitioOrigenDatos" TypeName="Model.ValorAtributoNovedadSitioOrigenDatos" StoreEntitySet="ValoresAtributos">
+      <EndProperty Name="SitioOrigenDatos">
+        <ScalarProperty Name="Id" ColumnName="ValorAtributoNovedadSitioOrigenDatos_ValorAtributoNovedad_Id" />
+      </EndProperty>
+      <EndProperty Name="ValorAtributoNovedad">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SesionUsuario" TypeName="Model.SesionUsuario" StoreEntitySet="Sesiones">
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="Id" ColumnName="Usuario_Id" />
+      </EndProperty>
+      <EndProperty Name="Sesion">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ValorCaracteristicaBien" TypeName="Model.ValorCaracteristicaBien" StoreEntitySet="ValoresCaracteristicas">
+      <EndProperty Name="Bien">
+        <ScalarProperty Name="Id" ColumnName="ValorCaracteristicaBien_ValorCaracteristica_Id" />
+      </EndProperty>
+      <EndProperty Name="ValorCaracteristica">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="ValorCaracteristicaBien_ValorCaracteristica_Id" IsNull="false" />
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">

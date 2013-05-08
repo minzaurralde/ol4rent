@@ -1,4 +1,4 @@
-﻿@model OL4RENT.Models.RegisterModel
+﻿@model Ol4RentAPI.Model.RegisterModel
 @{
     ViewBag.Title = "Registrarse";
 }
@@ -15,12 +15,24 @@
         <legend>Registration Form</legend>
         <ol>
             <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
+                @Html.LabelFor(m => m.Nombre)
+                @Html.TextBoxFor(m => m.Nombre)
             </li>
             <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
+                @Html.LabelFor(m => m.Apellido)
+                @Html.TextBoxFor(m => m.Apellido)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Mail)
+                @Html.TextBoxFor(m => m.Mail)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.NombreUsuario)
+                @Html.TextBoxFor(m => m.NombreUsuario)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Contraseña)
+                @Html.PasswordFor(m => m.Contraseña)
             </li>
             <li>
                 @Html.LabelFor(m => m.ConfirmPassword)

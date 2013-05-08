@@ -25,25 +25,25 @@ namespace Ol4RentAPI.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Sitio> SitioSet1 { get; set; }
-        public DbSet<OrigenDatos> OrigenDatosSet { get; set; }
-        public DbSet<Caracteristica> CaracteristicaSet1 { get; set; }
-        public DbSet<Novedad> NovedadSet { get; set; }
-        public DbSet<Bien> BienSet1 { get; set; }
-        public DbSet<TipoBien> TipoBienSet { get; set; }
-        public DbSet<Contenido> ContenidoSet { get; set; }
-        public DbSet<Adjunto> AdjuntoSet { get; set; }
-        public DbSet<Usuario> UsuarioSet { get; set; }
-        public DbSet<ConfiguracionOrigenDatos> ConfiguracionOrigenDatosSet { get; set; }
-        public DbSet<Rol> RolSet { get; set; }
-        public DbSet<HabilitacionUsuario> HabilitacionUsuarioSet { get; set; }
-        public DbSet<BuzonMensajes> BuzonMensajesSet { get; set; }
-        public DbSet<Mensaje> MensajeSet { get; set; }
-        public DbSet<EspecificacionBien> EspecificacionBienSet { get; set; }
-        public DbSet<ValorCaracteristica> ValorCaracteristicaSet { get; set; }
-        public DbSet<MeGusta> MeGustaSet { get; set; }
-        public DbSet<Atributo> AtributoSet { get; set; }
-        public DbSet<ValorAtributo> ValorAtributoSet { get; set; }
-        public DbSet<Sesion> SesionSet { get; set; }
+        public DbSet<Sitio> Sitios { get; set; }
+        public DbSet<OrigenDatos> OrigenesDatos { get; set; }
+        public DbSet<Caracteristica> Caracteristicas { get; set; }
+        public DbSet<Novedad> Novedades { get; set; }
+        public DbSet<Bien> Bienes { get; set; }
+        public DbSet<TipoBien> TiposBienes { get; set; }
+        public DbSet<Contenido> Contenidos { get; set; }
+        public DbSet<Adjunto> Adjuntos { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<ConfiguracionOrigenDatos> ConfiguracionesOrigenesDatos { get; set; }
+        public DbSet<Rol> Roles { get; set; }
+        public DbSet<HabilitacionUsuario> HabilitacionesUsuarios { get; set; }
+        public DbSet<BuzonMensajes> BuzonesMensajes { get; set; }
+        public DbSet<Mensaje> Mensajes { get; set; }
+        public DbSet<EspecificacionBien> EspecificacionesBienes { get; set; }
+        public DbSet<ValorCaracteristica> ValoresCaracteristicas { get; set; }
+        public DbSet<MeGusta> MeGusta { get; set; }
+        public DbSet<Atributo> Atributos { get; set; }
+        public DbSet<ValorAtributo> ValoresAtributos { get; set; }
+        public DbSet<Sesion> Sesiones { get; set; }
     }
 }

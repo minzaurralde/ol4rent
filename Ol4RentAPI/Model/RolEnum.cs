@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace OL4RENT.Models
+namespace Ol4RentAPI.Model
 {
     public enum RolEnum
     {

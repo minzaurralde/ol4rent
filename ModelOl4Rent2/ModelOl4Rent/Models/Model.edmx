@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="ModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SitioSet1" EntityType="Model.Sitio" />
+          <EntitySet Name="OrigenDatosSet" EntityType="Model.OrigenDatos" />
+          <EntitySet Name="CaracteristicaSet1" EntityType="Model.Caracteristica" />
+          <EntitySet Name="NovedadSet" EntityType="Model.Novedad" />
+          <EntitySet Name="BienSet1" EntityType="Model.Bien" />
+          <EntitySet Name="TipoBienSet" EntityType="Model.TipoBien" />
+          <AssociationSet Name="TipoBienSitio" Association="Model.TipoBienSitio">
+            <End Role="TipoBien" EntitySet="TipoBienSet" />
+            <End Role="Sitio" EntitySet="SitioSet1" />
+          </AssociationSet>
+          <AssociationSet Name="TipoBienCaracteristica" Association="Model.TipoBienCaracteristica">
+            <End Role="TipoBien" EntitySet="TipoBienSet" />
+            <End Role="Caracteristica" EntitySet="CaracteristicaSet1" />
+          </AssociationSet>
+          <EntitySet Name="ContenidoSet" EntityType="Model.Contenido" />
+          <EntitySet Name="AdjuntoSet" EntityType="Model.Adjunto" />
+          <AssociationSet Name="ContenidoBien" Association="Model.ContenidoBien">
+            <End Role="Contenido" EntitySet="ContenidoSet" />
+            <End Role="Bien" EntitySet="BienSet1" />
+          </AssociationSet>
+          <AssociationSet Name="AdjuntoContenido" Association="Model.AdjuntoContenido">
+            <End Role="Adjunto" EntitySet="AdjuntoSet" />
+            <End Role="Contenido" EntitySet="ContenidoSet" />
+          </AssociationSet>
+          <EntitySet Name="UsuarioSet" EntityType="Model.Usuario" />
+          <EntitySet Name="SitioOrigenDatosSet" EntityType="Model.SitioOrigenDatos" />
+          <AssociationSet Name="SitioSitioOrigenDatos" Association="Model.SitioSitioOrigenDatos">
+            <End Role="Sitio" EntitySet="SitioSet1" />
+            <End Role="SitioOrigenDatos" EntitySet="SitioOrigenDatosSet" />
+          </AssociationSet>
+          <AssociationSet Name="SitioOrigenDatosOrigenDato" Association="Model.SitioOrigenDatosOrigenDato">
+            <End Role="SitioOrigenDatos" EntitySet="SitioOrigenDatosSet" />
+            <End Role="OrigenDato" EntitySet="OrigenDatosSet" />
+          </AssociationSet>
+          <AssociationSet Name="NovedadSitioOrigenDatos" Association="Model.NovedadSitioOrigenDatos">
+            <End Role="Novedad" EntitySet="NovedadSet" />
+            <End Role="SitioOrigenDatos" EntitySet="SitioOrigenDatosSet" />
+          </AssociationSet>
+          <EntitySet Name="CaracteristicaBienSet" EntityType="Model.CaracteristicaBien" />
+          <AssociationSet Name="BienCaracteristicaBien" Association="Model.BienCaracteristicaBien">
+            <End Role="Bien" EntitySet="BienSet1" />
+            <End Role="CaracteristicaBien" EntitySet="CaracteristicaBienSet" />
+          </AssociationSet>
+          <AssociationSet Name="CaracteristicaCaracteristicaBien" Association="Model.CaracteristicaCaracteristicaBien">
+            <End Role="Caracteristica" EntitySet="CaracteristicaSet1" />
+            <End Role="CaracteristicaBien" EntitySet="CaracteristicaBienSet" />
+          </AssociationSet>
+          <EntitySet Name="RolSet" EntityType="Model.Rol" />
+          <AssociationSet Name="UsuarioRol" Association="Model.UsuarioRol">
+            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="Rol" EntitySet="RolSet" />
+          </AssociationSet>
+          <AssociationSet Name="UsuarioSitio" Association="Model.UsuarioSitio">
+            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="Sitio" EntitySet="SitioSet1" />
+          </AssociationSet>
+          <EntitySet Name="HabilitacionUsuarioSitioSet" EntityType="Model.HabilitacionUsuarioSitio" />
+          <AssociationSet Name="UsuarioHabilitacionUsuarioSitio" Association="Model.UsuarioHabilitacionUsuarioSitio">
+            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="HabilitacionUsuarioSitio" EntitySet="HabilitacionUsuarioSitioSet" />
+          </AssociationSet>
+          <AssociationSet Name="HabilitacionUsuarioSitioSitio" Association="Model.HabilitacionUsuarioSitioSitio">
+            <End Role="HabilitacionUsuarioSitio" EntitySet="HabilitacionUsuarioSitioSet" />
+            <End Role="Sitio" EntitySet="SitioSet1" />
+          </AssociationSet>
+          <AssociationSet Name="BienTipoBien" Association="Model.BienTipoBien">
+            <End Role="Bien" EntitySet="BienSet1" />
+            <End Role="TipoBien" EntitySet="TipoBienSet" />
+          </AssociationSet>
+          <AssociationSet Name="BienUsuario" Association="Model.BienUsuario">
+            <End Role="Bien" EntitySet="BienSet1" />
+            <End Role="Usuario" EntitySet="UsuarioSet" />
+          </AssociationSet>
+          <EntitySet Name="BuzonMensajeSet" EntityType="Model.BuzonMensaje" />
+          <AssociationSet Name="UsuarioBuzonMensajes" Association="Model.UsuarioBuzonMensajes">
+            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="BuzonMensajes" EntitySet="BuzonMensajeSet" />
+          </AssociationSet>
+          <EntitySet Name="MensajeSet" EntityType="Model.Mensaje" />
+          <AssociationSet Name="MensajeBuzonMensaje" Association="Model.MensajeBuzonMensaje">
+            <End Role="Mensaje" EntitySet="MensajeSet" />
+            <End Role="BuzonMensaje" EntitySet="BuzonMensajeSet" />
+          </AssociationSet>
+          <AssociationSet Name="MensajeUsuario" Association="Model.MensajeUsuario">
+            <End Role="Mensaje" EntitySet="MensajeSet" />
+            <End Role="Usuario" EntitySet="UsuarioSet" />
+          </AssociationSet>
+          <EntitySet Name="EspecificacionBienSet" EntityType="Model.EspecificacionBien" />
+          <AssociationSet Name="UsuarioWishList" Association="Model.UsuarioWishList">
+            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="WishList" EntitySet="EspecificacionBienSet" />
+          </AssociationSet>
+          <AssociationSet Name="EspecificacionBienTipoBien" Association="Model.EspecificacionBienTipoBien">
+            <End Role="EspecificacionBien" EntitySet="EspecificacionBienSet" />
+            <End Role="TipoBien" EntitySet="TipoBienSet" />
+          </AssociationSet>
+          <EntitySet Name="ValorCaracteristicaEspecificacionSet" EntityType="Model.ValorCaracteristicaEspecificacion" />
+          <AssociationSet Name="EspecificacionBienValorCaracteristicaEspecificacion" Association="Model.EspecificacionBienValorCaracteristicaEspecificacion">
+            <End Role="EspecificacionBien" EntitySet="EspecificacionBienSet" />
+            <End Role="ValorCaracteristicaEspecificacion" EntitySet="ValorCaracteristicaEspecificacionSet" />
+          </AssociationSet>
+          <AssociationSet Name="ValorCaracteristicaEspecificacionCaracteristica" Association="Model.ValorCaracteristicaEspecificacionCaracteristica">
+            <End Role="ValorCaracteristicaEspecificacion" EntitySet="ValorCaracteristicaEspecificacionSet" />
+            <End Role="Caracteristica" EntitySet="CaracteristicaSet1" />
+          </AssociationSet>
+          <EntitySet Name="MeGustaSet" EntityType="Model.MeGusta" />
+          <AssociationSet Name="MeGustaBien" Association="Model.MeGustaBien">
+            <End Role="MeGusta" EntitySet="MeGustaSet" />
+            <End Role="Bien" EntitySet="BienSet1" />
+          </AssociationSet>
+          <AssociationSet Name="UsuarioMeGusta" Association="Model.UsuarioMeGusta">
+            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="MeGusta" EntitySet="MeGustaSet" />
+          </AssociationSet>
+          <AssociationSet Name="ContenidoUsuario" Association="Model.ContenidoUsuario">
+            <End Role="Contenido" EntitySet="ContenidoSet" />
+            <End Role="Usuario" EntitySet="UsuarioSet" />
+          </AssociationSet>
+          <EntitySet Name="AtributoSet" EntityType="Model.Atributo" />
+          <AssociationSet Name="AtributoOrigenDatos" Association="Model.AtributoOrigenDatos">
+            <End Role="Atributo" EntitySet="AtributoSet" />
+            <End Role="OrigenDatos" EntitySet="OrigenDatosSet" />
+          </AssociationSet>
+          <EntitySet Name="ValorAtributoNovedadSet" EntityType="Model.ValorAtributoNovedad" />
+          <AssociationSet Name="AtributoValorAtributoNovedad" Association="Model.AtributoValorAtributoNovedad">
+            <End Role="Atributo" EntitySet="AtributoSet" />
+            <End Role="ValorAtributoNovedad" EntitySet="ValorAtributoNovedadSet" />
+          </AssociationSet>
+          <AssociationSet Name="ValorAtributoNovedadSitioOrigenDatos" Association="Model.ValorAtributoNovedadSitioOrigenDatos">
+            <End Role="ValorAtributoNovedad" EntitySet="ValorAtributoNovedadSet" />
+            <End Role="SitioOrigenDatos" EntitySet="SitioOrigenDatosSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Sitio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="TipoBien" Relationship="Model.TipoBienSitio" FromRole="Sitio" ToRole="TipoBien" />
+          <NavigationProperty Name="ConfiguracionesOrigenDatos" Relationship="Model.SitioSitioOrigenDatos" FromRole="Sitio" ToRole="SitioOrigenDatos" />
+          <NavigationProperty Name="UsuarioPropietario" Relationship="Model.UsuarioSitio" FromRole="Sitio" ToRole="Usuario" />
+          <NavigationProperty Name="HabilitacionesUsuarioSitio" Relationship="Model.HabilitacionUsuarioSitioSitio" FromRole="Sitio" ToRole="HabilitacionUsuarioSitio" />
+        </EntityType>
+        <EntityType Name="OrigenDatos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="SitioOrigenDatos" Relationship="Model.SitioOrigenDatosOrigenDato" FromRole="OrigenDato" ToRole="SitioOrigenDatos" />
+          <NavigationProperty Name="Atributos" Relationship="Model.AtributoOrigenDatos" FromRole="OrigenDatos" ToRole="Atributo" />
+        </EntityType>
+        <EntityType Name="TipoBien">
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Sitio" Relationship="Model.TipoBienSitio" FromRole="TipoBien" ToRole="Sitio" />
+          <NavigationProperty Name="Caracteristicas" Relationship="Model.TipoBienCaracteristica" FromRole="TipoBien" ToRole="Caracteristica" />
+          <NavigationProperty Name="Bienes" Relationship="Model.BienTipoBien" FromRole="TipoBien" ToRole="Bien" />
+          <NavigationProperty Name="EspecificacionesBien" Relationship="Model.EspecificacionBienTipoBien" FromRole="TipoBien" ToRole="EspecificacionBien" />
+        </EntityType>
+        <EntityType Name="Caracteristica">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="TipoBien" Relationship="Model.TipoBienCaracteristica" FromRole="Caracteristica" ToRole="TipoBien" />
+          <NavigationProperty Name="CaracteristicaBien" Relationship="Model.CaracteristicaCaracteristicaBien" FromRole="Caracteristica" ToRole="CaracteristicaBien" />
+          <NavigationProperty Name="ValorCaracteristicaEspecificacion" Relationship="Model.ValorCaracteristicaEspecificacionCaracteristica" FromRole="Caracteristica" ToRole="ValorCaracteristicaEspecificacion" />
+        </EntityType>
+        <EntityType Name="Novedad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="SitioOrigenDatos" Relationship="Model.NovedadSitioOrigenDatos" FromRole="Novedad" ToRole="SitioOrigenDatos" />
+        </EntityType>
+        <EntityType Name="Bien">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Contenidos" Relationship="Model.ContenidoBien" FromRole="Bien" ToRole="Contenido" />
+          <NavigationProperty Name="CaracteristicaBien" Relationship="Model.BienCaracteristicaBien" FromRole="Bien" ToRole="CaracteristicaBien" />
+          <NavigationProperty Name="TipoBien" Relationship="Model.BienTipoBien" FromRole="Bien" ToRole="TipoBien" />
+          <NavigationProperty Name="Usuario" Relationship="Model.BienUsuario" FromRole="Bien" ToRole="Usuario" />
+          <NavigationProperty Name="MeGusta" Relationship="Model.MeGustaBien" FromRole="Bien" ToRole="MeGusta" />
+        </EntityType>
+        <Association Name="TipoBienSitio">
+          <End Type="Model.TipoBien" Role="TipoBien" Multiplicity="1" />
+          <End Type="Model.Sitio" Role="Sitio" Multiplicity="1" />
+        </Association>
+        <Association Name="TipoBienCaracteristica">
+          <End Type="Model.TipoBien" Role="TipoBien" Multiplicity="1" />
+          <End Type="Model.Caracteristica" Role="Caracteristica" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Contenido">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Bien" Relationship="Model.ContenidoBien" FromRole="Contenido" ToRole="Bien" />
+          <NavigationProperty Name="Adjunto" Relationship="Model.AdjuntoContenido" FromRole="Contenido" ToRole="Adjunto" />
+          <NavigationProperty Name="Usuario" Relationship="Model.ContenidoUsuario" FromRole="Contenido" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Adjunto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Contenido" Relationship="Model.AdjuntoContenido" FromRole="Adjunto" ToRole="Contenido" />
+        </EntityType>
+        <Association Name="ContenidoBien">
+          <End Type="Model.Contenido" Role="Contenido" Multiplicity="*" />
+          <End Type="Model.Bien" Role="Bien" Multiplicity="1" />
+        </Association>
+        <Association Name="AdjuntoContenido">
+          <End Type="Model.Adjunto" Role="Adjunto" Multiplicity="*" />
+          <End Type="Model.Contenido" Role="Contenido" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Imagen" BaseType="Model.Adjunto">
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Video" BaseType="Model.Adjunto">
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Rol" Relationship="Model.UsuarioRol" FromRole="Usuario" ToRole="Rol" />
+          <NavigationProperty Name="Sitios" Relationship="Model.UsuarioSitio" FromRole="Usuario" ToRole="Sitio" />
+          <NavigationProperty Name="HabilitacionesUsuarioSitio" Relationship="Model.UsuarioHabilitacionUsuarioSitio" FromRole="Usuario" ToRole="HabilitacionUsuarioSitio" />
+          <NavigationProperty Name="Bienes" Relationship="Model.BienUsuario" FromRole="Usuario" ToRole="Bien" />
+          <NavigationProperty Name="BuzonesMensajes" Relationship="Model.UsuarioBuzonMensajes" FromRole="Usuario" ToRole="BuzonMensajes" />
+          <NavigationProperty Name="MensajesEnviados" Relationship="Model.MensajeUsuario" FromRole="Usuario" ToRole="Mensaje" />
+          <NavigationProperty Name="WishList" Relationship="Model.UsuarioWishList" FromRole="Usuario" ToRole="WishList" />
+          <NavigationProperty Name="BienesMeGusta" Relationship="Model.UsuarioMeGusta" FromRole="Usuario" ToRole="MeGusta" />
+          <NavigationProperty Name="Contenidos" Relationship="Model.ContenidoUsuario" FromRole="Usuario" ToRole="Contenido" />
+        </EntityType>
+        <EntityType Name="SitioOrigenDatos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Sitio" Relationship="Model.SitioSitioOrigenDatos" FromRole="SitioOrigenDatos" ToRole="Sitio" />
+          <NavigationProperty Name="OrigenDatos" Relationship="Model.SitioOrigenDatosOrigenDato" FromRole="SitioOrigenDatos" ToRole="OrigenDato" />
+          <NavigationProperty Name="Novedades" Relationship="Model.NovedadSitioOrigenDatos" FromRole="SitioOrigenDatos" ToRole="Novedad" />
+          <NavigationProperty Name="ValorAtributoNovedad" Relationship="Model.ValorAtributoNovedadSitioOrigenDatos" FromRole="SitioOrigenDatos" ToRole="ValorAtributoNovedad" />
+        </EntityType>
+        <Association Name="SitioSitioOrigenDatos">
+          <End Type="Model.Sitio" Role="Sitio" Multiplicity="1" />
+          <End Type="Model.SitioOrigenDatos" Role="SitioOrigenDatos" Multiplicity="*" />
+        </Association>
+        <Association Name="SitioOrigenDatosOrigenDato">
+          <End Type="Model.SitioOrigenDatos" Role="SitioOrigenDatos" Multiplicity="*" />
+          <End Type="Model.OrigenDatos" Role="OrigenDato" Multiplicity="1" />
+        </Association>
+        <Association Name="NovedadSitioOrigenDatos">
+          <End Type="Model.Novedad" Role="Novedad" Multiplicity="*" />
+          <End Type="Model.SitioOrigenDatos" Role="SitioOrigenDatos" Multiplicity="1" />
+        </Association>
+        <EntityType Name="CaracteristicaBien">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Bien" Relationship="Model.BienCaracteristicaBien" FromRole="CaracteristicaBien" ToRole="Bien" />
+          <NavigationProperty Name="Caracteristica" Relationship="Model.CaracteristicaCaracteristicaBien" FromRole="CaracteristicaBien" ToRole="Caracteristica" />
+        </EntityType>
+        <Association Name="BienCaracteristicaBien">
+          <End Type="Model.Bien" Role="Bien" Multiplicity="1" />
+          <End Type="Model.CaracteristicaBien" Role="CaracteristicaBien" Multiplicity="*" />
+        </Association>
+        <Association Name="CaracteristicaCaracteristicaBien">
+          <End Type="Model.Caracteristica" Role="Caracteristica" Multiplicity="1" />
+          <End Type="Model.CaracteristicaBien" Role="CaracteristicaBien" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Usuario" Relationship="Model.UsuarioRol" FromRole="Rol" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="UsuarioRol">
+          <End Type="Model.Usuario" Role="Usuario" Multiplicity="*" />
+          <End Type="Model.Rol" Role="Rol" Multiplicity="*" />
+        </Association>
+        <Association Name="UsuarioSitio">
+          <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Model.Sitio" Role="Sitio" Multiplicity="*" />
+        </Association>
+        <EntityType Name="HabilitacionUsuarioSitio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Usuario" Relationship="Model.UsuarioHabilitacionUsuarioSitio" FromRole="HabilitacionUsuarioSitio" ToRole="Usuario" />
+          <NavigationProperty Name="Sitio" Relationship="Model.HabilitacionUsuarioSitioSitio" FromRole="HabilitacionUsuarioSitio" ToRole="Sitio" />
+        </EntityType>
+        <Association Name="UsuarioHabilitacionUsuarioSitio">
+          <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Model.HabilitacionUsuarioSitio" Role="HabilitacionUsuarioSitio" Multiplicity="*" />
+        </Association>
+        <Association Name="HabilitacionUsuarioSitioSitio">
+          <End Type="Model.HabilitacionUsuarioSitio" Role="HabilitacionUsuarioSitio" Multiplicity="*" />
+          <End Type="Model.Sitio" Role="Sitio" Multiplicity="1" />
+        </Association>
+        <Association Name="BienTipoBien">
+          <End Type="Model.Bien" Role="Bien" Multiplicity="*" />
+          <End Type="Model.TipoBien" Role="TipoBien" Multiplicity="1" />
+        </Association>
+        <Association Name="BienUsuario">
+          <End Type="Model.Bien" Role="Bien" Multiplicity="*" />
+          <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
+        </Association>
+        <EntityType Name="BuzonMensaje">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Usuario" Relationship="Model.UsuarioBuzonMensajes" FromRole="BuzonMensajes" ToRole="Usuario" />
+          <NavigationProperty Name="Mensaje" Relationship="Model.MensajeBuzonMensaje" FromRole="BuzonMensaje" ToRole="Mensaje" />
+        </EntityType>
+        <Association Name="UsuarioBuzonMensajes">
+          <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Model.BuzonMensaje" Role="BuzonMensajes" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Mensaje">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="BuzonMensaje" Relationship="Model.MensajeBuzonMensaje" FromRole="Mensaje" ToRole="BuzonMensaje" />
+          <NavigationProperty Name="Usuario" Relationship="Model.MensajeUsuario" FromRole="Mensaje" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="MensajeBuzonMensaje">
+          <End Type="Model.Mensaje" Role="Mensaje" Multiplicity="*" />
+          <End Type="Model.BuzonMensaje" Role="BuzonMensaje" Multiplicity="1" />
+        </Association>
+        <Association Name="MensajeUsuario">
+          <End Type="Model.Mensaje" Role="Mensaje" Multiplicity="*" />
+          <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
+        </Association>
+        <EntityType Name="EspecificacionBien">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Usuario" Relationship="Model.UsuarioWishList" FromRole="WishList" ToRole="Usuario" />
+          <NavigationProperty Name="TipoBien" Relationship="Model.EspecificacionBienTipoBien" FromRole="EspecificacionBien" ToRole="TipoBien" />
+          <NavigationProperty Name="ValorCaracteristicaEspecificacion" Relationship="Model.EspecificacionBienValorCaracteristicaEspecificacion" FromRole="EspecificacionBien" ToRole="ValorCaracteristicaEspecificacion" />
+        </EntityType>
+        <Association Name="UsuarioWishList">
+          <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Model.EspecificacionBien" Role="WishList" Multiplicity="*" />
+        </Association>
+        <Association Name="EspecificacionBienTipoBien">
+          <End Type="Model.EspecificacionBien" Role="EspecificacionBien" Multiplicity="*" />
+          <End Type="Model.TipoBien" Role="TipoBien" Multiplicity="1" />
+        </Association>
+        <EntityType Name="ValorCaracteristicaEspecificacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="EspecificacionBien" Relationship="Model.EspecificacionBienValorCaracteristicaEspecificacion" FromRole="ValorCaracteristicaEspecificacion" ToRole="EspecificacionBien" />
+          <NavigationProperty Name="Caracteristica" Relationship="Model.ValorCaracteristicaEspecificacionCaracteristica" FromRole="ValorCaracteristicaEspecificacion" ToRole="Caracteristica" />
+        </EntityType>
+        <Association Name="EspecificacionBienValorCaracteristicaEspecificacion">
+          <End Type="Model.EspecificacionBien" Role="EspecificacionBien" Multiplicity="1" />
+          <End Type="Model.ValorCaracteristicaEspecificacion" Role="ValorCaracteristicaEspecificacion" Multiplicity="*" />
+        </Association>
+        <Association Name="ValorCaracteristicaEspecificacionCaracteristica">
+          <End Type="Model.ValorCaracteristicaEspecificacion" Role="ValorCaracteristicaEspecificacion" Multiplicity="*" />
+          <End Type="Model.Caracteristica" Role="Caracteristica" Multiplicity="1" />
+        </Association>
+        <EntityType Name="MeGusta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Bien" Relationship="Model.MeGustaBien" FromRole="MeGusta" ToRole="Bien" />
+          <NavigationProperty Name="Usuario" Relationship="Model.UsuarioMeGusta" FromRole="MeGusta" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="MeGustaBien">
+          <End Type="Model.MeGusta" Role="MeGusta" Multiplicity="*" />
+          <End Type="Model.Bien" Role="Bien" Multiplicity="1" />
+        </Association>
+        <Association Name="UsuarioMeGusta">
+          <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Model.MeGusta" Role="MeGusta" Multiplicity="*" />
+        </Association>
+        <Association Name="ContenidoUsuario">
+          <End Type="Model.Contenido" Role="Contenido" Multiplicity="*" />
+          <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Atributo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="OrigenDatos" Relationship="Model.AtributoOrigenDatos" FromRole="Atributo" ToRole="OrigenDatos" />
+          <NavigationProperty Name="ValorAtributoNovedad" Relationship="Model.AtributoValorAtributoNovedad" FromRole="Atributo" ToRole="ValorAtributoNovedad" />
+        </EntityType>
+        <Association Name="AtributoOrigenDatos">
+          <End Type="Model.Atributo" Role="Atributo" Multiplicity="*" />
+          <End Type="Model.OrigenDatos" Role="OrigenDatos" Multiplicity="1" />
+        </Association>
+        <EntityType Name="ValorAtributoNovedad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Atributos" Relationship="Model.AtributoValorAtributoNovedad" FromRole="ValorAtributoNovedad" ToRole="Atributo" />
+          <NavigationProperty Name="SitioOrigenDatos" Relationship="Model.ValorAtributoNovedadSitioOrigenDatos" FromRole="ValorAtributoNovedad" ToRole="SitioOrigenDatos" />
+        </EntityType>
+        <Association Name="AtributoValorAtributoNovedad">
+          <End Type="Model.Atributo" Role="Atributo" Multiplicity="1" />
+          <End Type="Model.ValorAtributoNovedad" Role="ValorAtributoNovedad" Multiplicity="*" />
+        </Association>
+        <Association Name="ValorAtributoNovedadSitioOrigenDatos">
+          <End Type="Model.ValorAtributoNovedad" Role="ValorAtributoNovedad" Multiplicity="*" />
+          <End Type="Model.SitioOrigenDatos" Role="SitioOrigenDatos" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="Model" />
+        <Alias Key="Target" Value="Model.Store" />
+        <EntityContainerMapping CdmEntityContainer="ModelContainer" StorageEntityContainer="ModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

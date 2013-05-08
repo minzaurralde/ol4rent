@@ -5,21 +5,21 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using OL4RENT.Models;
+using Ol4RentAPI.Model;
 using System.Collections;
 
 namespace OL4RENT.Controllers
 {
     public class NovedadController : Controller
     {
-        private NovedadContext db = new NovedadContext();
+        private ModelContainer db = new ModelContainer();
 
         internal List<Novedad> ListaNovedades
         {
             get
             {
                 int maximaCantidadNovedadesHome = 6;
-                return db.Novedades.Take(maximaCantidadNovedadesHome).ToList();
+                return db.NovedadSet.Take(maximaCantidadNovedadesHome).ToList();
             }
         }
 
@@ -36,7 +36,7 @@ namespace OL4RENT.Controllers
         // GET: /Novedad/
         public ActionResult Index()
         {
-            return View(db.Novedades.ToList());
+            return View(db.NovedadSet.ToList());
         }
 
         //
@@ -87,7 +87,7 @@ namespace OL4RENT.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Novedades.Add(novedad);
+                db.NovedadSet.Add(novedad);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -99,7 +99,7 @@ namespace OL4RENT.Controllers
         // GET: /Novedad/Edit/5
         public ActionResult Edit(long id = 0)
         {
-            Novedad novedad = db.Novedades.Find(id);
+            Novedad novedad = db.NovedadSet.Find(id);
             if (novedad == null)
             {
                 return HttpNotFound();
@@ -125,7 +125,7 @@ namespace OL4RENT.Controllers
         // GET: /Novedad/Delete/5
         public ActionResult Delete(long id = 0)
         {
-            Novedad novedad = db.Novedades.Find(id);
+            Novedad novedad = db.NovedadSet.Find(id);
             if (novedad == null)
             {
                 return HttpNotFound();

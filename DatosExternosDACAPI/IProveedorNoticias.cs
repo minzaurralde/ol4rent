@@ -8,6 +8,6 @@ namespace OL4RENT.DatosExternosDACAPI
 {
     interface IProveedorNoticias
     {
-        public List<NovedadExternaDTO> ObtenerNovedades(int cantidad);
+        List<NovedadExternaDTO> ObtenerNovedades(int cantidad);
     }
 }
