@@ -5,35 +5,27 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using OL4RENT.Models;
+using Ol4RentAPI.Model;
+using Ol4RentAPI.Facades;
 
 namespace OL4RENT.Controllers
 {
     public class BienController : Controller
     {
-        private BienContext db = new BienContext();
-
-        internal List<Bien> BienesPopulares
-        {
-            get
-            {
-                int maximaCantidadPopulares = 10;
-                return db.Bienes.OrderByDescending(bien => bien.CantidadLikes).Take(maximaCantidadPopulares).ToList();
-            }
-        }
+        private ModelContainer db = new ModelContainer();
 
         //
         // GET: /Bien/
         public ActionResult Index()
         {
-            return View(db.Bienes.ToList());
+            return View(ServiceFacadeFactory.Instance.BienFacade.Todos);
         }
 
         //
         // GET: /Bien/Details/5
-        public ActionResult Details(long id = 0)
+        public ActionResult Details(int id = 0)
         {
-            Bien bien = db.Bienes.Find(id);
+            Bien bien = ServiceFacadeFactory.Instance.BienFacade.Obtener(id);
             if (bien == null)
             {
                 return HttpNotFound();
@@ -53,22 +45,19 @@ namespace OL4RENT.Controllers
         [HttpPost]
         public ActionResult Create(Bien bien)
         {
-            if (ModelState.IsValid)
+            if ((bien = ServiceFacadeFactory.Instance.BienFacade.Crear(bien)) != null)
             {
-                db.Bienes.Add(bien);
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(bien);
         }
 
         //
         // GET: /Bien/Edit/5
         [Authorize(Roles = "ADMIN")]
-        public ActionResult Edit(long id = 0)
+        public ActionResult Edit(int id = 0)
         {
-            Bien bien = db.Bienes.Find(id);
+            Bien bien = ServiceFacadeFactory.Instance.BienFacade.Obtener(id);
             if (bien == null)
             {
                 return HttpNotFound();
@@ -82,10 +71,8 @@ namespace OL4RENT.Controllers
         [HttpPost]
         public ActionResult Edit(Bien bien)
         {
-            if (ModelState.IsValid)
+            if ((bien = ServiceFacadeFactory.Instance.BienFacade.Editar(bien)) != null)
             {
-                db.Entry(bien).State = EntityState.Modified;
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(bien);
@@ -93,9 +80,9 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Bien/Delete/5
-        public ActionResult Delete(long id = 0)
+        public ActionResult Delete(int id = 0)
         {
-            Bien bien = db.Bienes.Find(id);
+            Bien bien = ServiceFacadeFactory.Instance.BienFacade.Obtener(id);
             if (bien == null)
             {
                 return HttpNotFound();
@@ -108,7 +95,7 @@ namespace OL4RENT.Controllers
         public ActionResult Populares()
         {
             // TODO Mandar a Configuracion este valor
-            return View(BienesPopulares);
+            return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares);
         }
 
 
@@ -117,7 +104,7 @@ namespace OL4RENT.Controllers
         public ActionResult Mapa()
         {
             // TODO Implementar la vista de Mapa
-            return View(BienesPopulares);
+            return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares);
         }
 
         //
@@ -125,12 +112,7 @@ namespace OL4RENT.Controllers
         [HttpPost]
         public ActionResult Buscar(string query)
         {
-            List<Bien> resultadosBusqueda = new List<Bien>();
-            if (query != null)
-            {
-                resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(query) || b.Nombre.Contains(query)).ToList();
-            }
-            return View(resultadosBusqueda);
+            return View(ServiceFacadeFactory.Instance.BienFacade.Buscar(query));
         }
 
         //
@@ -145,42 +127,28 @@ namespace OL4RENT.Controllers
         [HttpPost]
         public ActionResult BusquedaAvanzada(Bien templateBien)
         {
-            List<Bien> resultadosBusqueda = new List<Bien>();
-            if (templateBien.Descripcion != null && templateBien.Nombre != null) {
-                resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion) && b.Nombre.Contains(templateBien.Nombre)).ToList();
-            }
-            else if (templateBien.Nombre != null)
-            {
-                resultadosBusqueda = db.Bienes.Where(b => b.Nombre.Contains(templateBien.Nombre)).ToList();
-            }
-            else if (templateBien.Descripcion != null)
-            {
-                resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion)).ToList();
-            }
-            return View("Buscar", resultadosBusqueda);
+            return View("Buscar", ServiceFacadeFactory.Instance.BienFacade.BusquedaAvanzada(templateBien));
         }
 
         //
         // POST: /Bien/Delete/5
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(long id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Bien bien = db.Bienes.Find(id);
-            db.Bienes.Remove(bien);
-            db.SaveChanges();
+            ServiceFacadeFactory.Instance.BienFacade.Eliminar(id);
             return RedirectToAction("Index");
         }
 
         public ActionResult Wishlist()
         {
             // TODO Implementar
-            return View(BienesPopulares);
+            return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares);
         }
 
         public ActionResult MisBienes()
         {
             // TODO Implementar
-            return View(BienesPopulares);
+            return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares);
         }
 
         protected override void Dispose(bool disposing)

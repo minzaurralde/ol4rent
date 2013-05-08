@@ -1,5 +1,5 @@
 ﻿using Microsoft.Web.WebPages.OAuth;
-using OL4RENT.Models;
+using Ol4RentAPI.Model;
 using OL4RENT.ViewModels;
 using System;
 using System.Collections.Generic;

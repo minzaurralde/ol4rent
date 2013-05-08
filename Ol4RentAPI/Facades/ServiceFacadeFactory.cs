@@ -29,5 +29,13 @@ namespace Ol4RentAPI.Facades
                 return new CreadorDatosDummyImpl();
             }
         }
+
+        public IBienFacade BienFacade
+        {
+            get
+            {
+                return new BienFacadeImpl();
+            }
+        }
     }
 }

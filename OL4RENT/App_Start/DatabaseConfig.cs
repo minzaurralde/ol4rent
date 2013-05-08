@@ -1,5 +1,5 @@
 ﻿using OL4RENT.Controllers;
-using OL4RENT.Models;
+using Ol4RentAPI.Model;
 using Ol4RentAPI.Facades;
 using System;
 using System.Collections.Generic;

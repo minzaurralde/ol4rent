@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Facades\BienFacadeImpl.cs" />
     <Compile Include="Facades\CreadorDatosDummyImpl.cs" />
+    <Compile Include="Facades\IBienFacade.cs" />
     <Compile Include="Facades\ICreadorDatosDummyFacade.cs" />
     <Compile Include="Facades\ServiceFacadeFactory.cs" />
     <Compile Include="Model\AccountModels.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Model\Rol.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\RolEnum.cs" />
     <Compile Include="Model\Sesion.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

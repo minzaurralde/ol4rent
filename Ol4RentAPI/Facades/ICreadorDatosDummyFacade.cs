@@ -8,6 +8,6 @@ namespace Ol4RentAPI.Facades
 {
     public interface ICreadorDatosDummyFacade
     {
-        public void CrearSitios();
+        void CrearSitios();
     }
 }

@@ -5,20 +5,20 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using OL4RENT.Models;
+using Ol4RentAPI.Model;
 
 namespace OL4RENT.Controllers
 {
     public class SitioController : Controller
     {
-        private SitioContext db = new SitioContext();
+        private ModelContainer db = new ModelContainer();
 
         //
         // GET: /Sitio/
 
         public ActionResult Index()
         {
-            return View(db.Sitios.ToList());
+            return View(db.SitioSet1.ToList());
         }
 
         //
@@ -26,7 +26,7 @@ namespace OL4RENT.Controllers
 
         public ActionResult Details(long id = 0)
         {
-            Sitio sitio = db.Sitios.Find(id);
+            Sitio sitio = db.SitioSet1.Find(id);
             if (sitio == null)
             {
                 return HttpNotFound();
@@ -50,7 +50,7 @@ namespace OL4RENT.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Sitios.Add(sitio);
+                db.SitioSet1.Add(sitio);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -63,7 +63,7 @@ namespace OL4RENT.Controllers
 
         public ActionResult Edit(long id = 0)
         {
-            Sitio sitio = db.Sitios.Find(id);
+            Sitio sitio = db.SitioSet1.Find(id);
             if (sitio == null)
             {
                 return HttpNotFound();
@@ -91,7 +91,7 @@ namespace OL4RENT.Controllers
 
         public ActionResult Delete(long id = 0)
         {
-            Sitio sitio = db.Sitios.Find(id);
+            Sitio sitio = db.SitioSet1.Find(id);
             if (sitio == null)
             {
                 return HttpNotFound();
@@ -105,8 +105,8 @@ namespace OL4RENT.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-            Sitio sitio = db.Sitios.Find(id);
-            db.Sitios.Remove(sitio);
+            Sitio sitio = db.SitioSet1.Find(id);
+            db.SitioSet1.Remove(sitio);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

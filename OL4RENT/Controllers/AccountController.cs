@@ -9,7 +9,7 @@ using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using OL4RENT.Filters;
-using OL4RENT.Models;
+using Ol4RentAPI.Model;
 
 namespace OL4RENT.Controllers
 {
@@ -78,9 +78,9 @@ namespace OL4RENT.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
-                    Roles.AddUserToRole(model.UserName, RolEnum.PUBLIC_USER.ToString());
+                    WebSecurity.CreateUserAndAccount(model.NombreUsuario, model.Contraseña);
+                    WebSecurity.Login(model.NombreUsuario, model.Contraseña);
+                    Roles.AddUserToRole(model.NombreUsuario, RolEnum.PUBLIC_USER.ToString());
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -263,14 +263,14 @@ namespace OL4RENT.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                using (ModelContainer db = new ModelContainer())
                 {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                    Usuario user = db.UsuarioSet.FirstOrDefault(u => u.NombreUsuario.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+                        db.UsuarioSet.Add(new Usuario { NombreUsuario = model.UserName });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);

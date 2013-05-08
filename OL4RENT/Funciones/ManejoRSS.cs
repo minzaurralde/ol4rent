@@ -5,7 +5,7 @@ using System.Web;
 
 using System.Xml;
 using System.Collections;
-using OL4RENT.Models;
+using Ol4RentAPI.Model;
 
 namespace OL4RENT.Funciones
 {
@@ -26,7 +26,7 @@ namespace OL4RENT.Funciones
             XmlNodeList nodes = xml.SelectNodes("//item");
 
             List<Novedad> listaNovRSS = new List<Novedad>();
-            Models.Novedad nv;
+            Novedad nv;
             string title, description;
 
             //Traverse the entire XML nodes.
@@ -38,9 +38,10 @@ namespace OL4RENT.Funciones
                 //Get the value from the <description> node
                 description = node.SelectSingleNode("description").InnerText;
 
-                nv = new Models.Novedad();
+                nv = new Novedad();
                 nv.Id = 30;
-                nv.Nombre = title + " - " + description;
+                nv.Titulo = title;
+                nv.Contenido = description;
 
                 listaNovRSS.Add(nv);
 

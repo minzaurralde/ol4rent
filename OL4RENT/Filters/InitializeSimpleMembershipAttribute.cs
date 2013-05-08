@@ -4,7 +4,7 @@ using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
-using OL4RENT.Models;
+using Ol4RentAPI.Model;
 using System.Web.Security;
 
 namespace OL4RENT.Filters
@@ -26,11 +26,11 @@ namespace OL4RENT.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<ModelContainer>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new ModelContainer())
                     {
                         if (!context.Database.Exists())
                         {
