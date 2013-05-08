@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Ol4RentAPI.Facades;
 
 namespace OL4RENT.Controllers
 {
@@ -15,7 +16,7 @@ namespace OL4RENT.Controllers
         public ActionResult Index()
         {
             IndexViewModel viewModel = new IndexViewModel();
-            viewModel.BienesPopulares = new BienController().BienesPopulares;
+            viewModel.BienesPopulares = ServiceFacadeFactory.Instance.BienFacade.BienesPopulares;
             viewModel.ListaNovedades = new NovedadController().ListaNovedades;
             viewModel.ListaNovedadesRSS = new NovedadController().ListaNovedadesRSS;
             return View(viewModel);

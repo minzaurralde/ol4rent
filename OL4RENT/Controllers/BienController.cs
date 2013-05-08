@@ -12,8 +12,6 @@ namespace OL4RENT.Controllers
 {
     public class BienController : Controller
     {
-        private ModelContainer db = new ModelContainer();
-
         //
         // GET: /Bien/
         public ActionResult Index()

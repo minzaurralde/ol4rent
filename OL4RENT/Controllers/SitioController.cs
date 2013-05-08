@@ -6,27 +6,26 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Ol4RentAPI.Model;
+using Ol4RentAPI.Facades;
 
 namespace OL4RENT.Controllers
 {
     public class SitioController : Controller
     {
-        private ModelContainer db = new ModelContainer();
-
         //
         // GET: /Sitio/
 
         public ActionResult Index()
         {
-            return View(db.SitioSet1.ToList());
+            return View(ServiceFacadeFactory.Instance.SitioFacade.Todos);
         }
 
         //
         // GET: /Sitio/Details/5
 
-        public ActionResult Details(long id = 0)
+        public ActionResult Details(int id = 0)
         {
-            Sitio sitio = db.SitioSet1.Find(id);
+            Sitio sitio = ServiceFacadeFactory.Instance.SitioFacade.Obtener(id);
             if (sitio == null)
             {
                 return HttpNotFound();
@@ -48,10 +47,8 @@ namespace OL4RENT.Controllers
         [HttpPost]
         public ActionResult Create(Sitio sitio)
         {
-            if (ModelState.IsValid)
+            if ((sitio = ServiceFacadeFactory.Instance.SitioFacade.Crear(sitio)) != null)
             {
-                db.SitioSet1.Add(sitio);
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -61,9 +58,9 @@ namespace OL4RENT.Controllers
         //
         // GET: /Sitio/Edit/5
 
-        public ActionResult Edit(long id = 0)
+        public ActionResult Edit(int id = 0)
         {
-            Sitio sitio = db.SitioSet1.Find(id);
+            Sitio sitio = ServiceFacadeFactory.Instance.SitioFacade.Obtener(id);
             if (sitio == null)
             {
                 return HttpNotFound();
@@ -77,10 +74,8 @@ namespace OL4RENT.Controllers
         [HttpPost]
         public ActionResult Edit(Sitio sitio)
         {
-            if (ModelState.IsValid)
+            if ((sitio = ServiceFacadeFactory.Instance.SitioFacade.Editar(sitio)) != null)
             {
-                db.Entry(sitio).State = EntityState.Modified;
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(sitio);
@@ -89,9 +84,9 @@ namespace OL4RENT.Controllers
         //
         // GET: /Sitio/Delete/5
 
-        public ActionResult Delete(long id = 0)
+        public ActionResult Delete(int id = 0)
         {
-            Sitio sitio = db.SitioSet1.Find(id);
+            Sitio sitio = ServiceFacadeFactory.Instance.SitioFacade.Obtener(id);
             if (sitio == null)
             {
                 return HttpNotFound();
@@ -103,11 +98,9 @@ namespace OL4RENT.Controllers
         // POST: /Sitio/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(long id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Sitio sitio = db.SitioSet1.Find(id);
-            db.SitioSet1.Remove(sitio);
-            db.SaveChanges();
+            ServiceFacadeFactory.Instance.SitioFacade.Eliminar(id);
             return RedirectToAction("Index");
         }
 
@@ -115,14 +108,15 @@ namespace OL4RENT.Controllers
         // GET: /Sitio/Logo
 
         [HttpGet]
-        public ActionResult Logo()
+        public FileContentResult Logo()
         {
-            return View();
+            // TODO implementar la obtencion del sitio
+            int idSitio = 1;
+            return new FileContentResult(ServiceFacadeFactory.Instance.SitioFacade.Logo(idSitio), "image/jpeg");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
             base.Dispose(disposing);
         }
     }

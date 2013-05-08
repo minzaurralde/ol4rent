@@ -37,5 +37,13 @@ namespace Ol4RentAPI.Facades
                 return new BienFacadeImpl();
             }
         }
+
+        public ISitioFacade SitioFacade
+        {
+            get
+            {
+                return new SitioFacadeImpl();
+            }
+        }
     }
 }
