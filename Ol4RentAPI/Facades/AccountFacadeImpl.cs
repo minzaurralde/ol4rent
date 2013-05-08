@@ -22,7 +22,7 @@ namespace Ol4RentAPI.Facades
             return db.Usuarios.Find(id);
         }
 
-        Usuario ObtenerPorNombre(string NombreUsuario)
+        public Usuario ObtenerPorNombre(string NombreUsuario)
         {
             return db.Usuarios.Where(u => u.NombreUsuario.ToLower() == NombreUsuario.ToLower()).First();
         }
