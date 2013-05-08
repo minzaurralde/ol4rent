@@ -45,5 +45,20 @@ namespace Ol4RentAPI.Facades
                 return new SitioFacadeImpl();
             }
         }
+
+        public IAccountFacade AccountFacade
+        {
+            get
+            {
+                return new AccountFacadeImpl();
+			}
+		}
+        public INovedadFacade NovedadFacade
+        {
+            get
+            {
+                return new NovedadFacadeImpl();
+            }
+        }
     }
 }

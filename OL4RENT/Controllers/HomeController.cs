@@ -17,8 +17,9 @@ namespace OL4RENT.Controllers
         {
             IndexViewModel viewModel = new IndexViewModel();
             viewModel.BienesPopulares = ServiceFacadeFactory.Instance.BienFacade.BienesPopulares;
-            viewModel.ListaNovedades = new NovedadController().ListaNovedades;
-            viewModel.ListaNovedadesRSS = new NovedadController().ListaNovedadesRSS;
+            viewModel.ListaNovedades = ServiceFacadeFactory.Instance.NovedadFacade.ListaNovedades();
+            // TODO ver que se hace con esto con los origenes de datos
+            viewModel.ListaNovedadesRSS = ServiceFacadeFactory.Instance.NovedadFacade.ListaNovedades();
             return View(viewModel);
         }
 
@@ -48,27 +49,21 @@ namespace OL4RENT.Controllers
             //Default value that is set if nothing is entered
             if (Membership.ValidateUser(username, password))
             {
-//                if (FormsAuthentication.Authenticate(username, password)) {
-                    string[] roles = Roles.GetRolesForUser(username);
-                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, username,
-                        DateTime.Now, DateTime.Now.AddMinutes(30), true,
-                        string.Join(",", roles));
-                    string cookieContents = FormsAuthentication.Encrypt(authTicket);
-                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieContents)
-                    {
-                        Expires = authTicket.Expiration,
-                        Path = FormsAuthentication.FormsCookiePath
-                    };
-                    Response.Cookies.Add(cookie);
-                
-                    if (!string.IsNullOrEmpty(ReturnURL))
-                        Response.Redirect(ReturnURL);
-  /*              }
-                else
+                string[] roles = Roles.GetRolesForUser(username);
+                FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, username,
+                    DateTime.Now, DateTime.Now.AddMinutes(30), true,
+                    string.Join(",", roles));
+                string cookieContents = FormsAuthentication.Encrypt(authTicket);
+                var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieContents)
                 {
-                    ViewBag.Message = "El usuario no es valido";
-                }
-    */        }
+                    Expires = authTicket.Expiration,
+                    Path = FormsAuthentication.FormsCookiePath
+                };
+                Response.Cookies.Add(cookie);
+
+                if (!string.IsNullOrEmpty(ReturnURL))
+                    Response.Redirect(ReturnURL);
+            }
             else
             {
                 ViewBag.Message = "El usuario no es valido";
