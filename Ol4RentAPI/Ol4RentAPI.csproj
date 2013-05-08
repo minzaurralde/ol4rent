@@ -154,6 +154,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Model\Model.edmx.sql" />
     <Content Include="Model\Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
