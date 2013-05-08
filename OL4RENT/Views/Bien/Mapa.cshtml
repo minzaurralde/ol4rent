@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OL4RENT.Models.Bien>
+﻿@model IEnumerable<Ol4RentAPI.Model.Bien>
 
 @{
     ViewBag.Title = "Mapa";
@@ -48,7 +48,7 @@
          @if(item.Longitud!=0){
             <text>lng = '@item.Longitud' ;</text>
         }
-        addM(lat, lng, '@item.Nombre', '/Bien/Details/@item.Id');
+        addM(lat, lng, '@item.Titulo', '/Bien/Details/@item.Id');
         </text>
     }
 
