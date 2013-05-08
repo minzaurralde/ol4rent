@@ -1,4 +1,4 @@
-﻿@model OL4RENT.Models.LoginModel
+﻿@model Ol4RentAPI.Model.LoginModel
 
 @{
     ViewBag.Title = "Inicio de Sesión";
@@ -18,14 +18,14 @@
         <legend>Inicio de sesión</legend>
         <ol>
             <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
+                @Html.LabelFor(m => m.NombreUsuario)
+                @Html.TextBoxFor(m => m.NombreUsuario)
+                @Html.ValidationMessageFor(m => m.NombreUsuario)
             </li>
             <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
+                @Html.LabelFor(m => m.Contraseña)
+                @Html.PasswordFor(m => m.Contraseña)
+                @Html.ValidationMessageFor(m => m.Contraseña)
             </li>
             <li>
                 @Html.CheckBoxFor(m => m.RememberMe)
