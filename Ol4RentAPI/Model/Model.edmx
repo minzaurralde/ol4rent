@@ -152,12 +152,12 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="TipoBien" Relationship="Model.TipoBienSitio" FromRole="Sitio" ToRole="TipoBien" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
-          <Property Type="String" Name="Descripcion" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="128" />
           <Property Type="Binary" Name="Logo" Nullable="false" />
           <Property Type="Binary" Name="CSS" Nullable="false" />
-          <Property Type="String" Name="MailAdmin" Nullable="false" />
-          <Property Type="String" Name="URL" Nullable="false" />
+          <Property Type="String" Name="MailAdmin" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="URL" Nullable="false" MaxLength="256" />
           <Property Type="Int16" Name="CantBienesPopulares" Nullable="false" />
           <Property Type="Int16" Name="CantMarcasXCont" Nullable="false" />
           <Property Type="Int16" Name="CantContBloqXUsu" Nullable="false" />
@@ -168,7 +168,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Atributos" Relationship="Model.AtributoOrigenDatos" FromRole="OrigenDatos" ToRole="Atributo" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
           <Property Type="Binary" Name="Manejador" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoBien">
@@ -178,14 +178,14 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Sitio" Relationship="Model.TipoBienSitio" FromRole="TipoBien" ToRole="Sitio" />
           <NavigationProperty Name="Caracteristicas" Relationship="Model.TipoBienCaracteristica" FromRole="TipoBien" ToRole="Caracteristica" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
         </EntityType>
         <EntityType Name="Caracteristica">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
           <Property Type="Model.TipoDato" Name="Tipo" Nullable="false" />
         </EntityType>
         <EntityType Name="Novedad">
@@ -194,8 +194,8 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Configuracion" Relationship="Model.NovedadSitioOrigenDatos" FromRole="Novedad" ToRole="SitioOrigenDatos" />
-          <Property Type="String" Name="Titulo" Nullable="false" />
-          <Property Type="String" Name="Contenido" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Contenido" Nullable="false" MaxLength="4000" />
           <Property Type="DateTime" Name="FechaHora" Nullable="false" />
         </EntityType>
         <EntityType Name="Bien">
@@ -206,15 +206,15 @@
           <NavigationProperty Name="Contenidos" Relationship="Model.ContenidoBien" FromRole="Bien" ToRole="Contenido" />
           <NavigationProperty Name="TipoBien" Relationship="Model.BienTipoBien" FromRole="Bien" ToRole="TipoBien" />
           <NavigationProperty Name="Usuario" Relationship="Model.BienUsuario" FromRole="Bien" ToRole="Usuario" />
-          <Property Type="String" Name="Titulo" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="false" MaxLength="64" />
           <Property Type="Binary" Name="Foto" Nullable="false" />
           <Property Type="Decimal" Name="Latitud" Nullable="false" />
           <Property Type="Decimal" Name="Longitud" Nullable="false" />
-          <Property Type="String" Name="Direccion" Nullable="false" />
-          <Property Type="String" Name="Normas" Nullable="false" />
+          <Property Type="String" Name="Direccion" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="Normas" Nullable="false" MaxLength="4000" />
           <Property Type="Int16" Name="Capacidad" Nullable="false" />
           <Property Type="Decimal" Name="Precio" Nullable="false" />
-          <Property Type="String" Name="Descripcion" Nullable="false" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="4000" />
           <Property Type="DateTime" Name="FechaAlquiler" Nullable="false" />
           <Property Type="Int16" Name="DuracionAlquiler" Nullable="false" />
           <NavigationProperty Name="ValoresCaracteristicas" Relationship="Model.ValorCaracteristicaBien" FromRole="Bien" ToRole="ValorCaracteristica" />
@@ -234,7 +234,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Adjuntos" Relationship="Model.AdjuntoContenido" FromRole="Contenido" ToRole="Adjunto" />
           <NavigationProperty Name="Usuario" Relationship="Model.ContenidoUsuario" FromRole="Contenido" ToRole="Usuario" />
-          <Property Type="String" Name="Mensaje" Nullable="false" />
+          <Property Type="String" Name="Mensaje" Nullable="false" MaxLength="1024" />
           <Property Type="Int16" Name="CantMarcas" Nullable="false" />
         </EntityType>
         <EntityType Name="Adjunto">
@@ -243,8 +243,8 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Binary" Name="Data" Nullable="false" />
-          <Property Type="String" Name="NombreArchivo" Nullable="false" />
-          <Property Type="String" Name="Formato" Nullable="false" />
+          <Property Type="String" Name="NombreArchivo" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Formato" Nullable="false" MaxLength="64" />
           <Property Type="Model.TipoAdjunto" Name="Tipo" Nullable="false" />
         </EntityType>
         <Association Name="ContenidoBien">
@@ -263,13 +263,13 @@
           <NavigationProperty Name="Roles" Relationship="Model.UsuarioRol" FromRole="Usuario" ToRole="Rol" />
           <NavigationProperty Name="SitiosAdministrados" Relationship="Model.UsuarioSitio" FromRole="Usuario" ToRole="Sitio" />
           <NavigationProperty Name="BuzonesMensajes" Relationship="Model.UsuarioBuzonMensajes" FromRole="Usuario" ToRole="BuzonMensajes" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
-          <Property Type="String" Name="Apellido" Nullable="false" />
-          <Property Type="String" Name="Mail" Nullable="false" />
-          <Property Type="String" Name="NombreUsuario" Nullable="false" />
-          <Property Type="String" Name="Contraseña" Nullable="false" />
-          <Property Type="String" Name="UsuarioFacebook" Nullable="false" />
-          <Property Type="String" Name="UsuarioTwitter" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Apellido" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Mail" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="NombreUsuario" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="Contraseña" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="UsuarioFacebook" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="UsuarioTwitter" Nullable="false" MaxLength="128" />
         </EntityType>
         <EntityType Name="ConfiguracionOrigenDatos">
           <Key>
@@ -297,7 +297,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
         </EntityType>
         <Association Name="UsuarioRol">
           <End Type="Model.Usuario" Role="Usuario" Multiplicity="*" />
@@ -350,7 +350,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Remitente" Relationship="Model.MensajeUsuario" FromRole="Mensaje" ToRole="Usuario" />
-          <Property Type="String" Name="Texto" Nullable="false" />
+          <Property Type="String" Name="Texto" Nullable="false" MaxLength="4000" />
           <Property Type="DateTime" Name="FechaHora" Nullable="false" />
           <Property Type="Boolean" Name="Leido" Nullable="false" />
         </EntityType>
@@ -372,7 +372,7 @@
           <NavigationProperty Name="ValoresCaracteristicas" Relationship="Model.EspecificacionBienValorCaracteristicaEspecificacion" FromRole="EspecificacionBien" ToRole="ValorCaracteristicaEspecificacion" />
           <Property Type="Decimal" Name="Latitud" Nullable="false" />
           <Property Type="Decimal" Name="Longitud" Nullable="false" />
-          <Property Type="String" Name="Direccion" Nullable="false" />
+          <Property Type="String" Name="Direccion" Nullable="false" MaxLength="128" />
           <Property Type="Int16" Name="Rango" Nullable="false" />
         </EntityType>
         <Association Name="UsuarioWishList">
@@ -389,7 +389,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Caracteristica" Relationship="Model.ValorCaracteristicaEspecificacionCaracteristica" FromRole="ValorCaracteristicaEspecificacion" ToRole="Caracteristica" />
-          <Property Type="String" Name="Valor" Nullable="false" />
+          <Property Type="String" Name="Valor" Nullable="false" MaxLength="1024" />
         </EntityType>
         <Association Name="EspecificacionBienValorCaracteristicaEspecificacion">
           <End Type="Model.EspecificacionBien" Role="EspecificacionBien" Multiplicity="0..1" />
@@ -425,7 +425,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Nombre" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
         </EntityType>
         <Association Name="AtributoOrigenDatos">
           <End Type="Model.Atributo" Role="Atributo" Multiplicity="*" />

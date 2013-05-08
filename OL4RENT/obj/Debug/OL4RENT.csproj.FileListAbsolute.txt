@@ -47,3 +47,6 @@ c:\users\martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\bin\DotNet
 c:\users\martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\obj\Debug\OL4RENT.dll
 c:\users\martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\obj\Debug\OL4RENT.pdb
 C:\Users\Martin\documents\visual studio 2012\Projects\OL4RENT\OL4RENT\obj\Debug\OL4RENT.csprojResolveAssemblyReference.cache
+C:\Users\Naty\Documents\Visual Studio 2012\Projects\ol4rent\OL4RENT\obj\Debug\OL4RENT.csprojResolveAssemblyReference.cache
+C:\Users\Naty\Documents\Visual Studio 2012\Projects\ol4rent\OL4RENT\obj\Debug\OL4RENT.dll
+C:\Users\Naty\Documents\Visual Studio 2012\Projects\ol4rent\OL4RENT\obj\Debug\OL4RENT.pdb
