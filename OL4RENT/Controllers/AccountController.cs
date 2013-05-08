@@ -10,6 +10,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using OL4RENT.Filters;
 using Ol4RentAPI.Model;
+using Ol4RentAPI.Facades;
 
 namespace OL4RENT.Controllers
 {
@@ -35,7 +36,7 @@ namespace OL4RENT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            if (ModelState.IsValid && WebSecurity.Login(model.NombreUsuario, model.Contraseña, persistCookie: model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
             }
@@ -265,13 +266,12 @@ namespace OL4RENT.Controllers
                 // Insert a new user into the database
                 using (ModelContainer db = new ModelContainer())
                 {
-                    Usuario user = db.UsuarioSet.FirstOrDefault(u => u.NombreUsuario.ToLower() == model.UserName.ToLower());
+                    Usuario user = ServiceFacadeFactory.Instance.AccountFacade.ObtenerPorNombre(model.UserName);
                     // Check if user already exists
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UsuarioSet.Add(new Usuario { NombreUsuario = model.UserName });
-                        db.SaveChanges();
+                        ServiceFacadeFactory.Instance.AccountFacade.Crear(new Usuario { NombreUsuario = model.UserName });
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);

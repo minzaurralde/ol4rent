@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Facades\IAccountFacade.cs" />
+    <Compile Include="Facades\AccountFacadeImpl.cs" />
     <Compile Include="Facades\BienFacadeImpl.cs" />
     <Compile Include="Facades\CreadorDatosDummyImpl.cs" />
     <Compile Include="Facades\IBienFacade.cs" />
