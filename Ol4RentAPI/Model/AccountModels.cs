@@ -42,13 +42,13 @@ namespace Ol4RentAPI.Model
         [Required(ErrorMessage = "El nombre de usuario es un campo obligatorio")]
         [Display(Name = "Nombre de usuario")]
         [StringLength(64, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.", MinimumLength = 1)]
-        public string UserName { get; set; }
+        public string NombreUsuario { get; set; }
 
         [Required(ErrorMessage = "La contraseña es un campo obligatorio")]
         [DataType(DataType.Password)]
         [StringLength(100, ErrorMessage = "La {0} debe tener como máximo {1} caracteres.", MinimumLength = 6)]
         [Display(Name = "Contraseña")]
-        public string Password { get; set; }
+        public string Contraseña { get; set; }
 
         [Display(Name = "Recordar?")]
         public bool RememberMe { get; set; }
