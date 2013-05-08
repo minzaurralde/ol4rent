@@ -171,7 +171,6 @@
     <Compile Include="Controllers\SitioController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\SelectorSitioFilterAttribute.cs" />
-    <Compile Include="Funciones\ManejoRSS.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

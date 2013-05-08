@@ -7,43 +7,24 @@ using System.Web;
 using System.Web.Mvc;
 using Ol4RentAPI.Model;
 using System.Collections;
+using Ol4RentAPI.Facades;
 
 namespace OL4RENT.Controllers
 {
     public class NovedadController : Controller
     {
-        private ModelContainer db = new ModelContainer();
-
-        internal List<Novedad> ListaNovedades
-        {
-            get
-            {
-                int maximaCantidadNovedadesHome = 6;
-                return db.NovedadSet.Take(maximaCantidadNovedadesHome).ToList();
-            }
-        }
-
-        internal List<Novedad> ListaNovedadesRSS
-        {            
-            get
-            {
-                Funciones.ManejoRSS mj = new Funciones.ManejoRSS();
-                return mj.LecturaRSS("http://blog.orcare.com/rss");
-            }
-        }  
-
         //
         // GET: /Novedad/
         public ActionResult Index()
         {
-            return View(db.NovedadSet.ToList());
+            return View(ServiceFacadeFactory.Instance.NovedadFacade.Todas);
         }
 
         //
         // GET: /Novedad/List
         public ActionResult List()
         {
-            return View(ListaNovedades);
+            return View(ServiceFacadeFactory.Instance.NovedadFacade.ListaNovedades());
         }
 
         //
@@ -58,14 +39,14 @@ namespace OL4RENT.Controllers
         public ActionResult NovedadesRSS()
         {
 
-            return View(ListaNovedadesRSS);
+            return View(ServiceFacadeFactory.Instance.NovedadFacade.ListaNovedades());
         }
 
         //
         // GET: /Novedad/Details/5
-        public ActionResult Details(long id = 0)
+        public ActionResult Details(int id = 0)
         {
-            Novedad novedad = db.Novedades.Find(id);
+            Novedad novedad = ServiceFacadeFactory.Instance.NovedadFacade.Obtener(id);
             if (novedad == null)
             {
                 return HttpNotFound();
@@ -85,10 +66,8 @@ namespace OL4RENT.Controllers
         [HttpPost]
         public ActionResult Create(Novedad novedad)
         {
-            if (ModelState.IsValid)
+            if ((novedad = ServiceFacadeFactory.Instance.NovedadFacade.Crear(novedad)) != null)
             {
-                db.NovedadSet.Add(novedad);
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -97,9 +76,9 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Novedad/Edit/5
-        public ActionResult Edit(long id = 0)
+        public ActionResult Edit(int id = 0)
         {
-            Novedad novedad = db.NovedadSet.Find(id);
+            Novedad novedad = ServiceFacadeFactory.Instance.NovedadFacade.Obtener(id);
             if (novedad == null)
             {
                 return HttpNotFound();
@@ -112,10 +91,8 @@ namespace OL4RENT.Controllers
         [HttpPost]
         public ActionResult Edit(Novedad novedad)
         {
-            if (ModelState.IsValid)
+            if ((novedad = ServiceFacadeFactory.Instance.NovedadFacade.Editar(novedad)) != null)
             {
-                db.Entry(novedad).State = EntityState.Modified;
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(novedad);
@@ -123,9 +100,9 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Novedad/Delete/5
-        public ActionResult Delete(long id = 0)
+        public ActionResult Delete(int id = 0)
         {
-            Novedad novedad = db.NovedadSet.Find(id);
+            Novedad novedad = ServiceFacadeFactory.Instance.NovedadFacade.Obtener(id);
             if (novedad == null)
             {
                 return HttpNotFound();
@@ -136,17 +113,14 @@ namespace OL4RENT.Controllers
         //
         // POST: /Novedad/Delete/5
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(long id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Novedad novedad = db.Novedades.Find(id);
-            db.Novedades.Remove(novedad);
-            db.SaveChanges();
+            ServiceFacadeFactory.Instance.NovedadFacade.Eliminar(id);
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
             base.Dispose(disposing);
         }
     }

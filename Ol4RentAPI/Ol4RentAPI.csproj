@@ -53,7 +53,9 @@
     <Compile Include="Facades\CreadorDatosDummyImpl.cs" />
     <Compile Include="Facades\IBienFacade.cs" />
     <Compile Include="Facades\ICreadorDatosDummyFacade.cs" />
+    <Compile Include="Facades\INovedadFacade.cs" />
     <Compile Include="Facades\ISitioFacade.cs" />
+    <Compile Include="Facades\NovedadFacadeImpl.cs" />
     <Compile Include="Facades\ServiceFacadeFactory.cs" />
     <Compile Include="Facades\SitioFacadeImpl.cs" />
     <Compile Include="Model\AccountModels.cs" />
@@ -85,6 +87,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Helpers\DBHelper.cs" />
+    <Compile Include="Model\Helpers\ManejoRSS.cs" />
     <Compile Include="Model\MeGusta.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
