@@ -34,28 +34,6 @@ namespace OL4RENT.Controllers
         }
 
         //
-        // GET: /Sitio/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Sitio/Create
-
-        [HttpPost]
-        public ActionResult Create(Sitio sitio)
-        {
-            if ((sitio = ServiceFacadeFactory.Instance.SitioFacade.Crear(sitio)) != null)
-            {
-                return RedirectToAction("Index");
-            }
-
-            return View(sitio);
-        }
-
-        //
         // GET: /Sitio/Edit/5
 
         public ActionResult Edit(int id = 0)

@@ -1,0 +1,95 @@
+﻿@model Ol4RentAPI.DTO.SitioAltaDTO
+@{
+    ViewBag.Title = "Crear nuevo sitio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { name = "RegisterForm", id = "RegisterForm", @encType = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Nuevo sitio</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.Nombre)
+                @Html.TextBoxFor(m => m.Nombre)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Descripcion)
+                @Html.TextAreaFor(m => m.Descripcion)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Logo)
+                @FileUpload.GetHtml(
+                    initialNumberOfFiles:1,
+                    allowMoreFilesToBeAdded:false,
+                    includeFormTag:true,
+                    uploadText:"Subir",
+                    name:"Logo")
+            </li>
+            <li>
+                @Html.LabelFor(m => m.CSS)
+                @FileUpload.GetHtml(
+                    initialNumberOfFiles:1,
+                    allowMoreFilesToBeAdded:false,
+                    includeFormTag:true,
+                    uploadText:"Subir",
+                    name:"CSS")
+            </li>
+            <li>
+                @Html.LabelFor(m => m.URL)
+                @Html.TextBoxFor(m => m.URL)
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset>
+        <legend>Admnistrador</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.MailAdmin)
+                @Html.TextBoxFor(m => m.MailAdmin)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.NombreUsuarioPropietario)
+                @Html.TextBoxFor(m => m.NombreUsuarioPropietario)
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset>
+        <legend>Configuraciones</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.CantBienesPopulares)
+                @Html.TextBoxFor(m => m.CantBienesPopulares)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.CantMarcasXCont)
+                @Html.TextBoxFor(m => m.CantMarcasXCont)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.CantContBloqXUsu)
+                @Html.TextBoxFor(m => m.CantContBloqXUsu)
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset>
+        <legend>Tipo de Bienes a Arrendar</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.NombreTipoBien)
+                @Html.TextBoxFor(m => m.NombreTipoBien)
+            </li>
+            <li>
+                <!-- TODO Caracteristicas -->
+                @Html.LabelFor(m => m.Caracteristicas)
+                @Html.TextBoxFor(m => m.NombreTipoBien)
+            </li>
+        </ol>
+        <input type="submit" value="Crear" />
+    </fieldset>
+}
