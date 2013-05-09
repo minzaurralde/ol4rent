@@ -9,7 +9,8 @@ using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using OL4RENTBackOffice.Filters;
-using OL4RENTBackOffice.Models;
+using Ol4RentAPI.Model;
+using Ol4RentAPI.Facades;
 
 namespace OL4RENTBackOffice.Controllers
 {
@@ -35,13 +36,12 @@ namespace OL4RENTBackOffice.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            if (ModelState.IsValid && WebSecurity.Login(model.NombreUsuario, model.Contraseña, persistCookie: model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
             }
 
-            // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "El nombre de usuario o la contraseña son incorrectos.");
             return View(model);
         }
 
@@ -79,8 +79,9 @@ namespace OL4RENTBackOffice.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
+                    WebSecurity.CreateUserAndAccount(model.NombreUsuario, model.Contraseña);
+                    WebSecurity.Login(model.NombreUsuario, model.Contraseña);
+                    Roles.AddUserToRole(model.NombreUsuario, RolEnum.PUBLIC_USER.ToString());
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -128,9 +129,9 @@ namespace OL4RENTBackOffice.Controllers
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Su contraseña ha sido reestablecida."
+                : message == ManageMessageId.SetPasswordSuccess ? "Se ha guardado su contraseña."
+                : message == ManageMessageId.RemoveLoginSuccess ? "El usuario ha sido eliminado."
                 : "";
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
@@ -168,7 +169,7 @@ namespace OL4RENTBackOffice.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                        ModelState.AddModelError("", "La contraseña actual no es correcta o la nueva no es válida.");
                     }
                 }
             }
@@ -263,15 +264,14 @@ namespace OL4RENTBackOffice.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                using (ModelContainer db = new ModelContainer())
                 {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                    Usuario user = ServiceFacadeFactory.Instance.AccountFacade.ObtenerPorNombre(model.UserName);
                     // Check if user already exists
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
-                        db.SaveChanges();
+                        ServiceFacadeFactory.Instance.AccountFacade.Crear(new Usuario { NombreUsuario = model.UserName });
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
