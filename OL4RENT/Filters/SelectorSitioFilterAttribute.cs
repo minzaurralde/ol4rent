@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ol4RentAPI.Facades;
+using Ol4RentAPI.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,8 +14,11 @@ namespace OL4RENT.Filters
         {
             Uri uri = filterContext.HttpContext.Request.Url;
             string posiblehost = uri.Host;
-            filterContext.HttpContext.Response.Write("posiblehost=" + posiblehost);
-            filterContext.HttpContext.Session["posiblehost"] = posiblehost;
+            SitioListadoDTO sitio = ServiceFacadeFactory.Instance.SitioFacade.ObtenerPorDominio(uri.Host);
+            if (sitio != null)
+            {
+                filterContext.HttpContext.Session["sitio"] = sitio;
+            }
             this.OnActionExecuting(filterContext);
         }
     }

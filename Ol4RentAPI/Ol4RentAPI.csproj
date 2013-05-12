@@ -127,6 +127,7 @@
     <Compile Include="Model\Novedad.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Facades\Novedades\NovedadesExternasFactory.cs" />
     <Compile Include="Model\OrigenDatos.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -193,7 +194,12 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DatosExternosDACAPI\DatosExternosDACAPI.csproj">
+      <Project>{bef574b0-0e83-4d3c-90bd-1d89dfb9ca4e}</Project>
+      <Name>DatosExternosDACAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

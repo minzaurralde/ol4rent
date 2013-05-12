@@ -196,5 +196,13 @@ namespace Ol4RentAPI.Facades
                 return (from usu in db.Usuarios where usu.SitiosAdministrados.Contains(sitio) select usu.NombreUsuario).First<string>();
             }
         }
+
+
+        public SitioListadoDTO ObtenerPorDominio(string dominio)
+        {
+            using (ModelContainer db = new ModelContainer()) {
+                return AutoMapperUtils<Sitio, SitioListadoDTO>.Map((from s in db.Sitios where s.URL == dominio select s).First());
+            }
+        }
     }
 }
