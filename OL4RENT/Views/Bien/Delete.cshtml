@@ -1,4 +1,4 @@
-﻿@model OL4RENT.Models.Bien
+﻿@model Ol4RentAPI.Model.Bien
 
 @{
     ViewBag.Title = "Delete";
@@ -11,10 +11,10 @@
     <legend>Bien</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Nombre)
+         @Html.DisplayNameFor(model => model.Titulo)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Nombre)
+        @Html.DisplayFor(model => model.Titulo)
     </div>
 </fieldset>
 @using (Html.BeginForm()) {

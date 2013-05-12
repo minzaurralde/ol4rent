@@ -1,4 +1,4 @@
-﻿@model OL4RENT.Models.Bien
+﻿@model Ol4RentAPI.Model.Bien
 @{
     ViewBag.Title = "BusquedaAvanzada";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,7 +7,7 @@
 <h2>BusquedaAvanzada</h2>
 @using (Html.BeginForm()) {
     <div>
-        @Html.LabelFor(model => model.Nombre)
+        @Html.LabelFor(model => model.Titulo)
         @Html.TextBox("Nombre")
     </div>
     <div>
