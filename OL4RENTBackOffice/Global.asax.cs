@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ol4RentAPI.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,6 +24,8 @@ namespace OL4RENTBackOffice
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            AutoMapperInitializer.Inicializar();
         }
     }
 }

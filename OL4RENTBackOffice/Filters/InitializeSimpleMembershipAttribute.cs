@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Ol4RentAPI.Model;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
-using OL4RENTBackOffice.Models;
 
 namespace OL4RENTBackOffice.Filters
 {
@@ -25,11 +25,11 @@ namespace OL4RENTBackOffice.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<ModelContainer>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new ModelContainer())
                     {
                         if (!context.Database.Exists())
                         {
@@ -38,7 +38,7 @@ namespace OL4RENTBackOffice.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuarios", "Id", "NombreUsuario", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

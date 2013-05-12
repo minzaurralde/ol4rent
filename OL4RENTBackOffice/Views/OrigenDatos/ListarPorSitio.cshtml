@@ -1,0 +1,41 @@
+﻿@model List<Ol4RentAPI.DTO.OrigenDatosListaDTO>
+@{
+    ViewBag.Title = "Listado de origenes de datos configurados para el sitio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<p>
+    @Html.ActionLink("Crear nuevo origen de datos", "Configurar", "OrigenDatos", new { idSitio = ViewBag.IdSitio })
+</p>
+@if (Model.Count > 0) {
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Nombre)
+        </th>
+        <th>Acciones</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString()))
+            {
+            @Html.ActionLink("Modificar", "ModificarConfiguracion", "OrigenDatos", new { idOrigenDatos = item.Id, idSitio = ViewBag.IdSitio }, null) 
+            }
+            @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString()))
+            {
+            @Html.ActionLink("Eliminar", "EliminarConfiguracion", "OrigenDatos", new { idOrigenDatos = item.Id, idSitio = ViewBag.IdSitio }, null)
+            }
+        </td>
+    </tr>
+}
+
+</table>
+} else {
+<p>No existen orígenes de datos configurados aún.</p>
+}

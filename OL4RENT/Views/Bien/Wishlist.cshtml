@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OL4RENT.Models.Bien>
+﻿@model IEnumerable<Ol4RentAPI.Model.Bien>
 @{
     ViewBag.Title = "Wishlist";
 }
@@ -8,7 +8,7 @@
 @foreach (var item in Model) {
     <li>
         <div>
-            @Html.ActionLink(item.Nombre, "Details", "Bien", new { id=item.Id }, null)
+            @Html.ActionLink(item.Titulo, "Details", "Bien", new { id=item.Id }, null)
         </div>
         <div>
             @Html.DisplayFor(modelItem => item.Descripcion)

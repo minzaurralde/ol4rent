@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OL4RENT.Models.Novedad>
+﻿@model IEnumerable<Ol4RentAPI.Model.Novedad>
 
 @{
     ViewBag.Title = "NovedadesRSS";
@@ -8,7 +8,7 @@
 @foreach (var item in Model) {
     <li>    
         <div>
-            @Html.DisplayFor(modelItem => item.Nombre).ToString().Substring(0,45)
+            @Html.DisplayFor(modelItem => item.Titulo).ToString().Substring(0,45)
         </div>
     </li>
 }

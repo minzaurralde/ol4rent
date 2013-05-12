@@ -29,7 +29,7 @@ namespace OL4RENT.App_Start
             // CrearBienesFalsos();
             // CrearSitioFalso();
 
-            ServiceFacadeFactory.Instance.CreadorDatosDummy.CrearSitios();
+            // ServiceFacadeFactory.Instance.CreadorDatosDummy.CrearSitios();
         }
 
         //private static void CrearSitioFalso()

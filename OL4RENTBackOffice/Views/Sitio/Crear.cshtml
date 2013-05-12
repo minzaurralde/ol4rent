@@ -1,0 +1,144 @@
+﻿@model Ol4RentAPI.DTO.SitioAltaDTO
+@{
+    ViewBag.Title = "Crear nuevo sitio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+@using (Html.BeginForm("Crear", "Sitio", FormMethod.Post, new { name = "RegisterForm", id = "RegisterForm", encType = "multipart/form-data" }))
+{
+    int i = 0;
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Nuevo sitio</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.Nombre)
+                @Html.TextBoxFor(m => m.Nombre)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Descripcion)
+                @Html.TextAreaFor(m => m.Descripcion)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Logo)
+                <input type="file" id="imagen" name="imagen" />
+            </li>
+            <li>
+                @Html.LabelFor(m => m.CSS)
+                <input type="file" id="estilo" name="estilo" />
+            </li>
+            <li>
+                @Html.LabelFor(m => m.URL)
+                @Html.TextBoxFor(m => m.URL)
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset>
+        <legend>Admnistrador</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.MailAdmin)
+                @Html.TextBoxFor(m => m.MailAdmin)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.NombreUsuarioPropietario)
+                @Html.TextBoxFor(m => m.NombreUsuarioPropietario)
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset>
+        <legend>Configuraciones</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.CantBienesPopulares)
+                @Html.TextBoxFor(m => m.CantBienesPopulares)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.CantMarcasXCont)
+                @Html.TextBoxFor(m => m.CantMarcasXCont)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.CantContBloqXUsu)
+                @Html.TextBoxFor(m => m.CantContBloqXUsu)
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset>
+        <legend>Tipo de Bienes a Arrendar</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.NombreTipoBien)
+                @Html.TextBoxFor(m => m.NombreTipoBien)
+            </li>
+            <li>
+                <!-- TODO Caracteristicas -->
+                @Html.LabelFor(m => m.Caracteristicas)
+                <table id="caracteristicas" >
+                    <thead>
+                        <tr>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Tipo
+                            </th>
+                            <th>
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Caracteristicas != null && Model.Caracteristicas.Count > 0) {
+                            foreach (Ol4RentAPI.DTO.CaracteristicaAltaDTO item in Model.Caracteristicas) {
+                                <tr id="tr@(i.ToString())">
+                                    <td>
+                                        @item.Nombre
+                                        @Html.Hidden("nombre" + i.ToString(), item.Nombre)
+                                    </td>
+                                    <td>
+                                        @item.Tipo
+                                        @Html.Hidden("tipo" + i.ToString(), item.Tipo)
+                                    </td>
+                                    <td>
+                                        <a onclick='javascript:$("#tr@(i.ToString())").remove();return false;'>Eliminar</a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">
+                                Agregar nueva caracteristica:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Nombre: @Html.TextBox("NuevoNombre")
+                            </td>
+                            <td>
+                                Tipo: @Html.DropDownList("NuevoTipo", (List<SelectListItem>) ViewBag.TiposDatos)
+                            </td>
+                            <td>
+                                <a id="agregarNuevo" name="agregarNuevo">Agregar</a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <input type="hidden" name="maxid" id="maxid" value="@i.ToString()" />
+            </li>
+        </ol>
+        <input type="submit" value="Guardar" />
+    </fieldset>
+}
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-1.7.1.js")
+    @Scripts.Render("~/Scripts/jquery.validate.js")
+    @Scripts.Render("~/Scripts/crearSitio.js")
+}

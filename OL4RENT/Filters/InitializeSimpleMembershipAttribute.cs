@@ -39,7 +39,7 @@ namespace OL4RENT.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuarios", "Id", "NombreUsuario", autoCreateTables: true);
 
                     if (!Roles.RoleExists(RolEnum.PUBLIC_USER.ToString()))
                     {

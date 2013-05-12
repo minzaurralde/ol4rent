@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\ext\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -47,6 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\AtributoDTO.cs" />
+    <Compile Include="DTO\AutoMapperUtils.cs" />
+    <Compile Include="DTO\CaracteristicaAltaDTO.cs" />
+    <Compile Include="DTO\ConfiguracionOrigenDatosAltaDTO.cs" />
+    <Compile Include="DTO\OrigenDatosAltaDTO.cs" />
+    <Compile Include="DTO\OrigenDatosListaDTO.cs" />
+    <Compile Include="DTO\SitioAltaDTO.cs" />
+    <Compile Include="DTO\SitioListadoDTO.cs" />
+    <Compile Include="DTO\UsuarioSitioDTO.cs" />
+    <Compile Include="DTO\ValorAtributoDTO.cs" />
     <Compile Include="Facades\IAccountFacade.cs" />
     <Compile Include="Facades\AccountFacadeImpl.cs" />
     <Compile Include="Facades\BienFacadeImpl.cs" />
@@ -54,8 +67,10 @@
     <Compile Include="Facades\IBienFacade.cs" />
     <Compile Include="Facades\ICreadorDatosDummyFacade.cs" />
     <Compile Include="Facades\INovedadFacade.cs" />
+    <Compile Include="Facades\IOrigenDatosFacade.cs" />
     <Compile Include="Facades\ISitioFacade.cs" />
     <Compile Include="Facades\NovedadFacadeImpl.cs" />
+    <Compile Include="Facades\OrigenDatosFacade.cs" />
     <Compile Include="Facades\ServiceFacadeFactory.cs" />
     <Compile Include="Facades\SitioFacadeImpl.cs" />
     <Compile Include="Model\AccountModels.cs" />
@@ -112,6 +127,7 @@
     <Compile Include="Model\Novedad.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Facades\Novedades\NovedadesExternasFactory.cs" />
     <Compile Include="Model\OrigenDatos.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -178,7 +194,12 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DatosExternosDACAPI\DatosExternosDACAPI.csproj">
+      <Project>{bef574b0-0e83-4d3c-90bd-1d89dfb9ca4e}</Project>
+      <Name>DatosExternosDACAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
