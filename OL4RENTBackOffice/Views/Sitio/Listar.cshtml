@@ -1,0 +1,53 @@
+﻿@model List<Ol4RentAPI.DTO.SitioListadoDTO>
+
+@{
+    ViewBag.Title = "Listado de sitios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<p>
+    @Html.ActionLink("Crear nuevo sitio", "Crear", "Sitio")
+</p>
+@if (Model.Count > 0) {
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].URL)
+        </th>
+        <th>Acciones</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.URL)
+        </td>
+        <td>
+            @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SITE_ADMIN.ToString())) {
+            @Html.ActionLink("Modificar", "Editar", "Sitio", new { id=item.Id }, null) 
+            }
+            @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString())) {
+            @Html.ActionLink("Eliminar", "Eliminar", "Sitio", new { id=item.Id }, null)
+            }
+            @Html.ActionLink("Ver usuarios", "ListarPorSitio", "Usuario", new { idSitio=item.Id }, null)
+            @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SITE_ADMIN.ToString())) {
+            @Html.ActionLink("Ver novedades", "ListarPorSitio", "Novedad", new { idSitio=item.Id }, null)
+            }
+            @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SITE_ADMIN.ToString())) {
+            @Html.ActionLink("Ver orígenes de datos", "Listar", "OrigenDatos", new { idSitio=item.Id }, null)
+            }
+        </td>
+    </tr>
+}
+
+</table>
+} else {
+<p>No existen sitios para administrar.</p>
+}

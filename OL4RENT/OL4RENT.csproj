@@ -298,10 +298,6 @@
     <Content Include="Views\Bien\Create.cshtml" />
     <Content Include="Views\Bien\Edit.cshtml" />
     <Content Include="Views\Bien\Delete.cshtml" />
-    <Content Include="Views\Sitio\Index.cshtml" />
-    <Content Include="Views\Sitio\Details.cshtml" />
-    <Content Include="Views\Sitio\Edit.cshtml" />
-    <Content Include="Views\Sitio\Delete.cshtml" />
     <Content Include="Views\Bien\Populares.cshtml" />
     <Content Include="Views\Bien\Mapa.cshtml" />
     <Content Include="Views\Novedad\Index.cshtml" />

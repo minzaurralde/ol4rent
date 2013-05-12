@@ -163,7 +163,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NovedadController.cs" />
+    <Compile Include="Controllers\OrigenDatosController.cs" />
     <Compile Include="Controllers\SitioController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -228,6 +231,11 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\configurarODSitio.js" />
+    <Content Include="Scripts\editarODSitio.js" />
+    <Content Include="Scripts\editarOrigenDatos.js" />
+    <Content Include="Scripts\crearOrigenDatos.js" />
+    <Content Include="Scripts\crearSitio.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -284,6 +292,27 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Sitio\Crear.cshtml" />
+    <Content Include="Views\Shared\Menu.cshtml" />
+    <Content Include="Views\Novedad\Create.cshtml" />
+    <Content Include="Views\Novedad\Delete.cshtml" />
+    <Content Include="Views\Novedad\Details.cshtml" />
+    <Content Include="Views\Novedad\Edit.cshtml" />
+    <Content Include="Views\Novedad\Index.cshtml" />
+    <Content Include="Views\Novedad\List.cshtml" />
+    <Content Include="Views\Novedad\NovedadesRSS.cshtml" />
+    <Content Include="Views\Novedad\NovedadesTwitter.cshtml" />
+    <Content Include="Views\Sitio\Listar.cshtml" />
+    <Content Include="Views\Sitio\Editar.cshtml" />
+    <Content Include="Views\Usuario\ListarPorSitio.cshtml" />
+    <Content Include="Views\Novedad\ListarPorSitio.cshtml" />
+    <Content Include="Views\OrigenDatos\Listar.cshtml" />
+    <Content Include="Views\Reporte\Reporte.cshtml" />
+    <Content Include="Views\OrigenDatos\ListarPorSitio.cshtml" />
+    <Content Include="Views\OrigenDatos\Crear.cshtml" />
+    <Content Include="Views\OrigenDatos\Editar.cshtml" />
+    <Content Include="Views\OrigenDatos\Configurar.cshtml" />
+    <Content Include="Views\OrigenDatos\ModificarConfiguracion.cshtml" />
+    <Content Include="Views\Reporte\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

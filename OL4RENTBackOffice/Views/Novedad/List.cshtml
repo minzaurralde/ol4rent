@@ -1,0 +1,15 @@
+﻿@model IEnumerable<OL4RENT.Models.Novedad>
+
+@{
+    ViewBag.Title = "Populares";
+}
+<h2>Novedades</h2>
+<ul>
+@foreach (var item in Model) {
+    <li>    
+        <div>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </div>
+    </li>
+}
+</ul>

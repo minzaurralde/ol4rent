@@ -60,5 +60,13 @@ namespace Ol4RentAPI.Facades
                 return new NovedadFacadeImpl();
             }
         }
+
+        public IOrigenDatosFacade OrigenDatosFacade
+        {
+            get
+            {
+                return new OrigenDatosFacade();
+            }
+        }
     }
 }

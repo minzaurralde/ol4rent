@@ -1,6 +1,6 @@
-﻿@model Ol4RentAPI.DTO.SitioAltaDTO
+﻿@model Ol4RentAPI.DTO.SitioEdicionDTO
 @{
-    ViewBag.Title = "Crear nuevo sitio";
+    ViewBag.Title = "Modificar sitio";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,10 +8,11 @@
     <h1>@ViewBag.Title</h1>
 </hgroup>
 
-@using (Html.BeginForm("Crear", "Sitio", FormMethod.Post, new { name = "RegisterForm", id = "RegisterForm", encType = "multipart/form-data" }))
+@using (Html.BeginForm("Editar", "Sitio", FormMethod.Post, new { name = "RegisterForm", id = "RegisterForm", encType = "multipart/form-data" }))
 {
     int i = 0;
     @Html.ValidationSummary()
+    @Html.HiddenFor(m => m.Id)
 
     <fieldset>
         <legend>Nuevo sitio</legend>

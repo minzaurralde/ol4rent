@@ -66,4 +66,9 @@ namespace Ol4RentAPI.DTO
         [Display(Name = "Nombre de usuario del propietario")]
         public string NombreUsuarioPropietario { get; set; }
     }
+
+    public class SitioEdicionDTO : SitioAltaDTO
+    {
+        public int Id { get; set; }
+    }
 }
