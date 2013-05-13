@@ -116,10 +116,10 @@ namespace Ol4RentAPI.Facades
         {
             try
             {
-                Sitio sitio = Obtener(sitioDTO.Id);
-                // TODO implementar edicion de sitio
                 using (ModelContainer db = new ModelContainer())
                 {
+                    Sitio sitio = db.Sitios.Find(sitioDTO.Id);
+                    // TODO implementar edicion de sitio
                     db.Entry(sitio).State = EntityState.Modified;
                     db.SaveChanges();
                 }
@@ -143,14 +143,17 @@ namespace Ol4RentAPI.Facades
         
         public byte[] Logo(int id)
         {
-            Sitio sitio = Obtener(id);
-            if (sitio != null)
+            using (ModelContainer db = new ModelContainer())
             {
-                return sitio.Logo;
-            }
-            else
-            {
-                return null;
+                Sitio sitio = db.Sitios.Find(id);
+                if (sitio != null)
+                {
+                    return sitio.Logo;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -165,12 +168,11 @@ namespace Ol4RentAPI.Facades
             {
                 IQueryable<Usuario> query =
                     from usu in db.Usuarios
-                    where usu.Nombre == nombreUsuario
+                    where usu.NombreUsuario == nombreUsuario
                     select usu;
                 if (query.Count() > 0)
                 {
-                    Usuario usuario = query.First();
-                    return AutoMapperUtils<Sitio, SitioListadoDTO>.Map(usuario.SitiosAdministrados.ToList());
+                    return AutoMapperUtils<Sitio, SitioListadoDTO>.Map(query.First().SitiosAdministrados.ToList());
                 }
                 else
                 {
@@ -188,12 +190,7 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
-                Sitio sitio = Obtener(id);
-                IQueryable<Usuario> usuarios = from usu in db.Usuarios where usu.SitiosAdministrados.Contains(sitio) select usu;
-                SitioEdicionDTO dto = AutoMapperUtils<Sitio, SitioEdicionDTO>.Map(sitio);
-                //dto.Caracteristicas = AutoMapperUtils<Caracteristica, CaracteristicaAltaDTO>.Map(sitio.TipoBien.Caracteristicas.ToList());
-                //dto.NombreUsuarioPropietario = usuarios.First().NombreUsuario;
-                return dto;
+                return AutoMapperUtils<Sitio, SitioEdicionDTO>.Map(db.Sitios.Find(id));
             }
         }
 
@@ -210,8 +207,7 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
-                Sitio sitio = db.Sitios.Find(idSitio);
-                return (from usu in db.Usuarios where usu.SitiosAdministrados.Contains(sitio) select usu.NombreUsuario).First<string>();
+                return (from usu in db.Usuarios where usu.SitiosAdministrados.Where(s => s.Id == idSitio).Count() > 0 select usu.NombreUsuario).First<string>();
             }
         }
 

@@ -50,6 +50,8 @@ namespace OL4RENTBackOffice.Controllers
                     dto.Atributos.Add(new AtributoAltaDTO() { Nombre = Request["nombre" + i.ToString()] });
                 }
             }
+            dto.Manejador = new byte[dll.ContentLength];
+            dll.InputStream.Read(dto.Manejador, 0, dll.ContentLength);
             if (ModelState.IsValid)
             {
                 if (ServiceFacadeFactory.Instance.OrigenDatosFacade.Crear(dto))
@@ -84,6 +86,8 @@ namespace OL4RENTBackOffice.Controllers
                     dto.Atributos.Add(new AtributoEdicionDTO() { Nombre = Request["nombre" + i.ToString()], Id = int.Parse(Request["id" + i.ToString()]) });
                 }
             }
+            dto.Manejador = new byte[dll.ContentLength];
+            dll.InputStream.Read(dto.Manejador, 0, dll.ContentLength);
             if (ModelState.IsValid)
             {
                 if (ServiceFacadeFactory.Instance.OrigenDatosFacade.Editar(dto))

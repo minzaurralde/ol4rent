@@ -108,15 +108,13 @@ namespace OL4RENTBackOffice.Controllers
                     sitioDTO.Caracteristicas.Add(new CaracteristicaAltaDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]) });
                 }
             }
+            // TODO validar los formatos de los archivos
+            sitioDTO.CSS = new byte[estilo.ContentLength];
+            estilo.InputStream.Read(sitioDTO.CSS, 0, estilo.ContentLength);
+            sitioDTO.Logo = new byte[imagen.ContentLength];
+            imagen.InputStream.Read(sitioDTO.Logo, 0, imagen.ContentLength);
             if (ModelState.IsValid)
             {
-                // TODO validar los formatos de los archivos
-                estilo = Request.Files["estilo"];
-                sitioDTO.CSS = new byte[estilo.ContentLength];
-                estilo.InputStream.Read(sitioDTO.CSS, 0, estilo.ContentLength);
-                imagen = Request.Files["imagen"];
-                sitioDTO.Logo = new byte[imagen.ContentLength];
-                imagen.InputStream.Read(sitioDTO.Logo, 0, imagen.ContentLength);
                 if (ServiceFacadeFactory.Instance.SitioFacade.Editar(sitioDTO))
                 {
                     return RedirectToAction("Listar", "Sitio");

@@ -36,6 +36,8 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.CantidadContenidosBloqueados, dat => dat.MapFrom(src => src.CantContBloq));
             Mapper.CreateMap<OrigenDatos, OrigenDatosListaDTO>();
             Mapper.CreateMap<OrigenDatos, OrigenDatosEdicionDTO>();
+            Mapper.CreateMap<OrigenDatosAltaDTO, OrigenDatos>()
+                .ForMember(dest => dest.Id, dat => dat.Ignore());
             Mapper.CreateMap<ConfiguracionOrigenDatos, ConfiguracionOrigenDatosEdicionDTO>()
                 .ForMember(dest => dest.IdOrigenDatos, dat => dat.MapFrom(src => src.OrigenDatos.Id))
                 .ForMember(dest => dest.NombreOrigenDatos, dat => dat.MapFrom(src => src.OrigenDatos.Nombre))
