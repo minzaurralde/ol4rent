@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 05/07/2013 23:03:16
--- Generated from EDMX file: C:\Users\Naty\Documents\Visual Studio 2012\Projects\ol4rent\Ol4RentAPI\Model\Model.edmx
+-- Date Created: 05/12/2013 20:49:27
+-- Generated from EDMX file: C:\Users\Martin\documents\visual studio 2012\Projects\OL4RENT\Ol4RentAPI\Model\Model.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -14,163 +14,158 @@ IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
 
 -- --------------------------------------------------
+-- [NOTE] Agregado por el tema de membership
+-- --------------------------------------------------
+IF OBJECT_ID(N'[dbo].[fk_UserId]', 'F') IS NOT NULL
+	ALTER TABLE [dbo].[webpages_UsersInRoles] DROP CONSTRAINT [fk_UserId];
+GO
+
+-- --------------------------------------------------
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
 IF OBJECT_ID(N'[dbo].[FK_TipoBienSitio]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[TipoBienSet] DROP CONSTRAINT [FK_TipoBienSitio];
+    ALTER TABLE [dbo].[TiposBienes] DROP CONSTRAINT [FK_TipoBienSitio];
 GO
 IF OBJECT_ID(N'[dbo].[FK_TipoBienCaracteristica]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CaracteristicaSet1] DROP CONSTRAINT [FK_TipoBienCaracteristica];
+    ALTER TABLE [dbo].[Caracteristicas] DROP CONSTRAINT [FK_TipoBienCaracteristica];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ContenidoBien]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ContenidoSet] DROP CONSTRAINT [FK_ContenidoBien];
+    ALTER TABLE [dbo].[Contenidos] DROP CONSTRAINT [FK_ContenidoBien];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AdjuntoContenido]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AdjuntoSet] DROP CONSTRAINT [FK_AdjuntoContenido];
+    ALTER TABLE [dbo].[Adjuntos] DROP CONSTRAINT [FK_AdjuntoContenido];
 GO
 IF OBJECT_ID(N'[dbo].[FK_SitioSitioOrigenDatos]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ConfiguracionOrigenDatosSet] DROP CONSTRAINT [FK_SitioSitioOrigenDatos];
+    ALTER TABLE [dbo].[ConfiguracionesOrigenesDatos] DROP CONSTRAINT [FK_SitioSitioOrigenDatos];
 GO
 IF OBJECT_ID(N'[dbo].[FK_SitioOrigenDatosOrigenDato]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ConfiguracionOrigenDatosSet] DROP CONSTRAINT [FK_SitioOrigenDatosOrigenDato];
+    ALTER TABLE [dbo].[ConfiguracionesOrigenesDatos] DROP CONSTRAINT [FK_SitioOrigenDatosOrigenDato];
 GO
 IF OBJECT_ID(N'[dbo].[FK_NovedadSitioOrigenDatos]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[NovedadSet] DROP CONSTRAINT [FK_NovedadSitioOrigenDatos];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UsuarioRol_Usuario]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UsuarioRol] DROP CONSTRAINT [FK_UsuarioRol_Usuario];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UsuarioRol_Rol]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UsuarioRol] DROP CONSTRAINT [FK_UsuarioRol_Rol];
+    ALTER TABLE [dbo].[Novedades] DROP CONSTRAINT [FK_NovedadSitioOrigenDatos];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UsuarioSitio]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SitioSet1] DROP CONSTRAINT [FK_UsuarioSitio];
+    ALTER TABLE [dbo].[Sitios] DROP CONSTRAINT [FK_UsuarioSitio];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UsuarioHabilitacionUsuarioSitio]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[HabilitacionUsuarioSet] DROP CONSTRAINT [FK_UsuarioHabilitacionUsuarioSitio];
+    ALTER TABLE [dbo].[HabilitacionesUsuarios] DROP CONSTRAINT [FK_UsuarioHabilitacionUsuarioSitio];
 GO
 IF OBJECT_ID(N'[dbo].[FK_HabilitacionUsuarioSitioSitio]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[HabilitacionUsuarioSet] DROP CONSTRAINT [FK_HabilitacionUsuarioSitioSitio];
+    ALTER TABLE [dbo].[HabilitacionesUsuarios] DROP CONSTRAINT [FK_HabilitacionUsuarioSitioSitio];
 GO
 IF OBJECT_ID(N'[dbo].[FK_BienTipoBien]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[BienSet1] DROP CONSTRAINT [FK_BienTipoBien];
+    ALTER TABLE [dbo].[Bienes] DROP CONSTRAINT [FK_BienTipoBien];
 GO
 IF OBJECT_ID(N'[dbo].[FK_BienUsuario]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[BienSet1] DROP CONSTRAINT [FK_BienUsuario];
+    ALTER TABLE [dbo].[Bienes] DROP CONSTRAINT [FK_BienUsuario];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UsuarioBuzonMensajes]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[BuzonMensajesSet] DROP CONSTRAINT [FK_UsuarioBuzonMensajes];
+    ALTER TABLE [dbo].[BuzonesMensajes] DROP CONSTRAINT [FK_UsuarioBuzonMensajes];
 GO
 IF OBJECT_ID(N'[dbo].[FK_MensajeBuzonMensaje]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MensajeSet] DROP CONSTRAINT [FK_MensajeBuzonMensaje];
+    ALTER TABLE [dbo].[Mensajes] DROP CONSTRAINT [FK_MensajeBuzonMensaje];
 GO
 IF OBJECT_ID(N'[dbo].[FK_MensajeUsuario]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MensajeSet] DROP CONSTRAINT [FK_MensajeUsuario];
+    ALTER TABLE [dbo].[Mensajes] DROP CONSTRAINT [FK_MensajeUsuario];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UsuarioWishList]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EspecificacionBienSet] DROP CONSTRAINT [FK_UsuarioWishList];
+    ALTER TABLE [dbo].[EspecificacionesBienes] DROP CONSTRAINT [FK_UsuarioWishList];
 GO
 IF OBJECT_ID(N'[dbo].[FK_EspecificacionBienTipoBien]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EspecificacionBienSet] DROP CONSTRAINT [FK_EspecificacionBienTipoBien];
+    ALTER TABLE [dbo].[EspecificacionesBienes] DROP CONSTRAINT [FK_EspecificacionBienTipoBien];
 GO
 IF OBJECT_ID(N'[dbo].[FK_EspecificacionBienValorCaracteristicaEspecificacion]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ValorCaracteristicaSet] DROP CONSTRAINT [FK_EspecificacionBienValorCaracteristicaEspecificacion];
+    ALTER TABLE [dbo].[ValoresCaracteristicas] DROP CONSTRAINT [FK_EspecificacionBienValorCaracteristicaEspecificacion];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ValorCaracteristicaEspecificacionCaracteristica]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ValorCaracteristicaSet] DROP CONSTRAINT [FK_ValorCaracteristicaEspecificacionCaracteristica];
+    ALTER TABLE [dbo].[ValoresCaracteristicas] DROP CONSTRAINT [FK_ValorCaracteristicaEspecificacionCaracteristica];
 GO
 IF OBJECT_ID(N'[dbo].[FK_MeGustaBien]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MeGustaSet] DROP CONSTRAINT [FK_MeGustaBien];
+    ALTER TABLE [dbo].[MeGusta] DROP CONSTRAINT [FK_MeGustaBien];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UsuarioMeGusta]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MeGustaSet] DROP CONSTRAINT [FK_UsuarioMeGusta];
+    ALTER TABLE [dbo].[MeGusta] DROP CONSTRAINT [FK_UsuarioMeGusta];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ContenidoUsuario]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ContenidoSet] DROP CONSTRAINT [FK_ContenidoUsuario];
+    ALTER TABLE [dbo].[Contenidos] DROP CONSTRAINT [FK_ContenidoUsuario];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AtributoOrigenDatos]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AtributoSet] DROP CONSTRAINT [FK_AtributoOrigenDatos];
+    ALTER TABLE [dbo].[Atributos] DROP CONSTRAINT [FK_AtributoOrigenDatos];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AtributoValorAtributoNovedad]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ValorAtributoSet] DROP CONSTRAINT [FK_AtributoValorAtributoNovedad];
+    ALTER TABLE [dbo].[ValoresAtributos] DROP CONSTRAINT [FK_AtributoValorAtributoNovedad];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ValorAtributoNovedadSitioOrigenDatos]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ValorAtributoSet] DROP CONSTRAINT [FK_ValorAtributoNovedadSitioOrigenDatos];
+    ALTER TABLE [dbo].[ValoresAtributos] DROP CONSTRAINT [FK_ValorAtributoNovedadSitioOrigenDatos];
 GO
 IF OBJECT_ID(N'[dbo].[FK_SesionUsuario]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SesionSet] DROP CONSTRAINT [FK_SesionUsuario];
+    ALTER TABLE [dbo].[Sesiones] DROP CONSTRAINT [FK_SesionUsuario];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ValorCaracteristicaBien]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ValorCaracteristicaSet] DROP CONSTRAINT [FK_ValorCaracteristicaBien];
+    ALTER TABLE [dbo].[ValoresCaracteristicas] DROP CONSTRAINT [FK_ValorCaracteristicaBien];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[SitioSet1]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[SitioSet1];
+IF OBJECT_ID(N'[dbo].[Sitios]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Sitios];
 GO
-IF OBJECT_ID(N'[dbo].[OrigenDatosSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[OrigenDatosSet];
+IF OBJECT_ID(N'[dbo].[OrigenesDatos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OrigenesDatos];
 GO
-IF OBJECT_ID(N'[dbo].[CaracteristicaSet1]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CaracteristicaSet1];
+IF OBJECT_ID(N'[dbo].[Caracteristicas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Caracteristicas];
 GO
-IF OBJECT_ID(N'[dbo].[NovedadSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[NovedadSet];
+IF OBJECT_ID(N'[dbo].[Novedades]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Novedades];
 GO
-IF OBJECT_ID(N'[dbo].[BienSet1]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BienSet1];
+IF OBJECT_ID(N'[dbo].[Bienes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Bienes];
 GO
-IF OBJECT_ID(N'[dbo].[TipoBienSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[TipoBienSet];
+IF OBJECT_ID(N'[dbo].[TiposBienes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TiposBienes];
 GO
-IF OBJECT_ID(N'[dbo].[ContenidoSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ContenidoSet];
+IF OBJECT_ID(N'[dbo].[Contenidos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Contenidos];
 GO
-IF OBJECT_ID(N'[dbo].[AdjuntoSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[AdjuntoSet];
+IF OBJECT_ID(N'[dbo].[Adjuntos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Adjuntos];
 GO
-IF OBJECT_ID(N'[dbo].[UsuarioSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[UsuarioSet];
+IF OBJECT_ID(N'[dbo].[Usuarios]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Usuarios];
 GO
-IF OBJECT_ID(N'[dbo].[ConfiguracionOrigenDatosSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ConfiguracionOrigenDatosSet];
+IF OBJECT_ID(N'[dbo].[ConfiguracionesOrigenesDatos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ConfiguracionesOrigenesDatos];
 GO
-IF OBJECT_ID(N'[dbo].[RolSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[RolSet];
+IF OBJECT_ID(N'[dbo].[HabilitacionesUsuarios]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[HabilitacionesUsuarios];
 GO
-IF OBJECT_ID(N'[dbo].[HabilitacionUsuarioSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[HabilitacionUsuarioSet];
+IF OBJECT_ID(N'[dbo].[BuzonesMensajes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BuzonesMensajes];
 GO
-IF OBJECT_ID(N'[dbo].[BuzonMensajesSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BuzonMensajesSet];
+IF OBJECT_ID(N'[dbo].[Mensajes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Mensajes];
 GO
-IF OBJECT_ID(N'[dbo].[MensajeSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[MensajeSet];
+IF OBJECT_ID(N'[dbo].[EspecificacionesBienes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[EspecificacionesBienes];
 GO
-IF OBJECT_ID(N'[dbo].[EspecificacionBienSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[EspecificacionBienSet];
+IF OBJECT_ID(N'[dbo].[ValoresCaracteristicas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ValoresCaracteristicas];
 GO
-IF OBJECT_ID(N'[dbo].[ValorCaracteristicaSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ValorCaracteristicaSet];
+IF OBJECT_ID(N'[dbo].[MeGusta]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[MeGusta];
 GO
-IF OBJECT_ID(N'[dbo].[MeGustaSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[MeGustaSet];
+IF OBJECT_ID(N'[dbo].[Atributos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Atributos];
 GO
-IF OBJECT_ID(N'[dbo].[AtributoSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[AtributoSet];
+IF OBJECT_ID(N'[dbo].[ValoresAtributos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ValoresAtributos];
 GO
-IF OBJECT_ID(N'[dbo].[ValorAtributoSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ValorAtributoSet];
-GO
-IF OBJECT_ID(N'[dbo].[SesionSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[SesionSet];
-GO
-IF OBJECT_ID(N'[dbo].[UsuarioRol]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[UsuarioRol];
+IF OBJECT_ID(N'[dbo].[Sesiones]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Sesiones];
 GO
 
 -- --------------------------------------------------
@@ -227,12 +222,12 @@ CREATE TABLE [dbo].[Bienes] (
     [Foto] varbinary(max)  NOT NULL,
     [Latitud] decimal(18,0)  NOT NULL,
     [Longitud] decimal(18,0)  NOT NULL,
-    [Direccion] nvarchar(128)  NOT NULL,
+    [Direccion] nvarchar(128)  NULL,
     [Normas] nvarchar(4000)  NOT NULL,
     [Capacidad] smallint  NOT NULL,
     [Precio] decimal(18,0)  NOT NULL,
     [Descripcion] nvarchar(4000)  NOT NULL,
-    [FechaAlquiler] datetime  NOT NULL,
+    [FechaAlquiler] datetime  NULL,
     [DuracionAlquiler] smallint  NOT NULL,
     [TipoBien_Id] int  NOT NULL,
     [Usuario_Id] int  NOT NULL
@@ -276,8 +271,8 @@ CREATE TABLE [dbo].[Usuarios] (
     [Mail] nvarchar(64)  NOT NULL,
     [NombreUsuario] nvarchar(64)  NOT NULL,
     [Contraseña] nvarchar(64)  NOT NULL,
-    [UsuarioFacebook] nvarchar(128)  NOT NULL,
-    [UsuarioTwitter] nvarchar(128)  NOT NULL
+    [UsuarioFacebook] nvarchar(128)  NULL,
+    [UsuarioTwitter] nvarchar(128)  NULL
 );
 GO
 
@@ -286,13 +281,6 @@ CREATE TABLE [dbo].[ConfiguracionesOrigenesDatos] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Sitio_Id] int  NOT NULL,
     [OrigenDatos_Id] int  NOT NULL
-);
-GO
-
--- Creating table 'Roles'
-CREATE TABLE [dbo].[Roles] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [Nombre] nvarchar(64)  NOT NULL
 );
 GO
 
@@ -329,7 +317,7 @@ CREATE TABLE [dbo].[EspecificacionesBienes] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Latitud] decimal(18,0)  NOT NULL,
     [Longitud] decimal(18,0)  NOT NULL,
-    [Direccion] nvarchar(128)  NOT NULL,
+    [Direccion] nvarchar(128)  NULL,
     [Rango] smallint  NOT NULL,
     [Usuario_Id] int  NOT NULL,
     [TipoBien_Id] int  NOT NULL
@@ -377,16 +365,9 @@ CREATE TABLE [dbo].[Sesiones] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [FechaConexion] datetime  NOT NULL,
     [UltimoUso] datetime  NOT NULL,
-    [FechaCierre] datetime  NOT NULL,
+    [FechaCierre] datetime  NULL,
     [SesionID] nvarchar(256)  NOT NULL,
     [Usuario_Id] int  NOT NULL
-);
-GO
-
--- Creating table 'UsuarioRol'
-CREATE TABLE [dbo].[UsuarioRol] (
-    [UsuarioRol_Rol_Id] int  NOT NULL,
-    [Roles_Id] int  NOT NULL
 );
 GO
 
@@ -454,12 +435,6 @@ ADD CONSTRAINT [PK_ConfiguracionesOrigenesDatos]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'Roles'
-ALTER TABLE [dbo].[Roles]
-ADD CONSTRAINT [PK_Roles]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
 -- Creating primary key on [Id] in table 'HabilitacionesUsuarios'
 ALTER TABLE [dbo].[HabilitacionesUsuarios]
 ADD CONSTRAINT [PK_HabilitacionesUsuarios]
@@ -512,12 +487,6 @@ GO
 ALTER TABLE [dbo].[Sesiones]
 ADD CONSTRAINT [PK_Sesiones]
     PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
--- Creating primary key on [UsuarioRol_Rol_Id], [Roles_Id] in table 'UsuarioRol'
-ALTER TABLE [dbo].[UsuarioRol]
-ADD CONSTRAINT [PK_UsuarioRol]
-    PRIMARY KEY NONCLUSTERED ([UsuarioRol_Rol_Id], [Roles_Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -620,29 +589,6 @@ ADD CONSTRAINT [FK_NovedadSitioOrigenDatos]
 CREATE INDEX [IX_FK_NovedadSitioOrigenDatos]
 ON [dbo].[Novedades]
     ([Configuracion_Id]);
-GO
-
--- Creating foreign key on [UsuarioRol_Rol_Id] in table 'UsuarioRol'
-ALTER TABLE [dbo].[UsuarioRol]
-ADD CONSTRAINT [FK_UsuarioRol_Usuario]
-    FOREIGN KEY ([UsuarioRol_Rol_Id])
-    REFERENCES [dbo].[Usuarios]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating foreign key on [Roles_Id] in table 'UsuarioRol'
-ALTER TABLE [dbo].[UsuarioRol]
-ADD CONSTRAINT [FK_UsuarioRol_Rol]
-    FOREIGN KEY ([Roles_Id])
-    REFERENCES [dbo].[Roles]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_UsuarioRol_Rol'
-CREATE INDEX [IX_FK_UsuarioRol_Rol]
-ON [dbo].[UsuarioRol]
-    ([Roles_Id]);
 GO
 
 -- Creating foreign key on [UsuarioSitio_Sitio_Id] in table 'Sitios'
@@ -923,6 +869,13 @@ ADD CONSTRAINT [FK_ValorCaracteristicaBien]
 CREATE INDEX [IX_FK_ValorCaracteristicaBien]
 ON [dbo].[ValoresCaracteristicas]
     ([ValorCaracteristicaBien_ValorCaracteristica_Id]);
+GO
+
+-- --------------------------------------------------
+-- [NOTE] Agregado por membership
+-- --------------------------------------------------
+
+ALTER TABLE [dbo].[webpages_UsersInRoles] ADD CONSTRAINT [fk_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Usuarios] ([Id]);
 GO
 
 -- --------------------------------------------------

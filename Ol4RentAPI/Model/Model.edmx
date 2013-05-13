@@ -16,7 +16,6 @@
     <EntitySet Name="Adjuntos" EntityType="Model.Store.Adjuntos" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Usuarios" EntityType="Model.Store.Usuarios" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ConfiguracionesOrigenesDatos" EntityType="Model.Store.ConfiguracionesOrigenesDatos" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Roles" EntityType="Model.Store.Roles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="HabilitacionesUsuarios" EntityType="Model.Store.HabilitacionesUsuarios" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="BuzonesMensajes" EntityType="Model.Store.BuzonesMensajes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Mensajes" EntityType="Model.Store.Mensajes" store:Type="Tables" Schema="dbo" />
@@ -26,7 +25,6 @@
     <EntitySet Name="Atributos" EntityType="Model.Store.Atributos" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ValoresAtributos" EntityType="Model.Store.ValoresAtributos" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Sesiones" EntityType="Model.Store.Sesiones" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="UsuarioRol" EntityType="Model.Store.UsuarioRol" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="TipoBienSitio" Association="Model.Store.TipoBienSitio">
       <End Role="TipoBien" EntitySet="TiposBienes" />
       <End Role="Sitio" EntitySet="Sitios" />
@@ -54,14 +52,6 @@
     <AssociationSet Name="NovedadSitioOrigenDatos" Association="Model.Store.NovedadSitioOrigenDatos">
       <End Role="Novedad" EntitySet="Novedades" />
       <End Role="SitioOrigenDatos" EntitySet="ConfiguracionesOrigenesDatos" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UsuarioRol_Usuario" Association="Model.Store.FK_UsuarioRol_Usuario">
-      <End Role="Usuario" EntitySet="Usuarios" />
-      <End Role="UsuarioRol" EntitySet="UsuarioRol" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UsuarioRol_Rol" Association="Model.Store.FK_UsuarioRol_Rol">
-      <End Role="Rol" EntitySet="Roles" />
-      <End Role="UsuarioRol" EntitySet="UsuarioRol" />
     </AssociationSet>
     <AssociationSet Name="UsuarioSitio" Association="Model.Store.UsuarioSitio">
       <End Role="Usuario" EntitySet="Usuarios" />
@@ -196,12 +186,12 @@
     <Property Name="Foto" Type="varbinary(max)" Nullable="false" />
     <Property Name="Latitud" Type="decimal" Nullable="false" />
     <Property Name="Longitud" Type="decimal" Nullable="false" />
-    <Property Name="Direccion" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Direccion" Type="nvarchar" Nullable="true" MaxLength="128" />
     <Property Name="Normas" Type="nvarchar" Nullable="false" MaxLength="4000" />
     <Property Name="Capacidad" Type="smallint" Nullable="false" />
     <Property Name="Precio" Type="decimal" Nullable="false" />
     <Property Name="Descripcion" Type="nvarchar" Nullable="false" MaxLength="4000" />
-    <Property Name="FechaAlquiler" Type="datetime" Nullable="false" />
+    <Property Name="FechaAlquiler" Type="datetime" Nullable="true" />
     <Property Name="DuracionAlquiler" Type="smallint" Nullable="false" />
     <Property Name="TipoBien_Id" Type="int" Nullable="false" />
     <Property Name="Usuario_Id" Type="int" Nullable="false" />
@@ -245,8 +235,8 @@
     <Property Name="Mail" Type="nvarchar" Nullable="false" MaxLength="64" />
     <Property Name="NombreUsuario" Type="nvarchar" Nullable="false" MaxLength="64" />
     <Property Name="Contraseña" Type="nvarchar" Nullable="false" MaxLength="64" />
-    <Property Name="UsuarioFacebook" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="UsuarioTwitter" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="UsuarioFacebook" Type="nvarchar" Nullable="true" MaxLength="128" />
+    <Property Name="UsuarioTwitter" Type="nvarchar" Nullable="true" MaxLength="128" />
   </EntityType>
   <EntityType Name="ConfiguracionesOrigenesDatos">
     <Key>
@@ -255,13 +245,6 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Sitio_Id" Type="int" Nullable="false" />
     <Property Name="OrigenDatos_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Roles">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="64" />
   </EntityType>
   <EntityType Name="HabilitacionesUsuarios">
     <Key>
@@ -298,7 +281,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Latitud" Type="decimal" Nullable="false" />
     <Property Name="Longitud" Type="decimal" Nullable="false" />
-    <Property Name="Direccion" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Direccion" Type="nvarchar" Nullable="true" MaxLength="128" />
     <Property Name="Rango" Type="smallint" Nullable="false" />
     <Property Name="Usuario_Id" Type="int" Nullable="false" />
     <Property Name="TipoBien_Id" Type="int" Nullable="false" />
@@ -346,17 +329,9 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FechaConexion" Type="datetime" Nullable="false" />
     <Property Name="UltimoUso" Type="datetime" Nullable="false" />
-    <Property Name="FechaCierre" Type="datetime" Nullable="false" />
+    <Property Name="FechaCierre" Type="datetime" Nullable="true" />
     <Property Name="SesionID" Type="nvarchar" Nullable="false" MaxLength="256" />
     <Property Name="Usuario_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="UsuarioRol">
-    <Key>
-      <PropertyRef Name="UsuarioRol_Rol_Id" />
-      <PropertyRef Name="Roles_Id" />
-    </Key>
-    <Property Name="UsuarioRol_Rol_Id" Type="int" Nullable="false" />
-    <Property Name="Roles_Id" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="TipoBienSitio">
     <End Role="TipoBien" Type="Model.Store.TiposBienes" Multiplicity="*" />
@@ -682,30 +657,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UsuarioRol_Usuario">
-    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
-    <End Role="UsuarioRol" Type="Model.Store.UsuarioRol" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Usuario">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="UsuarioRol">
-        <PropertyRef Name="UsuarioRol_Rol_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UsuarioRol_Rol">
-    <End Role="UsuarioRol" Type="Model.Store.UsuarioRol" Multiplicity="*" />
-    <End Role="Rol" Type="Model.Store.Roles" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Rol">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="UsuarioRol">
-        <PropertyRef Name="Roles_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -748,11 +699,6 @@
           <AssociationSet Name="NovedadSitioOrigenDatos" Association="Model.NovedadSitioOrigenDatos">
             <End Role="Novedad" EntitySet="Novedades" />
             <End Role="SitioOrigenDatos" EntitySet="ConfiguracionesOrigenesDatos" />
-          </AssociationSet>
-          <EntitySet Name="Roles" EntityType="Model.Rol" />
-          <AssociationSet Name="UsuarioRol" Association="Model.UsuarioRol">
-            <End Role="Usuario" EntitySet="Usuarios" />
-            <End Role="Rol" EntitySet="Roles" />
           </AssociationSet>
           <AssociationSet Name="UsuarioSitio" Association="Model.UsuarioSitio">
             <End Role="Usuario" EntitySet="Usuarios" />
@@ -908,12 +854,12 @@
           <Property Type="Binary" Name="Foto" Nullable="false" />
           <Property Type="Decimal" Name="Latitud" Nullable="false" />
           <Property Type="Decimal" Name="Longitud" Nullable="false" />
-          <Property Type="String" Name="Direccion" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="128" />
           <Property Type="String" Name="Normas" Nullable="false" MaxLength="4000" />
           <Property Type="Int16" Name="Capacidad" Nullable="false" />
           <Property Type="Decimal" Name="Precio" Nullable="false" />
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="4000" />
-          <Property Type="DateTime" Name="FechaAlquiler" Nullable="false" />
+          <Property Type="DateTime" Name="FechaAlquiler" Nullable="true" />
           <Property Type="Int16" Name="DuracionAlquiler" Nullable="false" />
           <NavigationProperty Name="ValoresCaracteristicas" Relationship="Model.ValorCaracteristicaBien" FromRole="Bien" ToRole="ValorCaracteristica" />
         </EntityType>
@@ -958,7 +904,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Roles" Relationship="Model.UsuarioRol" FromRole="Usuario" ToRole="Rol" />
           <NavigationProperty Name="SitiosAdministrados" Relationship="Model.UsuarioSitio" FromRole="Usuario" ToRole="Sitio" />
           <NavigationProperty Name="BuzonesMensajes" Relationship="Model.UsuarioBuzonMensajes" FromRole="Usuario" ToRole="BuzonMensajes" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
@@ -966,8 +911,8 @@
           <Property Type="String" Name="Mail" Nullable="false" MaxLength="64" />
           <Property Type="String" Name="NombreUsuario" Nullable="false" MaxLength="64" />
           <Property Type="String" Name="Contraseña" Nullable="false" MaxLength="64" />
-          <Property Type="String" Name="UsuarioFacebook" Nullable="false" MaxLength="128" />
-          <Property Type="String" Name="UsuarioTwitter" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="UsuarioFacebook" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="UsuarioTwitter" MaxLength="128" Nullable="true" />
         </EntityType>
         <EntityType Name="ConfiguracionOrigenDatos">
           <Key>
@@ -989,17 +934,6 @@
         <Association Name="NovedadSitioOrigenDatos">
           <End Type="Model.Novedad" Role="Novedad" Multiplicity="*" />
           <End Type="Model.ConfiguracionOrigenDatos" Role="SitioOrigenDatos" Multiplicity="1" />
-        </Association>
-        <EntityType Name="Rol">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
-        </EntityType>
-        <Association Name="UsuarioRol">
-          <End Type="Model.Usuario" Role="Usuario" Multiplicity="*" />
-          <End Type="Model.Rol" Role="Rol" Multiplicity="*" />
         </Association>
         <Association Name="UsuarioSitio">
           <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
@@ -1070,7 +1004,7 @@
           <NavigationProperty Name="ValoresCaracteristicas" Relationship="Model.EspecificacionBienValorCaracteristicaEspecificacion" FromRole="EspecificacionBien" ToRole="ValorCaracteristicaEspecificacion" />
           <Property Type="Decimal" Name="Latitud" Nullable="false" />
           <Property Type="Decimal" Name="Longitud" Nullable="false" />
-          <Property Type="String" Name="Direccion" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="128" />
           <Property Type="Int16" Name="Rango" Nullable="false" />
         </EntityType>
         <Association Name="UsuarioWishList">
@@ -1163,7 +1097,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="DateTime" Name="FechaConexion" Nullable="false" />
           <Property Type="DateTime" Name="UltimoUso" Nullable="false" />
-          <Property Type="DateTime" Name="FechaCierre" Nullable="false" />
+          <Property Type="DateTime" Name="FechaCierre" Nullable="true" />
           <Property Type="String" Name="SesionID" Nullable="false" MaxLength="256" />
           <NavigationProperty Name="Usuario" Relationship="Model.SesionUsuario" FromRole="Sesion" ToRole="Usuario" />
         </EntityType>
@@ -1289,14 +1223,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(Model.ConfiguracionOrigenDatos)">
         <MappingFragment StoreEntitySet="ConfiguracionesOrigenesDatos">
           <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.Rol)">
-        <MappingFragment StoreEntitySet="Roles">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1434,14 +1360,6 @@
       </EndProperty>
       <EndProperty Name="Novedad">
         <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="UsuarioRol" TypeName="Model.UsuarioRol" StoreEntitySet="UsuarioRol">
-      <EndProperty Name="Usuario">
-        <ScalarProperty Name="Id" ColumnName="UsuarioRol_Rol_Id" />
-      </EndProperty>
-      <EndProperty Name="Rol">
-        <ScalarProperty Name="Id" ColumnName="Roles_Id" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="UsuarioSitio" TypeName="Model.UsuarioSitio" StoreEntitySet="Sitios">

@@ -35,7 +35,6 @@ namespace Ol4RentAPI.Model
         public DbSet<Adjunto> Adjuntos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<ConfiguracionOrigenDatos> ConfiguracionesOrigenesDatos { get; set; }
-        public DbSet<Rol> Roles { get; set; }
         public DbSet<HabilitacionUsuario> HabilitacionesUsuarios { get; set; }
         public DbSet<BuzonMensajes> BuzonesMensajes { get; set; }
         public DbSet<Mensaje> Mensajes { get; set; }

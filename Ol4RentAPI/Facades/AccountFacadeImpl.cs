@@ -11,42 +11,54 @@ namespace Ol4RentAPI.Facades
 {
     class AccountFacadeImpl : IAccountFacade
     {
-        private ModelContainer db = new ModelContainer();
-
         public List<Model.Usuario> Todos
         {
-            get { return db.Usuarios.ToList(); }
+            get {
+                using (ModelContainer db = new ModelContainer())
+                {
+                    return db.Usuarios.ToList();
+                }
+            }
         }
         
         public Usuario Obtener(int id)
         {
-            return db.Usuarios.Find(id);
+            using (ModelContainer db = new ModelContainer())
+            {
+                return db.Usuarios.Find(id);
+            }
         }
 
         public Usuario ObtenerPorNombre(string NombreUsuario)
         {
-            return db.Usuarios.Where(u => u.NombreUsuario.ToLower() == NombreUsuario.ToLower()).First();
+            using (ModelContainer db = new ModelContainer())
+            {
+                return db.Usuarios.Where(u => u.NombreUsuario.ToLower() == NombreUsuario.ToLower()).First();
+            }
         }
 
-        public Usuario Crear(Usuario usuario)
+        public bool Crear(string nombreUsuario)
         {
             try
             {
-                // Creo el usuario
-                db.Usuarios.Add(usuario);
-                // Asocio todos los sitios al usuario
-                List<Sitio> sitios = db.Sitios.ToList();
-                foreach (Sitio sitio in sitios)
+                using (ModelContainer db = new ModelContainer())
                 {
-                    db.HabilitacionesUsuarios.Add(new HabilitacionUsuario() { Usuario = usuario, Sitio = sitio, Habilitado = true, CantContBloq = 0 });
+                    // Obtengo el usuario
+                    Usuario usuario = (from usu in db.Usuarios where usu.NombreUsuario == nombreUsuario select usu).First();
+                    // Asocio todos los sitios al usuario
+                    List<Sitio> sitios = db.Sitios.ToList();
+                    foreach (Sitio sitio in sitios)
+                    {
+                        db.HabilitacionesUsuarios.Add(new HabilitacionUsuario() { Usuario = usuario, Sitio = sitio, Habilitado = true, CantContBloq = 0 });
+                    }
+                    // Guardo los cambios
+                    db.SaveChanges();
+                    return true;
                 }
-                // Guardo los cambios
-                db.SaveChanges();
-                return usuario;
             }
             catch
             {
-                return null;
+                return false;
             }
 
         }
@@ -55,9 +67,12 @@ namespace Ol4RentAPI.Facades
         {
             try
             {
-                db.Entry(usuario).State = EntityState.Modified;
-                db.SaveChanges();
-                return usuario;
+                using (ModelContainer db = new ModelContainer())
+                {
+                    db.Entry(usuario).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return usuario;
+                }
             }
             catch
             {
@@ -67,9 +82,12 @@ namespace Ol4RentAPI.Facades
 
         public void Eliminar(int id)
         {
-            Usuario usuario = db.Usuarios.Find(id);
-            db.Usuarios.Remove(usuario);
-            db.SaveChanges();
+            using (ModelContainer db = new ModelContainer())
+            {
+                Usuario usuario = db.Usuarios.Find(id);
+                db.Usuarios.Remove(usuario);
+                db.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -79,11 +97,14 @@ namespace Ol4RentAPI.Facades
         /// <returns>Una lista de UsuarioSitioDTO con todos los usuarios y su relacion con el sitio</returns>
         public List<UsuarioSitioDTO> ObtenerPorSitio(int idSitio)
         {
-            IQueryable<HabilitacionUsuario> habilitaciones =
-                from hu in db.HabilitacionesUsuarios
-                where hu.Sitio.Id == idSitio
-                select hu;
-            return AutoMapperUtils<HabilitacionUsuario, UsuarioSitioDTO>.Map(habilitaciones.ToList());
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<HabilitacionUsuario> habilitaciones =
+                    from hu in db.HabilitacionesUsuarios
+                    where hu.Sitio.Id == idSitio
+                    select hu;
+                return AutoMapperUtils<HabilitacionUsuario, UsuarioSitioDTO>.Map(habilitaciones.ToList());
+            }
         }
 
         /// <summary>
@@ -93,16 +114,19 @@ namespace Ol4RentAPI.Facades
         /// <param name="idSitio">Identificador del sitio</param>
         public void DeshabilitarUsuarioEnSitio(int idUsuario, int idSitio)
         {
-            IQueryable<HabilitacionUsuario> habilitaciones =
-                from hu in db.HabilitacionesUsuarios
-                where hu.Sitio.Id == idSitio
-                    && hu.Usuario.Id == idUsuario
-                select hu;
-            if (habilitaciones.Count<HabilitacionUsuario>() > 0)
+            using (ModelContainer db = new ModelContainer())
             {
-                habilitaciones.First().Habilitado = false;
-                db.Entry<HabilitacionUsuario>(habilitaciones.First()).State = EntityState.Modified;
-                db.SaveChanges();
+                IQueryable<HabilitacionUsuario> habilitaciones =
+                    from hu in db.HabilitacionesUsuarios
+                    where hu.Sitio.Id == idSitio
+                        && hu.Usuario.Id == idUsuario
+                    select hu;
+                if (habilitaciones.Count<HabilitacionUsuario>() > 0)
+                {
+                    habilitaciones.First().Habilitado = false;
+                    db.Entry<HabilitacionUsuario>(habilitaciones.First()).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -113,16 +137,19 @@ namespace Ol4RentAPI.Facades
         /// <param name="idSitio">Identificador del sitio</param>
         public void HabilitarUsuarioEnSitio(int idUsuario, int idSitio)
         {
-            IQueryable<HabilitacionUsuario> habilitaciones =
-                from hu in db.HabilitacionesUsuarios
-                where hu.Sitio.Id == idSitio
-                    && hu.Usuario.Id == idUsuario
-                select hu;
-            if (habilitaciones.Count<HabilitacionUsuario>() > 0)
+            using (ModelContainer db = new ModelContainer())
             {
-                habilitaciones.First().Habilitado = true;
-                db.Entry<HabilitacionUsuario>(habilitaciones.First()).State = EntityState.Modified;
-                db.SaveChanges();
+                IQueryable<HabilitacionUsuario> habilitaciones =
+                    from hu in db.HabilitacionesUsuarios
+                    where hu.Sitio.Id == idSitio
+                        && hu.Usuario.Id == idUsuario
+                    select hu;
+                if (habilitaciones.Count<HabilitacionUsuario>() > 0)
+                {
+                    habilitaciones.First().Habilitado = true;
+                    db.Entry<HabilitacionUsuario>(habilitaciones.First()).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -133,17 +160,20 @@ namespace Ol4RentAPI.Facades
         /// <param name="idSitio">Identificador del sitio</param>
         public void ResetearUsuarioEnSitio(int idUsuario, int idSitio)
         {
-            IQueryable<HabilitacionUsuario> habilitaciones =
-                from hu in db.HabilitacionesUsuarios
-                where hu.Sitio.Id == idSitio
-                    && hu.Usuario.Id == idUsuario
-                select hu;
-            if (habilitaciones.Count<HabilitacionUsuario>() > 0)
+            using (ModelContainer db = new ModelContainer())
             {
-                habilitaciones.First().Habilitado = true;
-                habilitaciones.First().CantContBloq = 0;
-                db.Entry<HabilitacionUsuario>(habilitaciones.First()).State = EntityState.Modified;
-                db.SaveChanges();
+                IQueryable<HabilitacionUsuario> habilitaciones =
+                    from hu in db.HabilitacionesUsuarios
+                    where hu.Sitio.Id == idSitio
+                        && hu.Usuario.Id == idUsuario
+                    select hu;
+                if (habilitaciones.Count<HabilitacionUsuario>() > 0)
+                {
+                    habilitaciones.First().Habilitado = true;
+                    habilitaciones.First().CantContBloq = 0;
+                    db.Entry<HabilitacionUsuario>(habilitaciones.First()).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
         }
     }

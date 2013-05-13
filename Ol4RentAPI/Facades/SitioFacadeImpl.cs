@@ -201,7 +201,18 @@ namespace Ol4RentAPI.Facades
         public SitioListadoDTO ObtenerPorDominio(string dominio)
         {
             using (ModelContainer db = new ModelContainer()) {
-                return AutoMapperUtils<Sitio, SitioListadoDTO>.Map((from s in db.Sitios where s.URL == dominio select s).First());
+                IQueryable<Sitio> querySitio = 
+                    from s in db.Sitios 
+                    where s.URL == dominio 
+                    select s;
+                if (querySitio.Count() > 0)
+                {
+                    return AutoMapperUtils<Sitio, SitioListadoDTO>.Map(querySitio.First());
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
     }

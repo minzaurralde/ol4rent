@@ -131,9 +131,6 @@
     <Compile Include="Model\OrigenDatos.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Rol.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\RolEnum.cs" />
     <Compile Include="Model\Sesion.cs">
       <DependentUpon>Model.tt</DependentUpon>
