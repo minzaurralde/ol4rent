@@ -24,8 +24,6 @@
         <AssociationConnector Association="Model.SitioSitioOrigenDatos" />
         <AssociationConnector Association="Model.SitioOrigenDatosOrigenDato" />
         <AssociationConnector Association="Model.NovedadSitioOrigenDatos" />
-        <EntityTypeShape EntityType="Model.Rol" Width="1.5" PointX="2.875" PointY="15" IsExpanded="true" />
-        <AssociationConnector Association="Model.UsuarioRol" />
         <AssociationConnector Association="Model.UsuarioSitio" />
         <EntityTypeShape EntityType="Model.HabilitacionUsuario" Width="2.125" PointX="8.25" PointY="7.25" IsExpanded="true" />
         <AssociationConnector Association="Model.UsuarioHabilitacionUsuarioSitio" />

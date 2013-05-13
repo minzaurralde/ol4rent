@@ -79,9 +79,10 @@ namespace OL4RENT.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.NombreUsuario, model.Contraseña);
+                    WebSecurity.CreateUserAndAccount(model.NombreUsuario, model.Contraseña, new { Contraseña = model.Contraseña, Nombre = model.Nombre, Apellido = model.Apellido, Mail = model.Mail });
                     WebSecurity.Login(model.NombreUsuario, model.Contraseña);
                     Roles.AddUserToRole(model.NombreUsuario, RolEnum.PUBLIC_USER.ToString());
+                    ServiceFacadeFactory.Instance.AccountFacade.Crear(model.NombreUsuario);
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -271,7 +272,7 @@ namespace OL4RENT.Controllers
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        ServiceFacadeFactory.Instance.AccountFacade.Crear(new Usuario { NombreUsuario = model.UserName });
+                        ServiceFacadeFactory.Instance.AccountFacade.Crear(model.UserName);
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);

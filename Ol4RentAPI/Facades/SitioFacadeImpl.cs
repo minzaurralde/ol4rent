@@ -69,12 +69,16 @@ namespace Ol4RentAPI.Facades
             };
             // Se asocia el sitio al tipo de bien
             tipoBien.Sitio = sitio;
-            // Se obtiene el propietario del sitio
-            Usuario propietario = ServiceFacadeFactory.Instance.AccountFacade.ObtenerPorNombre(sitioDTO.NombreUsuarioPropietario);
             try
             {
                 using (ModelContainer db = new ModelContainer())
                 {
+                    // Se obtiene el propietario del sitio
+                    IQueryable<Usuario> queryPropietario =
+                        from usu in db.Usuarios
+                        where usu.NombreUsuario == sitioDTO.NombreUsuarioPropietario
+                        select usu;
+                    Usuario propietario = queryPropietario.First();
                     // Se guarda el sitio
                     db.Sitios.Add(sitio);
                     // Se guarda el tipo de bien
@@ -157,8 +161,22 @@ namespace Ol4RentAPI.Facades
         /// <returns></returns>
         public List<SitioListadoDTO> ObtenerPorUsuario(string nombreUsuario)
         {
-            Usuario usuario = ServiceFacadeFactory.Instance.AccountFacade.ObtenerPorNombre(nombreUsuario);
-            return AutoMapperUtils<Sitio, SitioListadoDTO>.Map(usuario.SitiosAdministrados.ToList());
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Usuario> query =
+                    from usu in db.Usuarios
+                    where usu.Nombre == nombreUsuario
+                    select usu;
+                if (query.Count() > 0)
+                {
+                    Usuario usuario = query.First();
+                    return AutoMapperUtils<Sitio, SitioListadoDTO>.Map(usuario.SitiosAdministrados.ToList());
+                }
+                else
+                {
+                    return new List<SitioListadoDTO>();
+                }
+            }
         }
 
         /// <summary>
@@ -201,7 +219,18 @@ namespace Ol4RentAPI.Facades
         public SitioListadoDTO ObtenerPorDominio(string dominio)
         {
             using (ModelContainer db = new ModelContainer()) {
-                return AutoMapperUtils<Sitio, SitioListadoDTO>.Map((from s in db.Sitios where s.URL == dominio select s).First());
+                IQueryable<Sitio> querySitio = 
+                    from s in db.Sitios 
+                    where s.URL == dominio 
+                    select s;
+                if (querySitio.Count() > 0)
+                {
+                    return AutoMapperUtils<Sitio, SitioListadoDTO>.Map(querySitio.First());
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
     }

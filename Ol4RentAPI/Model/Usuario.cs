@@ -16,7 +16,6 @@ namespace Ol4RentAPI.Model
     {
         public Usuario()
         {
-            this.Roles = new HashSet<Rol>();
             this.SitiosAdministrados = new HashSet<Sitio>();
             this.BuzonesMensajes = new HashSet<BuzonMensajes>();
         }
@@ -30,7 +29,6 @@ namespace Ol4RentAPI.Model
         public string UsuarioFacebook { get; set; }
         public string UsuarioTwitter { get; set; }
     
-        public virtual ICollection<Rol> Roles { get; set; }
         public virtual ICollection<Sitio> SitiosAdministrados { get; set; }
         public virtual ICollection<BuzonMensajes> BuzonesMensajes { get; set; }
     }

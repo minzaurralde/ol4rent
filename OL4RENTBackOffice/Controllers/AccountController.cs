@@ -149,7 +149,7 @@ namespace OL4RENTBackOffice.Controllers
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        ServiceFacadeFactory.Instance.AccountFacade.Crear(new Usuario { NombreUsuario = model.UserName });
+                        ServiceFacadeFactory.Instance.AccountFacade.Crear(model.UserName);
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);

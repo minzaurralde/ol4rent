@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
+using OL4RENTBackOffice.Filters;
+using WebMatrix.WebData;
 
 namespace OL4RENTBackOffice
 {
     public static class AuthConfig
     {
+        [InitializeSimpleMembership]
         public static void RegisterAuth()
         {
             // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,
@@ -26,6 +29,8 @@ namespace OL4RENTBackOffice
             //    appSecret: "");
 
             //OAuthWebSecurity.RegisterGoogleClient();
+
+            WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuarios", "Id", "NombreUsuario", autoCreateTables: true);
         }
     }
 }

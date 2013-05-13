@@ -1,8 +1,4 @@
-﻿using OL4RENT.App_Start;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Ol4RentAPI.DTO;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -25,7 +21,7 @@ namespace OL4RENT
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
 
-            DatabaseConfig.RegisterContexts();
+            AutoMapperInitializer.Inicializar();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace OL4RENT.DatosExternosDACAPI
 {
-    class NovedadExternaDTO
+    public class NovedadExternaDTO
     {
         public string Titulo { get; set; }
         public string Contenido { get; set; }

@@ -1,4 +1,5 @@
 ﻿
+using WebMatrix.WebData;
 namespace OL4RENT
 {
     public static class AuthConfig
@@ -22,6 +23,8 @@ namespace OL4RENT
             //    appSecret: "");
 
             //OAuthWebSecurity.RegisterGoogleClient();
+
+            WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuarios", "Id", "NombreUsuario", autoCreateTables: true);
         }
     }
 }

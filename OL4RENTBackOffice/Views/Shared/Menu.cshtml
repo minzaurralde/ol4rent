@@ -1,21 +1,12 @@
 ﻿@if (Request.IsAuthenticated) {
 <nav>
     <ul id="menu">
-        <li>@Html.ActionLink("Listar", "Sitio", "Sitios")</li>
-        <li>@Html.ActionLink("ListarPorSitio", "Usuario", "Usuarios")</li>
+        <li>@Html.ActionLink("Sitios", "Listar", "Sitio")</li>
+        <li>@Html.ActionLink("Usuarios", "ListarPorSitio", "Usuario")</li>
         @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString())) {
-        <li>@Html.ActionLink("Listar", "OrigenDatos", "Orígenes de Datos")</li>
+        <li>@Html.ActionLink("Orígenes de Datos", "Listar", "OrigenDatos")</li>
         }
-        <li>@Html.ActionLink("Index", "Reporte", "Reportes")</li>
+        <li>@Html.ActionLink("Reportes", "Index", "Reporte")</li>
     </ul>
 </nav>
 }
-
-<nav>
-    <ul id="menu">
-        <li>@Html.ActionLink("Sitios", "Listar", "Sitio")</li>
-        <li>@Html.ActionLink("Usuarios", "ListarPorSitio", "Usuario")</li>
-        <li>@Html.ActionLink("Orígenes de Datos", "Listar", "OrigenDatos")</li>
-        <li>@Html.ActionLink("Reporte", "Index", "Reporte")</li>
-    </ul>
-</nav>

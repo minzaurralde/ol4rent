@@ -17,7 +17,7 @@ namespace Ol4RentAPI.Model
         public int Id { get; set; }
         public System.DateTime FechaConexion { get; set; }
         public System.DateTime UltimoUso { get; set; }
-        public System.DateTime FechaCierre { get; set; }
+        public Nullable<System.DateTime> FechaCierre { get; set; }
         public string SesionID { get; set; }
     
         public virtual Usuario Usuario { get; set; }
