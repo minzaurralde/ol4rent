@@ -19,12 +19,10 @@ namespace Ol4RentAPI.DTO
         [DataType(DataType.MultilineText)]
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
-        [Required]
         [DataType(DataType.Upload)]
         [FileExtensions(Extensions="jpg", ErrorMessage="El logo del sitio debe ser un archivo en formato JPG")]
         [Display(Name = "Logo")]
         public byte[] Logo { get; set; }
-        [Required]
         [DataType(DataType.Upload)]
         [FileExtensions(Extensions = "css", ErrorMessage = "La hoja de estilos del sitio debe ser un archivo CSS")]
         [Display(Name = "Hoja de estilos")]
