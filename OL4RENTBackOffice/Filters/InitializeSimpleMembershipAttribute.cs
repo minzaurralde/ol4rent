@@ -38,7 +38,7 @@ namespace OL4RENTBackOffice.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuarios", "Id", "NombreUsuario", autoCreateTables: true);
+                    // WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuarios", "Id", "NombreUsuario", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

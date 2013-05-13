@@ -315,6 +315,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Novedad\NovedadesTwitter.cshtml" />
     <Content Include="Views\Novedad\NovedadesRSS.cshtml" />
+    <Content Include="Views\_AppStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,8 +3,10 @@
     <ul id="menu">
         <li>@Html.ActionLink("Sitios", "Listar", "Sitio")</li>
         <li>@Html.ActionLink("Usuarios", "ListarPorSitio", "Usuario")</li>
+        @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString())) {
         <li>@Html.ActionLink("Orígenes de Datos", "Listar", "OrigenDatos")</li>
-        <li>@Html.ActionLink("Reporte", "Index", "Reporte")</li>
+        }
+        <li>@Html.ActionLink("Reportes", "Index", "Reporte")</li>
     </ul>
 </nav>
 }

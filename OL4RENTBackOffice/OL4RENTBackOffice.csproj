@@ -313,6 +313,7 @@
     <Content Include="Views\OrigenDatos\Configurar.cshtml" />
     <Content Include="Views\OrigenDatos\ModificarConfiguracion.cshtml" />
     <Content Include="Views\Reporte\Index.cshtml" />
+    <Content Include="Views\_AppStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
