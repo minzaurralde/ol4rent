@@ -16,16 +16,21 @@ namespace OL4RENT.Controllers
         //
         // GET: /Sitio/Logo
         [HttpGet]
-        public FileContentResult Logo()
+        public FileContentResult Logo(int idSitio)
         {
-            // TODO implementar la obtencion del sitio
-            int idSitio = 1;
-            return new FileContentResult(ServiceFacadeFactory.Instance.SitioFacade.Logo(idSitio), "image/jpeg");
+            byte[] bytes = ServiceFacadeFactory.Instance.SitioFacade.Logo(idSitio);
+            if (bytes != null)
+            {
+                return new FileContentResult(ServiceFacadeFactory.Instance.SitioFacade.Logo(idSitio), "image/jpeg");
+            }
+            return null;
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
         }
+
+      
     }
 }

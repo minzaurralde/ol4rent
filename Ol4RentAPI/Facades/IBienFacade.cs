@@ -1,4 +1,5 @@
-﻿using Ol4RentAPI.Model;
+﻿using Ol4RentAPI.DTO;
+using Ol4RentAPI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Ol4RentAPI.Facades
         List<Bien> BienesPopulares { get; }
         List<Bien> Todos { get; }
         Bien Obtener(int id);
-        Bien Crear(Bien bien);
+        Bien Crear(BienAltaDTO bien);
         Bien Editar(Bien bien);
         void Eliminar(int id);
         List<Bien> Buscar(string query);
