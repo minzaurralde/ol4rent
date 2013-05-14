@@ -33,7 +33,18 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
-                return db.Usuarios.Where(u => u.NombreUsuario.ToLower() == NombreUsuario.ToLower()).First();
+                IQueryable<Usuario> query =
+                    from usu in db.Usuarios
+                    where usu.NombreUsuario.ToLower() == NombreUsuario.ToLower()
+                    select usu;
+                if (query.Count() > 0)
+                {
+                    return query.First();
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -63,20 +74,35 @@ namespace Ol4RentAPI.Facades
 
         }
         
-        public Usuario Editar(Usuario usuario)
+        public bool Editar(UsuarioDTO usuarioDTO)
         {
             try
             {
                 using (ModelContainer db = new ModelContainer())
                 {
-                    db.Entry(usuario).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return usuario;
+                    IQueryable<Usuario> query =
+                        from usu in db.Usuarios
+                        where usu.NombreUsuario.ToLower() == usuarioDTO.NombreUsuario.ToLower()
+                        select usu;
+                    if (query.Count() <= 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        Usuario usuario = query.First();
+                        usuario.Nombre = usuarioDTO.Nombre;
+                        usuario.Apellido = usuarioDTO.Apellido;
+                        usuario.Mail = usuarioDTO.Mail;
+                        db.Entry(usuario).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return true;
+                    }
                 }
             }
             catch
             {
-                return null;
+                return false;
             }
         }
 

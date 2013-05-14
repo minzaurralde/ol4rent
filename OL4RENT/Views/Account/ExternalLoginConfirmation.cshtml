@@ -1,4 +1,4 @@
-﻿@model OL4RENT.Models.RegisterExternalLoginModel
+﻿@model Ol4RentAPI.Model.RegisterExternalLoginModel
 @{
     ViewBag.Title = "Register";
 }
@@ -24,6 +24,21 @@
                 @Html.LabelFor(m => m.UserName)
                 @Html.TextBoxFor(m => m.UserName)
                 @Html.ValidationMessageFor(m => m.UserName)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Nombre)
+                @Html.TextBoxFor(m => m.Nombre)
+                @Html.ValidationMessageFor(m => m.Nombre)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Apellido)
+                @Html.TextBoxFor(m => m.Apellido)
+                @Html.ValidationMessageFor(m => m.Apellido)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Mail)
+                @Html.TextBoxFor(m => m.Mail)
+                @Html.ValidationMessageFor(m => m.Mail)
             </li>
         </ol>
         @Html.HiddenFor(m => m.ExternalLoginData)
