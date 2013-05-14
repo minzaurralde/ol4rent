@@ -14,7 +14,7 @@ namespace Ol4RentAPI.Facades
         Usuario Obtener(int id);
         Usuario ObtenerPorNombre(string NombreUsuario);
         bool Crear(string NombreUsuario);
-        Usuario Editar(Usuario usuario);
+        bool Editar(UsuarioDTO usuario);
         void Eliminar(int id);
 
         List<UsuarioSitioDTO> ObtenerPorSitio(int idSitio);
