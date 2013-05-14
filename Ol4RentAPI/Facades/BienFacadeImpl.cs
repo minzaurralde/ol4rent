@@ -1,4 +1,5 @@
-﻿using Ol4RentAPI.Model;
+﻿using Ol4RentAPI.DTO;
+using Ol4RentAPI.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,8 +18,31 @@ namespace Ol4RentAPI.Facades
             return db.Bienes.Find(id);
         }
 
-        public Model.Bien Crear(Model.Bien bien)
+        public Model.Bien Crear(BienAltaDTO bienDTO)
         {
+            bienDTO.Normas = "";
+            bienDTO.Capacidad = 12;
+
+
+            Bien bien = new Bien()
+            {
+                Titulo = bienDTO.Titulo,
+                Descripcion = bienDTO.Descripcion,
+                Foto = bienDTO.Foto,
+                Latitud = bienDTO.Latitud,
+                Longitud = bienDTO.Longitud,
+                Direccion = bienDTO.Direccion,
+                Normas = bienDTO.Normas,
+                Capacidad = bienDTO.Capacidad,
+                Precio = bienDTO.Precio,
+                TipoBien = new TipoBien()
+                {
+                    Id = 1,Nombre="Auto"
+                },
+                Usuario=new Usuario(){
+                    Id=1,Nombre="Ignacio"
+                }
+            };
             try {
                 db.Bienes.Add(bien);
                 db.SaveChanges();

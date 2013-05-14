@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Ol4RentAPI.Model;
 using Ol4RentAPI.Facades;
+using Ol4RentAPI.DTO;
 
 namespace OL4RENT.Controllers
 {
@@ -41,9 +42,11 @@ namespace OL4RENT.Controllers
         //
         // POST: /Bien/Create
         [HttpPost]
-        public ActionResult Create(Bien bien)
+        [ValidateInput(true)]
+        public ActionResult Create(BienAltaDTO bienDTO)
         {
-            if ((bien = ServiceFacadeFactory.Instance.BienFacade.Crear(bien)) != null)
+            Bien bien;
+            if ((bien = ServiceFacadeFactory.Instance.BienFacade.Crear(bienDTO)) != null)
             {
                 return RedirectToAction("Index");
             }

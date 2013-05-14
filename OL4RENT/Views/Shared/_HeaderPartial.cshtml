@@ -1,1 +1,19 @@
-﻿<p class="site-title"><a href="@Url.Action("Index", "Home")"><img src="~/Images/logo.png" alt="OL4RENT" /></a></p>
+﻿@using Ol4RentAPI.DTO;
+@{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
+
+<p class="site-title">
+    <a href="@Url.Action("Index", "Home")">
+        @if (sitio != null)
+        {
+            @Html.Label(sitio.Nombre)
+            <img src="@Url.Action("logo", "Sitio", new { idSitio = sitio.Id })" alt="@sitio.Nombre" /> 
+        }
+        else
+        {
+            <img src="~/Images/logo.png" alt="OL4RENT" />
+        }
+    </a>
+</p>
+
+
+
