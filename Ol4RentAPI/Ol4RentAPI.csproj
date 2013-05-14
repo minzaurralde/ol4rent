@@ -62,6 +62,7 @@
     <Compile Include="DTO\OrigenDatosListaDTO.cs" />
     <Compile Include="DTO\SitioAltaDTO.cs" />
     <Compile Include="DTO\SitioListadoDTO.cs" />
+    <Compile Include="DTO\UsuarioDTO.cs" />
     <Compile Include="DTO\UsuarioSitioDTO.cs" />
     <Compile Include="DTO\ValorAtributoDTO.cs" />
     <Compile Include="Facades\IAccountFacade.cs" />

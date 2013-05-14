@@ -11,6 +11,7 @@ using WebMatrix.WebData;
 using OL4RENT.Filters;
 using Ol4RentAPI.Model;
 using Ol4RentAPI.Facades;
+using Ol4RentAPI.DTO;
 
 namespace OL4RENT.Controllers
 {
@@ -272,9 +273,11 @@ namespace OL4RENT.Controllers
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        ServiceFacadeFactory.Instance.AccountFacade.Crear(model.UserName);
-
+                        WebSecurity.CreateUserAndAccount(model.UserName, model.UserName, new { Contraseña = model.UserName, Nombre = model.Nombre, Apellido = model.Apellido, Mail = model.Mail });
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
+                        ServiceFacadeFactory.Instance.AccountFacade.Crear(model.UserName);
+                        ServiceFacadeFactory.Instance.AccountFacade.Editar(new UsuarioDTO() { Nombre = model.Nombre, Apellido = model.Apellido, NombreUsuario = model.UserName, Mail = model.Mail });
+                         Roles.AddUserToRole(model.UserName, RolEnum.PUBLIC_USER.ToString());                        
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
 
                         return RedirectToLocal(returnUrl);

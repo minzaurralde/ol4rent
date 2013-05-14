@@ -14,6 +14,9 @@ namespace Ol4RentAPI.Model
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Mail { get; set; }
 
         public string ExternalLoginData { get; set; }
     }
