@@ -300,11 +300,7 @@
     <Content Include="Views\Bien\Delete.cshtml" />
     <Content Include="Views\Bien\Populares.cshtml" />
     <Content Include="Views\Bien\Mapa.cshtml" />
-    <Content Include="Views\Novedad\Index.cshtml" />
     <Content Include="Views\Novedad\Details.cshtml" />
-    <Content Include="Views\Novedad\Create.cshtml" />
-    <Content Include="Views\Novedad\Edit.cshtml" />
-    <Content Include="Views\Novedad\Delete.cshtml" />
     <Content Include="Views\Novedad\List.cshtml" />
     <Content Include="Views\Bien\Buscar.cshtml" />
     <Content Include="Views\Shared\_HeaderPartial.cshtml" />
@@ -314,7 +310,6 @@
     <Content Include="Views\Bien\MisBienes.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Novedad\NovedadesTwitter.cshtml" />
-    <Content Include="Views\Novedad\NovedadesRSS.cshtml" />
     <Content Include="Views\_AppStart.cshtml" />
   </ItemGroup>
   <ItemGroup>

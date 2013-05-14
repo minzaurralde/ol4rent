@@ -55,7 +55,7 @@
                                     </td>
                                     <td>
                                         @item.Valor
-                                        @Html.Hidden("valor" + i.ToString(), item.NombreAtributo)
+                                        @Html.Hidden("valor" + i.ToString(), item.Valor)
                                     </td>
                                     <td>
                                         <a onclick='javascript:$("#tr@(i.ToString())").remove();return false;'>Eliminar</a>

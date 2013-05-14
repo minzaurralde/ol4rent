@@ -36,6 +36,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -54,6 +57,7 @@
     <Compile Include="DTO\AutoMapperUtils.cs" />
     <Compile Include="DTO\CaracteristicaAltaDTO.cs" />
     <Compile Include="DTO\ConfiguracionOrigenDatosAltaDTO.cs" />
+    <Compile Include="DTO\NovedadDTO.cs" />
     <Compile Include="DTO\OrigenDatosAltaDTO.cs" />
     <Compile Include="DTO\OrigenDatosListaDTO.cs" />
     <Compile Include="DTO\SitioAltaDTO.cs" />
@@ -69,6 +73,7 @@
     <Compile Include="Facades\INovedadFacade.cs" />
     <Compile Include="Facades\IOrigenDatosFacade.cs" />
     <Compile Include="Facades\ISitioFacade.cs" />
+    <Compile Include="Facades\Novedades\NovedadComparer.cs" />
     <Compile Include="Facades\NovedadFacadeImpl.cs" />
     <Compile Include="Facades\OrigenDatosFacade.cs" />
     <Compile Include="Facades\ServiceFacadeFactory.cs" />
@@ -102,7 +107,6 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Helpers\DBHelper.cs" />
-    <Compile Include="Model\Helpers\ManejoRSS.cs" />
     <Compile Include="Model\MeGusta.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

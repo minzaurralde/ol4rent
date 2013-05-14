@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Ol4RentAPI.Model.Novedad>
+﻿@model IEnumerable<Ol4RentAPI.DTO.NovedadDTO>
 
 @{
     ViewBag.Title = "Populares";
@@ -9,6 +9,8 @@
     <li>    
         <div>
             @Html.DisplayFor(modelItem => item.Titulo)
+            @Html.DisplayFor(modelItem => item.Proveedor)
+            @Html.DisplayFor(modelItem => item.Contenido)
         </div>
     </li>
 }

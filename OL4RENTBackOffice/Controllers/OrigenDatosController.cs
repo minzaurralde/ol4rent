@@ -86,8 +86,11 @@ namespace OL4RENTBackOffice.Controllers
                     dto.Atributos.Add(new AtributoEdicionDTO() { Nombre = Request["nombre" + i.ToString()], Id = int.Parse(Request["id" + i.ToString()]) });
                 }
             }
-            dto.Manejador = new byte[dll.ContentLength];
-            dll.InputStream.Read(dto.Manejador, 0, dll.ContentLength);
+            if (dll != null)
+            {
+                dto.Manejador = new byte[dll.ContentLength];
+                dll.InputStream.Read(dto.Manejador, 0, dll.ContentLength);
+            }
             if (ModelState.IsValid)
             {
                 if (ServiceFacadeFactory.Instance.OrigenDatosFacade.Editar(dto))
@@ -102,7 +105,8 @@ namespace OL4RENTBackOffice.Controllers
         // GET: /OrigenDatos/Eliminar
         public ActionResult Eliminar(int id)
         {
-            return View(ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerParaEdicion(id));
+            ServiceFacadeFactory.Instance.OrigenDatosFacade.Eliminar(id);
+            return RedirectToAction("Listar", "OrigenDatos");
         }
 
         //
@@ -120,20 +124,49 @@ namespace OL4RENTBackOffice.Controllers
         public ActionResult Configurar(int idSitio)
         {
             ViewBag.Sitio = ServiceFacadeFactory.Instance.SitioFacade.Obtener(idSitio);
-            ViewBag.OrigenesDatos = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerTodos();
-            ViewBag.Atributos = new List<SelectListItem>();
+            ArmarComboOrigenesDatos();
             return View(new ConfiguracionOrigenDatosAltaDTO());
+        }
+
+        private void ArmarComboOrigenesDatos()
+        {
+            List<OrigenDatosListaDTO> origenesDatos = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerTodos();
+            List<SelectListItem> items = new List<SelectListItem>();
+            bool primero = true;
+            foreach (OrigenDatosListaDTO od in origenesDatos)
+            {
+                items.Add(new SelectListItem() { Selected = primero, Text = od.Nombre, Value = od.Id.ToString() });
+                if (primero)
+                {
+                    ArmarComboAtributos(od.Id);
+                    primero = false;
+                }
+            }
+            ViewBag.OrigenesDatos = items;            
         }
 
         //
         // POST: /OrigenDatos/Configurar
         [HttpPost]
-        public ActionResult Configurar(int idSitio, ConfiguracionOrigenDatosAltaDTO dto)
+        public ActionResult Configurar(int maxid, ConfiguracionOrigenDatosAltaDTO dto)
         {
+            if (dto.ValoresAtributo == null)
+            {
+                dto.ValoresAtributo = new List<ValorAtributoAltaDTO>();
+            }
+            for (int i = 0; i < maxid; i++)
+            {
+                if (Request["nombre" + i.ToString()] != null)
+                {
+                    dto.ValoresAtributo.Add(new ValorAtributoAltaDTO() { IdAtributo = int.Parse(Request["id" + i.ToString()]), NombreAtributo = Request["nombre" + i.ToString()], Valor = Request["valor" + i.ToString()] });
+                }
+            }
             if (ServiceFacadeFactory.Instance.OrigenDatosFacade.Configurar(dto))
             {
-                return RedirectToAction("ListarPorSitio", "OrigenDatos", new { idSitio = idSitio } );
+                return RedirectToAction("ListarPorSitio", "OrigenDatos", new { idSitio = dto.IdSitio } );
             }
+            ViewBag.Sitio = ServiceFacadeFactory.Instance.SitioFacade.Obtener(dto.IdSitio);
+            ArmarComboOrigenesDatos();
             return View(dto);
         }
 
@@ -149,12 +182,24 @@ namespace OL4RENTBackOffice.Controllers
         //
         // POST: /OrigenDatos/ModificarConfiguracion
         [HttpPost]
-        public ActionResult ModificarConfiguracion(ConfiguracionOrigenDatosEdicionDTO dto)
+        public ActionResult ModificarConfiguracion(int maxid, ConfiguracionOrigenDatosEdicionDTO dto)
         {
+            if (dto.ValoresAtributo == null)
+            {
+                dto.ValoresAtributo = new List<ValorAtributoEdicionDTO>();
+            }
+            for (int i = 0; i < maxid; i++)
+            {
+                if (Request["nombre" + i.ToString()] != null)
+                {
+                    dto.ValoresAtributo.Add(new ValorAtributoEdicionDTO() { Id = int.Parse(Request["idValor" + i.ToString()]), IdAtributo = int.Parse(Request["id" + i.ToString()]), NombreAtributo = Request["nombre" + i.ToString()], Valor = Request["valor" + i.ToString()] });
+                }
+            }
             if (ServiceFacadeFactory.Instance.OrigenDatosFacade.EditarConfiguracion(dto))
             {
                 return RedirectToAction("ListarPorSitio", "OrigenDatos");
             }
+            ArmarComboAtributos(dto.IdOrigenDatos);
             return View(dto);
         }
 

@@ -38,6 +38,10 @@ namespace Ol4RentAPI.Facades
                 {
                     OrigenDatos origenDatos = AutoMapperUtils<OrigenDatosAltaDTO, OrigenDatos>.Map(dto);
                     db.OrigenesDatos.Add(origenDatos);
+                    foreach (Atributo a in origenDatos.Atributos)
+                    {
+                        db.Atributos.Add(a);
+                    }
                     db.SaveChanges();
                     return true;
                 }
@@ -71,7 +75,7 @@ namespace Ol4RentAPI.Facades
                         origenDatos.Nombre = dto.Nombre;
                         seModifica = true;
                     }
-                    if (origenDatos.Manejador != dto.Manejador)
+                    if (dto.Manejador != null && origenDatos.Manejador != dto.Manejador)
                     {
                         origenDatos.Manejador = dto.Manejador;
                         seModifica = true;
@@ -148,6 +152,10 @@ namespace Ol4RentAPI.Facades
             using (ModelContainer db = new ModelContainer())
             {
                 OrigenDatos od = db.OrigenesDatos.Find(id);
+                foreach (Atributo a in od.Atributos)
+                {
+                    db.Atributos.Remove(a);
+                }
                 db.OrigenesDatos.Remove(od);
                 db.SaveChanges();
             }
@@ -161,13 +169,19 @@ namespace Ol4RentAPI.Facades
                 {
                     ConfiguracionOrigenDatos configuracion = AutoMapperUtils<ConfiguracionOrigenDatosAltaDTO, ConfiguracionOrigenDatos>.Map(dto);
                     db.ConfiguracionesOrigenesDatos.Add(configuracion);
+                    foreach (ValorAtributo va in configuracion.ValoresAtributo)
+                    {
+                        db.Entry(va.Atributo).Reload();
+                        db.ValoresAtributos.Add(va);
+                    }
                     db.SaveChanges();
                     return true;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
+                // return false;
             }
         }
 
@@ -275,6 +289,26 @@ namespace Ol4RentAPI.Facades
             {
                 OrigenDatos od = db.OrigenesDatos.Find(idOrigenDatos);
                 return AutoMapperUtils<Atributo, AtributoEdicionDTO>.Map(od.Atributos.ToList());
+            }
+        }
+
+
+        public OrigenDatos Obtener(int id)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                OrigenDatos od = db.OrigenesDatos.Find(id);
+                return od;
+            }
+        }
+
+
+        public Atributo ObtenerAtributo(int id)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Atributo a = db.Atributos.Find(id);
+                return a;
             }
         }
     }

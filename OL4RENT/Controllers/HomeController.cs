@@ -18,8 +18,6 @@ namespace OL4RENT.Controllers
             IndexViewModel viewModel = new IndexViewModel();
             viewModel.BienesPopulares = ServiceFacadeFactory.Instance.BienFacade.BienesPopulares;
             viewModel.ListaNovedades = ServiceFacadeFactory.Instance.NovedadFacade.ListaNovedades();
-            // TODO ver que se hace con esto con los origenes de datos
-            viewModel.ListaNovedadesRSS = ServiceFacadeFactory.Instance.NovedadFacade.ListaNovedades();
             return View(viewModel);
         }
 

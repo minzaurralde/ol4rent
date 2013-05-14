@@ -52,7 +52,7 @@
                                 <tr id="tr@(i.ToString())">
                                     <td>
                                         @item.Nombre
-                                        @Html.Hidden("id" + i.ToString(), item.Nombre)
+                                        @Html.Hidden("id" + i.ToString(), item.Id)
                                         @Html.Hidden("nombre" + i.ToString(), item.Nombre)
                                     </td>
                                     <td>

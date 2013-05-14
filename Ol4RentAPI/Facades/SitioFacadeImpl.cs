@@ -120,8 +120,68 @@ namespace Ol4RentAPI.Facades
                 {
                     Sitio sitio = db.Sitios.Find(sitioDTO.Id);
                     // TODO implementar edicion de sitio
-                    db.Entry(sitio).State = EntityState.Modified;
-                    db.SaveChanges();
+                    bool seModifico = false;
+                    if (sitio.Nombre != sitioDTO.Nombre)
+                    {
+                        sitio.Nombre = sitioDTO.Nombre;
+                        seModifico = true;
+                    }
+                    if (sitio.Descripcion != sitioDTO.Descripcion)
+                    {
+                        sitio.Descripcion = sitioDTO.Descripcion;
+                        seModifico = true;
+                    }
+                    if (sitio.MailAdmin != sitioDTO.MailAdmin)
+                    {
+                        sitio.MailAdmin = sitioDTO.MailAdmin;
+                        seModifico = true;
+                    }
+                    if (sitio.URL != sitioDTO.URL)
+                    {
+                        sitio.URL = sitioDTO.URL;
+                        seModifico = true;
+                    }
+                    if (sitio.CantBienesPopulares != sitioDTO.CantBienesPopulares)
+                    {
+                        sitio.CantBienesPopulares = sitioDTO.CantBienesPopulares;
+                        seModifico = true;
+                    }
+                    if (sitio.CantContBloqXUsu != sitioDTO.CantContBloqXUsu)
+                    {
+                        sitio.CantContBloqXUsu = sitioDTO.CantContBloqXUsu;
+                        seModifico = true;
+                    }
+                    if (sitio.CantMarcasXCont != sitioDTO.CantMarcasXCont)
+                    {
+                        sitio.CantMarcasXCont = sitioDTO.CantMarcasXCont;
+                        seModifico = true;
+                    }
+                    if (sitioDTO.CSS != null && sitio.CSS != sitioDTO.CSS)
+                    {
+                        sitio.CSS = sitioDTO.CSS;
+                        seModifico = true;
+                    }
+                    if (sitioDTO.Logo != null && sitio.Logo != sitioDTO.Logo)
+                    {
+                        sitio.Logo = sitioDTO.Logo;
+                        seModifico = true;
+                    }
+                    bool salvar = false;
+                    if (sitio.TipoBien.Nombre != sitioDTO.NombreTipoBien)
+                    {
+                        sitio.TipoBien.Nombre = sitioDTO.NombreTipoBien;
+                        db.Entry(sitio.TipoBien).State = EntityState.Modified;
+                        salvar = true;
+                    }
+                    // TODO faltanmodificar los atributos del tipo de bien y el usuario
+                    if (seModifico)
+                    {
+                        db.Entry(sitio).State = EntityState.Modified;
+                    }
+                    if (seModifico || salvar)
+                    {
+                        db.SaveChanges();
+                    }
                 }
                 return true;
             }

@@ -41,7 +41,7 @@
             @Html.ActionLink("Ver novedades", "ListarPorSitio", "Novedad", new { idSitio=item.Id }, null)
             }
             @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SITE_ADMIN.ToString())) {
-            @Html.ActionLink("Ver orígenes de datos", "Listar", "OrigenDatos", new { idSitio=item.Id }, null)
+            @Html.ActionLink("Ver orígenes de datos", "ListarPorSitio", "OrigenDatos", new { idSitio=item.Id }, null)
             }
         </td>
     </tr>

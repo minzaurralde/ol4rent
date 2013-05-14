@@ -17,6 +17,9 @@ namespace Ol4RentAPI.DTO
             Mapper.CreateMap<ValorAtributo, ValorAtributoEdicionDTO>()
                 .ForMember(dest => dest.IdAtributo, dat => dat.MapFrom(src => src.Atributo.Id))
                 .ForMember(dest => dest.NombreAtributo, dat => dat.MapFrom(src => src.Atributo.Nombre));
+            Mapper.CreateMap<ValorAtributoAltaDTO, ValorAtributo>()
+                .ForMember(dest => dest.Id, dat => dat.Ignore())
+                .ForMember(dest => dest.Atributo, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerAtributo(src.IdAtributo)));
             Mapper.CreateMap<Atributo, AtributoAltaDTO>();
             Mapper.CreateMap<Atributo, AtributoEdicionDTO>();
             Mapper.CreateMap<AtributoAltaDTO, Atributo>()
@@ -43,6 +46,10 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.NombreOrigenDatos, dat => dat.MapFrom(src => src.OrigenDatos.Nombre))
                 .ForMember(dest => dest.NombreSitio, dat => dat.MapFrom(src => src.Sitio.Nombre))
                 .ForMember(dest => dest.IdSitio, dat => dat.MapFrom(src => src.Sitio.Id));
+            Mapper.CreateMap<ConfiguracionOrigenDatosAltaDTO, ConfiguracionOrigenDatos>()
+                .ForMember(dest => dest.Id, dat => dat.Ignore())
+                .ForMember(dest => dest.OrigenDatos, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.OrigenDatosFacade.Obtener(src.IdOrigenDatos)))
+                .ForMember(dest => dest.Sitio, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.SitioFacade.Obtener(src.IdSitio)));
             Mapper.AssertConfigurationIsValid();
         }
     }
