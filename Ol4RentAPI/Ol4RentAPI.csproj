@@ -66,6 +66,7 @@
     <Compile Include="DTO\UsuarioDTO.cs" />
     <Compile Include="DTO\UsuarioSitioDTO.cs" />
     <Compile Include="DTO\ValorAtributoDTO.cs" />
+    <Compile Include="DTO\ValorCaracteristicaAltaDTO.cs" />
     <Compile Include="Facades\IAccountFacade.cs" />
     <Compile Include="Facades\AccountFacadeImpl.cs" />
     <Compile Include="Facades\BienFacadeImpl.cs" />

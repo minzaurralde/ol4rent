@@ -99,13 +99,13 @@ namespace OL4RENTBackOffice.Controllers
         {
             if (sitioDTO.Caracteristicas == null)
             {
-                sitioDTO.Caracteristicas = new List<CaracteristicaAltaDTO>();
+                sitioDTO.Caracteristicas = new List<CaracteristicaEdicionDTO>();
             }
             for (int i = 0; i < maxid; i++)
             {
                 if (Request["nombre" + i.ToString()] != null)
                 {
-                    sitioDTO.Caracteristicas.Add(new CaracteristicaAltaDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]) });
+                    sitioDTO.Caracteristicas.Add(new CaracteristicaEdicionDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]) });
                 }
             }
             // TODO validar los formatos de los archivos

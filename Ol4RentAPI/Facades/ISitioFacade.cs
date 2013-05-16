@@ -31,7 +31,7 @@ namespace Ol4RentAPI.Facades
 
         SitioEdicionDTO ObtenerParaEdicion(int id);
 
-        List<CaracteristicaAltaDTO> ObtenerCaracteristicasParaEdicion(int idSitio);
+        List<CaracteristicaEdicionDTO> ObtenerCaracteristicasParaEdicion(int idSitio);
 
         string ObtenerNombreUsuarioPropietario(int idSitio);
 

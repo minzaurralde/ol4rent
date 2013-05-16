@@ -11,14 +11,15 @@ namespace Ol4RentAPI.Facades
 {
     class BienFacadeImpl: IBienFacade
     {
-        private ModelContainer db = new ModelContainer();
-
         public Model.Bien Obtener(int id)
         {
-            return db.Bienes.Find(id);
+            using (ModelContainer db = new ModelContainer())
+            {
+                return db.Bienes.Find(id);
+            }
         }
 
-        public Model.Bien Crear(BienAltaDTO bienDTO)
+        public bool Crear(BienAltaDTO bienDTO)
         {
             bienDTO.Normas = "";
             bienDTO.Capacidad = 12;
@@ -44,13 +45,16 @@ namespace Ol4RentAPI.Facades
                 }
             };
             try {
-                db.Bienes.Add(bien);
-                db.SaveChanges();
-                return bien;
+                using (ModelContainer db = new ModelContainer())
+                {
+                    db.Bienes.Add(bien);
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch
             {
-                return null;
+                return false;
             }
         }
 
@@ -58,9 +62,12 @@ namespace Ol4RentAPI.Facades
         {
             try
             {
-                db.Entry(bien).State = EntityState.Modified;
-                db.SaveChanges();
-                return bien;
+                using (ModelContainer db = new ModelContainer())
+                {
+                    db.Entry(bien).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return bien;
+                }
             }
             catch
             {
@@ -70,11 +77,14 @@ namespace Ol4RentAPI.Facades
 
         public void Eliminar(int id)
         {
-            Bien bien = db.Bienes.Find(id);
-            if (bien != null)
+            using (ModelContainer db = new ModelContainer())
             {
-                db.Bienes.Remove(bien);
-                db.SaveChanges();
+                Bien bien = db.Bienes.Find(id);
+                if (bien != null)
+                {
+                    db.Bienes.Remove(bien);
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -83,7 +93,10 @@ namespace Ol4RentAPI.Facades
             if (query != null)
             {
                 // TODO pasar a linq
-                return db.Bienes.Where(b => b.Descripcion.Contains(query) || b.Titulo.Contains(query)).ToList();
+                using (ModelContainer db = new ModelContainer())
+                {
+                    return db.Bienes.Where(b => b.Descripcion.Contains(query) || b.Titulo.Contains(query)).ToList();
+                }
             }
             else
             {
@@ -93,23 +106,26 @@ namespace Ol4RentAPI.Facades
 
         public List<Model.Bien> BusquedaAvanzada(Model.Bien templateBien)
         {
-            List<Bien> resultadosBusqueda = new List<Bien>();
-            if (templateBien.Descripcion != null && templateBien.Titulo != null)
+            using (ModelContainer db = new ModelContainer())
             {
-                // TODO pasar a linq
-                resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion) && b.Titulo.Contains(templateBien.Titulo)).ToList();
+                List<Bien> resultadosBusqueda = new List<Bien>();
+                if (templateBien.Descripcion != null && templateBien.Titulo != null)
+                {
+                    // TODO pasar a linq
+                    resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion) && b.Titulo.Contains(templateBien.Titulo)).ToList();
+                }
+                else if (templateBien.Titulo != null)
+                {
+                    // TODO pasar a linq
+                    resultadosBusqueda = db.Bienes.Where(b => b.Titulo.Contains(templateBien.Titulo)).ToList();
+                }
+                else if (templateBien.Descripcion != null)
+                {
+                    // TODO pasar a linq
+                    resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion)).ToList();
+                }
+                return resultadosBusqueda;
             }
-            else if (templateBien.Titulo != null)
-            {
-                // TODO pasar a linq
-                resultadosBusqueda = db.Bienes.Where(b => b.Titulo.Contains(templateBien.Titulo)).ToList();
-            }
-            else if (templateBien.Descripcion != null)
-            {
-                // TODO pasar a linq
-                resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion)).ToList();
-            }
-            return resultadosBusqueda;
         }
 
         public List<Model.Bien> Wishlist(Model.Usuario usuario)
@@ -139,7 +155,10 @@ namespace Ol4RentAPI.Facades
         public List<Bien> Todos
         {
             get {
-                return db.Bienes.ToList();
+                using (ModelContainer db = new ModelContainer())
+                {
+                    return db.Bienes.ToList();
+                }
             }
         }
     }

@@ -254,12 +254,12 @@ namespace Ol4RentAPI.Facades
             }
         }
 
-        public List<CaracteristicaAltaDTO> ObtenerCaracteristicasParaEdicion(int idSitio)
+        public List<CaracteristicaEdicionDTO> ObtenerCaracteristicasParaEdicion(int idSitio)
         {
             using (ModelContainer db = new ModelContainer())
             {
                 Sitio sitio = db.Sitios.Find(idSitio);
-                return AutoMapperUtils<Caracteristica, CaracteristicaAltaDTO>.Map(sitio.TipoBien.Caracteristicas.ToList());
+                return AutoMapperUtils<Caracteristica, CaracteristicaEdicionDTO>.Map(sitio.TipoBien.Caracteristicas.ToList());
             }
         }
 

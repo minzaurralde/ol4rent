@@ -24,21 +24,26 @@ namespace Ol4RentAPI.DTO
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
         [Display(Name = "Latitud")]
+        [DataType(DataType.Text)]
         public decimal Latitud { get; set; }
         [Display(Name = "Longitud")]
+        [DataType(DataType.Text)]
         public decimal Longitud { get; set; }
         [StringLength(128, ErrorMessage = "Las normas deben tener como máximo {0} caracteres")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Normas")]
         public string Normas { get; set; }
         [Display(Name = "Capacidad")]
+        [DataType(DataType.Text)]
         public short Capacidad { get; set; }
         [Display(Name = "Precio")]
+        [DataType(DataType.Text)]
         public decimal Precio { get; set; }
         [StringLength(128, ErrorMessage = "La descripción debe tener como máximo {0} caracteres")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
+        public List<ValorCaracteristicaAltaDTO> ValoresCaracteristicas;
     }
 
     public class BienEdicionDTO : BienAltaDTO

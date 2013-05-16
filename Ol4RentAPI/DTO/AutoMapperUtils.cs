@@ -25,8 +25,7 @@ namespace Ol4RentAPI.DTO
             Mapper.CreateMap<AtributoAltaDTO, Atributo>()
                 .ForMember(dest => dest.Id, dat => dat.UseValue(-1));
             Mapper.CreateMap<AtributoEdicionDTO, Atributo>();
-            Mapper.CreateMap<Caracteristica, CaracteristicaAltaDTO>();
-            Mapper.CreateMap<Caracteristica, CaracteristicaEdicionDTO>(); Mapper.CreateMap<Caracteristica, CaracteristicaEdicionDTO>();
+            Mapper.CreateMap<Caracteristica, CaracteristicaEdicionDTO>(); 
             Mapper.CreateMap<Sitio, SitioListadoDTO>();
             Mapper.CreateMap<Sitio, SitioEdicionDTO>()
                 .ForMember(dest => dest.NombreTipoBien, dat => dat.MapFrom(src => src.TipoBien.Nombre))

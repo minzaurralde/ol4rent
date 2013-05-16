@@ -13,28 +13,90 @@
 
     <fieldset>
         <legend>Alta de Bien</legend>
-   <ol>
+        <ol>
             <li>
                 @Html.LabelFor(m => m.Titulo)
                 @Html.TextBoxFor(m => m.Titulo)
             </li>
             <li>
-                @Html.LabelFor(m => m.Direccion)
-                 @Html.TextBoxFor(m => m.Direccion)
+                @Html.LabelFor(m => m.Descripcion)
+                @Html.TextAreaFor(m => m.Descripcion)
             </li>
             <li>
-               @Html.LabelFor(m => m.Latitud)
+                @Html.LabelFor(m => m.Foto)
+                <input type="file" id="imagen" name="imagen" />
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Direccion)
+                @Html.TextBoxFor(m => m.Direccion)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Latitud)
                 @Html.TextBoxFor(m => m.Latitud)
-                
-               @Html.LabelFor(m => m.Longitud)
+
+                @Html.LabelFor(m => m.Longitud)
                 @Html.TextBoxFor(m => m.Longitud)
             </li>
             <li>
-                  @Html.LabelFor(m => m.Normas)
-                 @Html.TextAreaFor(m => m.Normas)
+                @Html.LabelFor(m => m.Normas)
+                @Html.TextAreaFor(m => m.Normas)
             </li>
+            <li>
+                @Html.LabelFor(m => m.Capacidad)
+                @Html.TextBoxFor(m => m.Capacidad)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Precio)
+                @Html.TextBoxFor(m => m.Precio)
+            </li>
+            @foreach (Ol4RentAPI.DTO.CaracteristicaEdicionDTO caracteristica in ViewBag.Caracteristicas)
+            {
+            <li>
+                @Html.Label("car-" + caracteristica.Id.ToString(), caracteristica.Nombre)
+                @if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
+                {
+                    @Html.CheckBox("car-" + caracteristica.Id.ToString());
+                }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.FECHA)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString());
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $("#car-@caracteristica.Id.ToString()").datepicker
+                                ({
+                                    dateFormat: 'dd/mm/yyyy',
+                                    showStatus: true,
+                                    showWeeks: true,
+                                    highlightWeek: true,
+                                    numberOfMonths: 1,
+                                    showAnim: "scale",
+                                    showOptions: {
+                                        origin: ["top", "left"]
+                                    }
+                                });
+                        });
+                    </script>
+                }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.HORA)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString(), String.Format("{HH:mm}", DateTime.Now), "HH:mm");
+                }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.ENTERO)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0");
+                }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.DECIMAL)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0.0");
+                }
+                else
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString());
+                }
+            </li>
+            }
         </ol>
-          <input type="submit" value="Guardar" />
+        <input type="submit" value="Guardar" />
     </fieldset>
 }
 

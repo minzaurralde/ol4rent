@@ -36,21 +36,82 @@ namespace OL4RENT.Controllers
         // GET: /Bien/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["sitio"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ArmarListadoCaracteristicas();
+                return View(new BienAltaDTO());
+            }
+        }
+
+        private List<CaracteristicaEdicionDTO> ObtenerListadoCaracteristicas()
+        {
+            if (Session["sitio"] != null)
+            {
+                SitioListadoDTO sitio = Session["sitio"] as SitioListadoDTO;
+                List<CaracteristicaEdicionDTO> caracteristicas = ServiceFacadeFactory.Instance.SitioFacade.ObtenerCaracteristicasParaEdicion(sitio.Id);
+                return caracteristicas;
+            }
+            else
+            {
+                return new List<CaracteristicaEdicionDTO>();
+            }
+        }
+
+        private void ArmarListadoCaracteristicas()
+        {
+            List<CaracteristicaEdicionDTO> caracteristicas = ObtenerListadoCaracteristicas();
+            ViewBag.Caracteristicas = caracteristicas;
         }
 
         //
         // POST: /Bien/Create
         [HttpPost]
         [ValidateInput(true)]
-        public ActionResult Create(BienAltaDTO bienDTO)
+        public ActionResult Create(BienAltaDTO bienDTO, HttpPostedFileBase imagen)
         {
-            Bien bien;
-            if ((bien = ServiceFacadeFactory.Instance.BienFacade.Crear(bienDTO)) != null)
+            if (bienDTO.ValoresCaracteristicas == null)
+            {
+                bienDTO.ValoresCaracteristicas = new List<ValorCaracteristicaAltaDTO>();
+            }
+            List<CaracteristicaEdicionDTO> caracteristicas = ObtenerListadoCaracteristicas();
+            foreach (CaracteristicaEdicionDTO caracteristica in caracteristicas)
+            {
+                string id = "car-" + caracteristica.Id.ToString();
+                if (Request[id] == null)
+                {
+                    if (caracteristica.Tipo == TipoDato.BOOLEANO)
+                    {
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = "false", IdCaracteristica = caracteristica.Id });
+                    }
+                    else
+                    {
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = "", IdCaracteristica = caracteristica.Id });
+                    }
+                }
+                else
+                {
+                    if (caracteristica.Tipo == TipoDato.BOOLEANO)
+                    {
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = "true", IdCaracteristica = caracteristica.Id });
+                    }
+                    else
+                    {
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
+                    }
+                }
+            }
+            bienDTO.Foto = new byte[imagen.ContentLength];
+            imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
+            if ((ServiceFacadeFactory.Instance.BienFacade.Crear(bienDTO)))
             {
                 return RedirectToAction("Index");
             }
-            return View(bien);
+            ArmarListadoCaracteristicas();
+            return View(bienDTO);
         }
 
         //
