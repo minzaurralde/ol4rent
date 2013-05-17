@@ -12,6 +12,7 @@ using OL4RENTBackOffice.Filters;
 using Ol4RentAPI.Model;
 using Ol4RentAPI.Facades;
 using Ol4RentAPI.DTO;
+using OL4RENTBackOffice.ViewModels;
 
 namespace OL4RENTBackOffice.Controllers
 {
@@ -285,7 +286,7 @@ namespace OL4RENTBackOffice.Controllers
         public JsonResult Buscar(string query)
         {
             List<UsuarioDTO> usuarios = ServiceFacadeFactory.Instance.AccountFacade.Buscar(query);
-            List<string> nombresUsuario = usuarios.Select(u => u.NombreUsuario).ToList();
+            List<Pair> nombresUsuario = usuarios.Select(u => new Pair() { Key = u.NombreUsuario, Value = u.NombreUsuario }).ToList<Pair>();
             return new JsonResult() { Data = nombresUsuario, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

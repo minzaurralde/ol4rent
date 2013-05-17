@@ -30,11 +30,11 @@
         $("#NombreUsuarioPropietario").autocomplete({
             minLength: 2,
             source: function (request, response) {
-                $.getJSON("/Account/Buscar/?query=" + request.term, function (data) {
-                    response($.map(data.nombresUsuario, function (value) {
+                $.getJSON("/Account/Buscar?query=" + request.term, function (data) {
+                    response($.map(data, function (item) {
                         return {
-                            label: value,
-                            value: value
+                            label: item.Key,
+                            value: item.Value
                         };
                     }));
                 });
