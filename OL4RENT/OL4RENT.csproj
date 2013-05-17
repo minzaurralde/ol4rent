@@ -311,7 +311,6 @@
     <Content Include="Views\Bien\Wishlist.cshtml" />
     <Content Include="Views\Bien\MisBienes.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Novedad\NovedadesTwitter.cshtml" />
     <Content Include="Views\_AppStart.cshtml" />
   </ItemGroup>
   <ItemGroup>

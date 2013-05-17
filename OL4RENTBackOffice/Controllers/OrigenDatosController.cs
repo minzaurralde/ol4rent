@@ -15,7 +15,7 @@ namespace OL4RENTBackOffice.Controllers
         public ActionResult ListarPorSitio(int idSitio)
         {
             ViewBag.IdSitio = idSitio;
-            List<OrigenDatosListaDTO> origenesDatos = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerPorSitio(idSitio);
+            List<ConfiguracionOrigenDatosEdicionDTO> origenesDatos = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerPorSitio(idSitio);
             return View(origenesDatos);
         }
 
@@ -124,118 +124,128 @@ namespace OL4RENTBackOffice.Controllers
         public ActionResult Configurar(int idSitio)
         {
             ViewBag.Sitio = ServiceFacadeFactory.Instance.SitioFacade.Obtener(idSitio);
-            ArmarComboOrigenesDatos();
+            ArmarComboOrigenesDatos(-1);
             return View(new ConfiguracionOrigenDatosAltaDTO());
-        }
-
-        private void ArmarComboOrigenesDatos()
-        {
-            List<OrigenDatosListaDTO> origenesDatos = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerTodos();
-            List<SelectListItem> items = new List<SelectListItem>();
-            bool primero = true;
-            foreach (OrigenDatosListaDTO od in origenesDatos)
-            {
-                items.Add(new SelectListItem() { Selected = primero, Text = od.Nombre, Value = od.Id.ToString() });
-                if (primero)
-                {
-                    ArmarComboAtributos(od.Id);
-                    primero = false;
-                }
-            }
-            ViewBag.OrigenesDatos = items;            
         }
 
         //
         // POST: /OrigenDatos/Configurar
         [HttpPost]
-        public ActionResult Configurar(int maxid, ConfiguracionOrigenDatosAltaDTO dto)
+        public ActionResult Configurar(ConfiguracionOrigenDatosAltaDTO dto)
         {
             if (dto.ValoresAtributo == null)
             {
                 dto.ValoresAtributo = new List<ValorAtributoAltaDTO>();
             }
-            for (int i = 0; i < maxid; i++)
+            List<AtributoEdicionDTO> atributos = ObtenerListaAtributos(dto.IdOrigenDatos);
+            foreach (AtributoEdicionDTO atributo in atributos)
             {
-                if (Request["nombre" + i.ToString()] != null)
-                {
-                    dto.ValoresAtributo.Add(new ValorAtributoAltaDTO() { IdAtributo = int.Parse(Request["id" + i.ToString()]), NombreAtributo = Request["nombre" + i.ToString()], Valor = Request["valor" + i.ToString()] });
-                }
+                string valor = Request["val-" + atributo.Id.ToString()];
+                dto.ValoresAtributo.Add(new ValorAtributoAltaDTO() { IdAtributo = atributo.Id, NombreAtributo = atributo.Nombre, Valor = valor });
             }
             if (ServiceFacadeFactory.Instance.OrigenDatosFacade.Configurar(dto))
             {
                 return RedirectToAction("ListarPorSitio", "OrigenDatos", new { idSitio = dto.IdSitio } );
             }
             ViewBag.Sitio = ServiceFacadeFactory.Instance.SitioFacade.Obtener(dto.IdSitio);
-            ArmarComboOrigenesDatos();
+            ArmarComboOrigenesDatos(dto.IdOrigenDatos);
             return View(dto);
         }
 
         //
         // GET: /OrigenDatos/ModificarConfiguracion
-        public ActionResult ModificarConfiguracion(int idSitio, int idOrigenDatos)
+        public ActionResult ModificarConfiguracion(int id)
         {
-            ConfiguracionOrigenDatosEdicionDTO dto = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerConfiguracionParaEdicion(idSitio, idOrigenDatos);
-            ArmarComboAtributos(dto.IdOrigenDatos);
+            ConfiguracionOrigenDatosEdicionDTO dto = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerConfiguracionParaEdicion(id);
+            ArmarListaAtributos(dto.IdOrigenDatos);
             return View(dto);
         }
 
         //
         // POST: /OrigenDatos/ModificarConfiguracion
         [HttpPost]
-        public ActionResult ModificarConfiguracion(int maxid, ConfiguracionOrigenDatosEdicionDTO dto)
+        public ActionResult ModificarConfiguracion(ConfiguracionOrigenDatosEdicionDTO dto)
         {
             if (dto.ValoresAtributo == null)
             {
                 dto.ValoresAtributo = new List<ValorAtributoEdicionDTO>();
             }
-            for (int i = 0; i < maxid; i++)
+            List<AtributoEdicionDTO> atributos = ObtenerListaAtributos(dto.IdOrigenDatos);
+            foreach (AtributoEdicionDTO atributo in atributos)
             {
-                if (Request["nombre" + i.ToString()] != null)
+                string valor = Request["val-" + atributo.Id.ToString()];
+                int id;
+                if (!int.TryParse(Request["id-va-" + atributo.Id.ToString()], out id))
                 {
-                    dto.ValoresAtributo.Add(new ValorAtributoEdicionDTO() { Id = int.Parse(Request["idValor" + i.ToString()]), IdAtributo = int.Parse(Request["id" + i.ToString()]), NombreAtributo = Request["nombre" + i.ToString()], Valor = Request["valor" + i.ToString()] });
+                    id = -1;
                 }
+                dto.ValoresAtributo.Add(new ValorAtributoEdicionDTO() { Id = id, IdAtributo = atributo.Id, NombreAtributo = atributo.Nombre, Valor = valor });
             }
             if (ServiceFacadeFactory.Instance.OrigenDatosFacade.EditarConfiguracion(dto))
             {
-                return RedirectToAction("ListarPorSitio", "OrigenDatos");
+                return RedirectToAction("ListarPorSitio", "OrigenDatos", new { idSitio = dto.IdSitio });
             }
-            ArmarComboAtributos(dto.IdOrigenDatos);
+            ArmarListaAtributos(dto.IdOrigenDatos);
             return View(dto);
         }
 
         //
         // GET: /OrigenDatos/Configurar
-        public ActionResult EliminarConfiguracion(int idSitio, int idOrigenDatos)
+        public ActionResult EliminarConfiguracion(int id)
         {
-            return View(ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerConfiguracionParaEdicion(idSitio, idOrigenDatos));
+            return View(ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerConfiguracionParaEdicion(id));
         }
 
         //
         // POST: /OrigenDatos/Configurar
         [HttpPost]
         [ActionName("EliminarConfiguracion")]
-        public ActionResult EliminarConfiguracionConfirm(int idSitio, int idOrigenDatos)
+        public ActionResult EliminarConfiguracionConfirm(int id)
         {
-            ServiceFacadeFactory.Instance.OrigenDatosFacade.EliminarConfiguracion(idSitio, idOrigenDatos);
+            ServiceFacadeFactory.Instance.OrigenDatosFacade.EliminarConfiguracion(id);
             return RedirectToAction("ListarPorSitio", "OrigenDatos");
         }
 
         // GET: /OrigenDatos/Atributos/5
-        public JsonResult Atributos(int idOrigenDatos)
+        public JsonResult Atributos(int id)
         {
-            List<AtributoEdicionDTO> atributos = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerAtributos(idOrigenDatos);
-            return new JsonResult() { Data = atributos };
+            List<AtributoEdicionDTO> atributos = ObtenerListaAtributos(id);
+            return new JsonResult() { Data = atributos , JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        private void ArmarComboAtributos(int idOrigenDatos)
+        private void ArmarComboOrigenesDatos(int idOrigenDatosSeleccionado)
+        {
+            List<OrigenDatosListaDTO> origenesDatos = ObtenerListaOrigenesDatos();
+            List<SelectListItem> items = new List<SelectListItem>();
+            bool primero = true;
+            foreach (OrigenDatosListaDTO od in origenesDatos)
+            {
+                bool seleccionado = (idOrigenDatosSeleccionado <= 0 && primero) || (od.Id == idOrigenDatosSeleccionado);
+                items.Add(new SelectListItem() { Selected = seleccionado, Text = od.Nombre, Value = od.Id.ToString() });
+                if (seleccionado)
+                {
+                    ArmarListaAtributos(od.Id);
+                    primero = false;
+                }
+            }
+            ViewBag.OrigenesDatos = items;
+        }
+
+        private void ArmarListaAtributos(int idOrigenDatos)
+        {
+            ViewBag.Atributos = ObtenerListaAtributos(idOrigenDatos);
+        }
+
+        private static List<OrigenDatosListaDTO> ObtenerListaOrigenesDatos()
+        {
+            List<OrigenDatosListaDTO> origenesDatos = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerTodos();
+            return origenesDatos;
+        }
+
+        private static List<AtributoEdicionDTO> ObtenerListaAtributos(int idOrigenDatos)
         {
             List<AtributoEdicionDTO> atributos = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerAtributos(idOrigenDatos);
-            List<SelectListItem> items = new List<SelectListItem>();
-            foreach (AtributoEdicionDTO atributo in atributos)
-            {
-                items.Add(new SelectListItem() { Selected = false, Text = atributo.Nombre, Value = atributo.Id.ToString() });
-            }
-            ViewBag.Atributos = items;
+            return atributos;
         }
     }
 }

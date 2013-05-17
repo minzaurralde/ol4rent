@@ -111,7 +111,7 @@ namespace Ol4RentAPI.Facades
                         List<NovedadExternaDTO> novedadesConfig = proveedor.ObtenerNovedades(maximaCantidadNovedadesHome);
                         foreach (NovedadExternaDTO novedadExterna in novedadesConfig)
                         {
-                            novedades.Add(new NovedadDTO() { Contenido = novedadExterna.Contenido, Titulo = novedadExterna.Titulo, Fecha = novedadExterna.Fecha, Proveedor = config.OrigenDatos.Nombre });
+                            novedades.Add(new NovedadDTO() { ContenidoRecortado = novedadExterna.Contenido.Count() > 130 ? novedadExterna.Contenido.Substring(0, 130) + "..." : novedadExterna.Contenido, Contenido = novedadExterna.Contenido, Titulo = novedadExterna.Titulo, Fecha = novedadExterna.Fecha, Proveedor = config.OrigenDatos.Nombre });
                         }
                     }
                     novedades.Sort(new NovedadComparer());

@@ -1,6 +1,6 @@
 ﻿@model Ol4RentAPI.DTO.ConfiguracionOrigenDatosAltaDTO
 @{
-    ViewBag.Title = "Configurar origen de datos para sitio";
+    ViewBag.Title = "Configurar origen de datos para el sitio " + ViewBag.Sitio.Nombre;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -26,70 +26,28 @@
         <legend>Configuraciones</legend>
         <ol>
             <li>
-                <!-- TODO Atributos -->
                 @Html.LabelFor(m => m.ValoresAtributo)
-                <table id="ValoresAtributo" >
-                    <thead>
-                        <tr>
-                            <th>
-                                Nombre
-                            </th>
-                            <th>
-                                Valor
-                            </th>
-                            <th>
-                                Acciones
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.ValoresAtributo != null && Model.ValoresAtributo.Count > 0)
+                <div>
+                    <ol id="ValoresAtributo">
+                        @foreach (Ol4RentAPI.DTO.AtributoEdicionDTO atributo in ViewBag.Atributos)
                         {
-                            foreach (Ol4RentAPI.DTO.ValorAtributoAltaDTO item in Model.ValoresAtributo)
-                            {
-                                <tr id="tr@(i.ToString())">
-                                    <td>
-                                        @item.NombreAtributo
-                                        @Html.Hidden("nombre" + i.ToString(), item.NombreAtributo)
-                                        @Html.Hidden("id" + i.ToString(), item.IdAtributo)
-                                    </td>
-                                    <td>
-                                        @item.Valor
-                                        @Html.Hidden("valor" + i.ToString(), item.Valor)
-                                    </td>
-                                    <td>
-                                        <a onclick='javascript:$("#tr@(i.ToString())").remove();return false;'>Eliminar</a>
-                                    </td>
-                                </tr>
-                                i++;
-                            }
+                            Ol4RentAPI.DTO.ValorAtributoAltaDTO valorAtributo = Model.ValoresAtributo == null ? null : ((List<Ol4RentAPI.DTO.ValorAtributoAltaDTO>)Model.ValoresAtributo).Find(val => val.IdAtributo == atributo.Id);
+                            string strValor = valorAtributo == null ? "" : valorAtributo.Valor;
+                            <li id="atr-@atributo.Id">
+                                @Html.Label("val-" + atributo.Id.ToString(), atributo.Nombre)
+                                @Html.TextBox("val-" + atributo.Id.ToString(), strValor)
+                            </li>
                         }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="2">
-                                Agregar atributo:
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Atributo: @Html.DropDownList("NuevoNombre", (List<SelectListItem>)ViewBag.Atributos)
-                            </td>
-                            <td>
-                                Valor: @Html.TextBox("NuevoValor")
-                            </td>
-                            <td>
-                                <a id="agregarNuevo" name="agregarNuevo">Agregar</a>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <input type="hidden" name="maxid" id="maxid" value="@i.ToString()" />
+                    </ol>
+                </div>
             </li>
         </ol>
         <input type="submit" value="Guardar" />
     </fieldset>
 }
+
+@Html.ActionLink("Volver", "ListarPorSitio", "OrigenDatos", new { idSitio = ViewBag.Sitio.Id }, null)
+
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery-1.7.1.js")
     @Scripts.Render("~/Scripts/jquery.validate.js")

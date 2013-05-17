@@ -10,7 +10,7 @@ namespace Ol4RentAPI.Facades
 {
     public interface IOrigenDatosFacade
     {
-        List<OrigenDatosListaDTO> ObtenerPorSitio(int idSitio);
+        List<ConfiguracionOrigenDatosEdicionDTO> ObtenerPorSitio(int idSitio);
 
         List<OrigenDatosListaDTO> ObtenerTodos();
 
@@ -24,11 +24,11 @@ namespace Ol4RentAPI.Facades
 
         bool Configurar(ConfiguracionOrigenDatosAltaDTO dto);
 
-        ConfiguracionOrigenDatosEdicionDTO ObtenerConfiguracionParaEdicion(int idSitio, int idOrigenDatos);
+        ConfiguracionOrigenDatosEdicionDTO ObtenerConfiguracionParaEdicion(int id);
 
         bool EditarConfiguracion(ConfiguracionOrigenDatosEdicionDTO dto);
 
-        void EliminarConfiguracion(int idSitio, int idOrigenDatos);
+        void EliminarConfiguracion(int id);
 
         List<AtributoEdicionDTO> ObtenerAtributos(int idOrigenDatos);
 

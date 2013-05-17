@@ -8,8 +8,9 @@
 @foreach (var item in Model) {
     <li>    
         <div>
-            @Html.DisplayFor(modelItem => item.Titulo)
-            @Html.DisplayFor(modelItem => item.Proveedor)
+            @Html.DisplayFor(modelItem => item.Titulo) [@Html.DisplayFor(modelItem => item.Proveedor)]
+        </div>
+        <div>
             @Html.DisplayFor(modelItem => item.Contenido)
         </div>
     </li>

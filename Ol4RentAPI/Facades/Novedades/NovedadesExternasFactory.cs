@@ -38,11 +38,11 @@ namespace Ol4RentAPI.Facades.Novedades
         public static IProveedorNoticias ObtenerProveedor(ConfiguracionOrigenDatos cod)
         {
             Assembly assembly = Assembly.Load(cod.OrigenDatos.Manejador);
-            foreach (TypeInfo tipo in assembly.DefinedTypes)
+            foreach (Type tipo in assembly.GetTypes())
             {
-                if (tipo.ImplementedInterfaces.Contains(typeof(IProveedorNoticias)))
+                if (tipo.GetInterfaces().Where(t => t.FullName == typeof(IProveedorNoticias).FullName).Count() > 0)
                 {
-                    IProveedorNoticias instancia = (IProveedorNoticias)Activator.CreateInstance(tipo.ReflectedType);
+                    IProveedorNoticias instancia = (IProveedorNoticias)Activator.CreateInstance(tipo);
                     Hashtable properties = new Hashtable();
                     foreach (ValorAtributo valor in cod.ValoresAtributo)
                     {

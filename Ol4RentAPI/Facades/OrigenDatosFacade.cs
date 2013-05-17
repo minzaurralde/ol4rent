@@ -10,15 +10,15 @@ namespace Ol4RentAPI.Facades
 {
     class OrigenDatosFacade: IOrigenDatosFacade
     {
-        public List<OrigenDatosListaDTO> ObtenerPorSitio(int idSitio)
+        public List<ConfiguracionOrigenDatosEdicionDTO> ObtenerPorSitio(int idSitio)
         {
             using (ModelContainer db = new ModelContainer())
             {
-                IQueryable<OrigenDatos> origenesDatos =
-                    from cod in db.ConfiguracionesOrigenesDatos
-                    where cod.Sitio.Id == idSitio
-                    select cod.OrigenDatos;
-                return AutoMapperUtils<OrigenDatos, OrigenDatosListaDTO>.Map(origenesDatos.ToList());
+                IQueryable<ConfiguracionOrigenDatos> configuraciones =
+                    from cfg in db.ConfiguracionesOrigenesDatos
+                    where cfg.Sitio.Id == idSitio
+                    select cfg;
+                return AutoMapperUtils<ConfiguracionOrigenDatos, ConfiguracionOrigenDatosEdicionDTO>.Map(configuraciones.ToList());
             }
         }
 
@@ -168,10 +168,14 @@ namespace Ol4RentAPI.Facades
                 using (ModelContainer db = new ModelContainer())
                 {
                     ConfiguracionOrigenDatos configuracion = AutoMapperUtils<ConfiguracionOrigenDatosAltaDTO, ConfiguracionOrigenDatos>.Map(dto);
+                    db.Entry<OrigenDatos>(configuracion.OrigenDatos).State = System.Data.EntityState.Unchanged;
+                    db.Entry<Sitio>(configuracion.Sitio).State = System.Data.EntityState.Unchanged;
                     db.ConfiguracionesOrigenesDatos.Add(configuracion);
                     foreach (ValorAtributo va in configuracion.ValoresAtributo)
                     {
-                        db.Entry(va.Atributo).Reload();
+                        // va.Atributo = db.Atributos.Find(va.Atributo.Id);
+                        // va.Atributo = new Atributo() { Id = va.Atributo.Id };
+                        db.Entry<Atributo>(va.Atributo).State = System.Data.EntityState.Unchanged;
                         db.ValoresAtributos.Add(va);
                     }
                     db.SaveChanges();
@@ -185,16 +189,11 @@ namespace Ol4RentAPI.Facades
             }
         }
 
-        public ConfiguracionOrigenDatosEdicionDTO ObtenerConfiguracionParaEdicion(int idSitio, int idOrigenDatos)
+        public ConfiguracionOrigenDatosEdicionDTO ObtenerConfiguracionParaEdicion(int id)
         {
             using (ModelContainer db = new ModelContainer())
             {
-                IQueryable<ConfiguracionOrigenDatos> configuraciones =
-                    from cfg in db.ConfiguracionesOrigenesDatos
-                    where cfg.Sitio.Id == idSitio
-                        && cfg.OrigenDatos.Id == idOrigenDatos
-                    select cfg;
-                return AutoMapperUtils<ConfiguracionOrigenDatos, ConfiguracionOrigenDatosEdicionDTO>.Map(configuraciones.First());
+                return AutoMapperUtils<ConfiguracionOrigenDatos, ConfiguracionOrigenDatosEdicionDTO>.Map(db.ConfiguracionesOrigenesDatos.Find(id));
             }
         }
 
@@ -268,16 +267,11 @@ namespace Ol4RentAPI.Facades
             }
         }
 
-        public void EliminarConfiguracion(int idSitio, int idOrigenDatos)
+        public void EliminarConfiguracion(int id)
         {
             using (ModelContainer db = new ModelContainer())
             {
-                IQueryable<ConfiguracionOrigenDatos> configuraciones =
-                    from cfg in db.ConfiguracionesOrigenesDatos
-                    where cfg.Sitio.Id == idSitio
-                        && cfg.OrigenDatos.Id == idOrigenDatos
-                    select cfg;
-                db.ConfiguracionesOrigenesDatos.Remove(configuraciones.First());
+                db.ConfiguracionesOrigenesDatos.Remove(db.ConfiguracionesOrigenesDatos.Find(id));
                 db.SaveChanges();
             }
         }

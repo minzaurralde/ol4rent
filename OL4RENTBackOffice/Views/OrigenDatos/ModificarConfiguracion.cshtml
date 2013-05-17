@@ -19,72 +19,23 @@
     <fieldset>
         <legend>Configuraciones del origen de datos @Model.NombreOrigenDatos para el sitio @Model.NombreSitio</legend>
         <ol>
-            <li>
-                <!-- TODO Atributos -->
-                @Html.LabelFor(m => m.ValoresAtributo)
-                <table id="ValoresAtributo" >
-                    <thead>
-                        <tr>
-                            <th>
-                                Nombre
-                            </th>
-                            <th>
-                                Valor
-                            </th>
-                            <th>
-                                Acciones
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.ValoresAtributo != null && Model.ValoresAtributo.Count > 0)
-                        {
-                            foreach (Ol4RentAPI.DTO.ValorAtributoEdicionDTO item in Model.ValoresAtributo)
-                            {
-                                <tr id="tr@(i.ToString())">
-                                    <td>
-                                        @item.NombreAtributo
-                                        @Html.Hidden("nombre" + i.ToString(), item.NombreAtributo)
-                                        @Html.Hidden("id" + i.ToString(), item.IdAtributo)
-                                    </td>
-                                    <td>
-                                        @item.Valor
-                                        @Html.Hidden("valor" + i.ToString(), item.Valor)
-                                        @Html.Hidden("idValor" + i.ToString(), item.Id)
-                                    </td>
-                                    <td>
-                                        <a onclick='javascript:$("#tr@(i.ToString())").remove();return false;'>Eliminar</a>
-                                    </td>
-                                </tr>
-                                i++;
-                            }
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="2">
-                                Agregar atributo:
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Atributo: @Html.DropDownList("NuevoNombre", (List<SelectListItem>)ViewBag.Atributos)
-                            </td>
-                            <td>
-                                Valor: @Html.TextBox("NuevoValor")
-                            </td>
-                            <td>
-                                <a id="agregarNuevo" name="agregarNuevo">Agregar</a>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <input type="hidden" name="maxid" id="maxid" value="@i.ToString()" />
-            </li>
+            @foreach (Ol4RentAPI.DTO.AtributoEdicionDTO atributo in ViewBag.Atributos)
+            {
+                Ol4RentAPI.DTO.ValorAtributoEdicionDTO valorAtributo = Model.ValoresAtributo == null ? null : ((List<Ol4RentAPI.DTO.ValorAtributoEdicionDTO>)Model.ValoresAtributo).Find(val => val.IdAtributo == atributo.Id);
+                string strValor = valorAtributo == null ? "" : valorAtributo.Valor;
+                <li id="atr-@atributo.Id">
+                    @Html.Label("val-" + atributo.Id.ToString(), atributo.Nombre)
+                    @Html.TextBox("val-" + atributo.Id.ToString(), strValor)
+                    @Html.Hidden("id-va-" + atributo.Id.ToString(), valorAtributo == null ? "-1" : valorAtributo.Id.ToString())
+                </li>
+            }
         </ol>
         <input type="submit" value="Guardar" />
     </fieldset>
 }
+
+@Html.ActionLink("Volver", "ListarPorSitio", "OrigenDatos", new {idSitio = Model.IdSitio}, null)
+
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery-1.7.1.js")
     @Scripts.Render("~/Scripts/jquery.validate.js")

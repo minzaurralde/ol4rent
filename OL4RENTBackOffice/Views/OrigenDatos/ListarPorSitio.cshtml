@@ -1,6 +1,6 @@
-﻿@model List<Ol4RentAPI.DTO.OrigenDatosListaDTO>
+﻿@model List<Ol4RentAPI.DTO.ConfiguracionOrigenDatosEdicionDTO>
 @{
-    ViewBag.Title = "Listado de origenes de datos configurados para el sitio";
+    ViewBag.Title = "Listado de origenes de datos configurados para el sitio" + (Model.Count > 0 ? " " + Model[0].NombreSitio : "");
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,7 +12,7 @@
 <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model[0].Nombre)
+            @Html.DisplayNameFor(model => model[0].NombreOrigenDatos)
         </th>
         <th>Acciones</th>
     </tr>
@@ -20,22 +20,23 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
+            @Html.DisplayFor(modelItem => item.NombreOrigenDatos)
         </td>
         <td>
             @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString()))
             {
-            @Html.ActionLink("Modificar", "ModificarConfiguracion", "OrigenDatos", new { idOrigenDatos = item.Id, idSitio = ViewBag.IdSitio }, null) 
+            @Html.ActionLink("Modificar", "ModificarConfiguracion", "OrigenDatos", new { id = item.Id }, null) 
             }
             @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString()))
             {
-            @Html.ActionLink("Eliminar", "EliminarConfiguracion", "OrigenDatos", new { idOrigenDatos = item.Id, idSitio = ViewBag.IdSitio }, null)
+            @Html.ActionLink("Eliminar", "EliminarConfiguracion", "OrigenDatos", new { id = item.Id }, null)
             }
         </td>
     </tr>
 }
 
 </table>
+@Html.ActionLink("Volver", "Listar", "Sitio", new { idSitio = Model[0].IdSitio }, null)
 } else {
 <p>No existen orígenes de datos configurados aún.</p>
 }
