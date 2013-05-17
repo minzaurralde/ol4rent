@@ -24,5 +24,7 @@ namespace Ol4RentAPI.Facades
         void HabilitarUsuarioEnSitio(int idUsuario, int idSitio);
 
         void ResetearUsuarioEnSitio(int idUsuario, int idSitio);
+
+        List<UsuarioDTO> Buscar(string query);
     }
 }

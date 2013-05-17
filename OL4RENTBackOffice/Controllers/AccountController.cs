@@ -11,6 +11,7 @@ using WebMatrix.WebData;
 using OL4RENTBackOffice.Filters;
 using Ol4RentAPI.Model;
 using Ol4RentAPI.Facades;
+using Ol4RentAPI.DTO;
 
 namespace OL4RENTBackOffice.Controllers
 {
@@ -280,5 +281,14 @@ namespace OL4RENTBackOffice.Controllers
             }
         }
         #endregion
+
+        public JsonResult Buscar(string query)
+        {
+            List<UsuarioDTO> usuarios = ServiceFacadeFactory.Instance.AccountFacade.Buscar(query);
+            List<string> nombresUsuario = usuarios.Select(u => u.NombreUsuario).ToList();
+            return new JsonResult() { Data = nombresUsuario, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
     }
 }

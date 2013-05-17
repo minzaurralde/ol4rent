@@ -49,6 +49,7 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.Id, dat => dat.Ignore())
                 .ForMember(dest => dest.OrigenDatos, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.OrigenDatosFacade.Obtener(src.IdOrigenDatos)))
                 .ForMember(dest => dest.Sitio, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.SitioFacade.Obtener(src.IdSitio)));
+            Mapper.CreateMap<Usuario, UsuarioDTO>();
             Mapper.AssertConfigurationIsValid();
         }
     }

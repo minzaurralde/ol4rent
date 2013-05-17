@@ -202,5 +202,25 @@ namespace Ol4RentAPI.Facades
                 }
             }
         }
+
+
+        public List<UsuarioDTO> Buscar(string query)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Usuario> q =
+                    from usu in db.Usuarios
+                    where usu.NombreUsuario.ToLower().StartsWith(query.Trim().ToLower())
+                    select usu;
+                if (q.Count() > 0)
+                {
+                    return AutoMapperUtils<Usuario, UsuarioDTO>.Map(q.ToList());
+                }
+                else
+                {
+                    return new List<UsuarioDTO>();
+                }
+            }
+        }
     }
 }
