@@ -95,7 +95,7 @@
                     </thead>
                     <tbody>
                         @if (Model.Caracteristicas != null && Model.Caracteristicas.Count > 0) {
-                            foreach (Ol4RentAPI.DTO.CaracteristicaAltaDTO item in Model.Caracteristicas) {
+                            foreach (Ol4RentAPI.DTO.CaracteristicaEdicionDTO item in Model.Caracteristicas) {
                                 <tr id="tr@(i.ToString())">
                                     <td>
                                         @item.Nombre

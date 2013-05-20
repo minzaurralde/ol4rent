@@ -109,10 +109,16 @@ namespace OL4RENTBackOffice.Controllers
                 }
             }
             // TODO validar los formatos de los archivos
-            sitioDTO.CSS = new byte[estilo.ContentLength];
-            estilo.InputStream.Read(sitioDTO.CSS, 0, estilo.ContentLength);
-            sitioDTO.Logo = new byte[imagen.ContentLength];
-            imagen.InputStream.Read(sitioDTO.Logo, 0, imagen.ContentLength);
+            if (estilo != null)
+            {
+                sitioDTO.CSS = new byte[estilo.ContentLength];
+                estilo.InputStream.Read(sitioDTO.CSS, 0, estilo.ContentLength);
+            }
+            if (imagen != null)
+            {
+                sitioDTO.Logo = new byte[imagen.ContentLength];
+                imagen.InputStream.Read(sitioDTO.Logo, 0, imagen.ContentLength);
+            }
             if (ModelState.IsValid)
             {
                 if (ServiceFacadeFactory.Instance.SitioFacade.Editar(sitioDTO))

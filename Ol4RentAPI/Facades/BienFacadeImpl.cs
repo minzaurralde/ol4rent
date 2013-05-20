@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Ol4RentAPI.Facades
 {
@@ -108,23 +109,59 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
-                List<Bien> resultadosBusqueda = new List<Bien>();
                 if (templateBien.Descripcion != null && templateBien.Titulo != null)
                 {
+                    IQueryable<Bien> query =
+                        from b in db.Bienes
+                        where b.Descripcion.Contains(templateBien.Descripcion)
+                            && b.Titulo.Contains(templateBien.Titulo)
+                        select b;
+                    if (query.Count() > 0)
+                    {
+                        return query.ToList();
+                    }
+                    else
+                    {
+                        return new List<Bien>();
+                    }
                     // TODO pasar a linq
-                    resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion) && b.Titulo.Contains(templateBien.Titulo)).ToList();
+                    // return db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion) && b.Titulo.Contains(templateBien.Titulo)).ToList();
                 }
                 else if (templateBien.Titulo != null)
                 {
+                    IQueryable<Bien> query =
+                        from b in db.Bienes
+                        where b.Titulo.Contains(templateBien.Titulo)
+                        select b;
+                    if (query.Count() > 0)
+                    {
+                        return query.ToList();
+                    }
+                    else
+                    {
+                        return new List<Bien>();
+                    }
                     // TODO pasar a linq
-                    resultadosBusqueda = db.Bienes.Where(b => b.Titulo.Contains(templateBien.Titulo)).ToList();
+                    // return db.Bienes.Where(b => b.Titulo.Contains(templateBien.Titulo)).ToList();
                 }
                 else if (templateBien.Descripcion != null)
                 {
+                    IQueryable<Bien> query =
+                        from b in db.Bienes
+                        where b.Descripcion.Contains(templateBien.Descripcion)
+                        select b;
+                    if (query.Count() > 0)
+                    {
+                        return query.ToList();
+                    }
+                    else
+                    {
+                        return new List<Bien>();
+                    }
                     // TODO pasar a linq
-                    resultadosBusqueda = db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion)).ToList();
+                    // return db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion)).ToList();
                 }
-                return resultadosBusqueda;
+                return new List<Bien>();
             }
         }
 
@@ -144,11 +181,26 @@ namespace Ol4RentAPI.Facades
         {
             get
             {
-                // TODO sacar este parametro del sitio
-                int maximaCantidadPopulares = 10;
-                // TODO implementar
-                // return db.Bienes.OrderByDescending(bien => bien.CantidadLikes).Take(maximaCantidadPopulares).ToList();
-                return Todos;
+                using (ModelContainer db = new ModelContainer())
+                {
+                    SitioListadoDTO sitioDTO = HttpContext.Current.Session["sitio"] as SitioListadoDTO;
+                    Sitio sitio = db.Sitios.Find(sitioDTO.Id);
+                    int maximaCantidadPopulares = sitio.CantBienesPopulares;
+                    IQueryable<Bien> query =
+                        from mg in db.MeGusta
+                        where mg.Bien.TipoBien.Sitio.Id == sitio.Id
+                        group mg by mg.Bien into mgg
+                        orderby mgg.Count() descending
+                        select mgg.Key;
+                    if (query.Count() > 0)
+                    {
+                        return query.ToList();
+                    }
+                    else
+                    {
+                        return new List<Bien>();
+                    }
+                }
             }
         }
 
@@ -160,6 +212,61 @@ namespace Ol4RentAPI.Facades
                     return db.Bienes.ToList();
                 }
             }
+        }
+
+        public BienEdicionDTO ObtenerBienParaContenido(int idContenido) 
+        {
+            using (ModelContainer db = new ModelContainer()) 
+            {
+                IQueryable<Bien> query =
+                    from b in db.Bienes
+                    where b.Contenidos.Where(c => c.Id == idContenido).Count() > 0
+                    select b;
+                if (query.Count() > 0) 
+                {
+                    return AutoMapperUtils<Bien, BienEdicionDTO>.Map(query.First());
+                }
+                else 
+                {
+                    return null;
+                }
+            }
+        }
+
+        public List<ContenidoDTO> ContenidosInadecuadosPorSitio(int idSitio)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Contenido> query =
+                    from cont in db.Contenidos
+                    where db.Bienes.Where(b => 
+                                b.TipoBien.Sitio.Id == idSitio 
+                                && b.Contenidos.Where(c => c.Id == cont.Id).Count() > 0).Count() > 0
+                    orderby cont.CantMarcas descending
+                    select cont;
+                if (query.Count() > 0) 
+                {
+                    return AutoMapperUtils<Contenido, ContenidoDTO>.Map(query.ToList());
+                } 
+                else 
+                {
+                    return new List<ContenidoDTO>();
+                }
+            }
+        }
+
+        public RegistroBienDTO RegistroDeBienesEnTiempo(int idSitio, DateTime fechaInicio, DateTime fechaFin)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                // TODO falta la fecha de alta en el bien
+                IQueryable<Bien> query =
+                    from b in db.Bienes
+                    where b.TipoBien.Sitio.Id == idSitio
+                    select b;
+                return new RegistroBienDTO() { Cantidad = query.Count() };
+            }
+            return null;
         }
     }
 }
