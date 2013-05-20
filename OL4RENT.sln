@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ol4RentAPI", "Ol4RentAPI\Ol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OL4RENTBackOffice", "OL4RENTBackOffice\OL4RENTBackOffice.csproj", "{29F68B9F-DD21-4D46-ACE7-3D04F26E2AE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OL4RENTServices", "OL4RENTServices\OL4RENTServices.csproj", "{712ADB40-E89F-44E0-BEC1-E4E29F302DCE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{29F68B9F-DD21-4D46-ACE7-3D04F26E2AE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29F68B9F-DD21-4D46-ACE7-3D04F26E2AE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29F68B9F-DD21-4D46-ACE7-3D04F26E2AE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{712ADB40-E89F-44E0-BEC1-E4E29F302DCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{712ADB40-E89F-44E0-BEC1-E4E29F302DCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{712ADB40-E89F-44E0-BEC1-E4E29F302DCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{712ADB40-E89F-44E0-BEC1-E4E29F302DCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
