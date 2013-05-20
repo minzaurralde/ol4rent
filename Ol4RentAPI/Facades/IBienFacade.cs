@@ -20,5 +20,8 @@ namespace Ol4RentAPI.Facades
         List<Bien> BusquedaAvanzada(Bien templateBien);
         List<Bien> Wishlist(Usuario usuario);
         List<Bien> MisBienes(Usuario usuario);
+        BienEdicionDTO ObtenerBienParaContenido(int idContenido);
+        List<ContenidoDTO> ContenidosInadecuadosPorSitio(int idSitio);
+        RegistroBienDTO RegistroDeBienesEnTiempo(int idSitio, DateTime fechaInicio, DateTime fechaFin);
     }
 }

@@ -57,10 +57,12 @@
     <Compile Include="DTO\AutoMapperUtils.cs" />
     <Compile Include="DTO\CaracteristicaAltaDTO.cs" />
     <Compile Include="DTO\ConfiguracionOrigenDatosAltaDTO.cs" />
+    <Compile Include="DTO\ContenidoDTO.cs" />
     <Compile Include="DTO\NovedadDTO.cs" />
     <Compile Include="DTO\BienAltaDTO.cs" />
     <Compile Include="DTO\OrigenDatosAltaDTO.cs" />
     <Compile Include="DTO\OrigenDatosListaDTO.cs" />
+    <Compile Include="DTO\RegistroBienDTO.cs" />
     <Compile Include="DTO\SitioAltaDTO.cs" />
     <Compile Include="DTO\SitioListadoDTO.cs" />
     <Compile Include="DTO\UsuarioDTO.cs" />
