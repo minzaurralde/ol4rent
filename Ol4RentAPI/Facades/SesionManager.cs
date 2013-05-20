@@ -96,9 +96,7 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
-                // TODO hay que configurar esto en algun lado
-
-                double minutosValidezSesion = 180;
+                double minutosValidezSesion = HttpContext.Current.Session.Timeout;
                 DateTime fechaTope = DateTime.Now.Date.AddMinutes(-1 * minutosValidezSesion);
                                 
                 var usuarioactual = from sesiones in db.Sesiones

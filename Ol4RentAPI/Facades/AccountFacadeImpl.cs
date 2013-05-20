@@ -7,6 +7,7 @@ using Ol4RentAPI.Model;
 using System.Data;
 using Ol4RentAPI.DTO;
 using System.Web.Security;
+using System.Web;
 
 namespace Ol4RentAPI.Facades
 {
@@ -230,7 +231,7 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
-                double minutosValidezSesion = 180;
+                double minutosValidezSesion = HttpContext.Current.Session.Timeout;
                 DateTime fechaTope = DateTime.Now.Date.AddMinutes(-1 * minutosValidezSesion);
 
                 IQueryable<Usuario> usuarios = from grupousuarios in db.Usuarios
