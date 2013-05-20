@@ -10,6 +10,7 @@ namespace OL4RENT
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new SelectorSitioFilterAttribute());
+            filters.Add(new SesionRenewalFilterAttribute());
         }
     }
 }

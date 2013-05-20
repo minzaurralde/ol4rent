@@ -11,7 +11,7 @@ namespace Ol4RentAPI.Facades
     public interface IAccountFacade
     {
         List<Usuario> Todos { get; }
-        Usuario Obtener(int id);
+        UsuarioDTO Obtener(int id);
         Usuario ObtenerPorNombre(string NombreUsuario);
         bool Crear(string NombreUsuario);
         bool Editar(UsuarioDTO usuario);
@@ -26,5 +26,7 @@ namespace Ol4RentAPI.Facades
         void ResetearUsuarioEnSitio(int idUsuario, int idSitio);
 
         List<UsuarioDTO> Buscar(string query);
+
+        List<UsuarioDTO> ObtenerUsuariosConectados(int idUsuarioActual);
     }
 }

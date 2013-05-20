@@ -55,6 +55,7 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.NombreUsuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario))
                 .ForMember(dest => dest.TieneAdjuntos, dat => dat.MapFrom(src => src.Adjuntos.Count > 0))
                 .ForMember(dest => dest.Bien, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.BienFacade.ObtenerBienParaContenido(src.Id)));
+            Mapper.CreateMap<Mensaje, MensajeDTO>();
             Mapper.AssertConfigurationIsValid();
         }
     }

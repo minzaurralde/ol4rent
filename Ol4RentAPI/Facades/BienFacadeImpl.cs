@@ -183,20 +183,27 @@ namespace Ol4RentAPI.Facades
             {
                 using (ModelContainer db = new ModelContainer())
                 {
-                    SitioListadoDTO sitioDTO = HttpContext.Current.Session["sitio"] as SitioListadoDTO;
-                    Sitio sitio = db.Sitios.Find(sitioDTO.Id);
-                    int maximaCantidadPopulares = sitio.CantBienesPopulares;
-                    IQueryable<Bien> query =
-                        from mg in db.MeGusta
-                        where mg.Bien.TipoBien.Sitio.Id == sitio.Id
-                        group mg by mg.Bien into mgg
-                        orderby mgg.Count() descending
-                        select mgg.Key;
-                    if (query.Count() > 0)
+                    try
                     {
-                        return query.ToList();
+                        SitioListadoDTO sitioDTO = HttpContext.Current.Session["sitio"] as SitioListadoDTO;
+                        Sitio sitio = db.Sitios.Find(sitioDTO.Id);
+                        int maximaCantidadPopulares = sitio.CantBienesPopulares;
+                        IQueryable<Bien> query =
+                            from mg in db.MeGusta
+                            where mg.Bien.TipoBien.Sitio.Id == sitio.Id
+                            group mg by mg.Bien into mgg
+                            orderby mgg.Count() descending
+                            select mgg.Key;
+                        if (query.Count() > 0)
+                        {
+                            return query.ToList();
+                        }
+                        else
+                        {
+                            return new List<Bien>();
+                        }
                     }
-                    else
+                    catch
                     {
                         return new List<Bien>();
                     }

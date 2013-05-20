@@ -68,5 +68,21 @@ namespace Ol4RentAPI.Facades
                 return new OrigenDatosFacade();
             }
         }
+
+        public ISesionManager SesionManager
+        {
+            get
+            {
+                return new SesionManager();
+            }
+        }
+
+        public IMensajeFacade MensajeFacade
+        {
+            get
+            {
+                return new MensajeFacade();
+            }
+        }
     }
 }
