@@ -156,7 +156,6 @@ namespace OL4RENT.Controllers
         // GET: /Bien/Populares
         public ActionResult Populares()
         {
-            // TODO Mandar a Configuracion este valor
             return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares);
         }
 
