@@ -1,0 +1,5 @@
+D:\OL4RENT\OL4RENTServices\bin\OL4RENTServices.dll
+D:\OL4RENT\OL4RENTServices\bin\OL4RENTServices.pdb
+D:\OL4RENT\OL4RENTServices\obj\Debug\OL4RENTServices.dll
+D:\OL4RENT\OL4RENTServices\obj\Debug\OL4RENTServices.pdb
+D:\OL4RENT\OL4RENTServices\obj\Debug\OL4RENTServices.csprojResolveAssemblyReference.cache
