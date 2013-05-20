@@ -69,6 +69,7 @@ namespace OL4RENT.Controllers
             return Content("");
         }
 
+        // Centinela que indica que no llega el mensaje
         const string nollegamensaje = "-*--*--*-";
 
         [HttpPost]
@@ -103,7 +104,11 @@ namespace OL4RENT.Controllers
                 ServiceFacadeFactory.Instance.MensajeFacade.MarcarComoLeido(m.Id);
             }
             ///textosdespliegues = textosdespliegues + "\n";
-            return Content(textosdespliegues);
+            if (textosdespliegues.Trim() != "")
+                return Content(textosdespliegues);
+            else
+                return Content(nollegamensaje);
+
         }
 
         [HttpPost]
