@@ -230,13 +230,17 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
+                double minutosValidezSesion = 180;
+                DateTime fechaTope = DateTime.Now.Date.AddMinutes(-1 * minutosValidezSesion);
+
                 IQueryable<Usuario> usuarios = from grupousuarios in db.Usuarios
                                from sesiones in db.Sesiones
                                where grupousuarios.Id != idUsuarioActual
                                where sesiones.Usuario.Id == grupousuarios.Id
-                               where sesiones.FechaConexion == sesiones.FechaCierre
-                               where sesiones.UltimoUso.AddHours(5) > DateTime.Now.Date
+                               where sesiones.FechaCierre == null
+                               where sesiones.UltimoUso > fechaTope
                                select grupousuarios;
+
                 return AutoMapperUtils<Usuario, UsuarioDTO>.Map(usuarios.ToList());
             }
         }

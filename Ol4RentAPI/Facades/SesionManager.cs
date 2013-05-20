@@ -97,13 +97,18 @@ namespace Ol4RentAPI.Facades
             using (ModelContainer db = new ModelContainer())
             {
                 // TODO hay que configurar esto en algun lado
-                int minutosValidezSesion = 180;
+
+                double minutosValidezSesion = 180;
+                DateTime fechaTope = DateTime.Now.Date.AddMinutes(-1 * minutosValidezSesion);
+                                
                 var usuarioactual = from sesiones in db.Sesiones
                                     where sesiones.Usuario.Id == idUsuario
-                                    where sesiones.FechaConexion == sesiones.FechaCierre
-                                    where sesiones.UltimoUso.AddMinutes(minutosValidezSesion) > DateTime.Now.Date
+                                    where sesiones.FechaCierre == null
+                                    where sesiones.UltimoUso > fechaTope
                                     select sesiones;
+                
                 return usuarioactual.Count() > 0;
+            
             }
         }
 
