@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="ChatEntorno">
+  <DataContextMoniker Name="/ChatEntornoDataContext" />
+  <nestedChildShapes>
+    <classShape Id="0a29fb73-a568-4849-abbb-799882c94580" absoluteBounds="1.5, 1, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/ChatEntornoDataContext/Usuario" />
+      <nestedChildShapes>
+        <elementListCompartment Id="86026460-5f08-4ada-9333-5ebf5b5d01ee" absoluteBounds="1.5149999999999997, 1.46, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5db0098f-4c80-4a66-9ab3-c777edde3591" absoluteBounds="5.5, 2, 2, 1.9631982421875">
+      <DataClassMoniker Name="/ChatEntornoDataContext/Sesione" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f7738ca3-551a-4262-afce-d761a4b797a1" absoluteBounds="5.515, 2.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.5 : 2.67390055338542); (5.5 : 2.67390055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ChatEntornoDataContext/Usuario/Usuario_Sesione" />
+      <nodes>
+        <classShapeMoniker Id="0a29fb73-a568-4849-abbb-799882c94580" />
+        <classShapeMoniker Id="5db0098f-4c80-4a66-9ab3-c777edde3591" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="59511b95-2f32-4ba6-92be-447547bda500" absoluteBounds="4.5, 5.25, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/ChatEntornoDataContext/BuzonesMensaje" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4b2d1a71-99b7-4910-a80f-e305d8a3dca3" absoluteBounds="4.515, 5.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.03125 : 3.34780110677083); (3.03125 : 5.46875); (4.5 : 5.46875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ChatEntornoDataContext/Usuario/Usuario_BuzonesMensaje" />
+      <nodes>
+        <classShapeMoniker Id="0a29fb73-a568-4849-abbb-799882c94580" />
+        <classShapeMoniker Id="59511b95-2f32-4ba6-92be-447547bda500" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="fe39fce7-069b-494a-b72c-fd46c81c0dae" absoluteBounds="0.5, 5.75, 2, 1.9631982421875">
+      <DataClassMoniker Name="/ChatEntornoDataContext/Mensaje" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e53061d8-e026-446f-beea-0877bbd21cc6" absoluteBounds="0.51499999999999968, 6.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.5 : 6.09699625651042); (2.5 : 6.09699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ChatEntornoDataContext/BuzonesMensaje/BuzonesMensaje_Mensaje" />
+      <nodes>
+        <classShapeMoniker Id="59511b95-2f32-4ba6-92be-447547bda500" />
+        <classShapeMoniker Id="fe39fce7-069b-494a-b72c-fd46c81c0dae" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2 : 3.34780110677083); (2 : 5.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ChatEntornoDataContext/Usuario/Usuario_Mensaje" />
+      <nodes>
+        <classShapeMoniker Id="0a29fb73-a568-4849-abbb-799882c94580" />
+        <classShapeMoniker Id="fe39fce7-069b-494a-b72c-fd46c81c0dae" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

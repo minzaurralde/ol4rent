@@ -1,0 +1,361 @@
+﻿@{
+    ViewBag.Title = "ChatUsuario";
+}
+
+<h2>Sala de Chat con Usuarios on-line</h2>
+
+<script type="text/javascript">
+    
+    @{  
+        
+        var iniciored = "http://localhost:5311/";
+
+        var nombreUsuario = User.Identity.Name;
+
+        if ((nombreUsuario == null) || (nombreUsuario == ""))
+        {
+            Response.Redirect(iniciored);
+        }
+        
+        //// Recibe por medio del GET el idusuario
+        var idusuarioremactual = Request.QueryString["userd"];
+
+        var useridactual = WebSecurity.GetUserId(User.Identity.Name);
+        
+    }    
+
+    //// Debe obtener el id. del idusuario logueado actualmente
+    var idremitente = "@useridactual";
+
+    function desplegarusuarios(entrada) {
+        
+        //// Verificar si los actuales estan incluidos en la lista que llega no
+        if ($('#todousrcon').val() != "") {
+
+            var actualesur = $('#todousrcon').val();
+            var parusu = actualesur.split(';');
+            var usuretirado = "";
+
+            var cantusuariosenlinea = parusu.length;
+
+            for (var i = 0; i < parusu.length - 1; i++) {
+                diopt = parusu[i];
+                arrdiopt = diopt.split('-');                
+                verstr = entrada.search(diopt);
+                if (verstr < 0) {
+                    usuretirado = $("#usuariosconectados option[value = '" + arrdiopt[0] + "']").text();
+                    agregaralpanael("Acaba de retirarse de la sala el Usuario: " + usuretirado);
+                    $("#usuariosconectados option[value = '" + arrdiopt[0] + "']").remove();
+                }
+
+            }
+        }
+
+        if (entrada != "") {
+
+            //// Verifico si los que llegan ya estaban en la lista anteriormente
+            var inHTML = "";
+            var parusu = entrada.split(';');
+            var marcainicio;
+            marcainicio = $('#iniciochat').val();
+
+            var cantusuariosenlinea = parusu.length;
+
+            for (var i = 0; i < parusu.length - 1; i++) {
+                diopt = parusu[i];
+                arrdiopt = diopt.split('-');
+
+                optionexiste = $("#usuariosconectados option[value = '" + arrdiopt[0] + "']").val();
+                        
+                if (!optionexiste) {                    
+                    inHTML += '<option value=' + arrdiopt[0] + '>' + arrdiopt[1] + '</option>';
+                    if (marcainicio == 0) {                       
+                        agregaralpanael("Acaba de ingresar a la sala el Usuario: " + arrdiopt[1]);
+                    }                    
+                }
+                else {
+                    //// por si cambio su nombre/apellido
+                    if ($("#usuariosconectados option[value = '" + arrdiopt[0] + "']").text() != arrdiopt[1])
+                        $("#usuariosconectados option[value = '" + arrdiopt[0] + "']").text(arrdiopt[1]);
+                }
+            }            
+
+            $('#todousrcon').val(entrada);
+
+            $("#usuariosconectados").append(inHTML);
+        }       
+
+    }    
+
+    function agregaralpanael(recibido) {
+        var dato = $("#BandejaMensajes").text();
+
+        if (dato == "")
+            dato = dato + recibido;
+        else
+            dato = dato + "\r\n\r\n" + recibido;
+
+        $("#BandejaMensajes").text(dato);
+
+        lineas = parseInt($("#lineas").val());        
+        lineas++;
+
+        $("#BandejaMensajes").scrollTop(lineas * 100);
+        $("#lineas").val(lineas);
+    }
+
+    function darFechaActual() {
+        var now = new Date();
+        var yyyy = now.getFullYear();
+        var mm = (now.getMonth() + 1).toString();
+        if ((now.getMonth() + 1) < 10)
+            mm = "0" + mm;
+        var dd = now.getDate().toString();
+        if (now.getDate() < 10)
+            dd = "0" + dd;
+        var hh = now.getHours();
+        if (now.getHours() < 10)
+            hh = "0" + hh;
+        var mi = now.getMinutes();
+        if (now.getMinutes() < 10)
+            mi = "0" + mi;
+        var ss = now.getSeconds();
+        if (now.getSeconds() < 10)
+            ss = "0" + ss;
+        return dd + "/" + mm + "/" + yyyy + " " + hh + ":" + mi + ":" + ss;
+    }
+
+    function enviomensaje() {
+
+        var fechaenvio = "";
+        var selectusu = $('#usuariosconectados');
+        var idusuarioenvio = selectusu.find('option:selected').val();
+        var nomusuenvio = selectusu.find('option:selected').text();        
+
+        if ((idusuarioenvio == "") || (!idusuarioenvio)) {
+            alert("Debe seleccionar al menos un usuario !!!");
+            $('#usuariosconectados').focus();
+        }
+        else {
+            
+            mensajeenvio = $.trim($("#mensaje").val());
+
+            if (mensajeenvio == "") {
+                alert("Debe escribir el mensaje a enviar al usuario !!!");
+                $('#mensaje').focus();                
+            }
+            else {
+
+                $.ajax(
+                {
+                    type: "POST",
+                    url: '@Url.Action("enviomensaje","Chat")',
+                    data: {
+                        idremitente: idremitente,
+                        idusuario: idusuarioenvio,
+                        mensaje: mensajeenvio
+                    },
+                    success: function (result) {
+                        if (result == "1") {
+                            fechaenvio = darFechaActual();
+                            agregaralpanael("Enviado a " + nomusuenvio + ": " + mensajeenvio + "\r\nFecha: " + fechaenvio);                            
+                        }
+                        else {
+                            mensajeenvio = "Mal Enviado";
+                            agregaralpanael("Mensaje a " + nomusuenvio + " mal enviado");
+                        }
+
+                    },
+                    error: function (req, status, error) {
+                        $("#BandejaMensajes").text("No se pudo invocar enviar");
+                    }
+                });
+
+                $("#mensaje").val("");
+                $("#mensaje").focus();
+
+            }
+        }
+    };
+
+    function estasesionactiva() {
+        $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("VerificarSesion","Chat")',
+                data: {
+                    idusuarioactual: idremitente,                    
+                },
+                success: function (ressesact) {
+                    if (ressesact != "1") {
+                        var urlh = '@iniciored';
+                        $(location).attr('href', urlh);
+                    }
+                },
+                error: function (req, status, error) {
+                    $("#BandejaMensajes").text("No se encuentra logueado");
+                }
+            });
+    }
+
+    function recibirmensajeinicial() {
+        $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("mensajeinicial","Chat")',
+                data: {                    
+                    idusuarioactual: idremitente,
+                    espero: $("#esperoinicial").val(),
+                },
+                success: function (result) {
+                    if (result != "") {
+                        agregaralpanael(result);
+                        valactual = parseInt($("#esperoinicial").val());
+                        valactual++;
+                        $("#esperoinicial").val(valactual);
+                    }
+                },
+                error: function (req, status, error) {
+                    $("#BandejaMensajes").text("No se pudo invocar recibir inicial");
+                }
+            });
+        }
+
+    function recibirmensaje() {
+        var fecharecibido = "";
+        $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("llegamensaje","Chat")',
+                data: {
+                        idusuarioactual: idremitente,
+                        espero: $("#espero").val(),
+                    },
+                    success: function (recibidom) {
+                        if (recibidom != "-*--*--*-") {                            
+                            agregaralpanael(recibidom);
+                            valactual = parseInt($("#espero").val());
+                            valactual++;
+                            $("#espero").val(valactual);
+                        }
+                    },
+                    error: function (req, status, error) {
+                        $("#BandejaMensajes").text("No se pudo invocar recibir");
+                    }
+                });
+
+            }
+
+    function dispusuarios() {
+        $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("ObtenerUsuariosOnline","Chat")',
+                    data: {
+                        idusuarioactual: idremitente
+                    },
+                    success: function (result) {
+                        var espusu = $("#esperousuarios").val();
+                        if (result != "") {
+                            desplegarusuarios(result);
+                            $("#esperousuarios").val(0);                            
+                        }
+                        else {
+                            if (espusu == 0) {
+                                desplegarusuarios(result);
+                                agregaralpanael("No hay usuarios conectados al momento\r\nAguarde a que llegue el primero");
+                                $("#esperousuarios").val(1);
+                            }
+                        }
+                        if ($('#iniciochat').val() == 1)
+                            $('#iniciochat').val(0);
+                    },
+                    error: function (req, status, error) {
+                        $("#BandejaMensajes").text("No se pudo obtener los usuarios");
+                    }
+                });
+
+            }
+
+    /// al iniciar la pagina
+    $(document).ready(function () {
+
+        $("#usuariosconectados").css("height", 400);
+        $("#usuariosconectados").css("width", 200);                
+        
+        estasesionactiva();
+        setInterval(estasesionactiva, 2000);
+
+        recibirmensajeinicial();
+
+        recibirmensaje();
+        setInterval(recibirmensaje, 3000);
+                
+        dispusuarios();        
+        setInterval(dispusuarios, 8000);
+        
+        $("#mensaje").focus();
+        
+    });
+
+</script>
+
+@Html.Hidden("espero", 1)
+@Html.Hidden("esperoinicial", 1)
+@Html.Hidden("lineas", 1)
+@Html.Hidden("idususel", "")
+@Html.Hidden("todousrcon", "")
+@Html.Hidden("esperousuarios", 0)
+@Html.Hidden("iniciochat", 1)
+
+<p>
+    Elija una de los usuario de la lista y proceda a enviar mensaje.
+</p>
+
+<p>
+    Id: @useridactual
+</p>
+
+<p>
+    Nombre: @nombreUsuario
+</p>
+
+<table border="1">
+    <tr>
+        <td valign="top">
+            <table valign="top">
+                <tr>
+                    <td>Usuarios conectados:
+                    </td>
+                    <tr></tr>
+                    <td>
+                        @Html.ListBox("usuariosconectados", new List<SelectListItem>())
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top" align="left">
+            @Html.TextArea("BandejaMensajes","",20,100,"")
+        </td>
+    </tr>
+    <tr>        
+        <td colspan ="2">
+            <table align="center">
+                <tr>
+                    <td valign="middle">            
+                        Mensaje:
+                    </td>
+                    <td>
+                        @Html.TextArea("mensaje","",3,50,"")
+                    </td> 
+                    <td>
+                        <button name="button" value="Enviar" onclick="enviomensaje()">Enviar</button>   
+                    </td>
+                </tr>
+            </table>                 
+         </td>
+    </tr>
+
+</table>
+
+
