@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="OL4RENT" Class="bienescercanosDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDb)\v11.0;Initial Catalog=OL4RENT;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="OL4RENTConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Bienes" Member="Bienes">
+    <Type Name="Biene">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Titulo" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="Foto" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Latitud" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Longitud" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Direccion" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="Normas" Type="System.String" DbType="NVarChar(4000) NOT NULL" CanBeNull="false" />
+      <Column Name="Capacidad" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Precio" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="NVarChar(4000) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaAlquiler" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DuracionAlquiler" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="TipoBien_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Usuario_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Usuario_Biene" Member="Usuario" ThisKey="Usuario_Id" OtherKey="Id" Type="Usuario" IsForeignKey="true" />
+      <Association Name="TiposBiene_Biene" Member="TiposBiene" ThisKey="TipoBien_Id" OtherKey="Id" Type="TiposBiene" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Usuarios" Member="Usuarios">
+    <Type Name="Usuario">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="Apellido" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="Mail" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="NombreUsuario" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="Contraseña" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioFacebook" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="UsuarioTwitter" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Association Name="Usuario_Biene" Member="Bienes" ThisKey="Id" OtherKey="Usuario_Id" Type="Biene" />
+      <Association Name="Usuario_Sitio" Member="Sitios" ThisKey="Id" OtherKey="UsuarioSitio_Sitio_Id" Type="Sitio" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TiposBienes" Member="TiposBienes">
+    <Type Name="TiposBiene">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="Sitio_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TiposBiene_Biene" Member="Bienes" ThisKey="Id" OtherKey="TipoBien_Id" Type="Biene" />
+      <Association Name="Sitio_TiposBiene" Member="Sitio" ThisKey="Sitio_Id" OtherKey="Id" Type="Sitio" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sitios" Member="Sitios">
+    <Type Name="Sitio">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Logo" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="CSS" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="MailAdmin" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="URL" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="CantBienesPopulares" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="CantMarcasXCont" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="CantContBloqXUsu" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioSitio_Sitio_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Sitio_TiposBiene" Member="TiposBienes" ThisKey="Id" OtherKey="Sitio_Id" Type="TiposBiene" />
+      <Association Name="Usuario_Sitio" Member="Usuario" ThisKey="UsuarioSitio_Sitio_Id" OtherKey="Id" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

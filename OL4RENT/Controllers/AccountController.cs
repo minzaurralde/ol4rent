@@ -39,6 +39,7 @@ namespace OL4RENT.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.NombreUsuario, model.Contraseña, persistCookie: model.RememberMe))
             {
+                ServiceFacadeFactory.Instance.SesionManager.CrearSesion(model.NombreUsuario);
                 return RedirectToLocal(returnUrl);
             }
 
@@ -53,8 +54,9 @@ namespace OL4RENT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            string nombreUsuario = WebSecurity.CurrentUserName;
             WebSecurity.Logout();
-
+            ServiceFacadeFactory.Instance.SesionManager.CerrarSesion(nombreUsuario);
             return RedirectToAction("Index", "Home");
         }
 
@@ -82,7 +84,6 @@ namespace OL4RENT.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.NombreUsuario, model.Contraseña, new { Contraseña = model.Contraseña, Nombre = model.Nombre, Apellido = model.Apellido, Mail = model.Mail });
                     WebSecurity.Login(model.NombreUsuario, model.Contraseña);
-                    Roles.AddUserToRole(model.NombreUsuario, RolEnum.PUBLIC_USER.ToString());
                     ServiceFacadeFactory.Instance.AccountFacade.Crear(model.NombreUsuario);
                     return RedirectToAction("Index", "Home");
                 }
@@ -228,6 +229,7 @@ namespace OL4RENT.Controllers
 
             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))
             {
+                ServiceFacadeFactory.Instance.SesionManager.CrearSesion(User.Identity.Name);
                 return RedirectToLocal(returnUrl);
             }
 
@@ -235,6 +237,7 @@ namespace OL4RENT.Controllers
             {
                 // If the current user is logged in add the new account
                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);
+                ServiceFacadeFactory.Instance.SesionManager.CrearSesion(User.Identity.Name);
                 return RedirectToLocal(returnUrl);
             }
             else
@@ -277,9 +280,8 @@ namespace OL4RENT.Controllers
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         ServiceFacadeFactory.Instance.AccountFacade.Crear(model.UserName);
                         ServiceFacadeFactory.Instance.AccountFacade.Editar(new UsuarioDTO() { Nombre = model.Nombre, Apellido = model.Apellido, NombreUsuario = model.UserName, Mail = model.Mail });
-                         Roles.AddUserToRole(model.UserName, RolEnum.PUBLIC_USER.ToString());                        
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
-
+                        ServiceFacadeFactory.Instance.SesionManager.CrearSesion(model.UserName);
                         return RedirectToLocal(returnUrl);
                     }
                     else

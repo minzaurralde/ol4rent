@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="bienescercanos">
+  <DataContextMoniker Name="/bienescercanosDataContext" />
+  <nestedChildShapes>
+    <classShape Id="0a31d9f8-06e4-4dba-ac5a-b6bf9c52529b" absoluteBounds="0.75, 0.5, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/bienescercanosDataContext/Biene" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bee8cc87-afb2-44bd-88a8-b35c135917b7" absoluteBounds="0.76499999999999968, 0.96, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="639c7d77-1551-4518-af4c-3d808d6e489e" absoluteBounds="4.25, 0.75, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/bienescercanosDataContext/Usuario" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ffad822d-6946-4040-92cc-9815523c5b03" absoluteBounds="4.265, 1.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.25 : 1.92390055338542); (2.75 : 1.92390055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/bienescercanosDataContext/Usuario/Usuario_Biene" />
+      <nodes>
+        <classShapeMoniker Id="639c7d77-1551-4518-af4c-3d808d6e489e" />
+        <classShapeMoniker Id="0a31d9f8-06e4-4dba-ac5a-b6bf9c52529b" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="07ef5966-c194-4d97-bf7e-1233628e2535" absoluteBounds="1.375, 5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/bienescercanosDataContext/TiposBiene" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b71130c7-0fbb-49c1-93d3-00d3fc90d847" absoluteBounds="1.3899999999999997, 5.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.0625 : 5); (2.0625 : 4.00160970052083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/bienescercanosDataContext/TiposBiene/TiposBiene_Biene" />
+      <nodes>
+        <classShapeMoniker Id="07ef5966-c194-4d97-bf7e-1233628e2535" />
+        <classShapeMoniker Id="0a31d9f8-06e4-4dba-ac5a-b6bf9c52529b" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="a105c2d2-2ed6-4fd1-86bf-75016f876344" absoluteBounds="4.875, 4.625, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/bienescercanosDataContext/Sitio" />
+      <nestedChildShapes>
+        <elementListCompartment Id="eb2ce572-6c57-4546-90fa-a991c72866a6" absoluteBounds="4.89, 5.085, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.875 : 5.69314697265625); (3.375 : 5.69314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/bienescercanosDataContext/Sitio/Sitio_TiposBiene" />
+      <nodes>
+        <classShapeMoniker Id="a105c2d2-2ed6-4fd1-86bf-75016f876344" />
+        <classShapeMoniker Id="07ef5966-c194-4d97-bf7e-1233628e2535" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5625 : 3.09780110677083); (5.5625 : 4.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/bienescercanosDataContext/Usuario/Usuario_Sitio" />
+      <nodes>
+        <classShapeMoniker Id="639c7d77-1551-4518-af4c-3d808d6e489e" />
+        <classShapeMoniker Id="a105c2d2-2ed6-4fd1-86bf-75016f876344" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

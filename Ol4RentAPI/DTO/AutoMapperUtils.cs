@@ -32,6 +32,7 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.Caracteristicas, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.SitioFacade.ObtenerCaracteristicasParaEdicion(src.Id)))
                 .ForMember(dest => dest.NombreUsuarioPropietario, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.SitioFacade.ObtenerNombreUsuarioPropietario(src.Id)));
             Mapper.CreateMap<HabilitacionUsuario, UsuarioSitioDTO>()
+                .ForMember(dest => dest.Id, dat => dat.MapFrom(src => src.Usuario.Id))
                 .ForMember(dest => dest.NombreUsuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario))
                 .ForMember(dest => dest.Correo, dat => dat.MapFrom(src => src.Usuario.Mail))
                 .ForMember(dest => dest.NombreCompleto, dat => dat.MapFrom(src => src.Usuario.Nombre + " " + src.Usuario.Apellido))
@@ -50,6 +51,11 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.OrigenDatos, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.OrigenDatosFacade.Obtener(src.IdOrigenDatos)))
                 .ForMember(dest => dest.Sitio, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.SitioFacade.Obtener(src.IdSitio)));
             Mapper.CreateMap<Usuario, UsuarioDTO>();
+            Mapper.CreateMap<Contenido, ContenidoDTO>()
+                .ForMember(dest => dest.NombreUsuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario))
+                .ForMember(dest => dest.TieneAdjuntos, dat => dat.MapFrom(src => src.Adjuntos.Count > 0))
+                .ForMember(dest => dest.Bien, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.BienFacade.ObtenerBienParaContenido(src.Id)));
+            Mapper.CreateMap<Mensaje, MensajeDTO>();
             Mapper.AssertConfigurationIsValid();
         }
     }

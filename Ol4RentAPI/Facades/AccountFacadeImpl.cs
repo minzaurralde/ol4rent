@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Ol4RentAPI.Model;
 using System.Data;
 using Ol4RentAPI.DTO;
+using System.Web.Security;
+using System.Web;
 
 namespace Ol4RentAPI.Facades
 {
@@ -21,11 +23,11 @@ namespace Ol4RentAPI.Facades
             }
         }
         
-        public Usuario Obtener(int id)
+        public UsuarioDTO Obtener(int id)
         {
             using (ModelContainer db = new ModelContainer())
             {
-                return db.Usuarios.Find(id);
+                return AutoMapperUtils<Usuario, UsuarioDTO>.Map(db.Usuarios.Find(id));
             }
         }
 
@@ -52,6 +54,7 @@ namespace Ol4RentAPI.Facades
         {
             try
             {
+                Roles.AddUserToRole(nombreUsuario, RolEnum.PUBLIC_USER.ToString());
                 using (ModelContainer db = new ModelContainer())
                 {
                     // Obtengo el usuario
@@ -222,5 +225,27 @@ namespace Ol4RentAPI.Facades
                 }
             }
         }
+
+
+        public List<UsuarioDTO> ObtenerUsuariosConectados(int idUsuarioActual)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                double minutosValidezSesion = HttpContext.Current.Session.Timeout;
+                DateTime fechaTope = DateTime.Now.Date.AddMinutes(-1 * minutosValidezSesion);
+
+                IQueryable<Usuario> usuarios = from grupousuarios in db.Usuarios
+                               from sesiones in db.Sesiones
+                               where grupousuarios.Id != idUsuarioActual
+                               where sesiones.Usuario.Id == grupousuarios.Id
+                               where sesiones.FechaCierre == null
+                               where sesiones.UltimoUso > fechaTope
+                               select grupousuarios;
+
+                return AutoMapperUtils<Usuario, UsuarioDTO>.Map(usuarios.ToList());
+            }
+        }
     }
 }
+
+
