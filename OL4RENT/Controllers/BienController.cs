@@ -201,12 +201,6 @@ namespace OL4RENT.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Wishlist()
-        {
-            // TODO Implementar
-            return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares);
-        }
-
         public ActionResult MisBienes()
         {
             // TODO Implementar

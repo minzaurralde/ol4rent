@@ -18,11 +18,14 @@ namespace Ol4RentAPI.Model
         {
             this.ValoresCaracteristicas = new HashSet<ValorCaracteristica>();
         }
-    
+
         public int Id { get; set; }
+        public string Titulo { get; set; }
         public decimal Latitud { get; set; }
         public decimal Longitud { get; set; }
         public string Direccion { get; set; }
+        public string Ciudad { get; set; }
+        public string Pais { get; set; }
         public short Rango { get; set; }
     
         public virtual Usuario Usuario { get; set; }

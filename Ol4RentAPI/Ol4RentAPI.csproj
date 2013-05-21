@@ -57,12 +57,14 @@
     <Compile Include="DTO\AutoMapperUtils.cs" />
     <Compile Include="DTO\CaracteristicaAltaDTO.cs" />
     <Compile Include="DTO\ConfiguracionOrigenDatosAltaDTO.cs" />
+    <Compile Include="DTO\EspecificacionBienDTO.cs" />
     <Compile Include="DTO\NovedadDTO.cs" />
     <Compile Include="DTO\BienAltaDTO.cs" />
     <Compile Include="DTO\OrigenDatosAltaDTO.cs" />
     <Compile Include="DTO\OrigenDatosListaDTO.cs" />
     <Compile Include="DTO\SitioAltaDTO.cs" />
     <Compile Include="DTO\SitioListadoDTO.cs" />
+    <Compile Include="DTO\TipoBienDTO.cs" />
     <Compile Include="DTO\UsuarioDTO.cs" />
     <Compile Include="DTO\UsuarioSitioDTO.cs" />
     <Compile Include="DTO\ValorAtributoDTO.cs" />
@@ -76,11 +78,13 @@
     <Compile Include="Facades\INovedadFacade.cs" />
     <Compile Include="Facades\IOrigenDatosFacade.cs" />
     <Compile Include="Facades\ISitioFacade.cs" />
+    <Compile Include="Facades\IEspecificacionBienFacade.cs" />
     <Compile Include="Facades\Novedades\NovedadComparer.cs" />
     <Compile Include="Facades\NovedadFacadeImpl.cs" />
     <Compile Include="Facades\OrigenDatosFacade.cs" />
     <Compile Include="Facades\ServiceFacadeFactory.cs" />
     <Compile Include="Facades\SitioFacadeImpl.cs" />
+    <Compile Include="Facades\EspecificacionBienFacadeImpl.cs" />
     <Compile Include="Model\AccountModels.cs" />
     <Compile Include="Model\Adjunto.cs">
       <DependentUpon>Model.tt</DependentUpon>

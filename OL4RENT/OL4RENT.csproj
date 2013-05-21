@@ -169,6 +169,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NovedadController.cs" />
     <Compile Include="Controllers\SitioController.cs" />
+    <Compile Include="Controllers\WishController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\SelectorSitioFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -238,6 +239,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="App_Code\TwitterGoodies.cshtml" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\twitter.png" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -308,10 +310,15 @@
     <Content Include="Views\Shared\_HeaderPartial.cshtml" />
     <Content Include="Views\Sitio\Logo.cshtml" />
     <Content Include="Views\Bien\BusquedaAvanzada.cshtml" />
-    <Content Include="Views\Bien\Wishlist.cshtml" />
+    <Content Include="Views\Wish\Wishlist.cshtml" />
     <Content Include="Views\Bien\MisBienes.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\_AppStart.cshtml" />
+    <Content Include="Views\Wish\Index.cshtml" />
+    <Content Include="Views\Wish\Details.cshtml" />
+    <Content Include="Views\Wish\Create.cshtml" />
+    <Content Include="Views\Wish\Edit.cshtml" />
+    <Content Include="Views\Wish\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
