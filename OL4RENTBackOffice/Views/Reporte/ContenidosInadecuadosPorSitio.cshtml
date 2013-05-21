@@ -1,5 +1,69 @@
-﻿@{
-    ViewBag.Title = "ContenidosInadecuadosPorSitio";
+﻿@model List<Ol4RentAPI.DTO.ContenidoDTO>
+@{
+    ViewBag.Title = "Contenidos marcados como inadecuados por sitio";
 }
 
-<h2>ContenidosInadecuadosPorSitio</h2>
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+<div>
+@using (Html.BeginForm("ContenidosInadecuadosPorSitio", "Reporte", FormMethod.Post, new { name = "RegisterForm", id = "RegisterForm" }))
+{
+    <fieldset>
+        <legend>Filtro</legend>
+        <ol>
+            <li>
+                @Html.Label("idSitio", "Seleccionar sitio")
+                @Html.DropDownList("idSitio", (List<SelectListItem>)ViewBag.Sitios)
+            </li>
+            <li>
+                <input type="submit" name="SubmitFiltro" value="Buscar" />
+            </li>
+        </ol>
+    </fieldset>
+}
+</div>
+<div>
+    @if (Model.Count() > 0) {
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayFor(m => m[0].Bien.Titulo)
+                </th>
+                <th>
+                    @Html.DisplayFor(m => m[0].NombreUsuario)
+                </th>
+                <th>
+                    @Html.DisplayFor(m => m[0].Mensaje)
+                </th>
+                <th>
+                    @Html.DisplayFor(m => m[0].CantMarcas)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Ol4RentAPI.DTO.ContenidoDTO contenido in Model) {
+            <tr>
+                <td>
+                    @contenido.Bien.Titulo
+                </td>
+                <td>
+                    @contenido.NombreUsuario
+                </td>
+                <td>
+                    @contenido.Mensaje.Substring(0, contenido.Mensaje.Length > 64 ? 64 : contenido.Mensaje.Length) ...
+                </td>
+                <td>
+                    @contenido.CantMarcas
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    }
+    else {
+        <p>No existen contenidos marcados como inadecuados aún.</p>
+    }
+</div>
