@@ -61,6 +61,14 @@ namespace Ol4RentAPI.Facades
             }
         }
 
+        public IEspecificacionBienFacade EspecificacionBienFacade
+        {
+            get
+            {
+                return new EspecificacionBienFacadeImpl();
+            }
+        }
+
         public IOrigenDatosFacade OrigenDatosFacade
         {
             get

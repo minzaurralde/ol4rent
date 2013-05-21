@@ -1,0 +1,43 @@
+﻿@model Ol4RentAPI.Model.EspecificacionBien
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>EspecificacionBien</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Latitud)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Latitud)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Longitud)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Longitud)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Direccion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Direccion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Rango)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Rango)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
