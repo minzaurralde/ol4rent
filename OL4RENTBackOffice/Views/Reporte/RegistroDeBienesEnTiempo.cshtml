@@ -1,5 +1,50 @@
-﻿@{
-    ViewBag.Title = "RegistroDeBienesEnTiempo";
+﻿@model Ol4RentAPI.DTO.RegistroBienDTO
+@{
+    ViewBag.Title = "Registro de bienes";
 }
 
-<h2>RegistroDeBienesEnTiempo</h2>
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+<div>
+@using (Html.BeginForm("RegistroDeBienesEnTiempo", "Reporte", FormMethod.Post, new { name = "RegisterForm", id = "RegisterForm" }))
+{
+    <fieldset>
+        <legend>Filtro</legend>
+        <ol>
+            <li>
+                @Html.Label("idSitio", "Seleccionar sitio")
+                @Html.DropDownList("idSitio", (List<SelectListItem>)ViewBag.Sitios)
+            </li>
+            <li>
+                @Html.Label("fechaInicio", "Fecha inicio")
+                @Html.TextBox("fechaInicio", ((DateTime)ViewBag.FechaInicio).ToString("dd-MM-yyyy"))
+            </li>
+            <li>
+                @Html.Label("fechaFin", "Fecha fin")
+                @Html.TextBox("fechaFin", ((DateTime)ViewBag.FechaFin).ToString("dd-MM-yyyy"))
+            </li>
+            <li>
+                <input type="submit" name="SubmitFiltro" value="Buscar" />
+            </li>
+        </ol>
+    </fieldset>
+}
+</div>
+<div>
+    @if (Model.Cantidad == 0)
+    {
+        <p>No se registraron bienes entre @(((DateTime)ViewBag.FechaInicio).ToString("dd-MM-yyyy")) y @(((DateTime)ViewBag.FechaFin).ToString("dd-MM-yyyy"))</p>
+    } else if (Model.Cantidad == 1) {
+        <p>Se registró @Model.Cantidad bien entre @(((DateTime)ViewBag.FechaInicio).ToString("dd-MM-yyyy")) y @(((DateTime)ViewBag.FechaFin).ToString("dd-MM-yyyy"))</p>
+    } else {
+        <p>Se registraron @Model.Cantidad bienes entre @(((DateTime)ViewBag.FechaInicio).ToString("dd-MM-yyyy")) y @(((DateTime)ViewBag.FechaFin).ToString("dd-MM-yyyy"))</p>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-1.7.1.js")
+    @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
+    @Scripts.Render("~/Scripts/registroBienes.js")
+}
+
