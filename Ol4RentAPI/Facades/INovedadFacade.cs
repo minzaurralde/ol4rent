@@ -1,4 +1,5 @@
-﻿using Ol4RentAPI.DTO;
+﻿using OL4RENT.DatosExternosDACAPI;
+using Ol4RentAPI.DTO;
 using Ol4RentAPI.Model;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,7 @@ namespace Ol4RentAPI.Facades
     public interface INovedadFacade
     {
         List<NovedadDTO> ListaNovedades();
+
+        List<NovedadExternaDTO> ObtenerNovedadesPorSitio(int idSitio);
     }
 }

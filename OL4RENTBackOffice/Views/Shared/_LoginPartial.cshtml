@@ -8,6 +8,6 @@
     </text>
 } else {
     <ul>
-        <li>@Html.ActionLink("Ingresar", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        @Html.Partial("_LoginFormMinPartial")
     </ul>
 }

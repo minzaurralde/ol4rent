@@ -1,0 +1,25 @@
+﻿@model Ol4RentAPI.Model.LoginModel
+<section id="loginMin">
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Inicio de sesión</legend>
+        <ol>
+            <li>
+                @Html.ValidationMessageFor(m => m.NombreUsuario)
+                @Html.ValidationMessageFor(m => m.Contraseña)
+            </li>
+        </ol>
+        @Html.Label("NombreUsuario", "Usuario:")
+        @Html.TextBoxFor(m => m.NombreUsuario)
+        @Html.Label("Contraseña", "Contraseña:")
+        @Html.PasswordFor(m => m.Contraseña)
+        @Html.CheckBoxFor(m => m.RememberMe)
+        @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+        <input type="submit" value="Iniciar sesión" />
+    </fieldset>
+}
+@Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl })
+</section>

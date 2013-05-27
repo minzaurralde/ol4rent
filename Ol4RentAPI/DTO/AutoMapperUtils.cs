@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OL4RENT.DatosExternosDACAPI;
 using Ol4RentAPI.Facades;
 using Ol4RentAPI.Model;
 using System;
@@ -56,6 +57,8 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.TieneAdjuntos, dat => dat.MapFrom(src => src.Adjuntos.Count > 0))
                 .ForMember(dest => dest.Bien, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.BienFacade.ObtenerBienParaContenido(src.Id)));
             Mapper.CreateMap<Mensaje, MensajeDTO>();
+            Mapper.CreateMap<Novedad, NovedadExternaDTO>()
+                .ForMember(dest => dest.Fecha, dat => dat.MapFrom(src => src.FechaHora));
             Mapper.AssertConfigurationIsValid();
         }
     }
