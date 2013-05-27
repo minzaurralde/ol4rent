@@ -281,8 +281,8 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Latitud" Type="decimal" Nullable="false" />
     <Property Name="Longitud" Type="decimal" Nullable="false" />
-    <Property Name="Direccion" Type="nvarchar" Nullable="true" MaxLength="128" />
     <Property Name="Rango" Type="smallint" Nullable="false" />
+    <Property Name="Titulo" Type="nvarchar" Nullable="false" MaxLength="64" />
     <Property Name="Usuario_Id" Type="int" Nullable="false" />
     <Property Name="TipoBien_Id" Type="int" Nullable="false" />
   </EntityType>
@@ -1004,8 +1004,8 @@
           <NavigationProperty Name="ValoresCaracteristicas" Relationship="Model.EspecificacionBienValorCaracteristicaEspecificacion" FromRole="EspecificacionBien" ToRole="ValorCaracteristicaEspecificacion" />
           <Property Type="Decimal" Name="Latitud" Nullable="false" />
           <Property Type="Decimal" Name="Longitud" Nullable="false" />
-          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="128" />
           <Property Type="Int16" Name="Rango" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="false" MaxLength="64" />
         </EntityType>
         <Association Name="UsuarioWishList">
           <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
@@ -1258,8 +1258,8 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Latitud" ColumnName="Latitud" />
           <ScalarProperty Name="Longitud" ColumnName="Longitud" />
-          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
           <ScalarProperty Name="Rango" ColumnName="Rango" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

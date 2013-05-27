@@ -18,4 +18,8 @@ namespace Ol4RentAPI.DTO
     {
         public int Id { get; set; }
     }
+    public class ValorCaracteristicaListadoDTO : ValorCaracteristicaEdicionDTO
+    {
+        public CaracteristicaEdicionDTO Caracteristica { get; set; }
+    }
 }

@@ -56,6 +56,14 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.TieneAdjuntos, dat => dat.MapFrom(src => src.Adjuntos.Count > 0))
                 .ForMember(dest => dest.Bien, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.BienFacade.ObtenerBienParaContenido(src.Id)));
             Mapper.CreateMap<Mensaje, MensajeDTO>();
+            Mapper.CreateMap<EspecificacionBien, EspecificacionBienDTO>()
+                .ForMember(dest => dest.TipoBien, dat => dat.MapFrom(src => src.TipoBien.Id))
+                .ForMember(dest => dest.Usuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario));
+            Mapper.CreateMap<ValorCaracteristica, ValorCaracteristicaAltaDTO>()
+                .ForMember(dest => dest.IdCaracteristica, dat => dat.MapFrom(src => src.Caracteristica.Id));
+            Mapper.CreateMap<ValorCaracteristica, ValorCaracteristicaListadoDTO>()
+                .ForMember(dest => dest.IdCaracteristica, dat => dat.MapFrom(src => src.Caracteristica.Id))
+                .ForMember(dest => dest.Caracteristica, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.CaracteristicaFacade.Obtener(src.Caracteristica.Id)));
             Mapper.AssertConfigurationIsValid();
         }
     }

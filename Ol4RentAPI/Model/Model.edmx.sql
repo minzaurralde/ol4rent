@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 05/12/2013 20:49:27
--- Generated from EDMX file: C:\Users\Martin\documents\visual studio 2012\Projects\OL4RENT\Ol4RentAPI\Model\Model.edmx
+-- Date Created: 05/26/2013 21:29:14
+-- Generated from EDMX file: C:\Users\Naty\Documents\Visual Studio 2012\Projects\ol4rent\Ol4RentAPI\Model\Model.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -11,13 +11,6 @@ GO
 USE [OL4RENT];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
-GO
-
--- --------------------------------------------------
--- [NOTE] Agregado por el tema de membership
--- --------------------------------------------------
-IF OBJECT_ID(N'[dbo].[fk_UserId]', 'F') IS NOT NULL
-	ALTER TABLE [dbo].[webpages_UsersInRoles] DROP CONSTRAINT [fk_UserId];
 GO
 
 -- --------------------------------------------------
@@ -317,8 +310,8 @@ CREATE TABLE [dbo].[EspecificacionesBienes] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Latitud] decimal(18,0)  NOT NULL,
     [Longitud] decimal(18,0)  NOT NULL,
-    [Direccion] nvarchar(128)  NULL,
     [Rango] smallint  NOT NULL,
+    [Titulo] nvarchar(64)  NOT NULL,
     [Usuario_Id] int  NOT NULL,
     [TipoBien_Id] int  NOT NULL
 );
@@ -869,13 +862,6 @@ ADD CONSTRAINT [FK_ValorCaracteristicaBien]
 CREATE INDEX [IX_FK_ValorCaracteristicaBien]
 ON [dbo].[ValoresCaracteristicas]
     ([ValorCaracteristicaBien_ValorCaracteristica_Id]);
-GO
-
--- --------------------------------------------------
--- [NOTE] Agregado por membership
--- --------------------------------------------------
-
-ALTER TABLE [dbo].[webpages_UsersInRoles] ADD CONSTRAINT [fk_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Usuarios] ([Id]);
 GO
 
 -- --------------------------------------------------

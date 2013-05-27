@@ -289,5 +289,24 @@ namespace Ol4RentAPI.Facades
                 }
             }
         }
+
+        public int ObtenerIdTipoBien (int id)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Sitio> querySitio =
+                    from s in db.Sitios
+                    where s.Id == id
+                    select s;
+                if (querySitio.Count() > 0)
+                {
+                    return querySitio.First().TipoBien.Id;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
     }
 }

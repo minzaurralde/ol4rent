@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Mapa";
+}
+
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR_JcEyolVGeSAWZsQ4g8cIuOLBnDD2l4&sensor=false"></script>
+<script type="text/javascript">
+    var map;
+    function initialize() {
+
+        var mapOptions = {
+            center: new google.maps.LatLng(-34.887057, -56.171036),
+            panControl: true,
+            zoomControl: true,
+            mapTypeControl: true,
+            scaleControl: true,
+            streetViewControl: true,
+            overviewMapControl: true,
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+        google.maps.Map.prototype.marker = new google.maps.Marker();
+
+        google.maps.event.addListener(map, "click", function (event) { esperaClick(event.latLng); });
+        
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    function esperaClick(location) {
+        gLocation = location;
+        google.maps.Map.prototype.marker.setMap(null);
+
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+
+        google.maps.Map.prototype.marker = marker;
+        map.setCenter(location);
+        $("#Latitud").val(location.lat());
+        $("#Longitud").val(location.lng());
+        crearCirculo();
+    }
+
+    var gLocation = new google.maps.LatLng(-34.887057, -56.171036);
+
+    function crearCirculo() {
+        var circulo = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: gLocation,
+            radius: $("#Rango").val() == "" ? 1 : parseInt($("#Rango").val())
+        });
+    }
+
+    function addM(latLng, lat, lng, titulo, link) {
+        if(latLng == null){
+            lat = lat.replace(",", ".");
+            lng = lng.replace(",", ".");
+            var latLng = new google.maps.LatLng(lat, lng);
+        }
+        var marker = new google.maps.Marker({
+            position: latLng,
+            title: titulo,
+            map: map,
+            url: link
+        });
+        google.maps.event.addListener(marker, 'click', function () {
+            window.location.href = marker.url;
+        });
+    }
+
+    
+    function geocode(address, titulo, link) {
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                addM(results[0].geometry.location , null, null, titulo, link);
+            } 
+        });
+    }
+
+</script>
+<h3>Ubicación</h3>
+<br />
+<div id="map-canvas" style="width: 450px; height: 300px"></div>
+
+

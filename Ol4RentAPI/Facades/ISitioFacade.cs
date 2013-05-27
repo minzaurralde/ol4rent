@@ -36,5 +36,7 @@ namespace Ol4RentAPI.Facades
         string ObtenerNombreUsuarioPropietario(int idSitio);
 
         SitioListadoDTO ObtenerPorDominio(string dominio);
+
+        int ObtenerIdTipoBien (int id);
     }
 }

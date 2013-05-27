@@ -21,34 +21,41 @@ namespace Ol4RentAPI.Facades
             }
         }
 
-        public EspecificacionBien Obtener(int id)
+        public EspecificacionBienDTO Obtener(int id)
         {
-            using (ModelContainer db = new ModelContainer())
+            try
             {
-                return db.EspecificacionesBienes.Find(id);
+                using (ModelContainer db = new ModelContainer())
+                {
+                    return AutoMapperUtils<EspecificacionBien, EspecificacionBienDTO>.Map(db.EspecificacionesBienes.Find(id));
+                }
+            }
+            catch
+            {
+                return null;
             }
         }
 
-        public bool Crear(EspecificacionBienDTO w)
+        public bool Crear(EspecificacionBienAltaDTO wishDTO)
         {
             using (ModelContainer db = new ModelContainer())
             {
-
+                IQueryable<Usuario> query =
+                    from u in db.Usuarios
+                    where u.NombreUsuario == wishDTO.Usuario
+                    select u;
                 EspecificacionBien wish = new EspecificacionBien()
                 {
-                    Titulo = w.Titulo,
-                    Direccion = w.Direccion,
-                    Latitud = w.Latitud,
-                    Longitud = w.Longitud,
-                    Pais = w.Pais,
-                    Ciudad = w.Ciudad,
-                    Rango = w.Rango,
-                    TipoBien = db.TiposBienes.Find(w.TipoBien),
-                    Usuario = db.Usuarios.Find(w.Usuario),
+                    Titulo = wishDTO.Titulo,
+                    Latitud = wishDTO.Latitud,
+                    Longitud = wishDTO.Longitud,
+                    Rango = wishDTO.Rango,
+                    TipoBien = db.TiposBienes.Find(wishDTO.TipoBien),
+                    Usuario = query.First(),
                     ValoresCaracteristicas = new List<ValorCaracteristica>()
                 };
 
-                foreach (ValorCaracteristicaAltaDTO valorCaracteristicaDTO in w.ValoresCaracteristicas)
+                foreach (ValorCaracteristicaAltaDTO valorCaracteristicaDTO in wishDTO.ValoresCaracteristicas)
                 {
                     wish.ValoresCaracteristicas.Add(new ValorCaracteristica() 
                     {
@@ -82,16 +89,6 @@ namespace Ol4RentAPI.Facades
                         wish.Titulo = w.Titulo;
                         seModifico = true;
                     }
-                    if (wish.Ciudad != w.Ciudad)
-                    {
-                        wish.Ciudad = w.Ciudad;
-                        seModifico = true;
-                    }
-                    if (wish.Direccion != w.Direccion)
-                    {
-                        wish.Direccion = w.Direccion;
-                        seModifico = true;
-                    }
                     if (wish.Latitud != w.Latitud)
                     {
                         wish.Latitud = w.Latitud;
@@ -100,11 +97,6 @@ namespace Ol4RentAPI.Facades
                     if (wish.Longitud != w.Longitud)
                     {
                         wish.Longitud = w.Longitud;
-                        seModifico = true;
-                    }
-                    if (wish.Pais != w.Pais)
-                    {
-                        wish.Pais = w.Pais;
                         seModifico = true;
                     }
                     if (wish.Rango != w.Rango)
@@ -145,13 +137,13 @@ namespace Ol4RentAPI.Facades
             }
         }
 
-        public List<EspecificacionBienListadoDTO> Wishlist(string usuario, string tipoBien)
+        public List<EspecificacionBienListadoDTO> Wishlist(string usuario, int sitio)
         {
             using (ModelContainer db = new ModelContainer())
             {
                 IQueryable<EspecificacionBien> queryWish =
                     from w in db.EspecificacionesBienes
-                    where w.Usuario.NombreUsuario == usuario && w.TipoBien.Nombre == tipoBien
+                    where w.Usuario.NombreUsuario == usuario && w.TipoBien.Sitio.Id == sitio
                     select w;
                 if (queryWish.Count() > 0)
                 {
@@ -162,8 +154,6 @@ namespace Ol4RentAPI.Facades
                         {
                             Id = queryWish.First().Id, 
                             Titulo = queryWish.First().Titulo,
-                            Ciudad = queryWish.First().Ciudad,
-                            Pais = queryWish.First().Pais
                         });
                     }
                     return list;

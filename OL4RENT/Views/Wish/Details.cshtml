@@ -1,33 +1,83 @@
-﻿@model Ol4RentAPI.Model.EspecificacionBien
+﻿@model Ol4RentAPI.DTO.EspecificacionBienDTO
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="float-right">
+    <div>
+        <!-- Mapa -->
+        <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR_JcEyolVGeSAWZsQ4g8cIuOLBnDD2l4&sensor=false"></script>
+        <script type="text/javascript">
+            var map;
+            function initialize() {
+
+                var mapOptions = {
+                    center: new google.maps.LatLng(-34.887057, -56.171036),
+                    panControl: true,
+                    zoomControl: true,
+                    mapTypeControl: true,
+                    scaleControl: true,
+                    streetViewControl: true,
+                    overviewMapControl: true,
+                    zoom: 12,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+                crearCirculo();
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            function CrearPunto() {
+                var location = new google.maps.LatLng($("#Latitud").val(), $("#Longitud").val());
+                gLocation = location;
+                google.maps.Map.prototype.marker.setMap(null);
+
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+
+                google.maps.Map.prototype.marker = marker;
+                map.setCenter(location);
+                crearCirculo();
+            }
+
+            var gLocation = new google.maps.LatLng(-34.887057, -56.171036);
+
+            function crearCirculo() {
+                var circulo = new google.maps.Circle({
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                    map: map,
+                    center: gLocation,
+                    radius: $("#Rango").val() == "" ? 1 : parseInt($("#Rango").val())
+                });
+            }
+
+        </script>
+        <h3>Ubicación</h3>
+        <br />
+        <div id="map-canvas" style="width: 450px; height: 300px"></div>
+    </div>
+</div>
+
+<h2>Detalles</h2>
 
 <fieldset>
     <legend>EspecificacionBien</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Latitud)
+         @Html.DisplayNameFor(model => model.Titulo)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Latitud)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Longitud)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Longitud)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Direccion)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Direccion)
+        @Html.DisplayFor(model => model.Titulo)
     </div>
 
     <div class="display-label">
@@ -36,8 +86,44 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.Rango)
     </div>
+    <div>
+        @Html.HiddenFor(model => model.Latitud)
+        @Html.HiddenFor(model => model.Longitud)
+
+    </div>
+    <ol>
+        @if (Model.ValoresCaracteristicas != null && Model.ValoresCaracteristicas.Count() > 0){
+            foreach (Ol4RentAPI.DTO.ValorCaracteristicaListadoDTO item in Model.ValoresCaracteristicas)
+            {
+            <li>
+                @Html.Label("car-" + item.Caracteristica.Id.ToString(),item.Caracteristica.Nombre)
+                @if(item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
+                {
+                    @Html.CheckBox("car-" + item.Caracteristica.Id.ToString(),item.Valor.AsBool());
+                }
+                else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.FECHA)
+                {
+                    @Html.TextBox("car-" + item.Caracteristica.Id.ToString(),item.Valor);
+                }
+                else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.ENTERO)
+                {
+                    @Html.TextBox("car-" + item.Caracteristica.Id.ToString(), 0, item.Valor);
+                }
+                else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.DECIMAL)
+                {
+                    @Html.TextBox("car-" + item.Caracteristica.Id.ToString(), 0, item.Valor);
+                }
+                else
+                {
+                    @Html.TextBox("car-" + item.Caracteristica.Id.ToString(),item.Valor);
+                }
+            </li>
+            
+            }
+        }
+    </ol>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Volver a Wishlist", "Index")
 </p>

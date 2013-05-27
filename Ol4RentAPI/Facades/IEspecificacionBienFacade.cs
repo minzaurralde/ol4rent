@@ -11,10 +11,10 @@ namespace Ol4RentAPI.Facades
     public interface IEspecificacionBienFacade
     {
         List<EspecificacionBien> Todos { get; }
-        EspecificacionBien Obtener(int id);
-        bool Crear(EspecificacionBienDTO w);
+        EspecificacionBienDTO Obtener(int id);
+        bool Crear(EspecificacionBienAltaDTO wishDTO);
         bool Editar(EspecificacionBienDTO w);
         void Eliminar(int id);
-        List<EspecificacionBienListadoDTO> Wishlist(string usuario, string tipoBien);
+        List<EspecificacionBienListadoDTO> Wishlist(string usuario, int sitio);
     }
 }

@@ -1,15 +1,25 @@
-﻿@model Ol4RentAPI.Model.EspecificacionBien
+﻿@model Ol4RentAPI.DTO.EspecificacionBienAltaDTO
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<div class="float-right">
+    <div>
+        <!-- Mapa -->
+        @Html.Partial("../Wish/Mapa")
+    </div>
+</div>
 
-@using (Html.BeginForm()) {
+<h2>Crear Wish</h2>
+
+@using (Html.BeginForm("Create", "Wish", FormMethod.Post,new { name = "RegisterForm", id = "RegisterForm", encType = "multipart/form-data" })) 
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-
+    
+        
     <fieldset>
         <legend>EspecificacionBien</legend>
 
@@ -22,46 +32,6 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Pais)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Pais)
-            @Html.ValidationMessageFor(model => model.Pais)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Ciudad)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Ciudad)
-            @Html.ValidationMessageFor(model => model.Ciudad)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Latitud)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Latitud)
-            @Html.ValidationMessageFor(model => model.Latitud)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Longitud)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Longitud)
-            @Html.ValidationMessageFor(model => model.Longitud)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Direccion)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Direccion)
-            @Html.ValidationMessageFor(model => model.Direccion)
-        </div>
-
-        <div class="editor-label">
             @Html.LabelFor(model => model.Rango)
         </div>
         <div class="editor-field">
@@ -69,6 +39,54 @@
             @Html.ValidationMessageFor(model => model.Rango)
         </div>
 
+       <div>
+           @Html.HiddenFor(model => model.Latitud)
+           @Html.HiddenFor(model => model.Longitud)
+       </div>
+        <ol>
+        @foreach (Ol4RentAPI.DTO.CaracteristicaEdicionDTO caracteristica in ViewBag.Caracteristicas)
+            {
+            <li>
+                @Html.Label("car-" + caracteristica.Id.ToString(), caracteristica.Nombre)
+                @if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
+                {
+                    @Html.CheckBox("car-" + caracteristica.Id.ToString());
+                }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.FECHA)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString());
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $("#car-@caracteristica.Id.ToString()").datepicker
+                                ({
+                                    dateFormat: 'dd/mm/yyyy',
+                                    showStatus: true,
+                                    showWeeks: true,
+                                    highlightWeek: true,
+                                    numberOfMonths: 1,
+                                    showAnim: "scale",
+                                    showOptions: {
+                                        origin: ["top", "left"]
+                                    }
+                                });
+                        });
+                    </script>
+                }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.ENTERO)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0");
+                }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.DECIMAL)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0.0");
+                }
+                else
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString());
+                }
+            </li>
+            }
+            </ol>
         <p>
             <input type="submit" value="Create" />
         </p>
@@ -76,9 +94,11 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver a Wishlist", "Wishlist")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/crearWish.js")
+    @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
 }

@@ -72,11 +72,13 @@
     <Compile Include="DTO\UsuarioSitioDTO.cs" />
     <Compile Include="DTO\ValorAtributoDTO.cs" />
     <Compile Include="DTO\ValorCaracteristicaAltaDTO.cs" />
+    <Compile Include="Facades\CaracteristicasFacadeImpl.cs" />
     <Compile Include="Facades\IAccountFacade.cs" />
     <Compile Include="Facades\AccountFacadeImpl.cs" />
     <Compile Include="Facades\BienFacadeImpl.cs" />
     <Compile Include="Facades\CreadorDatosDummyImpl.cs" />
     <Compile Include="Facades\IBienFacade.cs" />
+    <Compile Include="Facades\ICaracteristica.cs" />
     <Compile Include="Facades\ICreadorDatosDummyFacade.cs" />
     <Compile Include="Facades\IMensajeFacade.cs" />
     <Compile Include="Facades\INovedadFacade.cs" />

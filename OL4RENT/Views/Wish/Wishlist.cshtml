@@ -12,12 +12,6 @@
         <div>
             @Html.ActionLink(item.Titulo, "Details", "Wish", new { id=item.Id }, null)
         </div>
-        <div>
-            @Html.DisplayFor(modelItem => item.Pais)
-        </div>
-        <div>
-            @Html.DisplayFor(modelItem => item.Ciudad)
-        </div>
     </li>
 }
 </ul>

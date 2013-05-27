@@ -92,5 +92,13 @@ namespace Ol4RentAPI.Facades
                 return new MensajeFacade();
             }
         }
+
+        public ICaracteristicaFacade CaracteristicaFacade
+        {
+            get
+            {
+                return new CaracteristicasFacadeImpl();
+            }
+        }
     }
 }

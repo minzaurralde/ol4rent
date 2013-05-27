@@ -242,9 +242,9 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="App_Code\TwitterGoodies.cshtml" />
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\twitter.png" />
+    <Content Include="Scripts\crearWish.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -323,6 +323,7 @@
     <Content Include="Views\Wish\Edit.cshtml" />
     <Content Include="Views\Wish\Delete.cshtml" />
     <Content Include="Views\Chat\ChatUsuario.cshtml" />
+    <Content Include="Views\Wish\Mapa.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

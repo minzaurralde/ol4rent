@@ -273,7 +273,6 @@ namespace Ol4RentAPI.Facades
                     select b;
                 return new RegistroBienDTO() { Cantidad = query.Count() };
             }
-            return null;
         }
     }
 }
