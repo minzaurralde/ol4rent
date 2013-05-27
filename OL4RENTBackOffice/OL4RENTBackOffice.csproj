@@ -233,6 +233,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Images\facebook.png" />
+    <Content Include="Images\twitter.png" />
     <Content Include="Scripts\configurarODSitio.js" />
     <Content Include="Scripts\editarODSitio.js" />
     <Content Include="Scripts\editarOrigenDatos.js" />
@@ -319,6 +321,8 @@
     <Content Include="Views\OrigenDatos\Eliminar.cshtml" />
     <Content Include="Views\Reporte\RegistroDeBienesEnTiempo.cshtml" />
     <Content Include="Views\Reporte\ContenidosInadecuadosPorSitio.cshtml" />
+    <Content Include="Views\Shared\_LoginFormPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginFormMinPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

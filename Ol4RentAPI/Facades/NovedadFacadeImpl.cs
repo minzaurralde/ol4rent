@@ -119,5 +119,25 @@ namespace Ol4RentAPI.Facades
                 }
             }
         }
+
+
+        public List<NovedadExternaDTO> ObtenerNovedadesPorSitio(int idSitio)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Novedad> queryNovedades =
+                    from nov in db.Novedades
+                    where nov.Configuracion.Sitio.Id == idSitio
+                    select nov;
+                if (queryNovedades.Count() > 0)
+                {
+                    return AutoMapperUtils<Novedad, NovedadExternaDTO>.Map(queryNovedades.ToList());
+                }
+                else
+                {
+                    return new List<NovedadExternaDTO>();
+                }
+            }
+        }
     }
 }
