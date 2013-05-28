@@ -44,5 +44,6 @@ namespace Ol4RentAPI.Model
         public DbSet<Atributo> Atributos { get; set; }
         public DbSet<ValorAtributo> ValoresAtributos { get; set; }
         public DbSet<Sesion> Sesiones { get; set; }
+        public DbSet<Dependencia> DependenciaSet { get; set; }
     }
 }

@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 05/26/2013 21:29:14
--- Generated from EDMX file: C:\Users\Naty\Documents\Visual Studio 2012\Projects\ol4rent\Ol4RentAPI\Model\Model.edmx
+-- Date Created: 05/28/2013 09:22:10
+-- Generated from EDMX file: C:\Users\Martin\documents\visual studio 2012\Projects\OL4RENT\Ol4RentAPI\Model\Model.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -177,6 +177,7 @@ CREATE TABLE [dbo].[Sitios] (
     [CantBienesPopulares] smallint  NOT NULL,
     [CantMarcasXCont] smallint  NOT NULL,
     [CantContBloqXUsu] smallint  NOT NULL,
+    [CantNovedadesHome] int  NOT NULL,
     [UsuarioSitio_Sitio_Id] int  NOT NULL
 );
 GO
@@ -204,6 +205,7 @@ CREATE TABLE [dbo].[Novedades] (
     [Titulo] nvarchar(64)  NOT NULL,
     [Contenido] nvarchar(4000)  NOT NULL,
     [FechaHora] datetime  NOT NULL,
+    [Prioridad] int  NOT NULL,
     [Configuracion_Id] int  NOT NULL
 );
 GO
@@ -364,6 +366,15 @@ CREATE TABLE [dbo].[Sesiones] (
 );
 GO
 
+-- Creating table 'DependenciaSet'
+CREATE TABLE [dbo].[DependenciaSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Nombre] nvarchar(64)  NOT NULL,
+    [Dll] varbinary(max)  NOT NULL,
+    [OrigenDatosDependencia_Dependencia_Id] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -479,6 +490,12 @@ GO
 -- Creating primary key on [Id] in table 'Sesiones'
 ALTER TABLE [dbo].[Sesiones]
 ADD CONSTRAINT [PK_Sesiones]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'DependenciaSet'
+ALTER TABLE [dbo].[DependenciaSet]
+ADD CONSTRAINT [PK_DependenciaSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -862,6 +879,20 @@ ADD CONSTRAINT [FK_ValorCaracteristicaBien]
 CREATE INDEX [IX_FK_ValorCaracteristicaBien]
 ON [dbo].[ValoresCaracteristicas]
     ([ValorCaracteristicaBien_ValorCaracteristica_Id]);
+GO
+
+-- Creating foreign key on [OrigenDatosDependencia_Dependencia_Id] in table 'DependenciaSet'
+ALTER TABLE [dbo].[DependenciaSet]
+ADD CONSTRAINT [FK_OrigenDatosDependencia]
+    FOREIGN KEY ([OrigenDatosDependencia_Dependencia_Id])
+    REFERENCES [dbo].[OrigenesDatos]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_OrigenDatosDependencia'
+CREATE INDEX [IX_FK_OrigenDatosDependencia]
+ON [dbo].[DependenciaSet]
+    ([OrigenDatosDependencia_Dependencia_Id]);
 GO
 
 -- --------------------------------------------------

@@ -119,7 +119,6 @@ namespace Ol4RentAPI.Facades
                 using (ModelContainer db = new ModelContainer())
                 {
                     Sitio sitio = db.Sitios.Find(sitioDTO.Id);
-                    // TODO implementar edicion de sitio
                     bool seModifico = false;
                     if (sitio.Nombre != sitioDTO.Nombre)
                     {
@@ -173,7 +172,7 @@ namespace Ol4RentAPI.Facades
                         db.Entry(sitio.TipoBien).State = EntityState.Modified;
                         salvar = true;
                     }
-                    // TODO faltanmodificar los atributos del tipo de bien y el usuario
+                    // TODO edicion de sitio: faltan modificar los atributos del tipo de bien y el usuario
                     if (seModifico)
                     {
                         db.Entry(sitio).State = EntityState.Modified;

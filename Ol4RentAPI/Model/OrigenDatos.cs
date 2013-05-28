@@ -17,6 +17,7 @@ namespace Ol4RentAPI.Model
         public OrigenDatos()
         {
             this.Atributos = new HashSet<Atributo>();
+            this.Dependencias = new HashSet<Dependencia>();
         }
     
         public int Id { get; set; }
@@ -24,5 +25,6 @@ namespace Ol4RentAPI.Model
         public byte[] Manejador { get; set; }
     
         public virtual ICollection<Atributo> Atributos { get; set; }
+        public virtual ICollection<Dependencia> Dependencias { get; set; }
     }
 }

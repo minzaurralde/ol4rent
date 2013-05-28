@@ -39,6 +39,7 @@ namespace OL4RENTBackOffice.Controllers
         [HttpPost]
         public ActionResult Crear(int maxid, OrigenDatosAltaDTO dto, HttpPostedFileBase dll)
         {
+            // TODO crear origen de datos: falta agregar todo lo que tiene que ver con las Dlls "Dependencias" de la dll del OD
             if (dto.Atributos == null)
             {
                 dto.Atributos = new List<AtributoAltaDTO>();
@@ -75,6 +76,7 @@ namespace OL4RENTBackOffice.Controllers
         [HttpPost]
         public ActionResult Editar(int maxid, OrigenDatosEdicionDTO dto, HttpPostedFileBase dll)
         {
+            // TODO editar origen de datos: falta agregar todo lo que tiene que ver con las Dlls "Dependencias" de la dll del OD
             if (dto.Atributos == null)
             {
                 dto.Atributos = new List<AtributoEdicionDTO>();

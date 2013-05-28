@@ -12,14 +12,10 @@ namespace Ol4RentAPI.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Novedad
+    public partial class Dependencia
     {
         public int Id { get; set; }
-        public string Titulo { get; set; }
-        public string Contenido { get; set; }
-        public System.DateTime FechaHora { get; set; }
-        public int Prioridad { get; set; }
-    
-        public virtual ConfiguracionOrigenDatos Configuracion { get; set; }
+        public string Nombre { get; set; }
+        public byte[] Dll { get; set; }
     }
 }
