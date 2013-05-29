@@ -67,6 +67,8 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.Caracteristica, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.CaracteristicaFacade.Obtener(src.Caracteristica.Id)));
             Mapper.CreateMap<Novedad, NovedadExternaDTO>()
                 .ForMember(dest => dest.Fecha, dat => dat.MapFrom(src => src.FechaHora));
+            Mapper.CreateMap<Dependencia, DependenciaDTO>();
+            Mapper.CreateMap<DependenciaDTO, Dependencia>();
             Mapper.AssertConfigurationIsValid();
         }
     }

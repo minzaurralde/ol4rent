@@ -106,7 +106,7 @@ namespace Ol4RentAPI.Facades
                     List<NovedadDTO> novedades = new List<NovedadDTO>();
                     foreach (ConfiguracionOrigenDatos config in configuraciones)
                     {
-                        IProveedorNoticias proveedor = NovedadesExternasFactory.ObtenerProveedor(config);
+                        IProveedorNoticias proveedor = NovedadesExternasFactory.Instance.ObtenerProveedor(config);
                         List<NovedadExternaDTO> novedadesConfig = proveedor.ObtenerNovedades(maximaCantidadNovedadesHome);
                         foreach (NovedadExternaDTO novedadExterna in novedadesConfig)
                         {

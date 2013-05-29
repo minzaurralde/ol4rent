@@ -25,7 +25,7 @@
     <EntitySet Name="Atributos" EntityType="Model.Store.Atributos" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ValoresAtributos" EntityType="Model.Store.ValoresAtributos" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Sesiones" EntityType="Model.Store.Sesiones" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="DependenciaSet" EntityType="Model.Store.DependenciaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Dependencias" EntityType="Model.Store.Dependencias" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="TipoBienSitio" Association="Model.Store.TipoBienSitio">
       <End Role="TipoBien" EntitySet="TiposBienes" />
       <End Role="Sitio" EntitySet="Sitios" />
@@ -136,7 +136,7 @@
     </AssociationSet>
     <AssociationSet Name="OrigenDatosDependencia" Association="Model.Store.OrigenDatosDependencia">
       <End Role="OrigenDatos" EntitySet="OrigenesDatos" />
-      <End Role="Dependencia" EntitySet="DependenciaSet" />
+      <End Role="Dependencia" EntitySet="Dependencias" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Sitios">
@@ -340,7 +340,7 @@
     <Property Name="SesionID" Type="nvarchar" Nullable="false" MaxLength="256" />
     <Property Name="Usuario_Id" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="DependenciaSet">
+  <EntityType Name="Dependencias">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -675,7 +675,7 @@
   </Association>
   <Association Name="OrigenDatosDependencia">
     <End Role="OrigenDatos" Type="Model.Store.OrigenesDatos" Multiplicity="1" />
-    <End Role="Dependencia" Type="Model.Store.DependenciaSet" Multiplicity="*" />
+    <End Role="Dependencia" Type="Model.Store.Dependencias" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="OrigenDatos">
         <PropertyRef Name="Id" />
@@ -817,10 +817,10 @@
             <End Role="ValorCaracteristica" EntitySet="ValoresCaracteristicas" />
             <End Role="Bien" EntitySet="Bienes" />
           </AssociationSet>
-          <EntitySet Name="DependenciaSet" EntityType="Model.Dependencia" />
+          <EntitySet Name="Dependencias" EntityType="Model.Dependencia" />
           <AssociationSet Name="OrigenDatosDependencia" Association="Model.OrigenDatosDependencia">
             <End Role="OrigenDatos" EntitySet="OrigenesDatos" />
-            <End Role="Dependencia" EntitySet="DependenciaSet" />
+            <End Role="Dependencia" EntitySet="Dependencias" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Sitio">
@@ -1356,9 +1356,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DependenciaSet">
+    <EntitySetMapping Name="Dependencias">
       <EntityTypeMapping TypeName="IsTypeOf(Model.Dependencia)">
-        <MappingFragment StoreEntitySet="DependenciaSet">
+        <MappingFragment StoreEntitySet="Dependencias">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="Dll" ColumnName="Dll" />
@@ -1583,7 +1583,7 @@
       </EndProperty>
       <Condition ColumnName="ValorCaracteristicaBien_ValorCaracteristica_Id" IsNull="false" />
     </AssociationSetMapping>
-    <AssociationSetMapping Name="OrigenDatosDependencia" TypeName="Model.OrigenDatosDependencia" StoreEntitySet="DependenciaSet">
+    <AssociationSetMapping Name="OrigenDatosDependencia" TypeName="Model.OrigenDatosDependencia" StoreEntitySet="Dependencias">
       <EndProperty Name="OrigenDatos">
         <ScalarProperty Name="Id" ColumnName="OrigenDatosDependencia_Dependencia_Id" />
       </EndProperty>

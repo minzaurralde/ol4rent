@@ -42,6 +42,35 @@ namespace Ol4RentAPI.Facades
                     {
                         db.Atributos.Add(a);
                     }
+                    List<Dependencia> aBorrar = new List<Dependencia>();
+                    List<Dependencia> aAgregar = new List<Dependencia>();
+                    foreach (Dependencia d in origenDatos.Dependencias)
+                    {
+                        IQueryable<Dependencia> queryDependencia =
+                            from dep in db.Dependencias
+                            where dep.Nombre == d.Nombre
+                            select dep;
+                        if (queryDependencia.Count() > 0)
+                        {
+                            aBorrar.Add(d);
+                            Dependencia vieja = queryDependencia.First();
+                            aAgregar.Add(vieja);
+                            vieja.Dll = d.Dll;
+                            db.Entry<Dependencia>(vieja).State = System.Data.EntityState.Modified;
+                        }
+                        else
+                        {
+                            db.Dependencias.Add(d);
+                        }
+                    }
+                    foreach (Dependencia d in aBorrar)
+                    {
+                        origenDatos.Dependencias.Remove(d);
+                    }
+                    foreach (Dependencia d in aAgregar)
+                    {
+                        origenDatos.Dependencias.Add(d);
+                    }
                     db.SaveChanges();
                     return true;
                 }
@@ -133,6 +162,40 @@ namespace Ol4RentAPI.Facades
                         origenDatos.Atributos.Add(atributo);
                         seAgregoAlguno = true;
                     }
+                    List<Dependencia> aBorrar = new List<Dependencia>();
+                    List<Dependencia> aAgregar = new List<Dependencia>();
+                    foreach (Dependencia d in origenDatos.Dependencias)
+                    {
+                        if (!seAgregoAlguno)
+                        {
+                            seAgregoAlguno = true;
+                        }
+                        IQueryable<Dependencia> queryDependencia =
+                            from dep in db.Dependencias
+                            where dep.Nombre == d.Nombre
+                            select dep;
+                        if (queryDependencia.Count() > 0)
+                        {
+                            aBorrar.Add(d);
+                            Dependencia vieja = queryDependencia.First();
+                            aAgregar.Add(vieja);
+                            vieja.Dll = d.Dll;
+                            db.Entry<Dependencia>(vieja).State = System.Data.EntityState.Modified;
+                        }
+                        else
+                        {
+                            db.Dependencias.Add(d);
+                        }
+                    }
+                    foreach (Dependencia d in aBorrar)
+                    {
+                        origenDatos.Dependencias.Remove(d);
+                    }
+                    foreach (Dependencia d in aAgregar)
+                    {
+                        origenDatos.Dependencias.Add(d);
+                    }
+
                     // Se guardan los cambios en la base en caso que corresponda
                     if (seAgregoAlguno)
                     {
@@ -152,10 +215,12 @@ namespace Ol4RentAPI.Facades
             using (ModelContainer db = new ModelContainer())
             {
                 OrigenDatos od = db.OrigenesDatos.Find(id);
-                foreach (Atributo a in od.Atributos)
+                List<Atributo> atributos = new List<Atributo>(od.Atributos);
+                foreach (Atributo a in atributos)
                 {
                     db.Atributos.Remove(a);
                 }
+                od.Atributos.Clear();
                 db.OrigenesDatos.Remove(od);
                 db.SaveChanges();
             }

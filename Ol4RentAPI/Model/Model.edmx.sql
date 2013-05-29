@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 05/28/2013 09:22:10
+-- Date Created: 05/28/2013 23:11:25
 -- Generated from EDMX file: C:\Users\Martin\documents\visual studio 2012\Projects\OL4RENT\Ol4RentAPI\Model\Model.edmx
 -- --------------------------------------------------
 
@@ -98,6 +98,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ValorCaracteristicaBien]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ValoresCaracteristicas] DROP CONSTRAINT [FK_ValorCaracteristicaBien];
 GO
+IF OBJECT_ID(N'[dbo].[FK_OrigenDatosDependencia]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[DependenciaSet] DROP CONSTRAINT [FK_OrigenDatosDependencia];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -159,6 +162,9 @@ IF OBJECT_ID(N'[dbo].[ValoresAtributos]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Sesiones]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Sesiones];
+GO
+IF OBJECT_ID(N'[dbo].[DependenciaSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[DependenciaSet];
 GO
 
 -- --------------------------------------------------
@@ -366,8 +372,8 @@ CREATE TABLE [dbo].[Sesiones] (
 );
 GO
 
--- Creating table 'DependenciaSet'
-CREATE TABLE [dbo].[DependenciaSet] (
+-- Creating table 'Dependencias'
+CREATE TABLE [dbo].[Dependencias] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Nombre] nvarchar(64)  NOT NULL,
     [Dll] varbinary(max)  NOT NULL,
@@ -493,9 +499,9 @@ ADD CONSTRAINT [PK_Sesiones]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'DependenciaSet'
-ALTER TABLE [dbo].[DependenciaSet]
-ADD CONSTRAINT [PK_DependenciaSet]
+-- Creating primary key on [Id] in table 'Dependencias'
+ALTER TABLE [dbo].[Dependencias]
+ADD CONSTRAINT [PK_Dependencias]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -881,8 +887,8 @@ ON [dbo].[ValoresCaracteristicas]
     ([ValorCaracteristicaBien_ValorCaracteristica_Id]);
 GO
 
--- Creating foreign key on [OrigenDatosDependencia_Dependencia_Id] in table 'DependenciaSet'
-ALTER TABLE [dbo].[DependenciaSet]
+-- Creating foreign key on [OrigenDatosDependencia_Dependencia_Id] in table 'Dependencias'
+ALTER TABLE [dbo].[Dependencias]
 ADD CONSTRAINT [FK_OrigenDatosDependencia]
     FOREIGN KEY ([OrigenDatosDependencia_Dependencia_Id])
     REFERENCES [dbo].[OrigenesDatos]
@@ -891,7 +897,7 @@ ADD CONSTRAINT [FK_OrigenDatosDependencia]
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_OrigenDatosDependencia'
 CREATE INDEX [IX_FK_OrigenDatosDependencia]
-ON [dbo].[DependenciaSet]
+ON [dbo].[Dependencias]
     ([OrigenDatosDependencia_Dependencia_Id]);
 GO
 
