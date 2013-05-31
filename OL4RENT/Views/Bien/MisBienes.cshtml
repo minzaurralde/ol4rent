@@ -1,9 +1,20 @@
 ﻿@model IEnumerable<Ol4RentAPI.Model.Bien>
+@using Ol4RentAPI.DTO;
+@{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
+
 @{
-    ViewBag.Title = "Mis Bienes";
+    String nombreTipoBien = "Bien";
+    if (sitio != null)
+    {
+        nombreTipoBien = @sitio.NombreTipoBien.Trim();
+    }
+    String plural = nombreTipoBien.ToLower().EndsWith("a") || nombreTipoBien.ToLower().EndsWith("e") ||
+        nombreTipoBien.ToLower().EndsWith("i") || nombreTipoBien.ToLower().EndsWith("o") ||
+        nombreTipoBien.ToLower().EndsWith("u") ? "s" : "es";
+    ViewBag.Title = "Mis "+nombreTipoBien+plural;
 }
 
-<h2>Mis Bienes</h2>
+<h2>Mis @nombreTipoBien@plural</h2>
 <ul>
 @foreach (var item in Model) {
     <li>

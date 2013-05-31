@@ -94,21 +94,22 @@ namespace OL4RENT.Controllers
                 }
                 else
                 {
-                    if (caracteristica.Tipo == TipoDato.BOOLEANO)
-                    {
-                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = "true", IdCaracteristica = caracteristica.Id });
-                    }
-                    else
-                    {
-                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
-                    }
+                    bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
                 }
             }
-            bienDTO.Foto = new byte[imagen.ContentLength];
-            imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
-            if ((ServiceFacadeFactory.Instance.BienFacade.Crear(bienDTO)))
+            if (imagen != null)
             {
-                return RedirectToAction("Index");
+                bienDTO.Foto = new byte[imagen.ContentLength];
+                imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
+            }
+            SitioListadoDTO sitio = Session["sitio"] as SitioListadoDTO;
+            String usuario = User.Identity.Name;
+            if (sitio !=null && ModelState.IsValid)
+            {
+                if (ServiceFacadeFactory.Instance.BienFacade.Crear(bienDTO, sitio.Id, usuario))
+                {
+                    return RedirectToAction("MisBienes", "Bien");
+                }
             }
             ArmarListadoCaracteristicas();
             return View(bienDTO);

@@ -15,5 +15,7 @@ namespace Ol4RentAPI.DTO
         public string Nombre { get; set; }
         [Display(Name = "Dominio")]
         public string URL { get; set; }
+        [Display(Name = "Tipo de Bien")]
+        public String NombreTipoBien { get; set; }
     }
 }

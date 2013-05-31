@@ -1,10 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using Ol4RentAPI.DTO;
+@{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
+
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Ol4RENT - @ViewBag.Title</title>
+        <title>@(sitio != null ? sitio.Nombre : "Ol4RENT") - @ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" /
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
