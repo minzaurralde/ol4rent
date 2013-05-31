@@ -32,13 +32,44 @@
 }
 </div>
 <div>
-    @if (Model.Cantidad == 0)
+    @if (Model.Valores.Count() == 0)
     {
         <p>No se registraron bienes entre @(((DateTime)ViewBag.FechaInicio).ToString("dd-MM-yyyy")) y @(((DateTime)ViewBag.FechaFin).ToString("dd-MM-yyyy"))</p>
-    } else if (Model.Cantidad == 1) {
-        <p>Se registró @Model.Cantidad bien entre @(((DateTime)ViewBag.FechaInicio).ToString("dd-MM-yyyy")) y @(((DateTime)ViewBag.FechaFin).ToString("dd-MM-yyyy"))</p>
     } else {
-        <p>Se registraron @Model.Cantidad bienes entre @(((DateTime)ViewBag.FechaInicio).ToString("dd-MM-yyyy")) y @(((DateTime)ViewBag.FechaFin).ToString("dd-MM-yyyy"))</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        @Model.Tipo
+                    </th>
+                    <th>
+                        Cantidad
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Ol4RentAPI.DTO.ValorRegistroBienDTO valor in Model.Valores) {
+                    <tr>
+                        <td>
+                            @valor.Etiqueta
+                        </td>
+                        <td>
+                            @valor.Cantidad
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <strong>Total</strong>
+                    </td>
+                    <td>
+                        @Model.Valores.Sum(v => v.Cantidad)
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
     }
 </div>
 

@@ -1,9 +1,15 @@
 
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
+<<<<<<< HEAD
 -- --------------------------------------------------
 -- Date Created: 05/31/2013 08:49:11
 -- Generated from EDMX file: C:\Users\Usuario\Documents\Visual Studio 2012\Projects\ol4rent\Ol4RentAPI\Model\Model.edmx
+=======
+-- --------------------------------------------------
+-- Date Created: 05/30/2013 21:45:14
+-- Generated from EDMX file: C:\Users\Naty\Documents\Visual Studio 2012\Projects\ol4rent\Ol4RentAPI\Model\Model.edmx
+>>>>>>> origin/master
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -317,8 +323,8 @@ GO
 -- Creating table 'EspecificacionesBienes'
 CREATE TABLE [dbo].[EspecificacionesBienes] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Latitud] decimal(18,0)  NOT NULL,
-    [Longitud] decimal(18,0)  NOT NULL,
+    [Latitud] decimal(18,15)  NOT NULL,
+    [Longitud] decimal(18,15)  NOT NULL,
     [Rango] smallint  NOT NULL,
     [Titulo] nvarchar(64)  NOT NULL,
     [Usuario_Id] int  NOT NULL,

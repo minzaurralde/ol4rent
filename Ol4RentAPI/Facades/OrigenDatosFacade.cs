@@ -95,6 +95,7 @@ namespace Ol4RentAPI.Facades
             {
                 using (ModelContainer db = new ModelContainer())
                 {
+                    Novedades.NovedadesExternasFactory.Instance.ResetearCacheTipoDeOrigenDatos(dto.Id);
                     // Se obtiene el origen de datos a partir de su id
                     OrigenDatos origenDatos = db.OrigenesDatos.Find(dto.Id);
                     // Se verifica que se hayan modificado las propiedades del origen de datos
@@ -214,6 +215,7 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
+                Novedades.NovedadesExternasFactory.Instance.ResetearCacheTipoDeOrigenDatos(id);
                 OrigenDatos od = db.OrigenesDatos.Find(id);
                 List<Atributo> atributos = new List<Atributo>(od.Atributos);
                 foreach (Atributo a in atributos)
@@ -268,6 +270,7 @@ namespace Ol4RentAPI.Facades
             {
                 using (ModelContainer db = new ModelContainer())
                 {
+                    Novedades.NovedadesExternasFactory.Instance.ResetearCacheInstanciaDeConfiguracion(dto.Id);
                     // Se obtiene la configuració a partir del id
                     ConfiguracionOrigenDatos configuracion = db.ConfiguracionesOrigenesDatos.Find(dto.Id);
                     // Se obtiene la lista de ids de los valores de atributo que se pasaron por parametro
@@ -336,6 +339,7 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
+                Novedades.NovedadesExternasFactory.Instance.ResetearCacheInstanciaDeConfiguracion(id);
                 db.ConfiguracionesOrigenesDatos.Remove(db.ConfiguracionesOrigenesDatos.Find(id));
                 db.SaveChanges();
             }
