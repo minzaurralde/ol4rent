@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 05/30/2013 21:45:14
+-- Date Created: 05/31/2013 00:31:08
 -- Generated from EDMX file: C:\Users\Naty\Documents\Visual Studio 2012\Projects\ol4rent\Ol4RentAPI\Model\Model.edmx
 -- --------------------------------------------------
 
@@ -99,7 +99,7 @@ IF OBJECT_ID(N'[dbo].[FK_ValorCaracteristicaBien]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ValoresCaracteristicas] DROP CONSTRAINT [FK_ValorCaracteristicaBien];
 GO
 IF OBJECT_ID(N'[dbo].[FK_OrigenDatosDependencia]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[DependenciaSet] DROP CONSTRAINT [FK_OrigenDatosDependencia];
+    ALTER TABLE [dbo].[Dependencias] DROP CONSTRAINT [FK_OrigenDatosDependencia];
 GO
 
 -- --------------------------------------------------
@@ -163,8 +163,8 @@ GO
 IF OBJECT_ID(N'[dbo].[Sesiones]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Sesiones];
 GO
-IF OBJECT_ID(N'[dbo].[DependenciaSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[DependenciaSet];
+IF OBJECT_ID(N'[dbo].[Dependencias]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Dependencias];
 GO
 
 -- --------------------------------------------------

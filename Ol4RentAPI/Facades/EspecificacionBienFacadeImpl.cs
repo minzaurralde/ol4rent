@@ -110,22 +110,10 @@ namespace Ol4RentAPI.Facades
                         ValorCaracteristica valor = wish.ValoresCaracteristicas.Where(a => a.Id == valorDTO.Id).First();
                         if (valor.Valor != valorDTO.Valor)
                         {
-                            wish.ValoresCaracteristicas.Where(a => a.Id == valorDTO.Id).First().Valor = valorDTO.Valor;
-                            db.Entry(wish.ValoresCaracteristicas).State = EntityState.Modified;
+                            valor.Valor = valorDTO.Valor;
+                            db.Entry(valor).State = EntityState.Modified;
                             salvar = true;
                         }
-                    }
-                    if (wish.Usuario.NombreUsuario != wishDTO.Usuario)
-                    {
-                        wish.Usuario.NombreUsuario = wishDTO.Usuario;
-                        db.Entry(wish.Usuario).State = EntityState.Modified;
-                        salvar = true;
-                    }
-                    if (wish.TipoBien.Id != wishDTO.TipoBien)
-                    {
-                        wish.TipoBien.Id = wishDTO.TipoBien;
-                        db.Entry(wish.TipoBien).State = EntityState.Modified;
-                        salvar = true;
                     }
                     if (seModifico)
                     {
@@ -148,15 +136,12 @@ namespace Ol4RentAPI.Facades
             using (ModelContainer db = new ModelContainer())
             {
                 EspecificacionBien wish = db.EspecificacionesBienes.Find(id);
-                List<int> valores = new List<int>();
-                foreach (ValorCaracteristica valor in wish.ValoresCaracteristicas)
+                List<ValorCaracteristica> valores = new List<ValorCaracteristica>(wish.ValoresCaracteristicas);
+                foreach (ValorCaracteristica vc in valores)
                 {
-                    valores.Add(valor.Id);
+                     db.ValoresCaracteristicas.Remove(vc);
                 }
-                foreach (int idVC in valores)
-                {
-                    db.ValoresCaracteristicas.Remove(db.ValoresCaracteristicas.Where(vc => vc.Id == idVC).First());
-                }
+                wish.ValoresCaracteristicas.Clear();
                 db.EspecificacionesBienes.Remove(wish);
                 db.SaveChanges();
             }

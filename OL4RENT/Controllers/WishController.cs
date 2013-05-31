@@ -81,7 +81,7 @@ namespace OL4RENT.Controllers
         {
             if (wishDTO.ValoresCaracteristicas == null)
             {
-                wishDTO.ValoresCaracteristicas = new List<ValorCaracteristicaListadoDTO>();
+                wishDTO.ValoresCaracteristicas = new List<ValorCaracteristicaAltaDTO>();
             }
             List<CaracteristicaEdicionDTO> caracteristicas = ObtenerListadoCaracteristicas();
             foreach (CaracteristicaEdicionDTO caracteristica in caracteristicas)
@@ -91,23 +91,16 @@ namespace OL4RENT.Controllers
                 {
                     if (caracteristica.Tipo == TipoDato.BOOLEANO)
                     {
-                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = "false", IdCaracteristica = caracteristica.Id });
+                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = "false", IdCaracteristica = caracteristica.Id });
                     }
                     else
                     {
-                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = "", IdCaracteristica = caracteristica.Id });
+                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = "", IdCaracteristica = caracteristica.Id });
                     }
                 }
                 else
                 {
-                    if (caracteristica.Tipo == TipoDato.BOOLEANO)
-                    {
-                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = "true", IdCaracteristica = caracteristica.Id });
-                    }
-                    else
-                    {
-                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
-                    }
+                    wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
                 }
             }
             wishDTO.Usuario = User.Identity.Name;

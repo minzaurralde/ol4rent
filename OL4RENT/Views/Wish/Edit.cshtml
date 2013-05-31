@@ -120,11 +120,11 @@
             @Html.ValidationMessageFor(model => model.Rango)
         </div>
 
-        <ol>
+        <ol >
             @if (Model.ValoresCaracteristicas != null && Model.ValoresCaracteristicas.Count() > 0){
                 foreach (Ol4RentAPI.DTO.ValorCaracteristicaListadoDTO item in Model.ValoresCaracteristicas)
                 {
-                <li>
+                <li >
                     @Html.Label("car-" + item.Caracteristica.Id.ToString(), item.Caracteristica.Nombre)
                     @if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
                         {
