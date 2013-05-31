@@ -25,16 +25,14 @@ namespace Ol4RentAPI.Facades.Novedades
 
         private Hashtable CacheTipos = new Hashtable();
         private Hashtable ValidezTipos = new Hashtable();
+        private Hashtable CacheDependencias = new Hashtable();
         private Hashtable CacheInstancias = new Hashtable();
         private Hashtable ValidezInstancias = new Hashtable();
 
         private static NovedadesExternasFactory instance = null;
 
         private NovedadesExternasFactory() {
-            CacheTipos = new Hashtable();
-            ValidezTipos = new Hashtable();
-            CacheInstancias = new Hashtable();
-            ValidezInstancias = new Hashtable();
+            ResetearCaché();
         }
 
         /// <summary>
@@ -72,6 +70,8 @@ namespace Ol4RentAPI.Facades.Novedades
                 }
                 else
                 {
+                    // Se levantan las dependencias primero
+                    LevantarDependencias(cod);
                     // Si no existe en el caché la clase, se crea levantando la Dll "Manejador" por reflection
                     tipo = CrearTipo(cod);
                 }
@@ -86,6 +86,17 @@ namespace Ol4RentAPI.Facades.Novedades
                     // Si se encuentra el tipo ya sea en el caché o lo creé de la dll, se crea la instancia
                     return CrearInstancia(tipo, cod);
                 }
+            }
+        }
+
+        private void LevantarDependencias(ConfiguracionOrigenDatos cod)
+        {
+            foreach (Dependencia dependencia in cod.OrigenDatos.Dependencias)
+            {
+                // Se levanta la Assembly (dll)
+                Assembly assembly = Assembly.Load(dependencia.Dll);
+                // Se agrega al caché: se cache por el mismo tiempo que se cachea la clase
+                CacheDependencias.Add(dependencia.Id, assembly);
             }
         }
 
@@ -174,6 +185,43 @@ namespace Ol4RentAPI.Facades.Novedades
         private Type ObtenerTipoDeCache(int id)
         {
             return CacheTipos[id] as Type;
+        }
+
+        public void ResetearCache()
+        {
+            ResetearCacheTipos();
+            ResetearCacheInstancias();
+        }
+
+        public void ResetearCacheTipos()
+        {
+            CacheTipos = new Hashtable();
+            ValidezTipos = new Hashtable();
+            CacheDependencias = new Hashtable();
+        }
+
+        public void ResetearCacheInstancias()
+        {
+            CacheInstancias = new Hashtable();
+            ValidezInstancias = new Hashtable();
+        }
+
+        public void ResetearCacheTipoDeOrigenDatos(int idOrigenDatos)
+        {
+            if (TieneTipoValido(idOrigenDatos))
+            {
+                CacheTipos.Remove(idOrigenDatos);
+                ValidezTipos.Remove(idOrigenDatos);
+            }
+        }
+
+        public void ResetearCacheInstanciaDeConfiguracion(int idConfiguracion)
+        {
+            if (TieneInstanciaValida(idConfiguracion))
+            {
+                CacheInstancias.Remove(idConfiguracion);
+                ValidezInstancias.Remove(idConfiguracion);
+            }
         }
     }
 }
