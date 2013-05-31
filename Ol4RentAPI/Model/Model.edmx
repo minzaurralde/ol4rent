@@ -279,8 +279,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Latitud" Type="decimal" Nullable="false" />
-    <Property Name="Longitud" Type="decimal" Nullable="false" />
+    <Property Name="Latitud" Type="decimal" Nullable="false" Precision="18" Scale="15" />
+    <Property Name="Longitud" Type="decimal" Nullable="false" Precision="18" Scale="15" />
     <Property Name="Rango" Type="smallint" Nullable="false" />
     <Property Name="Titulo" Type="nvarchar" Nullable="false" MaxLength="64" />
     <Property Name="Usuario_Id" Type="int" Nullable="false" />
@@ -1002,8 +1002,8 @@
           <NavigationProperty Name="Usuario" Relationship="Model.UsuarioWishList" FromRole="WishList" ToRole="Usuario" />
           <NavigationProperty Name="TipoBien" Relationship="Model.EspecificacionBienTipoBien" FromRole="EspecificacionBien" ToRole="TipoBien" />
           <NavigationProperty Name="ValoresCaracteristicas" Relationship="Model.EspecificacionBienValorCaracteristicaEspecificacion" FromRole="EspecificacionBien" ToRole="ValorCaracteristicaEspecificacion" />
-          <Property Type="Decimal" Name="Latitud" Nullable="false" />
-          <Property Type="Decimal" Name="Longitud" Nullable="false" />
+          <Property Type="Decimal" Name="Latitud" Nullable="false" Precision="18" Scale="15" />
+          <Property Type="Decimal" Name="Longitud" Nullable="false" Precision="18" Scale="15" />
           <Property Type="Int16" Name="Rango" Nullable="false" />
           <Property Type="String" Name="Titulo" Nullable="false" MaxLength="64" />
         </EntityType>

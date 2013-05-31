@@ -40,24 +40,29 @@
 
         google.maps.Map.prototype.marker = marker;
         map.setCenter(location);
-        $("#Latitud").val(location.lat());
-        $("#Longitud").val(location.lng());
+        var lat = location.lat().toString().replace(".", ",");
+        var lng = location.lng().toString().replace(".", ",");
+        $("#Latitud").val(lat);
+        $("#Longitud").val(lng);
         crearCirculo();
     }
 
     var gLocation = new google.maps.LatLng(-34.887057, -56.171036);
-
+    var circulo = new google.maps.Circle();
     function crearCirculo() {
-        var circulo = new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: gLocation,
-            radius: $("#Rango").val() == "" ? 1 : parseInt($("#Rango").val())
-        });
+        if ($("#Latitud").val() != 0) {
+            circulo.setMap(null);
+            circulo = new google.maps.Circle({
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35,
+                map: map,
+                center: gLocation,
+                radius: $("#Rango").val() == "" ? 1 : parseInt($("#Rango").val())
+            });
+        }
     }
 
     function addM(latLng, lat, lng, titulo, link) {

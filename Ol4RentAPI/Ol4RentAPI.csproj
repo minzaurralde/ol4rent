@@ -144,10 +144,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Facades\Novedades\NovedadesExternasFactory.cs" />
     <Compile Include="Model\Novedad.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Facades\Novedades\NovedadesExternasFactory.cs" />
     <Compile Include="Model\OrigenDatos.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

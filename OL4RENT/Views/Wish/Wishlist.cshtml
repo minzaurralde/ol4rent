@@ -11,7 +11,13 @@
     <li>
         <div>
             @Html.ActionLink(item.Titulo, "Details", "Wish", new { id=item.Id }, null)
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Borrar", "Delete", new { id=item.Id })
         </div>
     </li>
 }
 </ul>
+<div>
+    @Html.ActionLink("Principal", "Index","Home")
+</div>
