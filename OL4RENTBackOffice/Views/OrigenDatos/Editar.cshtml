@@ -82,8 +82,17 @@
                 <input type="hidden" name="maxid" id="maxid" value="@i.ToString()" />
             </li>
         </ol>
-        <input type="submit" value="Guardar" />
     </fieldset>
+    <fieldset>
+        <legend>Dependencias</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.Dependencias)
+                <input type="file" id="dependencias" multiple="multiple" name="dependencias" accept="dll" />
+            </li>
+        </ol>
+    </fieldset>
+    <input type="submit" value="Guardar" />
 }
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery-1.7.1.js")

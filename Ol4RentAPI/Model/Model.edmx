@@ -25,6 +25,7 @@
     <EntitySet Name="Atributos" EntityType="Model.Store.Atributos" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ValoresAtributos" EntityType="Model.Store.ValoresAtributos" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Sesiones" EntityType="Model.Store.Sesiones" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Dependencias" EntityType="Model.Store.Dependencias" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="TipoBienSitio" Association="Model.Store.TipoBienSitio">
       <End Role="TipoBien" EntitySet="TiposBienes" />
       <End Role="Sitio" EntitySet="Sitios" />
@@ -133,6 +134,10 @@
       <End Role="ValorCaracteristica" EntitySet="ValoresCaracteristicas" />
       <End Role="Bien" EntitySet="Bienes" />
     </AssociationSet>
+    <AssociationSet Name="OrigenDatosDependencia" Association="Model.Store.OrigenDatosDependencia">
+      <End Role="OrigenDatos" EntitySet="OrigenesDatos" />
+      <End Role="Dependencia" EntitySet="Dependencias" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Sitios">
     <Key>
@@ -148,6 +153,7 @@
     <Property Name="CantBienesPopulares" Type="smallint" Nullable="false" />
     <Property Name="CantMarcasXCont" Type="smallint" Nullable="false" />
     <Property Name="CantContBloqXUsu" Type="smallint" Nullable="false" />
+    <Property Name="CantNovedadesHome" Type="int" Nullable="false" />
     <Property Name="UsuarioSitio_Sitio_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="OrigenesDatos">
@@ -175,6 +181,7 @@
     <Property Name="Titulo" Type="nvarchar" Nullable="false" MaxLength="64" />
     <Property Name="Contenido" Type="nvarchar" Nullable="false" MaxLength="4000" />
     <Property Name="FechaHora" Type="datetime" Nullable="false" />
+    <Property Name="Prioridad" Type="int" Nullable="false" />
     <Property Name="Configuracion_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Bienes">
@@ -332,6 +339,15 @@
     <Property Name="FechaCierre" Type="datetime" Nullable="true" />
     <Property Name="SesionID" Type="nvarchar" Nullable="false" MaxLength="256" />
     <Property Name="Usuario_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dependencias">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Dll" Type="varbinary(max)" Nullable="false" />
+    <Property Name="OrigenDatosDependencia_Dependencia_Id" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="TipoBienSitio">
     <End Role="TipoBien" Type="Model.Store.TiposBienes" Multiplicity="*" />
@@ -657,6 +673,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="OrigenDatosDependencia">
+    <End Role="OrigenDatos" Type="Model.Store.OrigenesDatos" Multiplicity="1" />
+    <End Role="Dependencia" Type="Model.Store.Dependencias" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrigenDatos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Dependencia">
+        <PropertyRef Name="OrigenDatosDependencia_Dependencia_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -789,6 +817,11 @@
             <End Role="ValorCaracteristica" EntitySet="ValoresCaracteristicas" />
             <End Role="Bien" EntitySet="Bienes" />
           </AssociationSet>
+          <EntitySet Name="Dependencias" EntityType="Model.Dependencia" />
+          <AssociationSet Name="OrigenDatosDependencia" Association="Model.OrigenDatosDependencia">
+            <End Role="OrigenDatos" EntitySet="OrigenesDatos" />
+            <End Role="Dependencia" EntitySet="Dependencias" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Sitio">
           <Key>
@@ -805,6 +838,7 @@
           <Property Type="Int16" Name="CantBienesPopulares" Nullable="false" />
           <Property Type="Int16" Name="CantMarcasXCont" Nullable="false" />
           <Property Type="Int16" Name="CantContBloqXUsu" Nullable="false" />
+          <Property Type="Int32" Name="CantNovedadesHome" Nullable="false" />
         </EntityType>
         <EntityType Name="OrigenDatos">
           <Key>
@@ -814,6 +848,7 @@
           <NavigationProperty Name="Atributos" Relationship="Model.AtributoOrigenDatos" FromRole="OrigenDatos" ToRole="Atributo" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
           <Property Type="Binary" Name="Manejador" Nullable="false" />
+          <NavigationProperty Name="Dependencias" Relationship="Model.OrigenDatosDependencia" FromRole="OrigenDatos" ToRole="Dependencia" />
         </EntityType>
         <EntityType Name="TipoBien">
           <Key>
@@ -841,6 +876,7 @@
           <Property Type="String" Name="Titulo" Nullable="false" MaxLength="64" />
           <Property Type="String" Name="Contenido" Nullable="false" MaxLength="4000" />
           <Property Type="DateTime" Name="FechaHora" Nullable="false" />
+          <Property Type="Int32" Name="Prioridad" Nullable="false" />
         </EntityType>
         <EntityType Name="Bien">
           <Key>
@@ -1109,6 +1145,18 @@
           <End Type="Model.ValorCaracteristica" Role="ValorCaracteristica" Multiplicity="*" />
           <End Type="Model.Bien" Role="Bien" Multiplicity="0..1" />
         </Association>
+        <EntityType Name="Dependencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="64" />
+          <Property Type="Binary" Name="Dll" Nullable="false" />
+        </EntityType>
+        <Association Name="OrigenDatosDependencia">
+          <End Type="Model.OrigenDatos" Role="OrigenDatos" Multiplicity="1" />
+          <End Type="Model.Dependencia" Role="Dependencia" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1128,6 +1176,7 @@
           <ScalarProperty Name="CantBienesPopulares" ColumnName="CantBienesPopulares" />
           <ScalarProperty Name="CantMarcasXCont" ColumnName="CantMarcasXCont" />
           <ScalarProperty Name="CantContBloqXUsu" ColumnName="CantContBloqXUsu" />
+          <ScalarProperty Name="CantNovedadesHome" ColumnName="CantNovedadesHome" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1156,6 +1205,7 @@
           <ScalarProperty Name="Titulo" ColumnName="Titulo" />
           <ScalarProperty Name="Contenido" ColumnName="Contenido" />
           <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+          <ScalarProperty Name="Prioridad" ColumnName="Prioridad" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1303,6 +1353,15 @@
           <ScalarProperty Name="UltimoUso" ColumnName="UltimoUso" />
           <ScalarProperty Name="FechaCierre" ColumnName="FechaCierre" />
           <ScalarProperty Name="SesionID" ColumnName="SesionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dependencias">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Dependencia)">
+        <MappingFragment StoreEntitySet="Dependencias">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Dll" ColumnName="Dll" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1523,6 +1582,14 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
       <Condition ColumnName="ValorCaracteristicaBien_ValorCaracteristica_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="OrigenDatosDependencia" TypeName="Model.OrigenDatosDependencia" StoreEntitySet="Dependencias">
+      <EndProperty Name="OrigenDatos">
+        <ScalarProperty Name="Id" ColumnName="OrigenDatosDependencia_Dependencia_Id" />
+      </EndProperty>
+      <EndProperty Name="Dependencia">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>

@@ -91,8 +91,7 @@ namespace Ol4RentAPI.Facades
                 {
                     return new List<NovedadDTO>();
                 }
-                // TODO agregar parametro en el sitio con la cantidad maxima de novedades a mostrar
-                int maximaCantidadNovedadesHome = sitio.CantBienesPopulares;
+                int maximaCantidadNovedadesHome = sitio.CantNovedadesHome;
                 IQueryable<ConfiguracionOrigenDatos> query =
                     from cod in db.ConfiguracionesOrigenesDatos
                     where cod.Sitio.Id == sitio.Id
@@ -107,7 +106,7 @@ namespace Ol4RentAPI.Facades
                     List<NovedadDTO> novedades = new List<NovedadDTO>();
                     foreach (ConfiguracionOrigenDatos config in configuraciones)
                     {
-                        IProveedorNoticias proveedor = NovedadesExternasFactory.ObtenerProveedor(config);
+                        IProveedorNoticias proveedor = NovedadesExternasFactory.Instance.ObtenerProveedor(config);
                         List<NovedadExternaDTO> novedadesConfig = proveedor.ObtenerNovedades(maximaCantidadNovedadesHome);
                         foreach (NovedadExternaDTO novedadExterna in novedadesConfig)
                         {

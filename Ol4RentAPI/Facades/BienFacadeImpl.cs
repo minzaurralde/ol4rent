@@ -266,12 +266,45 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
+                TimeSpan diff = fechaFin - fechaInicio;
                 // TODO falta la fecha de alta en el bien
                 IQueryable<Bien> query =
                     from b in db.Bienes
                     where b.TipoBien.Sitio.Id == idSitio
                     select b;
-                return new RegistroBienDTO() { Cantidad = query.Count() };
+                if (diff.Days > 750)
+                {
+                    return new RegistroBienDTO()
+                    {
+                        Valores = query
+                            .GroupBy(b => b.FechaAlquiler.Value.ToString("yyyy"))
+                            .Select(mes => new ValorRegistroBienDTO() { Etiqueta = mes.Key, Cantidad = mes.Count() })
+                            .ToList(),
+                        Tipo = "Año"
+                    };
+                }
+                else if (diff.Days > 31)
+                {
+                    return new RegistroBienDTO()
+                    {
+                        Valores = query
+                            .GroupBy(b => b.FechaAlquiler.Value.ToString("MMMM yyyy"))
+                            .Select(mes => new ValorRegistroBienDTO() { Etiqueta = mes.Key, Cantidad = mes.Count() })
+                            .ToList(),
+                        Tipo = "Mes"
+                    };
+                }
+                else
+                {
+                    return new RegistroBienDTO()
+                    {
+                        Valores = query
+                            .GroupBy(b => b.FechaAlquiler.Value.ToString("dd MMMM"))
+                            .Select(dia => new ValorRegistroBienDTO() { Etiqueta = dia.Key, Cantidad = dia.Count() })
+                            .ToList(),
+                        Tipo = "Día"
+                    };
+                }
             }
         }
     }

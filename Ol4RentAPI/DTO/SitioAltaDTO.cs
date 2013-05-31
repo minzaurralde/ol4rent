@@ -49,6 +49,10 @@ namespace Ol4RentAPI.DTO
         [DataType(DataType.Text)]
         [Display(Name = "Cantidad máxima de contenidos bloqueados por usuario")]
         public short CantContBloqXUsu { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Cantidad máxima de novedades mostradas en la home")]
+        public short CantNovedadesHome { get; set; }
         // propiedades para el tipo de bien
         [Required]
         [DataType(DataType.Text)]
@@ -108,6 +112,10 @@ namespace Ol4RentAPI.DTO
         [DataType(DataType.Text)]
         [Display(Name = "Cantidad máxima de contenidos bloqueados por usuario")]
         public short CantContBloqXUsu { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Cantidad máxima de novedades mostradas en la home")]
+        public short CantNovedadesHome { get; set; }
         // propiedades para el tipo de bien
         [Required]
         [DataType(DataType.Text)]

@@ -1,6 +1,6 @@
 ﻿@model Ol4RentAPI.Model.LoginModel
 <section id="loginMin">
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post)) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 

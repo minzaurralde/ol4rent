@@ -35,7 +35,7 @@ namespace OL4RENTBackOffice.Controllers
         {
             ArmarFiltroFechas(null, null);
             ArmarComboSitios(null);
-            return View(new RegistroBienDTO() { Cantidad = 0 });
+            return View(new RegistroBienDTO() { Tipo = "", Valores = new List<ValorRegistroBienDTO>() });
         }
 
         [HttpPost]

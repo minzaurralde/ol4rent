@@ -42,6 +42,35 @@ namespace Ol4RentAPI.Facades
                     {
                         db.Atributos.Add(a);
                     }
+                    List<Dependencia> aBorrar = new List<Dependencia>();
+                    List<Dependencia> aAgregar = new List<Dependencia>();
+                    foreach (Dependencia d in origenDatos.Dependencias)
+                    {
+                        IQueryable<Dependencia> queryDependencia =
+                            from dep in db.Dependencias
+                            where dep.Nombre == d.Nombre
+                            select dep;
+                        if (queryDependencia.Count() > 0)
+                        {
+                            aBorrar.Add(d);
+                            Dependencia vieja = queryDependencia.First();
+                            aAgregar.Add(vieja);
+                            vieja.Dll = d.Dll;
+                            db.Entry<Dependencia>(vieja).State = System.Data.EntityState.Modified;
+                        }
+                        else
+                        {
+                            db.Dependencias.Add(d);
+                        }
+                    }
+                    foreach (Dependencia d in aBorrar)
+                    {
+                        origenDatos.Dependencias.Remove(d);
+                    }
+                    foreach (Dependencia d in aAgregar)
+                    {
+                        origenDatos.Dependencias.Add(d);
+                    }
                     db.SaveChanges();
                     return true;
                 }
@@ -66,6 +95,7 @@ namespace Ol4RentAPI.Facades
             {
                 using (ModelContainer db = new ModelContainer())
                 {
+                    Novedades.NovedadesExternasFactory.Instance.ResetearCacheTipoDeOrigenDatos(dto.Id);
                     // Se obtiene el origen de datos a partir de su id
                     OrigenDatos origenDatos = db.OrigenesDatos.Find(dto.Id);
                     // Se verifica que se hayan modificado las propiedades del origen de datos
@@ -133,6 +163,40 @@ namespace Ol4RentAPI.Facades
                         origenDatos.Atributos.Add(atributo);
                         seAgregoAlguno = true;
                     }
+                    List<Dependencia> aBorrar = new List<Dependencia>();
+                    List<Dependencia> aAgregar = new List<Dependencia>();
+                    foreach (Dependencia d in origenDatos.Dependencias)
+                    {
+                        if (!seAgregoAlguno)
+                        {
+                            seAgregoAlguno = true;
+                        }
+                        IQueryable<Dependencia> queryDependencia =
+                            from dep in db.Dependencias
+                            where dep.Nombre == d.Nombre
+                            select dep;
+                        if (queryDependencia.Count() > 0)
+                        {
+                            aBorrar.Add(d);
+                            Dependencia vieja = queryDependencia.First();
+                            aAgregar.Add(vieja);
+                            vieja.Dll = d.Dll;
+                            db.Entry<Dependencia>(vieja).State = System.Data.EntityState.Modified;
+                        }
+                        else
+                        {
+                            db.Dependencias.Add(d);
+                        }
+                    }
+                    foreach (Dependencia d in aBorrar)
+                    {
+                        origenDatos.Dependencias.Remove(d);
+                    }
+                    foreach (Dependencia d in aAgregar)
+                    {
+                        origenDatos.Dependencias.Add(d);
+                    }
+
                     // Se guardan los cambios en la base en caso que corresponda
                     if (seAgregoAlguno)
                     {
@@ -151,11 +215,14 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
+                Novedades.NovedadesExternasFactory.Instance.ResetearCacheTipoDeOrigenDatos(id);
                 OrigenDatos od = db.OrigenesDatos.Find(id);
-                foreach (Atributo a in od.Atributos)
+                List<Atributo> atributos = new List<Atributo>(od.Atributos);
+                foreach (Atributo a in atributos)
                 {
                     db.Atributos.Remove(a);
                 }
+                od.Atributos.Clear();
                 db.OrigenesDatos.Remove(od);
                 db.SaveChanges();
             }
@@ -203,6 +270,7 @@ namespace Ol4RentAPI.Facades
             {
                 using (ModelContainer db = new ModelContainer())
                 {
+                    Novedades.NovedadesExternasFactory.Instance.ResetearCacheInstanciaDeConfiguracion(dto.Id);
                     // Se obtiene la configuració a partir del id
                     ConfiguracionOrigenDatos configuracion = db.ConfiguracionesOrigenesDatos.Find(dto.Id);
                     // Se obtiene la lista de ids de los valores de atributo que se pasaron por parametro
@@ -271,6 +339,7 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
+                Novedades.NovedadesExternasFactory.Instance.ResetearCacheInstanciaDeConfiguracion(id);
                 db.ConfiguracionesOrigenesDatos.Remove(db.ConfiguracionesOrigenesDatos.Find(id));
                 db.SaveChanges();
             }

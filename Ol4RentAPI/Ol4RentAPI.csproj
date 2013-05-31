@@ -116,6 +116,9 @@
     <Compile Include="Model\Contenido.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Dependencia.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\EspecificacionBien.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

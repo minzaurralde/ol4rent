@@ -37,8 +37,19 @@ namespace OL4RENTBackOffice.Controllers
         //
         // POST: /OrigenDatos/Crear
         [HttpPost]
-        public ActionResult Crear(int maxid, OrigenDatosAltaDTO dto, HttpPostedFileBase dll)
+        public ActionResult Crear(int maxid, OrigenDatosAltaDTO dto, HttpPostedFileBase dll, IEnumerable<HttpPostedFileBase> dependencias)
         {
+            // TODO crear origen de datos: falta probar todo lo que tiene que ver con las Dlls "Dependencias" de la dll del OD
+            dto.Dependencias = new List<DependenciaDTO>();
+            foreach (HttpPostedFileBase fileDepedencia in dependencias)
+            {
+                if (fileDepedencia != null)
+                {
+                    byte[] buffer = new byte[fileDepedencia.ContentLength];
+                    fileDepedencia.InputStream.Read(buffer, 0, fileDepedencia.ContentLength);
+                    dto.Dependencias.Add(new DependenciaDTO() { Id = -1, Nombre = fileDepedencia.FileName, Dll = buffer });
+                }
+            }
             if (dto.Atributos == null)
             {
                 dto.Atributos = new List<AtributoAltaDTO>();
@@ -52,13 +63,13 @@ namespace OL4RENTBackOffice.Controllers
             }
             dto.Manejador = new byte[dll.ContentLength];
             dll.InputStream.Read(dto.Manejador, 0, dll.ContentLength);
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 if (ServiceFacadeFactory.Instance.OrigenDatosFacade.Crear(dto))
                 {
                     return RedirectToAction("Listar", "OrigenDatos");
                 }
-            }
+            //}
             return View(dto);
         }
 
@@ -73,8 +84,19 @@ namespace OL4RENTBackOffice.Controllers
         //
         // POST: /OrigenDatos/Crear
         [HttpPost]
-        public ActionResult Editar(int maxid, OrigenDatosEdicionDTO dto, HttpPostedFileBase dll)
+        public ActionResult Editar(int maxid, OrigenDatosEdicionDTO dto, HttpPostedFileBase dll, IEnumerable<HttpPostedFileBase> dependencias)
         {
+            // TODO editar origen de datos: falta probar todo lo que tiene que ver con las Dlls "Dependencias" de la dll del OD
+            dto.Dependencias = new List<DependenciaDTO>();
+            foreach (HttpPostedFileBase fileDepedencia in dependencias)
+            {
+                if (fileDepedencia != null)
+                {
+                    byte[] buffer = new byte[fileDepedencia.ContentLength];
+                    fileDepedencia.InputStream.Read(buffer, 0, fileDepedencia.ContentLength);
+                    dto.Dependencias.Add(new DependenciaDTO() { Id = -1, Nombre = fileDepedencia.FileName, Dll = buffer });
+                }
+            }
             if (dto.Atributos == null)
             {
                 dto.Atributos = new List<AtributoEdicionDTO>();

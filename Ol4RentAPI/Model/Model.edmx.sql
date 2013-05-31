@@ -98,6 +98,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ValorCaracteristicaBien]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ValoresCaracteristicas] DROP CONSTRAINT [FK_ValorCaracteristicaBien];
 GO
+IF OBJECT_ID(N'[dbo].[FK_OrigenDatosDependencia]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[DependenciaSet] DROP CONSTRAINT [FK_OrigenDatosDependencia];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -160,6 +163,9 @@ GO
 IF OBJECT_ID(N'[dbo].[Sesiones]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Sesiones];
 GO
+IF OBJECT_ID(N'[dbo].[DependenciaSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[DependenciaSet];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -177,6 +183,7 @@ CREATE TABLE [dbo].[Sitios] (
     [CantBienesPopulares] smallint  NOT NULL,
     [CantMarcasXCont] smallint  NOT NULL,
     [CantContBloqXUsu] smallint  NOT NULL,
+    [CantNovedadesHome] int  NOT NULL,
     [UsuarioSitio_Sitio_Id] int  NOT NULL
 );
 GO
@@ -204,6 +211,7 @@ CREATE TABLE [dbo].[Novedades] (
     [Titulo] nvarchar(64)  NOT NULL,
     [Contenido] nvarchar(4000)  NOT NULL,
     [FechaHora] datetime  NOT NULL,
+    [Prioridad] int  NOT NULL,
     [Configuracion_Id] int  NOT NULL
 );
 GO
@@ -364,6 +372,15 @@ CREATE TABLE [dbo].[Sesiones] (
 );
 GO
 
+-- Creating table 'Dependencias'
+CREATE TABLE [dbo].[Dependencias] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Nombre] nvarchar(64)  NOT NULL,
+    [Dll] varbinary(max)  NOT NULL,
+    [OrigenDatosDependencia_Dependencia_Id] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -479,6 +496,12 @@ GO
 -- Creating primary key on [Id] in table 'Sesiones'
 ALTER TABLE [dbo].[Sesiones]
 ADD CONSTRAINT [PK_Sesiones]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Dependencias'
+ALTER TABLE [dbo].[Dependencias]
+ADD CONSTRAINT [PK_Dependencias]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -862,6 +885,20 @@ ADD CONSTRAINT [FK_ValorCaracteristicaBien]
 CREATE INDEX [IX_FK_ValorCaracteristicaBien]
 ON [dbo].[ValoresCaracteristicas]
     ([ValorCaracteristicaBien_ValorCaracteristica_Id]);
+GO
+
+-- Creating foreign key on [OrigenDatosDependencia_Dependencia_Id] in table 'Dependencias'
+ALTER TABLE [dbo].[Dependencias]
+ADD CONSTRAINT [FK_OrigenDatosDependencia]
+    FOREIGN KEY ([OrigenDatosDependencia_Dependencia_Id])
+    REFERENCES [dbo].[OrigenesDatos]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_OrigenDatosDependencia'
+CREATE INDEX [IX_FK_OrigenDatosDependencia]
+ON [dbo].[Dependencias]
+    ([OrigenDatosDependencia_Dependencia_Id]);
 GO
 
 -- --------------------------------------------------
