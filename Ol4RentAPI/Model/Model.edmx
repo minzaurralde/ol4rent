@@ -190,7 +190,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Titulo" Type="nvarchar" Nullable="false" MaxLength="64" />
-    <Property Name="Foto" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Foto" Type="varbinary(max)" Nullable="true" />
     <Property Name="Latitud" Type="decimal" Nullable="false" />
     <Property Name="Longitud" Type="decimal" Nullable="false" />
     <Property Name="Direccion" Type="nvarchar" Nullable="true" MaxLength="128" />
@@ -200,6 +200,7 @@
     <Property Name="Descripcion" Type="nvarchar" Nullable="false" MaxLength="4000" />
     <Property Name="FechaAlquiler" Type="datetime" Nullable="true" />
     <Property Name="DuracionAlquiler" Type="smallint" Nullable="false" />
+    <Property Name="FechaAlta" Type="datetime" Nullable="false" />
     <Property Name="TipoBien_Id" Type="int" Nullable="false" />
     <Property Name="Usuario_Id" Type="int" Nullable="false" />
   </EntityType>
@@ -887,7 +888,7 @@
           <NavigationProperty Name="TipoBien" Relationship="Model.BienTipoBien" FromRole="Bien" ToRole="TipoBien" />
           <NavigationProperty Name="Usuario" Relationship="Model.BienUsuario" FromRole="Bien" ToRole="Usuario" />
           <Property Type="String" Name="Titulo" Nullable="false" MaxLength="64" />
-          <Property Type="Binary" Name="Foto" Nullable="false" />
+          <Property Type="Binary" Name="Foto" Nullable="true" />
           <Property Type="Decimal" Name="Latitud" Nullable="false" />
           <Property Type="Decimal" Name="Longitud" Nullable="false" />
           <Property Type="String" Name="Direccion" Nullable="true" MaxLength="128" />
@@ -898,6 +899,7 @@
           <Property Type="DateTime" Name="FechaAlquiler" Nullable="true" />
           <Property Type="Int16" Name="DuracionAlquiler" Nullable="false" />
           <NavigationProperty Name="ValoresCaracteristicas" Relationship="Model.ValorCaracteristicaBien" FromRole="Bien" ToRole="ValorCaracteristica" />
+          <Property Type="DateTime" Name="FechaAlta" Nullable="false" />
         </EntityType>
         <Association Name="TipoBienSitio">
           <End Type="Model.TipoBien" Role="TipoBien" Multiplicity="1" />
@@ -1121,6 +1123,7 @@
           <Member Name="DECIMAL" Value="3" />
           <Member Name="BOOLEANO" Value="4" />
           <Member Name="FECHA" Value="5" />
+          <Member Name="HORA" Value="6" />
         </EnumType>
         <EnumType Name="TipoAdjunto">
           <Member Name="IMAGEN" Value="1" />
@@ -1224,6 +1227,7 @@
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="FechaAlquiler" ColumnName="FechaAlquiler" />
           <ScalarProperty Name="DuracionAlquiler" ColumnName="DuracionAlquiler" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

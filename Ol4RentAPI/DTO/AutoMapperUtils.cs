@@ -26,8 +26,10 @@ namespace Ol4RentAPI.DTO
             Mapper.CreateMap<AtributoAltaDTO, Atributo>()
                 .ForMember(dest => dest.Id, dat => dat.UseValue(-1));
             Mapper.CreateMap<AtributoEdicionDTO, Atributo>();
-            Mapper.CreateMap<Caracteristica, CaracteristicaEdicionDTO>(); 
-            Mapper.CreateMap<Sitio, SitioListadoDTO>();
+            Mapper.CreateMap<Caracteristica, CaracteristicaEdicionDTO>();
+            Mapper.CreateMap<CaracteristicaEdicionDTO, Caracteristica>();
+            Mapper.CreateMap<Sitio, SitioListadoDTO>()
+                .ForMember(dest => dest.NombreTipoBien, dat => dat.MapFrom(src => src.TipoBien.Nombre));
             Mapper.CreateMap<Sitio, SitioEdicionDTO>()
                 .ForMember(dest => dest.NombreTipoBien, dat => dat.MapFrom(src => src.TipoBien.Nombre))
                 .ForMember(dest => dest.Caracteristicas, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.SitioFacade.ObtenerCaracteristicasParaEdicion(src.Id)))
@@ -62,6 +64,9 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.Usuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario));
             Mapper.CreateMap<ValorCaracteristica, ValorCaracteristicaAltaDTO>()
                 .ForMember(dest => dest.IdCaracteristica, dat => dat.MapFrom(src => src.Caracteristica.Id));
+            Mapper.CreateMap<ValorCaracteristicaAltaDTO, ValorCaracteristica>()
+                .ForMember(dest => dest.Caracteristica, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.CaracteristicaFacade.Obtener(src.IdCaracteristica)))
+                .ForMember(dest => dest.Id, dat => dat.UseValue(-1)); ;
             Mapper.CreateMap<ValorCaracteristica, ValorCaracteristicaListadoDTO>()
                 .ForMember(dest => dest.IdCaracteristica, dat => dat.MapFrom(src => src.Caracteristica.Id))
                 .ForMember(dest => dest.Caracteristica, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.CaracteristicaFacade.Obtener(src.Caracteristica.Id)));
@@ -73,7 +78,7 @@ namespace Ol4RentAPI.DTO
         }
     }
 
-    public class AutoMapperUtils <TOrigen,TDestino>
+    public class AutoMapperUtils<TOrigen, TDestino>
     {
         public static TDestino Map(TOrigen objeto)
         {
