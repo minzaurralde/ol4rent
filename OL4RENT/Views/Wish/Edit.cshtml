@@ -125,6 +125,7 @@
                 foreach (Ol4RentAPI.DTO.ValorCaracteristicaListadoDTO item in Model.ValoresCaracteristicas)
                 {
                 <li >
+                    @Html.Hidden("itemid-" + item.Caracteristica.Id.ToString(), item.Id.ToString())
                     @Html.Label("car-" + item.Caracteristica.Id.ToString(), item.Caracteristica.Nombre)
                     @if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
                         {

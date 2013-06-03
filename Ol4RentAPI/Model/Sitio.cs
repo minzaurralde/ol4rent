@@ -25,6 +25,7 @@ namespace Ol4RentAPI.Model
         public short CantMarcasXCont { get; set; }
         public short CantContBloqXUsu { get; set; }
         public int CantNovedadesHome { get; set; }
+        public short AproximacionWish { get; set; }
     
         public virtual TipoBien TipoBien { get; set; }
     }

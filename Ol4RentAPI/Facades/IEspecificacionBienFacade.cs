@@ -16,5 +16,6 @@ namespace Ol4RentAPI.Facades
         bool Editar(EspecificacionBienDTO w);
         void Eliminar(int id);
         List<EspecificacionBienListadoDTO> Wishlist(string usuario, int sitio);
+        void BuscarCoincidencias(int bien);
     }
 }

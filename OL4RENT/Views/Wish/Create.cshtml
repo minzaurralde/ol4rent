@@ -50,7 +50,7 @@
                 @Html.Label("car-" + caracteristica.Id.ToString(), caracteristica.Nombre)
                 @if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
                 {
-                    @Html.CheckBox("car-" + caracteristica.Id.ToString());
+                    @Html.CheckBox("car-" + caracteristica.Id.ToString(),false);
                 }
                 else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.FECHA)
                 {

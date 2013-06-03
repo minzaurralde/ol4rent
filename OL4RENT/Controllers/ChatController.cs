@@ -9,14 +9,13 @@ using System.Data.Linq.Mapping;
 using System.Web.Script.Serialization;
 using Ol4RentAPI.Facades;
 using Ol4RentAPI.DTO;
-using WebMatrix.WebData;
 
 namespace OL4RENT.Controllers
 {
     public class ChatController : Controller
     {
         //
-        // GET: /Chat/        
+        // GET: /Chat/
 
         public ActionResult Index()
         {
@@ -31,12 +30,11 @@ namespace OL4RENT.Controllers
         }
 
         [HttpPost]
-        public ActionResult VerificarSesion()
+        public ActionResult VerificarSesion(string idusuarioactual)
         {
-            int useridactual = WebSecurity.GetUserId(User.Identity.Name);
             var estasesionactiva = "0";
             //// No se debe mostrar al usuario actual
-            if (ServiceFacadeFactory.Instance.SesionManager.TieneSesionValida(useridactual))
+            if (ServiceFacadeFactory.Instance.SesionManager.TieneSesionValida(int.Parse(idusuarioactual)))
             {
                 estasesionactiva = "1";
             }
@@ -44,11 +42,10 @@ namespace OL4RENT.Controllers
         }
 
         [HttpPost]
-        public ActionResult ObtenerUsuariosOnline()
+        public ActionResult ObtenerUsuariosOnline(string idusuarioactual)
         {
             //// No se debe mostrar al usuario actual
-            int useridactual = WebSecurity.GetUserId(User.Identity.Name);
-            List<UsuarioDTO> usuarios = ServiceFacadeFactory.Instance.AccountFacade.ObtenerUsuariosConectados(useridactual);
+            List<UsuarioDTO> usuarios = ServiceFacadeFactory.Instance.AccountFacade.ObtenerUsuariosConectados(int.Parse(idusuarioactual));
             string listausuariosonline = "";
             foreach (var usu in usuarios)
             {
@@ -58,17 +55,16 @@ namespace OL4RENT.Controllers
         }
 
         [HttpPost]
-        public ActionResult mensajeinicial(int espero)
+        public ActionResult mensajeinicial(string idusuarioactual, int espero)
         {
-            int useridactual = WebSecurity.GetUserId(User.Identity.Name);
-            UsuarioDTO usuario = ServiceFacadeFactory.Instance.AccountFacade.Obtener(useridactual);
-            
+            UsuarioDTO usuario = ServiceFacadeFactory.Instance.AccountFacade.Obtener(int.Parse(idusuarioactual));
+
             string Nombre = usuario.Nombre;
             string Apellido = usuario.Apellido;
-            string MensajeUsuario = "<font color='#0000FF'><b>Administrador: Bienvenido al Chat " + Nombre + " " + Apellido + ".</b></font>";
+            string MensajeUsuario = "Bienvenido al Chat " + Nombre + " " + Apellido + ".";
             if (espero == 1)
             {
-                return Content(MensajeUsuario);
+                return Content("Administrador: " + MensajeUsuario);
             }
             return Content("");
         }
@@ -77,16 +73,11 @@ namespace OL4RENT.Controllers
         const string nollegamensaje = "-*--*--*-";
 
         [HttpPost]
-        public ActionResult llegamensaje(int espero)
+        public ActionResult llegamensaje(string idusuarioactual, int espero)
         {
             var textosdespliegues = "";
-
-            int useridactual = WebSecurity.GetUserId(User.Identity.Name);
-
-            List<MensajeDTO> mensajesnoleidos = ServiceFacadeFactory.Instance.MensajeFacade.ObtenerMensajesNoLeidos(useridactual);
-            
+            List<MensajeDTO> mensajesnoleidos = ServiceFacadeFactory.Instance.MensajeFacade.ObtenerMensajesNoLeidos(int.Parse(idusuarioactual));
             var primerorec = 1;
-
             foreach (var m in mensajesnoleidos)
             {
                 var Nombre = m.Remitente.Nombre;
@@ -96,19 +87,19 @@ namespace OL4RENT.Controllers
 
                 if (primerorec == 0)
                 {
-                    textomensaje = "<BR>";
+                    textomensaje = "\n";
                 }
-                textomensaje = textomensaje + "Recibido de " + Nombre + " " + Apellido + ": " + m.Texto + "<BR><font size=2><b>Fecha: " + m.FechaHora.ToString() + "</b></font>";
+                textomensaje = textomensaje + "Recibido de " + Nombre + " " + Apellido + ": " + m.Texto + "\nFecha: " + m.FechaHora.ToString();
 
                 if (primerorec == 1)
                 {
                     textosdespliegues = textosdespliegues + textomensaje;
                     primerorec = 0;
                 }
-                /*else
+                else
                 {
-                    textosdespliegues = textosdespliegues + "<BR>" + textomensaje;
-                }*/
+                    textosdespliegues = textosdespliegues + "\n" + textomensaje;
+                }
                 //// Pasar la variable como leido=True
                 ServiceFacadeFactory.Instance.MensajeFacade.MarcarComoLeido(m.Id);
             }
@@ -121,14 +112,11 @@ namespace OL4RENT.Controllers
         }
 
         [HttpPost]
-        public ActionResult enviomensaje(string idusuario, string mensaje)
+        public ActionResult enviomensaje(string idremitente, string idusuario, string mensaje)
         {
             // Primero verificar si existe el usuario
             // Luego verificar que el usuario siga con la sesion activa
             // Luego verificar si el mensaje tiene contenidos 
-
-            int useridactual = WebSecurity.GetUserId(User.Identity.Name);
-
             string validoentra = "0";
 
             try
@@ -136,18 +124,18 @@ namespace OL4RENT.Controllers
                 // Invocar mensaje en la base de datos
                 // hacia el otro usuario
                 //// Si no existe el buzon de mensajes para el usuario, se crea
-                ServiceFacadeFactory.Instance.MensajeFacade.EnviarMensaje(int.Parse(idusuario), useridactual, mensaje);
+                ServiceFacadeFactory.Instance.MensajeFacade.EnviarMensaje(int.Parse(idusuario), int.Parse(idremitente), mensaje);
                 validoentra = "1";
             }
             // Most specific:
             catch (ArgumentNullException e)
             {
-                Console.WriteLine("{0} Excepción en Argumento de Chat.", e);
+                Console.WriteLine("{0} First exception caught.", e);
             }
             // Least specific:
             catch (Exception e)
             {
-                Console.WriteLine("{0} Excepción en Argumento Genérico de Chat.", e);
+                Console.WriteLine("{0} Second exception caught.", e);
             }
 
             return Content(validoentra);

@@ -13,7 +13,7 @@ namespace Ol4RentAPI.Facades
         List<Bien> BienesPopulares { get; }
         List<Bien> Todos { get; }
         Bien Obtener(int id);
-        bool Crear(BienAltaDTO bien);
+        bool Crear(BienAltaDTO bien, int idSitio, String nombreUsuario);
         Bien Editar(Bien bien);
         void Eliminar(int id);
         List<Bien> Buscar(string query);

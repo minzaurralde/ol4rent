@@ -32,7 +32,7 @@ namespace Ol4RentAPI.Facades.Novedades
         private static NovedadesExternasFactory instance = null;
 
         private NovedadesExternasFactory() {
-            ResetearCaché();
+            //ResetearCaché();
         }
 
         /// <summary>

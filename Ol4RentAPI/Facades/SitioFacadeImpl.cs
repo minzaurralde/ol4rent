@@ -65,6 +65,7 @@ namespace Ol4RentAPI.Facades
                 CantBienesPopulares = sitioDTO.CantBienesPopulares,
                 CantMarcasXCont = sitioDTO.CantMarcasXCont,
                 CantContBloqXUsu = sitioDTO.CantContBloqXUsu,
+                AproximacionWish = sitioDTO.AproximacionWish,
                 TipoBien = tipoBien
             };
             // Se asocia el sitio al tipo de bien
@@ -153,6 +154,11 @@ namespace Ol4RentAPI.Facades
                     if (sitio.CantMarcasXCont != sitioDTO.CantMarcasXCont)
                     {
                         sitio.CantMarcasXCont = sitioDTO.CantMarcasXCont;
+                        seModifico = true;
+                    }
+                    if (sitio.AproximacionWish != sitioDTO.AproximacionWish)
+                    {
+                        sitio.AproximacionWish = sitioDTO.AproximacionWish;
                         seModifico = true;
                     }
                     if (sitioDTO.CSS != null && sitio.CSS != sitioDTO.CSS)

@@ -154,6 +154,7 @@
     <Property Name="CantMarcasXCont" Type="smallint" Nullable="false" />
     <Property Name="CantContBloqXUsu" Type="smallint" Nullable="false" />
     <Property Name="CantNovedadesHome" Type="int" Nullable="false" />
+    <Property Name="AproximacionWish" Type="smallint" Nullable="false" />
     <Property Name="UsuarioSitio_Sitio_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="OrigenesDatos">
@@ -190,7 +191,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Titulo" Type="nvarchar" Nullable="false" MaxLength="64" />
-    <Property Name="Foto" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Foto" Type="varbinary(max)" Nullable="true" />
     <Property Name="Latitud" Type="decimal" Nullable="false" />
     <Property Name="Longitud" Type="decimal" Nullable="false" />
     <Property Name="Direccion" Type="nvarchar" Nullable="true" MaxLength="128" />
@@ -200,6 +201,7 @@
     <Property Name="Descripcion" Type="nvarchar" Nullable="false" MaxLength="4000" />
     <Property Name="FechaAlquiler" Type="datetime" Nullable="true" />
     <Property Name="DuracionAlquiler" Type="smallint" Nullable="false" />
+    <Property Name="FechaAlta" Type="datetime" Nullable="false" />
     <Property Name="TipoBien_Id" Type="int" Nullable="false" />
     <Property Name="Usuario_Id" Type="int" Nullable="false" />
   </EntityType>
@@ -286,8 +288,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Latitud" Type="decimal" Nullable="false" />
-    <Property Name="Longitud" Type="decimal" Nullable="false" />
+    <Property Name="Latitud" Type="decimal" Nullable="false" Precision="18" Scale="15" />
+    <Property Name="Longitud" Type="decimal" Nullable="false" Precision="18" Scale="15" />
     <Property Name="Rango" Type="smallint" Nullable="false" />
     <Property Name="Titulo" Type="nvarchar" Nullable="false" MaxLength="64" />
     <Property Name="Usuario_Id" Type="int" Nullable="false" />
@@ -839,6 +841,7 @@
           <Property Type="Int16" Name="CantMarcasXCont" Nullable="false" />
           <Property Type="Int16" Name="CantContBloqXUsu" Nullable="false" />
           <Property Type="Int32" Name="CantNovedadesHome" Nullable="false" />
+          <Property Type="Int16" Name="AproximacionWish" Nullable="false" />
         </EntityType>
         <EntityType Name="OrigenDatos">
           <Key>
@@ -887,7 +890,7 @@
           <NavigationProperty Name="TipoBien" Relationship="Model.BienTipoBien" FromRole="Bien" ToRole="TipoBien" />
           <NavigationProperty Name="Usuario" Relationship="Model.BienUsuario" FromRole="Bien" ToRole="Usuario" />
           <Property Type="String" Name="Titulo" Nullable="false" MaxLength="64" />
-          <Property Type="Binary" Name="Foto" Nullable="false" />
+          <Property Type="Binary" Name="Foto" Nullable="true" />
           <Property Type="Decimal" Name="Latitud" Nullable="false" />
           <Property Type="Decimal" Name="Longitud" Nullable="false" />
           <Property Type="String" Name="Direccion" Nullable="true" MaxLength="128" />
@@ -898,6 +901,7 @@
           <Property Type="DateTime" Name="FechaAlquiler" Nullable="true" />
           <Property Type="Int16" Name="DuracionAlquiler" Nullable="false" />
           <NavigationProperty Name="ValoresCaracteristicas" Relationship="Model.ValorCaracteristicaBien" FromRole="Bien" ToRole="ValorCaracteristica" />
+          <Property Type="DateTime" Name="FechaAlta" Nullable="false" />
         </EntityType>
         <Association Name="TipoBienSitio">
           <End Type="Model.TipoBien" Role="TipoBien" Multiplicity="1" />
@@ -1038,8 +1042,8 @@
           <NavigationProperty Name="Usuario" Relationship="Model.UsuarioWishList" FromRole="WishList" ToRole="Usuario" />
           <NavigationProperty Name="TipoBien" Relationship="Model.EspecificacionBienTipoBien" FromRole="EspecificacionBien" ToRole="TipoBien" />
           <NavigationProperty Name="ValoresCaracteristicas" Relationship="Model.EspecificacionBienValorCaracteristicaEspecificacion" FromRole="EspecificacionBien" ToRole="ValorCaracteristicaEspecificacion" />
-          <Property Type="Decimal" Name="Latitud" Nullable="false" />
-          <Property Type="Decimal" Name="Longitud" Nullable="false" />
+          <Property Type="Decimal" Name="Latitud" Nullable="false" Precision="18" Scale="15" />
+          <Property Type="Decimal" Name="Longitud" Nullable="false" Precision="18" Scale="15" />
           <Property Type="Int16" Name="Rango" Nullable="false" />
           <Property Type="String" Name="Titulo" Nullable="false" MaxLength="64" />
         </EntityType>
@@ -1121,6 +1125,7 @@
           <Member Name="DECIMAL" Value="3" />
           <Member Name="BOOLEANO" Value="4" />
           <Member Name="FECHA" Value="5" />
+          <Member Name="HORA" Value="6" />
         </EnumType>
         <EnumType Name="TipoAdjunto">
           <Member Name="IMAGEN" Value="1" />
@@ -1177,6 +1182,7 @@
           <ScalarProperty Name="CantMarcasXCont" ColumnName="CantMarcasXCont" />
           <ScalarProperty Name="CantContBloqXUsu" ColumnName="CantContBloqXUsu" />
           <ScalarProperty Name="CantNovedadesHome" ColumnName="CantNovedadesHome" />
+          <ScalarProperty Name="AproximacionWish" ColumnName="AproximacionWish" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1224,6 +1230,7 @@
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="FechaAlquiler" ColumnName="FechaAlquiler" />
           <ScalarProperty Name="DuracionAlquiler" ColumnName="DuracionAlquiler" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

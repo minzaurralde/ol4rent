@@ -61,7 +61,7 @@ namespace Ol4RentAPI.DTO
         public int TipoBien { get; set; }
         //Propiedades del Tipo de Bien
         [Display(Name = "Características esecíficas del bien")]
-        public virtual List<ValorCaracteristicaListadoDTO> ValoresCaracteristicas { get; set; }
+        public virtual List<ValorCaracteristicaAltaDTO> ValoresCaracteristicas { get; set; }
     }
 
     public class EspecificacionBienListadoDTO
