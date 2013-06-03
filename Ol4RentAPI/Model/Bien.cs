@@ -32,6 +32,7 @@ namespace Ol4RentAPI.Model
         public string Descripcion { get; set; }
         public Nullable<System.DateTime> FechaAlquiler { get; set; }
         public short DuracionAlquiler { get; set; }
+        public System.DateTime FechaAlta { get; set; }
     
         public virtual ICollection<Contenido> Contenidos { get; set; }
         public virtual TipoBien TipoBien { get; set; }

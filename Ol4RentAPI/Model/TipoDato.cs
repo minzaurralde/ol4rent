@@ -17,6 +17,7 @@ namespace Ol4RentAPI.Model
         STRING = 2,
         DECIMAL = 3,
         BOOLEANO = 4,
-        FECHA = 5
+        FECHA = 5,
+        HORA = 6
     }
 }

@@ -13,7 +13,7 @@ namespace Ol4RentAPI.DTO
         [Required]
         [StringLength(64, ErrorMessage = "El titulo del bien debe tener como máximo {0} caracteres")]
         [DataType(DataType.Text)]
-        [Display(Name = "Titulo del bien")]
+        [Display(Name = "Titulo")]
         public string Titulo { get; set; }
         [DataType(DataType.Upload)]
         [FileExtensions(Extensions = "jpg", ErrorMessage = "La foto del bien debe ser un archivo en formato JPG")]

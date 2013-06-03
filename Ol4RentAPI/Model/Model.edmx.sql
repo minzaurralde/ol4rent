@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 05/28/2013 23:11:25
--- Generated from EDMX file: C:\Users\Martin\documents\visual studio 2012\Projects\OL4RENT\Ol4RentAPI\Model\Model.edmx
+-- Date Created: 05/31/2013 08:49:11
+-- Generated from EDMX file: C:\Users\Usuario\Documents\Visual Studio 2012\Projects\ol4rent\Ol4RentAPI\Model\Model.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -99,7 +99,7 @@ IF OBJECT_ID(N'[dbo].[FK_ValorCaracteristicaBien]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ValoresCaracteristicas] DROP CONSTRAINT [FK_ValorCaracteristicaBien];
 GO
 IF OBJECT_ID(N'[dbo].[FK_OrigenDatosDependencia]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[DependenciaSet] DROP CONSTRAINT [FK_OrigenDatosDependencia];
+    ALTER TABLE [dbo].[Dependencias] DROP CONSTRAINT [FK_OrigenDatosDependencia];
 GO
 
 -- --------------------------------------------------
@@ -163,8 +163,8 @@ GO
 IF OBJECT_ID(N'[dbo].[Sesiones]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Sesiones];
 GO
-IF OBJECT_ID(N'[dbo].[DependenciaSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[DependenciaSet];
+IF OBJECT_ID(N'[dbo].[Dependencias]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Dependencias];
 GO
 
 -- --------------------------------------------------
@@ -220,7 +220,7 @@ GO
 CREATE TABLE [dbo].[Bienes] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Titulo] nvarchar(64)  NOT NULL,
-    [Foto] varbinary(max)  NOT NULL,
+    [Foto] varbinary(max)  NULL,
     [Latitud] decimal(18,0)  NOT NULL,
     [Longitud] decimal(18,0)  NOT NULL,
     [Direccion] nvarchar(128)  NULL,
@@ -230,6 +230,7 @@ CREATE TABLE [dbo].[Bienes] (
     [Descripcion] nvarchar(4000)  NOT NULL,
     [FechaAlquiler] datetime  NULL,
     [DuracionAlquiler] smallint  NOT NULL,
+    [FechaAlta] datetime  NOT NULL,
     [TipoBien_Id] int  NOT NULL,
     [Usuario_Id] int  NOT NULL
 );
@@ -316,8 +317,8 @@ GO
 -- Creating table 'EspecificacionesBienes'
 CREATE TABLE [dbo].[EspecificacionesBienes] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Latitud] decimal(18,0)  NOT NULL,
-    [Longitud] decimal(18,0)  NOT NULL,
+    [Latitud] decimal(18,15)  NOT NULL,
+    [Longitud] decimal(18,15)  NOT NULL,
     [Rango] smallint  NOT NULL,
     [Titulo] nvarchar(64)  NOT NULL,
     [Usuario_Id] int  NOT NULL,

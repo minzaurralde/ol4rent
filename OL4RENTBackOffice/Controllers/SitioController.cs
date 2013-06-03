@@ -155,11 +155,12 @@ namespace OL4RENTBackOffice.Controllers
         private void ArmarComboTipoDatos()
         {
             List<SelectListItem> tipos = new List<SelectListItem>();
-            tipos.Add(new SelectListItem() { Selected = false, Text = TipoDato.BOOLEANO.ToString(), Value = TipoDato.BOOLEANO.ToString() });
-            tipos.Add(new SelectListItem() { Selected = false, Text = TipoDato.DECIMAL.ToString(), Value = TipoDato.DECIMAL.ToString() });
-            tipos.Add(new SelectListItem() { Selected = false, Text = TipoDato.ENTERO.ToString(), Value = TipoDato.ENTERO.ToString() });
-            tipos.Add(new SelectListItem() { Selected = false, Text = TipoDato.FECHA.ToString(), Value = TipoDato.FECHA.ToString() });
             tipos.Add(new SelectListItem() { Selected = false, Text = TipoDato.STRING.ToString(), Value = TipoDato.STRING.ToString() });
+            tipos.Add(new SelectListItem() { Selected = false, Text = TipoDato.BOOLEANO.ToString(), Value = TipoDato.BOOLEANO.ToString() });
+            tipos.Add(new SelectListItem() { Selected = false, Text = TipoDato.ENTERO.ToString(), Value = TipoDato.ENTERO.ToString() });
+            tipos.Add(new SelectListItem() { Selected = false, Text = TipoDato.DECIMAL.ToString(), Value = TipoDato.DECIMAL.ToString() });
+            tipos.Add(new SelectListItem() { Selected = false, Text = TipoDato.FECHA.ToString(), Value = TipoDato.FECHA.ToString() });
+            tipos.Add(new SelectListItem() { Selected = false, Text = TipoDato.HORA.ToString(), Value = TipoDato.HORA.ToString() });
             ViewBag.TiposDatos = tipos;
         }
     }
