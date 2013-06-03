@@ -28,12 +28,12 @@ namespace OL4RENT.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            EspecificacionBienDTO especificacionbien = ServiceFacadeFactory.Instance.EspecificacionBienFacade.Obtener(id);
-            if (especificacionbien == null)
+            EspecificacionBienDTO wish = ServiceFacadeFactory.Instance.EspecificacionBienFacade.Obtener(id);
+            if (wish == null)
             {
                 return HttpNotFound();
             }
-            return View(especificacionbien);
+            return View(wish);
         }
 
         //
@@ -81,6 +81,61 @@ namespace OL4RENT.Controllers
         {
             if (wishDTO.ValoresCaracteristicas == null)
             {
+                wishDTO.ValoresCaracteristicas = new List<ValorCaracteristicaAltaDTO>();
+            }
+            List<CaracteristicaEdicionDTO> caracteristicas = ObtenerListadoCaracteristicas();
+            foreach (CaracteristicaEdicionDTO caracteristica in caracteristicas)
+            {
+                string id = "car-" + caracteristica.Id.ToString();
+                if (Request[id] == null)
+                {
+                    if (caracteristica.Tipo == TipoDato.BOOLEANO)
+                    {
+                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = "false", IdCaracteristica = caracteristica.Id });
+                    }
+                    else
+                    {
+                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = "", IdCaracteristica = caracteristica.Id });
+                    }
+                }
+                else
+                {
+                    wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
+                }
+            }
+            wishDTO.Usuario = User.Identity.Name;
+            SitioListadoDTO sitio = Session["sitio"] as SitioListadoDTO;
+            wishDTO.TipoBien = ServiceFacadeFactory.Instance.SitioFacade.ObtenerIdTipoBien(sitio.Id);
+            if ((ServiceFacadeFactory.Instance.EspecificacionBienFacade.Crear(wishDTO)))
+            {
+                return RedirectToAction("Wishlist");
+            }
+            ArmarListadoCaracteristicas();
+            return View(wishDTO);
+        }
+
+        //
+        // GET: /Wish/Edit/5
+
+        public ActionResult Edit(int id = 0)
+        {
+            EspecificacionBienDTO especificacionbien = ServiceFacadeFactory.Instance.EspecificacionBienFacade.Obtener(id);
+            if (especificacionbien == null)
+            {
+                return HttpNotFound();
+            }
+            return View(especificacionbien);
+        }
+
+        //
+        // POST: /Wish/Edit/5
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EspecificacionBienDTO wishDTO)
+        {
+            if (wishDTO.ValoresCaracteristicas == null)
+            {
                 wishDTO.ValoresCaracteristicas = new List<ValorCaracteristicaListadoDTO>();
             }
             List<CaracteristicaEdicionDTO> caracteristicas = ObtenerListadoCaracteristicas();
@@ -110,44 +165,12 @@ namespace OL4RENT.Controllers
                     }
                 }
             }
-            wishDTO.Usuario = User.Identity.Name;
-            SitioListadoDTO sitio = Session["sitio"] as SitioListadoDTO;
-            wishDTO.TipoBien = ServiceFacadeFactory.Instance.SitioFacade.ObtenerIdTipoBien(sitio.Id);
-            if ((ServiceFacadeFactory.Instance.EspecificacionBienFacade.Crear(wishDTO)))
+            if ((ServiceFacadeFactory.Instance.EspecificacionBienFacade.Editar(wishDTO)))
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Wishlist");
             }
             ArmarListadoCaracteristicas();
             return View(wishDTO);
-        }
-
-        //
-        // GET: /Wish/Edit/5
-
-        public ActionResult Edit(int id = 0)
-        {
-            EspecificacionBien especificacionbien = db.EspecificacionesBienes.Find(id);
-            if (especificacionbien == null)
-            {
-                return HttpNotFound();
-            }
-            return View(especificacionbien);
-        }
-
-        //
-        // POST: /Wish/Edit/5
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(EspecificacionBien especificacionbien)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(especificacionbien).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(especificacionbien);
         }
 
         //
@@ -155,12 +178,12 @@ namespace OL4RENT.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            EspecificacionBien especificacionbien = db.EspecificacionesBienes.Find(id);
-            if (especificacionbien == null)
+            EspecificacionBienDTO wish = ServiceFacadeFactory.Instance.EspecificacionBienFacade.Obtener(id);
+            if (wish == null)
             {
                 return HttpNotFound();
             }
-            return View(especificacionbien);
+            return View(wish);
         }
 
         //
@@ -170,10 +193,8 @@ namespace OL4RENT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            EspecificacionBien especificacionbien = db.EspecificacionesBienes.Find(id);
-            db.EspecificacionesBienes.Remove(especificacionbien);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            ServiceFacadeFactory.Instance.EspecificacionBienFacade.Eliminar(id);
+            return RedirectToAction("Wishlist");
         }
 
         protected override void Dispose(bool disposing)

@@ -1,18 +1,25 @@
 ﻿@model Ol4RentAPI.DTO.BienAltaDTO
+@using Ol4RentAPI.DTO;
+@{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
 
 @{
-    ViewBag.Title = "Dar de Alta un Nuevo Bien";
+    String nombreTipoBien = "Bien";
+    if (sitio != null)
+    {
+        nombreTipoBien = @sitio.NombreTipoBien;
+    }
+    ViewBag.Title = "Dar de Alta un Nuevo "+nombreTipoBien;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Dar de Alta un Nuevo Bien</h2>
+<h2>Dar de Alta un Nuevo @nombreTipoBien</h2>
 
 @using (Html.BeginForm("Create", "Bien", FormMethod.Post, new { name = "RegisterForm", id = "RegisterForm", encType = "multipart/form-data" }))
 {
     @Html.ValidationSummary()
 
     <fieldset>
-        <legend>Alta de Bien</legend>
+        <legend>Alta de @nombreTipoBien</legend>
         <ol>
             <li>
                 @Html.LabelFor(m => m.Titulo)

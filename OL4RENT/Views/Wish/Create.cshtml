@@ -59,7 +59,7 @@
                         $(document).ready(function () {
                             $("#car-@caracteristica.Id.ToString()").datepicker
                                 ({
-                                    dateFormat: 'dd/mm/yyyy',
+                                    dateFormat: 'dd/mm/yy',
                                     showStatus: true,
                                     showWeeks: true,
                                     highlightWeek: true,
@@ -78,7 +78,7 @@
                 }
                 else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.DECIMAL)
                 {
-                    @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0.0");
+                    @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0,0");
                 }
                 else
                 {
@@ -88,7 +88,7 @@
             }
             </ol>
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Crear" />
         </p>
     </fieldset>
 }

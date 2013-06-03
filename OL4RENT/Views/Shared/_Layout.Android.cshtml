@@ -1,13 +1,9 @@
-﻿@using Ol4RentAPI.DTO;
-@{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@(sitio != null ? sitio.Nombre : "Ol4RENT") - @ViewBag.Title</title>
+        <title>Ol4RENT - @ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
@@ -17,7 +13,7 @@
         <header>
             <div class="content-wrapper">
                 <div class="header">
-                    @Html.Partial("_HeaderPartial")
+                    @Html.Partial("_HeaderPartialAndroid")
                 </div>
                 <div class="float-left">
                     <section id="login">
@@ -48,7 +44,7 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - OL4RENT - TSI1, Grupo 6</p>
+                    <p>&copy; @DateTime.Now.Year - OL4RENT - TSI1, Grupo 6 - Android</p>
                 </div>
             </div>
         </footer>

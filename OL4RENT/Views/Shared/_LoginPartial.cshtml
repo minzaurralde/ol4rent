@@ -1,15 +1,31 @@
-﻿@if (Request.IsAuthenticated) {
+﻿@using Ol4RentAPI.DTO;
+@{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
+
+@if (Request.IsAuthenticated)
+{
+    String nombreTipoBien = "Bien";
+    if (sitio != null)
+    {
+        nombreTipoBien = @sitio.NombreTipoBien.Trim();
+    }
+    String plural = nombreTipoBien.ToLower().EndsWith("a") || nombreTipoBien.ToLower().EndsWith("e") ||
+        nombreTipoBien.ToLower().EndsWith("i") || nombreTipoBien.ToLower().EndsWith("o") ||
+        nombreTipoBien.ToLower().EndsWith("u") ? "s" : "es";
     <ul>
         <li>@Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })</li>
         <li>@Html.ActionLink("Wishlist", "Wishlist", "Wish")</li>
-        <li>@Html.ActionLink("Mis bienes", "MisBienes", "Bien")</li>
+        <li>@Html.ActionLink("Mis " + nombreTipoBien + plural, "MisBienes", "Bien")</li>
+        <li>@Html.ActionLink("Nuevo " + nombreTipoBien, "Create", "Bien")</li>
         <li>@Html.ActionLink("Chat", "ChatUsuario", "Chat")</li>
-        <li>@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+        <li>@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            {
             @Html.AntiForgeryToken()
             <a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a>
-        }</li>
+            }</li>
     </ul>
-} else {
+}
+else
+{
     <ul>
         <li>@Html.ActionLink("Registrarse", "Register", "Account")</li>
         <li>@Html.ActionLink("Iniciar Sesión", "Login", "Account")</li>
