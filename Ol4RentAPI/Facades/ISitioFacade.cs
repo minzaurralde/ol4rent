@@ -38,5 +38,7 @@ namespace Ol4RentAPI.Facades
         SitioListadoDTO ObtenerPorDominio(string dominio);
 
         int ObtenerIdTipoBien (int id);
+
+        byte[] Css(int idSitio);
     }
 }

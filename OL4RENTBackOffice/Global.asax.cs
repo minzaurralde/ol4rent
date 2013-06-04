@@ -1,4 +1,5 @@
 ﻿using Ol4RentAPI.DTO;
+using OL4RENTBackOffice.Process;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -22,6 +23,7 @@ namespace OL4RENTBackOffice
             AuthConfig.RegisterAuth();
 
             AutoMapperInitializer.Inicializar();
+            WatchDog.IniciarWatchDog();
         }
     }
 }

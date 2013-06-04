@@ -156,6 +156,11 @@ namespace Ol4RentAPI.Facades
                         sitio.CantMarcasXCont = sitioDTO.CantMarcasXCont;
                         seModifico = true;
                     }
+                    if (sitio.CantNovedadesHome != sitioDTO.CantNovedadesHome)
+                    {
+                        sitio.CantNovedadesHome = sitioDTO.CantNovedadesHome;
+                        seModifico = true;
+                    }
                     if (sitio.AproximacionWish != sitioDTO.AproximacionWish)
                     {
                         sitio.AproximacionWish = sitioDTO.AproximacionWish;
@@ -310,6 +315,23 @@ namespace Ol4RentAPI.Facades
                 else
                 {
                     return 0;
+                }
+            }
+        }
+
+
+        public byte[] Css(int idSitio)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Sitio sitio = db.Sitios.Find(idSitio);
+                if (sitio == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return sitio.CSS;
                 }
             }
         }

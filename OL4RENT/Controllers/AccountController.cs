@@ -39,11 +39,23 @@ namespace OL4RENT.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.NombreUsuario, model.Contraseña, persistCookie: model.RememberMe))
             {
-                ServiceFacadeFactory.Instance.SesionManager.CrearSesion(model.NombreUsuario);
-                return RedirectToLocal(returnUrl);
+                // Verifico si esta habilitado en el sitio
+                Boolean habilitado = ServiceFacadeFactory.Instance.AccountFacade.UsuarioHabilitadoEnSitio(model.NombreUsuario, model.IdSitio);
+                if (habilitado)
+                {
+                    ServiceFacadeFactory.Instance.SesionManager.CrearSesion(model.NombreUsuario);
+                    return RedirectToLocal(returnUrl);
+                }
+                else
+                {
+                    WebSecurity.Logout();
+                    ModelState.AddModelError("", "El usuario no esta habilitado para ingresar al sitio.");
+                }
             }
-
-            ModelState.AddModelError("", "El nombre de usuario o la contraseña son incorrectos.");
+            else
+            {
+                ModelState.AddModelError("", "El nombre de usuario o la contraseña son incorrectos.");
+            }
             return View(model);
         }
 

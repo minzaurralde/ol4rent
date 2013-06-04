@@ -1,7 +1,17 @@
 ﻿@model Ol4RentAPI.DTO.BienEdicionDTO
+@using Ol4RentAPI.DTO;
+@{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
 
 @{
-    ViewBag.Title = "Details";
+    String nombreTipoBien = "Bien";
+    if (sitio != null)
+    {
+        nombreTipoBien = @sitio.NombreTipoBien;
+    }
+    String plural = nombreTipoBien.ToLower().EndsWith("a") || nombreTipoBien.ToLower().EndsWith("e") ||
+    nombreTipoBien.ToLower().EndsWith("i") || nombreTipoBien.ToLower().EndsWith("o") ||
+    nombreTipoBien.ToLower().EndsWith("u") ? "s" : "es";
+    ViewBag.Title = "Detalles";
 }
 
 <div class="float-right">
@@ -47,7 +57,7 @@
                 map.setCenter(location);
                 map.setZoom(15);
             }
-            
+
         </script>
         <h3>Ubicación</h3>
         <br />
@@ -55,17 +65,20 @@
     </div>
 </div>
 
-<h2>Details</h2>
+<h2>Detalles</h2>
 
 <fieldset>
     <legend>Bien</legend>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Titulo)
+        @Html.DisplayNameFor(model => model.Titulo) <input type="button" value="Me Gusta" onclick="javascript: like(@Model.Id);" />
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Titulo)
     </div>
+
+    <img src="@Url.Action("Foto", "Bien", new { idBien = @Model.Id })" alt="@Model.Titulo" />
+
     <div class="display-label">
         @Html.DisplayNameFor(model => model.Descripcion)
     </div>
@@ -101,7 +114,8 @@
         @Html.HiddenFor(m => m.Longitud)
     </div>
     <ol>
-        @if (Model.ValoresCaracteristicas != null && Model.ValoresCaracteristicas.Count() > 0){
+        @if (Model.ValoresCaracteristicas != null && Model.ValoresCaracteristicas.Count() > 0)
+        {
             foreach (Ol4RentAPI.DTO.ValorCaracteristicaListadoDTO item in Model.ValoresCaracteristicas)
             {
             <li>
@@ -110,12 +124,14 @@
                 {
                     if (item.Valor.AsBool())
                     {
-                        @Html.DisplayName("Si")
-                    }else
-                    {
-                        @Html.DisplayName("No")
+                    @Html.DisplayName("Si")
                     }
-                }else
+                    else
+                    {
+                    @Html.DisplayName("No")
+                    }
+                }
+                else
                 {
                     @Html.DisplayName(item.Valor)
                 }
@@ -127,6 +143,16 @@
 </fieldset>
 <p>
     @Html.ActionLink("Arrendar", "Arrendar", new { id=Model.Id}) |
-    @Html.ActionLink("Editar", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Volver a Mis Bienes", "MisBienes")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Volver a Mis " + nombreTipoBien + plural, "MisBienes")
 </p>
+
+<div>
+    @Html.Action("Comentarios", "Bien", new { id = Model.Id })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-1.7.1.js")
+    @Scripts.Render("~/Scripts/meGusta.js")
+}
+

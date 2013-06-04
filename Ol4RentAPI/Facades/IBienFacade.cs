@@ -1,5 +1,4 @@
 ﻿using Ol4RentAPI.DTO;
-using Ol4RentAPI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +17,15 @@ namespace Ol4RentAPI.Facades
         bool Crear(BienAltaDTO bien);
         bool Editar(BienEdicionDTO bienDTO);
         void Eliminar(int id);
-        List<Bien> Buscar(string query);
+        List<BienListadoDTO> Buscar(string query);
         List<BienListadoDTO> MisBienes(string usuario, int sitio);
         BienEdicionDTO ObtenerBienParaContenido(int idContenido);
         List<ContenidoDTO> ContenidosInadecuadosPorSitio(int idSitio);
         RegistroBienDTO RegistroDeBienesEnTiempo(int idSitio, DateTime fechaInicio, DateTime fechaFin);
-        List<Model.Bien> BusquedaAvanzada(Model.Bien templateBien);
+        List<BienListadoDTO> BusquedaAvanzada(BusquedaAvanzadaDTO templateBien);
+
+        void Like(string nombreUsuario, int idBien);
+        byte[] Foto(int idBien);
+        List<ContenidoDTO> ObtenerComentariosBien(int idBien);
     }
 }

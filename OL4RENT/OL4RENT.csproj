@@ -259,6 +259,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\meGusta.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -337,6 +338,7 @@
     <Content Include="Views\Shared\_HeaderPartialIPhone.cshtml" />
     <Content Include="Views\Wish\Mapa.cshtml" />
     <Content Include="Views\Bien\Arrendar.cshtml" />
+    <Content Include="Views\Bien\Comentarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
