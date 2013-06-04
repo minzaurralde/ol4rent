@@ -12,6 +12,72 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="float-right">
+    <div>
+        <!-- Mapa -->
+        <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR_JcEyolVGeSAWZsQ4g8cIuOLBnDD2l4&sensor=false"></script>
+        <script type="text/javascript">
+            var map;
+            function initialize() {
+
+                var mapOptions = {
+                    center: new google.maps.LatLng(-34.887057, -56.171036),
+                    panControl: true,
+                    zoomControl: true,
+                    mapTypeControl: true,
+                    scaleControl: true,
+                    streetViewControl: true,
+                    overviewMapControl: true,
+                    zoom: 12,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+                google.maps.Map.prototype.marker = new google.maps.Marker();
+
+                google.maps.event.addListener(map, "click", function (event) { esperaClick(event.latLng); });
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            function esperaClick(location){
+                $("#Direccion").val("");
+                creaMarca(location);
+            }
+
+            function creaMarca(location) {
+                google.maps.Map.prototype.marker.setMap(null);
+
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+
+                google.maps.Map.prototype.marker = marker;
+                map.setZoom(15);
+                map.setCenter(location);
+                var lat = location.lat().toString().replace(".", ",");
+                var lng = location.lng().toString().replace(".", ",");
+                $("#Latitud").val(lat);
+                $("#Longitud").val(lng);
+            }
+
+            function crearPuntoDireccion() {
+                var address = $("#Direccion").val();
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ 'address': address }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        creaMarca(results[0].geometry.location);
+                    }
+                });
+            }
+
+        </script>
+        <h3>Ubicación</h3>
+        <br />
+        <div id="map-canvas" style="width: 400px; height: 350px"></div>
+    </div>
+</div>
+
 <h2>Dar de Alta un Nuevo @nombreTipoBien</h2>
 
 @using (Html.BeginForm("Create", "Bien", FormMethod.Post, new { name = "RegisterForm", id = "RegisterForm", encType = "multipart/form-data" }))
@@ -38,23 +104,20 @@
                 @Html.TextBoxFor(m => m.Direccion)
             </li>
             <li>
-                @Html.LabelFor(m => m.Latitud)
-                @Html.TextBoxFor(m => m.Latitud)
-
-                @Html.LabelFor(m => m.Longitud)
-                @Html.TextBoxFor(m => m.Longitud)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Normas)
-                @Html.TextAreaFor(m => m.Normas)
-            </li>
-            <li>
                 @Html.LabelFor(m => m.Capacidad)
                 @Html.TextBoxFor(m => m.Capacidad)
             </li>
             <li>
                 @Html.LabelFor(m => m.Precio)
                 @Html.TextBoxFor(m => m.Precio)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Normas)
+                @Html.TextAreaFor(m => m.Normas)
+            </li>
+            <li>
+                @Html.HiddenFor(m => m.Latitud)
+                @Html.HiddenFor(m => m.Longitud)
             </li>
 
             @foreach (Ol4RentAPI.DTO.CaracteristicaEdicionDTO caracteristica in ViewBag.Caracteristicas)
@@ -72,7 +135,7 @@
                         $(document).ready(function () {
                             $("#car-@caracteristica.Id.ToString()").datepicker
                                 ({
-                                    dateFormat: 'dd/mm/yyyy',
+                                    dateFormat: 'dd/mm/yy',
                                     showStatus: true,
                                     showWeeks: true,
                                     highlightWeek: true,
@@ -95,7 +158,7 @@
                 }
                 else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.DECIMAL)
                 {
-                    @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0.0");
+                    @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0,0");
                 }
                 else
                 {
@@ -109,6 +172,9 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver a Mis Bienes", "MisBienes")
 </div>
 
+@section Scripts {
+    @Scripts.Render("~/Scripts/crearBien.js")
+}

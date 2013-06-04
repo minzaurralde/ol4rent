@@ -1,31 +1,26 @@
 ﻿@{
     ViewBag.Title = "ChatUsuario";
 }
-
+\
 <h2>Sala de Chat con Usuarios on-line</h2>
 
 <script type="text/javascript">
     
     @{  
         
-        var iniciored = "http://localhost:5311/";
-
+        ///// Marca de la pagina de inicio en caso de no estar logueado
+        var iniciored = "/Home/Index";
+        
         var nombreUsuario = User.Identity.Name;
 
         if ((nombreUsuario == null) || (nombreUsuario == ""))
         {
             Response.Redirect(iniciored);
-        }
-        
-        //// Recibe por medio del GET el idusuario
-        var idusuarioremactual = Request.QueryString["userd"];
+        }       
 
         var useridactual = WebSecurity.GetUserId(User.Identity.Name);
         
-    }    
-
-    //// Debe obtener el id. del idusuario logueado actualmente
-    var idremitente = "@useridactual";
+    }       
 
     function desplegarusuarios(entrada) {
         
@@ -44,7 +39,7 @@
                 verstr = entrada.search(diopt);
                 if (verstr < 0) {
                     usuretirado = $("#usuariosconectados option[value = '" + arrdiopt[0] + "']").text();
-                    agregaralpanael("Acaba de retirarse de la sala el Usuario: " + usuretirado);
+                    agregaralpanael("<font color='brown'>Acaba de retirarse de la sala el Usuario: " + usuretirado + "</font>");
                     $("#usuariosconectados option[value = '" + arrdiopt[0] + "']").remove();
                 }
 
@@ -70,7 +65,7 @@
                 if (!optionexiste) {                    
                     inHTML += '<option value=' + arrdiopt[0] + '>' + arrdiopt[1] + '</option>';
                     if (marcainicio == 0) {                       
-                        agregaralpanael("Acaba de ingresar a la sala el Usuario: " + arrdiopt[1]);
+                        agregaralpanael("<font color='brown'>Acaba de ingresar a la sala el Usuario: " + arrdiopt[1] + "</font>");
                     }                    
                 }
                 else {
@@ -81,22 +76,15 @@
             }            
 
             $('#todousrcon').val(entrada);
-
             $("#usuariosconectados").append(inHTML);
         }       
 
     }    
 
     function agregaralpanael(recibido) {
-        var dato = $("#BandejaMensajes").text();
-
-        if (dato == "")
-            dato = dato + recibido;
-        else
-            dato = dato + "\r\n\r\n" + recibido;
-
-        $("#BandejaMensajes").text(dato);
-
+       
+        $("#BandejaMensajes").append("<BR>" + recibido + "<BR>");
+        
         lineas = parseInt($("#lineas").val());        
         lineas++;
 
@@ -141,7 +129,7 @@
             mensajeenvio = $.trim($("#mensaje").val());
 
             if (mensajeenvio == "") {
-                alert("Debe escribir el mensaje a enviar al usuario !!!");
+                alert("Debe escribir el Mensaje a enviar al usuario !!!");
                 $('#mensaje').focus();                
             }
             else {
@@ -150,24 +138,23 @@
                 {
                     type: "POST",
                     url: '@Url.Action("enviomensaje","Chat")',
-                    data: {
-                        idremitente: idremitente,
+                    data: {                        
                         idusuario: idusuarioenvio,
                         mensaje: mensajeenvio
                     },
                     success: function (result) {
                         if (result == "1") {
                             fechaenvio = darFechaActual();
-                            agregaralpanael("Enviado a " + nomusuenvio + ": " + mensajeenvio + "\r\nFecha: " + fechaenvio);                            
+                            agregaralpanael("<b>Enviado a " + nomusuenvio + "</b>: " + mensajeenvio + "<BR><font size=2>Fecha: " + fechaenvio + "</font>");                            
                         }
                         else {
                             mensajeenvio = "Mal Enviado";
-                            agregaralpanael("Mensaje a " + nomusuenvio + " mal enviado");
+                            agregaralpanael("<font color='#FF0000' size=3><b>Mensaje a " + nomusuenvio + " mal enviado</b></font>");
                         }
 
                     },
                     error: function (req, status, error) {
-                        $("#BandejaMensajes").text("No se pudo invocar enviar");
+                        $("#BandejaMensajes").text("<font color='#FF0000' size=3><b>No se pudo invocar enviar</b></font>");
                     }
                 });
 
@@ -182,10 +169,7 @@
         $.ajax(
             {
                 type: "POST",
-                url: '@Url.Action("VerificarSesion","Chat")',
-                data: {
-                    idusuarioactual: idremitente,                    
-                },
+                url: '@Url.Action("VerificarSesion","Chat")',                
                 success: function (ressesact) {
                     if (ressesact != "1") {
                         var urlh = '@iniciored';
@@ -193,7 +177,7 @@
                     }
                 },
                 error: function (req, status, error) {
-                    $("#BandejaMensajes").text("No se encuentra logueado");
+                    $("#BandejaMensajes").text("<font color='#FF0000' size=3><b>No se encuentra logueado</b></font>");
                 }
             });
     }
@@ -204,11 +188,10 @@
                 type: "POST",
                 url: '@Url.Action("mensajeinicial","Chat")',
                 data: {                    
-                    idusuarioactual: idremitente,
                     espero: $("#esperoinicial").val(),
                 },
                 success: function (result) {
-                    if (result != "") {
+                    if ((result != "") && (result != "[object XMLDocument]")) {
                         agregaralpanael(result);
                         valactual = parseInt($("#esperoinicial").val());
                         valactual++;
@@ -216,7 +199,7 @@
                     }
                 },
                 error: function (req, status, error) {
-                    $("#BandejaMensajes").text("No se pudo invocar recibir inicial");
+                    $("#BandejaMensajes").text("<font color='#FF0000' size=3><b>No se pudo invocar recibir inicial</b></font>");
                 }
             });
         }
@@ -227,12 +210,11 @@
             {
                 type: "POST",
                 url: '@Url.Action("llegamensaje","Chat")',
-                data: {
-                        idusuarioactual: idremitente,
+                data: {                        
                         espero: $("#espero").val(),
                     },
                     success: function (recibidom) {
-                        if (recibidom != "-*--*--*-") {                            
+                        if ((recibidom != "-*--*--*-") && (recibidom != "[object XMLDocument]")) {
                             agregaralpanael(recibidom);
                             valactual = parseInt($("#espero").val());
                             valactual++;
@@ -240,7 +222,7 @@
                         }
                     },
                     error: function (req, status, error) {
-                        $("#BandejaMensajes").text("No se pudo invocar recibir");
+                        $("#BandejaMensajes").text("<font color='#FF0000' size=3><b>No se pudo invocar recibir</b></font>");
                     }
                 });
 
@@ -251,8 +233,7 @@
             {
                 type: "POST",
                 url: '@Url.Action("ObtenerUsuariosOnline","Chat")',
-                    data: {
-                        idusuarioactual: idremitente
+                    data: {                        
                     },
                     success: function (result) {
                         var espusu = $("#esperousuarios").val();
@@ -263,7 +244,7 @@
                         else {
                             if (espusu == 0) {
                                 desplegarusuarios(result);
-                                agregaralpanael("No hay usuarios conectados al momento\r\nAguarde a que llegue el primero");
+                                agregaralpanael("<b>No hay usuarios conectados al momento - Aguarde a que llegue el primero</b><BR>");
                                 $("#esperousuarios").val(1);
                             }
                         }
@@ -271,7 +252,7 @@
                             $('#iniciochat').val(0);
                     },
                     error: function (req, status, error) {
-                        $("#BandejaMensajes").text("No se pudo obtener los usuarios");
+                        $("#BandejaMensajes").text("<font color='#FF0000' size=3><b>No se pudo obtener los usuarios</b></font>");
                     }
                 });
 
@@ -281,8 +262,8 @@
     $(document).ready(function () {
 
         $("#usuariosconectados").css("height", 400);
-        $("#usuariosconectados").css("width", 200);                
-        
+        $("#usuariosconectados").css("width", 200);
+
         estasesionactiva();
         setInterval(estasesionactiva, 2000);
 
@@ -290,12 +271,14 @@
 
         recibirmensaje();
         setInterval(recibirmensaje, 3000);
-                
-        dispusuarios();        
+
+        dispusuarios();
         setInterval(dispusuarios, 8000);
-        
-        $("#mensaje").focus();
-        
+
+        $("#BandejaMensajes").prop("disabled", true);
+
+        $("#mensaje").focus();        
+
     });
 
 </script>
@@ -309,53 +292,24 @@
 @Html.Hidden("iniciochat", 1)
 
 <p>
-    Elija una de los usuario de la lista y proceda a enviar mensaje.
+    Seleccione una de los Usuarios de la lista y proceda a enviar mensaje.
 </p>
 
-<p>
-    Id: @useridactual
-</p>
+<div id="posusuarios">
+    Usuarios conectados:<BR>
+    <select id="usuariosconectados" name="usuariosconectados" size="3"></select>
+    <BR><BR>
+</div>
 
-<p>
-    Nombre: @nombreUsuario
-</p>
+<div id="pospanel">
+    <div id="BandejaMensajes" style="border-color: black; background-color: #ffffff; height: 400px; overflow : auto; "></div>
+</div>
 
-<table border="1">
-    <tr>
-        <td valign="top">
-            <table valign="top">
-                <tr>
-                    <td>Usuarios conectados:
-                    </td>
-                    <tr></tr>
-                    <td>
-                        @Html.ListBox("usuariosconectados", new List<SelectListItem>())
-                    </td>
-                </tr>
-            </table>
-        </td>
-        <td valign="top" align="left">
-            @Html.TextArea("BandejaMensajes","",20,100,"")
-        </td>
-    </tr>
-    <tr>        
-        <td colspan ="2">
-            <table align="center">
-                <tr>
-                    <td valign="middle">            
-                        Mensaje:
-                    </td>
-                    <td>
-                        @Html.TextArea("mensaje","",3,50,"")
-                    </td> 
-                    <td>
-                        <button name="button" value="Enviar" onclick="enviomensaje()">Enviar</button>   
-                    </td>
-                </tr>
-            </table>                 
-         </td>
-    </tr>
+<div id="posmensaje">    
+    Mensaje:
+    @Html.TextArea("mensaje","",3,50,"")
+    <button name="button" value="Enviar" onclick="enviomensaje()">Enviar</button> 
+</div>
 
-</table>
 
 

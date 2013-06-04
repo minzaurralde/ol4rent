@@ -244,6 +244,7 @@
     <Content Include="App_Code\TwitterGoodies.cshtml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\twitter.png" />
+    <Content Include="Scripts\crearBien.js" />
     <Content Include="Scripts\crearWish.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -323,6 +324,17 @@
     <Content Include="Views\Wish\Edit.cshtml" />
     <Content Include="Views\Wish\Delete.cshtml" />
     <Content Include="Views\Chat\ChatUsuario.cshtml" />
+    <Content Include="Views\Shared\_Layout.Mobile.cshtml" />
+    <Content Include="Views\Copy of _ViewStart.cshtml" />
+    <Content Include="Views\Shared\_HeaderPartialMobile.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialMobile.cshtml" />
+    <Content Include="Views\Shared\_Layout.Android.cshtml" />
+    <Content Include="Views\Shared\_HeaderPartialAndroid.cshtml" />
+    <Content Include="Views\Shared\_Layout.WindowsPhone.cshtml" />
+    <Content Include="Views\Shared\_HeaderPartialWindowsPhone.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialWindowsPhone.cshtml" />
+    <Content Include="Views\Shared\_Layout.iPhone.cshtml" />
+    <Content Include="Views\Shared\_HeaderPartialIPhone.cshtml" />
     <Content Include="Views\Wish\Mapa.cshtml" />
   </ItemGroup>
   <ItemGroup>

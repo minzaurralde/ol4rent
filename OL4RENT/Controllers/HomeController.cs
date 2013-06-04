@@ -1,5 +1,6 @@
 ﻿using Microsoft.Web.WebPages.OAuth;
 using Ol4RentAPI.Model;
+using Ol4RentAPI.DTO;
 using OL4RENT.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace OL4RENT.Controllers
         public ActionResult Index()
         {
             IndexViewModel viewModel = new IndexViewModel();
-            viewModel.BienesPopulares = ServiceFacadeFactory.Instance.BienFacade.BienesPopulares;
+            viewModel.BienesPopulares = ServiceFacadeFactory.Instance.BienFacade.BienesPopulares();
             viewModel.ListaNovedades = ServiceFacadeFactory.Instance.NovedadFacade.ListaNovedades();
             return View(viewModel);
         }

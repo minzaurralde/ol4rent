@@ -17,14 +17,14 @@ namespace OL4RENT.Controllers
         // GET: /Bien/
         public ActionResult Index()
         {
-            return View(ServiceFacadeFactory.Instance.BienFacade.Todos);
+            return View(ServiceFacadeFactory.Instance.BienFacade.Todos());
         }
 
         //
         // GET: /Bien/Details/5
         public ActionResult Details(int id = 0)
         {
-            Bien bien = ServiceFacadeFactory.Instance.BienFacade.Obtener(id);
+            BienEdicionDTO bien = ServiceFacadeFactory.Instance.BienFacade.Obtener(id);
             if (bien == null)
             {
                 return HttpNotFound();
@@ -94,7 +94,15 @@ namespace OL4RENT.Controllers
                 }
                 else
                 {
-                    bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
+                    if (caracteristica.Tipo == TipoDato.BOOLEANO)
+                    {
+                        bool boolean = Request[id].ToString() != "false";
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = boolean.ToString(), IdCaracteristica = caracteristica.Id });
+                    }
+                    else
+                    {
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
+                    }
                 }
             }
             if (imagen != null)
@@ -102,11 +110,12 @@ namespace OL4RENT.Controllers
                 bienDTO.Foto = new byte[imagen.ContentLength];
                 imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
             }
+            bienDTO.Usuario = User.Identity.Name;
             SitioListadoDTO sitio = Session["sitio"] as SitioListadoDTO;
-            String usuario = User.Identity.Name;
+            bienDTO.TipoBien = ServiceFacadeFactory.Instance.SitioFacade.ObtenerIdTipoBien(sitio.Id);
             if (sitio !=null && ModelState.IsValid)
             {
-                if (ServiceFacadeFactory.Instance.BienFacade.Crear(bienDTO, sitio.Id, usuario))
+                if (ServiceFacadeFactory.Instance.BienFacade.Crear(bienDTO))
                 {
                     return RedirectToAction("MisBienes", "Bien");
                 }
@@ -120,7 +129,7 @@ namespace OL4RENT.Controllers
         [Authorize(Roles = "ADMIN")]
         public ActionResult Edit(int id = 0)
         {
-            Bien bien = ServiceFacadeFactory.Instance.BienFacade.Obtener(id);
+            BienEdicionDTO bien = ServiceFacadeFactory.Instance.BienFacade.Obtener(id);
             if (bien == null)
             {
                 return HttpNotFound();
@@ -132,9 +141,9 @@ namespace OL4RENT.Controllers
         // POST: /Bien/Edit/5
         [Authorize(Roles="ADMIN")]
         [HttpPost]
-        public ActionResult Edit(Bien bien)
+        public ActionResult Edit(BienEdicionDTO bien)
         {
-            if ((bien = ServiceFacadeFactory.Instance.BienFacade.Editar(bien)) != null)
+            if (ServiceFacadeFactory.Instance.BienFacade.Editar(bien))
             {
                 return RedirectToAction("Index");
             }
@@ -145,7 +154,7 @@ namespace OL4RENT.Controllers
         // GET: /Bien/Delete/5
         public ActionResult Delete(int id = 0)
         {
-            Bien bien = ServiceFacadeFactory.Instance.BienFacade.Obtener(id);
+            BienEdicionDTO bien = ServiceFacadeFactory.Instance.BienFacade.Obtener(id);
             if (bien == null)
             {
                 return HttpNotFound();
@@ -157,7 +166,7 @@ namespace OL4RENT.Controllers
         // GET: /Bien/Populares
         public ActionResult Populares()
         {
-            return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares);
+            return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares());
         }
 
 
@@ -166,7 +175,7 @@ namespace OL4RENT.Controllers
         public ActionResult Mapa()
         {
             // TODO Implementar la vista de Mapa
-            return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares);
+            return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares());
         }
 
         //
@@ -203,8 +212,17 @@ namespace OL4RENT.Controllers
 
         public ActionResult MisBienes()
         {
-            // TODO Implementar
-            return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares);
+            // Verificar
+            if (Session["sitio"] != null)
+            {
+                SitioListadoDTO sitio = Session["sitio"] as SitioListadoDTO;
+                List<BienListadoDTO> bienes = ServiceFacadeFactory.Instance.BienFacade.MisBienes(User.Identity.Name, sitio.Id);
+                return View(bienes);
+            }
+            else
+            {
+                return View(new List<BienListadoDTO>());
+            }
         }
 
         protected override void Dispose(bool disposing)

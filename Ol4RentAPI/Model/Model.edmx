@@ -192,8 +192,8 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Titulo" Type="nvarchar" Nullable="false" MaxLength="64" />
     <Property Name="Foto" Type="varbinary(max)" Nullable="true" />
-    <Property Name="Latitud" Type="decimal" Nullable="false" />
-    <Property Name="Longitud" Type="decimal" Nullable="false" />
+    <Property Name="Latitud" Type="decimal" Nullable="false" Precision="18" Scale="15" />
+    <Property Name="Longitud" Type="decimal" Nullable="false" Precision="18" Scale="15" />
     <Property Name="Direccion" Type="nvarchar" Nullable="true" MaxLength="128" />
     <Property Name="Normas" Type="nvarchar" Nullable="false" MaxLength="4000" />
     <Property Name="Capacidad" Type="smallint" Nullable="false" />
@@ -891,8 +891,8 @@
           <NavigationProperty Name="Usuario" Relationship="Model.BienUsuario" FromRole="Bien" ToRole="Usuario" />
           <Property Type="String" Name="Titulo" Nullable="false" MaxLength="64" />
           <Property Type="Binary" Name="Foto" Nullable="true" />
-          <Property Type="Decimal" Name="Latitud" Nullable="false" />
-          <Property Type="Decimal" Name="Longitud" Nullable="false" />
+          <Property Type="Decimal" Name="Latitud" Nullable="false" Precision="18" Scale="15" />
+          <Property Type="Decimal" Name="Longitud" Nullable="false" Precision="18" Scale="15" />
           <Property Type="String" Name="Direccion" Nullable="true" MaxLength="128" />
           <Property Type="String" Name="Normas" Nullable="false" MaxLength="4000" />
           <Property Type="Int16" Name="Capacidad" Nullable="false" />

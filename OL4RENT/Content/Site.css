@@ -595,6 +595,42 @@ tr.pager td {
 }
 
 
+
+#posusuarios {     
+     width:25%;
+     float: left;
+}
+
+#pospanel {
+    width: 75%;
+    float: left;    
+}
+
+#posmensaje {
+    width:20%;
+    float: none;
+}
+
+#BandejaMensajes
+    {
+        width: 550px;
+    }
+
+/* Para la seccion del Chat */
+#BandejaMensajes {
+    font-size: 15px;
+    margin: 0 0 15px;
+    text-align: left;
+    border-color: black;
+}
+
+#mensaje {
+    font-size: 15px;
+    margin: 0 0 15px;
+    text-align: left;
+    border-color: black;
+}
+
 /********************
 *   Mobile Styles   *
 ********************/
@@ -761,4 +797,121 @@ tr.pager td {
         footer p {
             margin: 0;
         }
+
+} /* FIN - @media only screen and (max-width: 850px) { */
+
+
+@media only screen and (min-width: 480px) and (max-width: 850px)
+{
+    /* Es para el Chat */
+    #posusuarios
+    {
+        width: 25%;
+        float: left;
+    }
+
+    #pospanel
+    {
+        width: 45%;
+        float: none;
+    }
+
+    #BandejaMensajes
+    {
+        width: 450px;
+    }
+
+    #posmensaje
+    {
+        width: 20%;
+        float: none;
+    }
+
+    #mensaje
+    {
+        width: 450px;
+    }
+
+    /* FIN - Es para el Chat */
 }
+
+@media only screen and (min-width: 350px) and (max-width: 480px)
+{
+    /* Es para el Chat */
+    #posusuarios
+    {
+        width: 25%;
+        float: left;
+    }
+
+    #pospanel
+    {
+        width: 45%;
+        float: none;
+    }
+
+    #BandejaMensajes
+    {
+        width: 370px;
+    }
+
+    #posmensaje
+    {
+        width: 20%;
+        float: none;
+    }
+
+    #mensaje
+    {
+        width: 370px;
+    }
+
+    /* FIN - Es para el Chat */
+}
+
+@media only screen and (max-width: 350px)
+{
+    /* Es para el Chat */
+    #posusuarios
+    {
+        width: 25%;
+        float: left;
+    }
+
+    #pospanel
+    {
+        width: 85%;
+        float: none;
+    }
+
+    #BandejaMensajes
+    {
+        float: left;
+        width: 285px;
+        font-size: 7px;
+        border-color: blue;
+    }
+
+    /*#BandejaMensajes {
+    font-size: 15px;
+    margin: 0 0 15px;
+    text-align: left;
+    border-color: black;
+    }*/
+
+    #posmensaje
+    {
+        width: 20%;
+        float: none;
+    }
+
+    #mensaje
+    {
+        width: 285px;
+    }
+
+    /* FIN - Es para el Chat */
+}
+
+
+

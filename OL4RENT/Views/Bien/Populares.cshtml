@@ -1,11 +1,11 @@
-﻿@model IEnumerable<Ol4RentAPI.Model.Bien>
+﻿@model IEnumerable<Ol4RentAPI.DTO.BienListadoDTO>
 
 @{
     ViewBag.Title = "Populares";
 }
 <h2>Bienes Populares</h2>
 <ul>
-@foreach (Ol4RentAPI.Model.Bien item in Model) {
+@foreach (Ol4RentAPI.DTO.BienListadoDTO item in Model) {
     <li>
         <div>
             @Html.ActionLink(item.Titulo, "Details", "Bien", new { id=item.Id }, null)
