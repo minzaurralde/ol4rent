@@ -126,9 +126,9 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Bien/Edit/5
-        [Authorize(Roles = "ADMIN")]
         public ActionResult Edit(int id = 0)
         {
+
             BienEdicionDTO bien = ServiceFacadeFactory.Instance.BienFacade.Obtener(id);
             if (bien == null)
             {
@@ -139,15 +139,56 @@ namespace OL4RENT.Controllers
 
         //
         // POST: /Bien/Edit/5
-        [Authorize(Roles="ADMIN")]
         [HttpPost]
-        public ActionResult Edit(BienEdicionDTO bien)
+        public ActionResult Edit(BienEdicionDTO bienDTO)
         {
-            if (ServiceFacadeFactory.Instance.BienFacade.Editar(bien))
+            if (bienDTO.ValoresCaracteristicas == null)
             {
-                return RedirectToAction("Index");
+                bienDTO.ValoresCaracteristicas = new List<ValorCaracteristicaListadoDTO>();
             }
-            return View(bien);
+            List<CaracteristicaEdicionDTO> caracteristicas = ObtenerListadoCaracteristicas();
+            foreach (CaracteristicaEdicionDTO caracteristica in caracteristicas)
+            {
+                string id = "car-" + caracteristica.Id.ToString();
+                int idValor;
+                try
+                {
+                    idValor = Convert.ToInt32(Request["itemid-" + caracteristica.Id.ToString()]);
+                }
+                catch
+                {
+                    idValor = 0;
+                }
+                if (Request[id] == null)
+                {
+                    if (caracteristica.Tipo == TipoDato.BOOLEANO)
+                    {
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = "false", IdCaracteristica = caracteristica.Id, Caracteristica = caracteristica, Id = idValor });
+                    }
+                    else
+                    {
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = "", IdCaracteristica = caracteristica.Id, Caracteristica = caracteristica, Id = idValor });
+                    }
+                }
+                else
+                {
+                    if (caracteristica.Tipo == TipoDato.BOOLEANO)
+                    {
+                        bool boolean = Request[id].ToString() != "false";
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = boolean.ToString(), IdCaracteristica = caracteristica.Id, Caracteristica = caracteristica, Id = idValor });
+                    }
+                    else
+                    {
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id, Caracteristica = caracteristica, Id = idValor });
+                    }
+                }
+            }
+            if (ServiceFacadeFactory.Instance.BienFacade.Editar(bienDTO))
+            {
+                return RedirectToAction("MisBienes");
+            }
+            ArmarListadoCaracteristicas();
+            return View(bienDTO);
         }
 
         //
@@ -207,7 +248,7 @@ namespace OL4RENT.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             ServiceFacadeFactory.Instance.BienFacade.Eliminar(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("MisBienes");
         }
 
         public ActionResult MisBienes()
@@ -223,6 +264,27 @@ namespace OL4RENT.Controllers
             {
                 return View(new List<BienListadoDTO>());
             }
+        }
+
+        public ActionResult Arrendar(int id)
+        {
+            BienArrendarDTO bien = ServiceFacadeFactory.Instance.BienFacade.ObtenerArrendar(id);
+            if (bien == null)
+            {
+                return HttpNotFound();
+            }
+            return View(bien);
+        }
+
+        [HttpPost]
+        [ValidateInput(true)]
+        public ActionResult Arrendar(BienArrendarDTO bienDTO)
+        {
+            if (ServiceFacadeFactory.Instance.BienFacade.Arrendar(bienDTO, User.Identity.Name))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         protected override void Dispose(bool disposing)
