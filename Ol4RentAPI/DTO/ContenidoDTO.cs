@@ -15,4 +15,18 @@ namespace Ol4RentAPI.DTO
         public string NombreUsuario { get; set; }
         public BienEdicionDTO Bien { get; set; }
     }
+
+    public class ComentarioAltaDTO
+    {
+        public int IdBien { get; set; }
+        public string NombreUsuario { get; set; }
+        public string Texto { get; set; }
+        public List<AdjuntoDTO> Adjuntos { get; set; }
+    }
+
+    public class AdjuntoDTO
+    {
+        public string Nombre { get; set; }
+        public byte[] Contenido { get; set; }
+    }
 }

@@ -142,6 +142,7 @@
     </ol>
 </fieldset>
 <p>
+    @Html.ActionLink("Arrendar", "Arrendar", new { id=Model.Id}) |
     @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Volver a Mis " + nombreTipoBien + plural, "MisBienes")
 </p>

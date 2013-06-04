@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Net.Mail;
+using System.Net.Mime;
 
 namespace Ol4RentAPI.Facades
 {
@@ -29,6 +31,73 @@ namespace Ol4RentAPI.Facades
                 {
                     return null;
                 }
+            }
+        }
+
+        public BienArrendarDTO ObtenerArrendar(int id)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Bien> queryBien =
+                    from b in db.Bienes
+                    where b.Id == id
+                    select b;
+                if (queryBien.Count() > 0)
+                {
+                    return AutoMapperUtils<Bien, BienArrendarDTO>.Map(queryBien.First());
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public bool Arrendar(BienArrendarDTO bienDTO, string usuario)
+        {
+            try
+            {
+               using (ModelContainer db = new ModelContainer())
+                {
+                    IQueryable<Bien> queryBien =
+                        from b in db.Bienes
+                        where b.Id == bienDTO.Id && b.Usuario.NombreUsuario != usuario && b.FechaAlquiler == null && b.DuracionAlquiler == null
+                        select b;
+                    if (queryBien.Count() > 0)
+                    {
+                        Bien bien = queryBien.First();
+                        bien.FechaAlquiler = bienDTO.FechaAlquiler;
+                        bien.DuracionAlquiler = bienDTO.DuracionAlquiler;
+                        db.Entry(bien).State = EntityState.Modified;
+                        db.SaveChanges();
+                        //Envío de mail de alerta
+                        MailMessage mail = new MailMessage();
+                        SmtpClient sc = new SmtpClient();
+                        mail.From = new MailAddress("gr6tsi1@gmail.com", "Ol4Rent");
+                        mail.To.Add(new MailAddress(bien.Usuario.Mail, bien.Usuario.Nombre + " " + bien.Usuario.Apellido));
+                        //m.CC.Add(new MailAddress("CC@yahoo.com", "Display name CC"));
+                        //similarly BCC
+                        mail.Subject = "Se arrendo un bien suyo";
+                        var body = "Estimado Cliente, se a Arrendado el Bien: " + bien.Titulo + "\n";
+                        body = body + "Desde la fehca: " + bien.FechaAlquiler.ToString() + "\n";
+                        body = body + "Por un periodo: " + bien.DuracionAlquiler.ToString();
+                        mail.Body = body;
+                        sc.Host = "smtp.gmail.com";
+                        sc.Port = 587;
+                        sc.Credentials = new System.Net.NetworkCredential("gr6tsi1@gmail.com", "gr643210");
+                        sc.EnableSsl = true; // runtime encrypt the SMTP communications using SSL
+                        sc.Send(mail);
+                        // Fin
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }catch
+            {
+                return false;
             }
         }
 
@@ -88,17 +157,80 @@ namespace Ol4RentAPI.Facades
             }
         }
 
-        public bool Editar(BienEdicionDTO bien)
+        public bool Editar(BienEdicionDTO bienDTO)
         {
-            //TODO
             try
             {
                 using (ModelContainer db = new ModelContainer())
                 {
-                    db.Entry(bien).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return true;
+                    Bien bien = db.Bienes.Find(bienDTO.Id);
+                    bool seModifico = false;
+                    if (bien.Titulo != bienDTO.Titulo)
+                    {
+                        bien.Titulo = bienDTO.Titulo;
+                        seModifico = true;
+                    }
+                    if (bien.Descripcion != bienDTO.Descripcion)
+                    {
+                        bien.Descripcion = bienDTO.Descripcion;
+                        seModifico = true;
+                    }
+                    if (bien.Capacidad != bienDTO.Capacidad)
+                    {
+                        bien.Capacidad = bienDTO.Capacidad;
+                        seModifico = true;
+                    }
+                    if (bien.Direccion != bienDTO.Direccion)
+                    {
+                        bien.Direccion = bienDTO.Direccion;
+                        seModifico = true;
+                    }
+                    if (bien.Foto != bienDTO.Foto)
+                    {
+                        bien.Foto = bienDTO.Foto;
+                        seModifico = true;
+                    }
+                    if (bien.Normas != bienDTO.Normas)
+                    {
+                        bien.Normas = bienDTO.Normas;
+                        seModifico = true;
+                    }
+                    if (bien.Precio != bienDTO.Precio)
+                    {
+                        bien.Precio = bienDTO.Precio;
+                        seModifico = true;
+                    }
+                    if (bien.Latitud != bienDTO.Latitud)
+                    {
+                        bien.Latitud = bienDTO.Latitud;
+                        seModifico = true;
+                    }
+                    if (bien.Longitud != bienDTO.Longitud)
+                    {
+                        bien.Longitud = bienDTO.Longitud;
+                        seModifico = true;
+                    }
+                    bool salvar = false;
+                    foreach (ValorCaracteristicaListadoDTO valorDTO in bienDTO.ValoresCaracteristicas)
+                    {
+                        ValorCaracteristica valor = bien.ValoresCaracteristicas.Where(a => a.Id == valorDTO.Id).First();
+                        if (valor.Valor != valorDTO.Valor)
+                        {
+                            valor.Valor = valorDTO.Valor;
+                            db.Entry(valor).State = EntityState.Modified;
+                            salvar = true;
+                        }
+                    }
+                    if (seModifico)
+                    {
+                        db.Entry(bien).State = EntityState.Modified;
+                    }
+                    if (seModifico || salvar)
+                    {
+                        db.SaveChanges();
+                    }
                 }
+                return true;
             }
             catch
             {
@@ -429,3 +561,4 @@ namespace Ol4RentAPI.Facades
         }
     }
 }
+

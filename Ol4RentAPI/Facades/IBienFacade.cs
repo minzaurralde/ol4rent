@@ -12,8 +12,10 @@ namespace Ol4RentAPI.Facades
         List<BienListadoDTO> BienesPopulares();
         List<BienListadoDTO> Todos();
         BienEdicionDTO Obtener(int id);
+        BienArrendarDTO ObtenerArrendar(int id);
+        bool Arrendar(BienArrendarDTO bienDTO, string usuario);
         bool Crear(BienAltaDTO bien);
-        bool Editar(BienEdicionDTO bien);
+        bool Editar(BienEdicionDTO bienDTO);
         void Eliminar(int id);
         List<BienListadoDTO> Buscar(string query);
         List<BienListadoDTO> MisBienes(string usuario, int sitio);

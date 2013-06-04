@@ -116,4 +116,15 @@ namespace Ol4RentAPI.DTO
         [Display(Name = "Longitud")]
         public decimal Longitud { get; set; }
     }
+    public class BienArrendarDTO
+    {
+        [Display(Name = "Identificador de Bien")]
+        public int Id { get; set; }
+        [Display(Name = "Titulo")]
+        public string Titulo { get; set; }
+        [Display(Name = "Fecha Alquilar")]
+        public Nullable<System.DateTime> FechaAlquiler { get; set; }
+        [Display(Name = "Duración Alquiler")]
+        public short DuracionAlquiler { get; set; }
+    }
 }
