@@ -354,5 +354,21 @@ namespace Ol4RentAPI.Facades
                 }
             }
         }
+
+        public byte[] Foto(int idBien)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Bien bien = db.Bienes.Find(idBien);
+                if (bien != null)
+                {
+                    return bien.Foto;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
     }
 }

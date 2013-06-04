@@ -8,7 +8,10 @@
     {
         nombreTipoBien = @sitio.NombreTipoBien;
     }
-    ViewBag.Title = "Dar de Alta un Nuevo "+nombreTipoBien;
+    String plural = nombreTipoBien.ToLower().EndsWith("a") || nombreTipoBien.ToLower().EndsWith("e") ||
+    nombreTipoBien.ToLower().EndsWith("i") || nombreTipoBien.ToLower().EndsWith("o") ||
+    nombreTipoBien.ToLower().EndsWith("u") ? "s" : "es";
+    ViewBag.Title = "Dar de Alta un Nuevo " + nombreTipoBien;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -39,7 +42,7 @@
             }
             google.maps.event.addDomListener(window, 'load', initialize);
 
-            function esperaClick(location){
+            function esperaClick(location) {
                 $("#Direccion").val("");
                 creaMarca(location);
             }
@@ -122,18 +125,18 @@
 
             @foreach (Ol4RentAPI.DTO.CaracteristicaEdicionDTO caracteristica in ViewBag.Caracteristicas)
             {
-            <li>
-                @Html.Label("car-" + caracteristica.Id.ToString(), caracteristica.Nombre)
-                @if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
-                {
-                    @Html.CheckBox("car-" + caracteristica.Id.ToString());
-                }
-                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.FECHA)
-                {
-                    @Html.TextBox("car-" + caracteristica.Id.ToString());
-                    <script type="text/javascript">
-                        $(document).ready(function () {
-                            $("#car-@caracteristica.Id.ToString()").datepicker
+                <li>
+                    @Html.Label("car-" + caracteristica.Id.ToString(), caracteristica.Nombre)
+                    @if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
+                    {
+                        @Html.CheckBox("car-" + caracteristica.Id.ToString());
+                    }
+                    else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.FECHA)
+                    {
+                        @Html.TextBox("car-" + caracteristica.Id.ToString());
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#car-@caracteristica.Id.ToString()").datepicker
                                 ({
                                     dateFormat: 'dd/mm/yy',
                                     showStatus: true,
@@ -145,26 +148,26 @@
                                         origin: ["top", "left"]
                                     }
                                 });
-                        });
-                    </script>
-                }
-                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.HORA)
-                {
-                    @Html.TextBox("car-" + caracteristica.Id.ToString(), String.Format("{HH:mm}", DateTime.Now), "HH:mm");
-                }
-                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.ENTERO)
-                {
-                    @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0");
-                }
-                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.DECIMAL)
-                {
-                    @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0,0");
-                }
-                else
-                {
-                    @Html.TextBox("car-" + caracteristica.Id.ToString());
-                }
-            </li>
+                            });
+                        </script>
+                    }
+                    else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.HORA)
+                    {
+                        @Html.TextBox("car-" + caracteristica.Id.ToString(), String.Format("{HH:mm}", DateTime.Now), "HH:mm");
+                    }
+                    else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.ENTERO)
+                    {
+                        @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0");
+                    }
+                    else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.DECIMAL)
+                    {
+                        @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0,0");
+                    }
+                    else
+                    {
+                        @Html.TextBox("car-" + caracteristica.Id.ToString());
+                    }
+                </li>
             }
         </ol>
         <input type="submit" value="Guardar" />
@@ -172,7 +175,7 @@
 }
 
 <div>
-    @Html.ActionLink("Volver a Mis Bienes", "MisBienes")
+    @Html.ActionLink("Volver a Mis " + nombreTipoBien + plural, "MisBienes")
 </div>
 
 @section Scripts {

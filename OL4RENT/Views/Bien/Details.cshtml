@@ -1,7 +1,17 @@
 ﻿@model Ol4RentAPI.DTO.BienEdicionDTO
+@using Ol4RentAPI.DTO;
+@{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
 
 @{
-    ViewBag.Title = "Details";
+    String nombreTipoBien = "Bien";
+    if (sitio != null)
+    {
+        nombreTipoBien = @sitio.NombreTipoBien;
+    }
+    String plural = nombreTipoBien.ToLower().EndsWith("a") || nombreTipoBien.ToLower().EndsWith("e") ||
+    nombreTipoBien.ToLower().EndsWith("i") || nombreTipoBien.ToLower().EndsWith("o") ||
+    nombreTipoBien.ToLower().EndsWith("u") ? "s" : "es";
+    ViewBag.Title = "Detalles";
 }
 
 <div class="float-right">
@@ -55,7 +65,7 @@
     </div>
 </div>
 
-<h2>Details</h2>
+<h2>Detalles</h2>
 
 <fieldset>
     <legend>Bien</legend>
@@ -66,6 +76,9 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.Titulo)
     </div>
+
+      <img src="@Url.Action("Foto", "Bien", new { idBien = @Model.Id })" alt="@Model.Titulo" /> 
+
     <div class="display-label">
         @Html.DisplayNameFor(model => model.Descripcion)
     </div>
@@ -101,7 +114,8 @@
         @Html.HiddenFor(m => m.Longitud)
     </div>
     <ol>
-        @if (Model.ValoresCaracteristicas != null && Model.ValoresCaracteristicas.Count() > 0){
+        @if (Model.ValoresCaracteristicas != null && Model.ValoresCaracteristicas.Count() > 0)
+        {
             foreach (Ol4RentAPI.DTO.ValorCaracteristicaListadoDTO item in Model.ValoresCaracteristicas)
             {
             <li>
@@ -111,11 +125,13 @@
                     if (item.Valor.AsBool())
                     {
                         @Html.DisplayName("Si")
-                    }else
+                    }
+                    else
                     {
                         @Html.DisplayName("No")
                     }
-                }else
+                }
+                else
                 {
                     @Html.DisplayName(item.Valor)
                 }
@@ -126,6 +142,6 @@
     </ol>
 </fieldset>
 <p>
-    @Html.ActionLink("Editar", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Volver a Mis Bienes", "MisBienes")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Volver a Mis " + nombreTipoBien + plural, "MisBienes")
 </p>

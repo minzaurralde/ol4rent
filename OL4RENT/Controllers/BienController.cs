@@ -229,5 +229,18 @@ namespace OL4RENT.Controllers
         {
             base.Dispose(disposing);
         }
+
+        //
+        // GET: /Bien/Foto
+        [HttpGet]
+        public FileContentResult Foto(int idBien)
+        {
+            byte[] bytes = ServiceFacadeFactory.Instance.BienFacade.Foto(idBien);
+            if (bytes != null)
+            {
+                return new FileContentResult(ServiceFacadeFactory.Instance.BienFacade.Foto(idBien), "image/jpeg");
+            }
+            return null;
+        }
     }
 }
