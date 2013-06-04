@@ -55,6 +55,8 @@ namespace Ol4RentAPI.Model
 
         [Display(Name = "Recordar?")]
         public bool RememberMe { get; set; }
+
+        public int IdSitio { get; set; }
     }
 
     public class RegisterModel

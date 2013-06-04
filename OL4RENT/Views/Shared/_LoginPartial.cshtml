@@ -28,6 +28,8 @@ else
 {
     <ul>
         <li>@Html.ActionLink("Registrarse", "Register", "Account")</li>
+        @if (sitio != null){
         <li>@Html.ActionLink("Iniciar Sesión", "Login", "Account")</li>
+        }
     </ul>
 }

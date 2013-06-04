@@ -28,5 +28,9 @@ namespace Ol4RentAPI.Facades
         List<UsuarioDTO> Buscar(string query);
 
         List<UsuarioDTO> ObtenerUsuariosConectados(int idUsuarioActual);
+
+        Boolean UsuarioHabilitadoEnSitio(int idUsuario, int idSitio);
+
+        Boolean UsuarioHabilitadoEnSitio(String nombreUsuario, int idSitio);
     }
 }
