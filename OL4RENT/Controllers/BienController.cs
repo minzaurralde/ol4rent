@@ -190,15 +190,48 @@ namespace OL4RENT.Controllers
         // GET: /Bien/BusquedaAvanzada
         public ActionResult BusquedaAvanzada()
         {
-            return View(new Bien());
+            ArmarListadoCaracteristicas();
+            return View(new BusquedaAvanzadaDTO());
         }
 
         //
         // POST: /Bien/BusquedaAvanzada/5
         [HttpPost]
-        public ActionResult BusquedaAvanzada(Bien templateBien)
+        public ActionResult BusquedaAvanzada(BusquedaAvanzadaDTO bienDTO)
         {
-            return View("Buscar", ServiceFacadeFactory.Instance.BienFacade.BusquedaAvanzada(templateBien));
+            if (bienDTO.ValoresCaracteristicas == null)
+            {
+                bienDTO.ValoresCaracteristicas = new List<ValorCaracteristicaAltaDTO>();
+            }
+            List<CaracteristicaEdicionDTO> caracteristicas = ObtenerListadoCaracteristicas();
+            foreach (CaracteristicaEdicionDTO caracteristica in caracteristicas)
+            {
+                string id = "car-" + caracteristica.Id.ToString();
+                if (Request[id] == null)
+                {
+                    if (caracteristica.Tipo == TipoDato.BOOLEANO)
+                    {
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = "false", IdCaracteristica = caracteristica.Id });
+                    }
+                    else
+                    {
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = "", IdCaracteristica = caracteristica.Id });
+                    }
+                }
+                else
+                {
+                    if (caracteristica.Tipo == TipoDato.BOOLEANO)
+                    {
+                        bool boolean = Request[id].ToString() != "false";
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = boolean.ToString(), IdCaracteristica = caracteristica.Id });
+                    }
+                    else
+                    {
+                        bienDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
+                    }
+                }
+            }
+            return View("Buscar", ServiceFacadeFactory.Instance.BienFacade.BusquedaAvanzada(bienDTO));
         }
 
         //
@@ -223,6 +256,27 @@ namespace OL4RENT.Controllers
             {
                 return View(new List<BienListadoDTO>());
             }
+        }
+
+        [HttpGet]
+        public RedirectResult Like(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                ServiceFacadeFactory.Instance.BienFacade.Like(User.Identity.Name, id);
+            }
+            return Redirect(Request.UrlReferrer.AbsoluteUri);
+        }
+
+        [HttpPost]
+        [ActionName("Like")]
+        public JsonResult LikePost(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                ServiceFacadeFactory.Instance.BienFacade.Like(User.Identity.Name, id);
+            }
+            return new JsonResult() { Data = "ok" , JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         protected override void Dispose(bool disposing)

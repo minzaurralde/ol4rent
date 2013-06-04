@@ -156,6 +156,11 @@ namespace Ol4RentAPI.Facades
                         sitio.CantMarcasXCont = sitioDTO.CantMarcasXCont;
                         seModifico = true;
                     }
+                    if (sitio.CantNovedadesHome != sitioDTO.CantNovedadesHome)
+                    {
+                        sitio.CantNovedadesHome = sitioDTO.CantNovedadesHome;
+                        seModifico = true;
+                    }
                     if (sitio.AproximacionWish != sitioDTO.AproximacionWish)
                     {
                         sitio.AproximacionWish = sitioDTO.AproximacionWish;

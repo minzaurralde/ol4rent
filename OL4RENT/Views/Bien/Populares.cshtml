@@ -8,7 +8,7 @@
 @foreach (Ol4RentAPI.DTO.BienListadoDTO item in Model) {
     <li>
         <div>
-            @Html.ActionLink(item.Titulo, "Details", "Bien", new { id=item.Id }, null)
+            @Html.ActionLink(item.Titulo, "Details", "Bien", new { id=item.Id }, null) <input type="button" value="Me Gusta"  onclick="javascript: like(@item.Id);" />
         </div>
         <div>
             @Html.DisplayFor(modelItem => item.Descripcion)
@@ -16,3 +16,7 @@
     </li>
 }
 </ul>
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-1.7.1.js")
+    @Scripts.Render("~/Scripts/meGusta.js")
+}

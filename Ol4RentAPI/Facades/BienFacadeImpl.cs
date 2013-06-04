@@ -121,79 +121,111 @@ namespace Ol4RentAPI.Facades
             }
         }
 
-        public List<Model.Bien> Buscar(string query)
+        public List<BienListadoDTO> Buscar(string query)
         {
             if (query != null)
             {
                 // TODO pasar a linq
                 using (ModelContainer db = new ModelContainer())
                 {
-                    return db.Bienes.Where(b => b.Descripcion.Contains(query) || b.Titulo.Contains(query)).ToList();
+                    return AutoMapperUtils<Bien, BienListadoDTO>.Map(db.Bienes.Where(b => b.Descripcion.ToLower().Contains(query.ToLower()) || b.Titulo.ToLower().Contains(query.ToLower())).ToList());
                 }
             }
             else
             {
-                return new List<Bien>();
+                return new List<BienListadoDTO>();
             }
         }
 
-        public List<Model.Bien> BusquedaAvanzada(Model.Bien templateBien)
+        public List<BienListadoDTO> BusquedaAvanzada(BusquedaAvanzadaDTO templateBien)
         {
             using (ModelContainer db = new ModelContainer())
             {
-                if (templateBien.Descripcion != null && templateBien.Titulo != null)
+                List<Bien> bienes = db.Bienes.ToList();
+                bool huboBusqueda = false;
+                // busco por titulo
+                if (templateBien.Titulo != null && templateBien.Titulo.Trim() != "")
                 {
-                    IQueryable<Bien> query =
-                        from b in db.Bienes
-                        where b.Descripcion.Contains(templateBien.Descripcion)
-                            && b.Titulo.Contains(templateBien.Titulo)
-                        select b;
-                    if (query.Count() > 0)
-                    {
-                        return query.ToList();
-                    }
-                    else
-                    {
-                        return new List<Bien>();
-                    }
-                    // TODO pasar a linq
-                    // return db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion) && b.Titulo.Contains(templateBien.Titulo)).ToList();
+                    huboBusqueda = true;
+                    bienes = bienes.Where(b => b.Titulo.ToLower().Contains(templateBien.Titulo.ToLower())).ToList();
                 }
-                else if (templateBien.Titulo != null)
+                // busco por descripcion
+                if (templateBien.Descripcion != null && templateBien.Descripcion.Trim() != "")
                 {
-                    IQueryable<Bien> query =
-                        from b in db.Bienes
-                        where b.Titulo.Contains(templateBien.Titulo)
-                        select b;
-                    if (query.Count() > 0)
-                    {
-                        return query.ToList();
-                    }
-                    else
-                    {
-                        return new List<Bien>();
-                    }
-                    // TODO pasar a linq
-                    // return db.Bienes.Where(b => b.Titulo.Contains(templateBien.Titulo)).ToList();
+                    huboBusqueda = true;
+                    bienes = bienes.Where(b => b.Descripcion.ToLower().Contains(templateBien.Descripcion.ToLower())).ToList();
                 }
-                else if (templateBien.Descripcion != null)
+                // busco por normas
+                if (templateBien.Normas != null && templateBien.Normas.Trim() != "")
                 {
-                    IQueryable<Bien> query =
-                        from b in db.Bienes
-                        where b.Descripcion.Contains(templateBien.Descripcion)
-                        select b;
-                    if (query.Count() > 0)
-                    {
-                        return query.ToList();
-                    }
-                    else
-                    {
-                        return new List<Bien>();
-                    }
-                    // TODO pasar a linq
-                    // return db.Bienes.Where(b => b.Descripcion.Contains(templateBien.Descripcion)).ToList();
+                    huboBusqueda = true;
+                    bienes = bienes.Where(b => b.Normas.ToLower().Contains(templateBien.Normas.ToLower())).ToList();
                 }
-                return new List<Bien>();
+                // busco por capacidad
+                int capacidadMinima = int.MinValue;
+                int capacidadMaxima = int.MaxValue;
+                try
+                {
+                    capacidadMinima = int.Parse(templateBien.CapacidadMinima);
+                    huboBusqueda = true;
+                }
+                catch
+                {
+                }
+                try
+                {
+                    capacidadMaxima = int.Parse(templateBien.CapacidadMaxima);
+                    huboBusqueda = true;
+                }
+                catch
+                {
+                }
+                bienes = bienes.Where(b => b.Capacidad <= capacidadMaxima && b.Capacidad >= capacidadMinima).ToList();
+                // busco por precio
+                decimal precioMinimo = decimal.MinValue;
+                decimal precioMaximo = decimal.MaxValue;
+                try
+                {
+                    precioMinimo = decimal.Parse(templateBien.PrecioMinimo);
+                    huboBusqueda = true;
+                }
+                catch
+                {
+                }
+                try
+                {
+                    precioMaximo = decimal.Parse(templateBien.PrecioMaximo);
+                    huboBusqueda = true;
+                }
+                catch
+                {
+                }
+                bienes = bienes.Where(b => b.Precio <= precioMaximo && b.Precio >= precioMinimo).ToList();
+                // busco por caracteristicas
+                foreach (ValorCaracteristicaAltaDTO valorCaracteristica in templateBien.ValoresCaracteristicas)
+                {
+                    if (valorCaracteristica.Valor != null && valorCaracteristica.Valor.Trim() != "")
+                    {
+                        Caracteristica caracteristica = db.Caracteristicas.Find(valorCaracteristica.IdCaracteristica);
+                        if (caracteristica.Tipo == TipoDato.STRING)
+                        {
+                            bienes = bienes.Where(b => b.ValoresCaracteristicas.Where(vc => vc.Caracteristica.Id == valorCaracteristica.IdCaracteristica && vc.Valor.ToLower().Contains(valorCaracteristica.Valor.ToLower())).Count() > 0).ToList();
+                        }
+                        else
+                        {
+                            bienes = bienes.Where(b => b.ValoresCaracteristicas.Where(vc => vc.Caracteristica.Id == valorCaracteristica.IdCaracteristica && vc.Valor == valorCaracteristica.Valor).Count() > 0).ToList();
+                        }
+                    }
+                }
+                // retorno
+                if (huboBusqueda)
+                {
+                    return AutoMapperUtils<Bien, BienListadoDTO>.Map(bienes);
+                }
+                else
+                {
+                    return new List<BienListadoDTO>();
+                }
             }
         }
 
@@ -351,6 +383,22 @@ namespace Ol4RentAPI.Facades
                             .ToList(),
                         Tipo = "Día"
                     };
+                }
+            }
+        }
+
+
+        public void Like(string nombreUsuario, int idBien)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Usuario usuario = (from usu in db.Usuarios where usu.NombreUsuario == nombreUsuario select usu).First();
+                Bien bien = db.Bienes.Find(idBien);
+                if (bien.Usuario.NombreUsuario != nombreUsuario)
+                {
+                    MeGusta megusta = new MeGusta() { Fecha = DateTime.Now, Usuario = usuario, Bien = bien };
+                    db.MeGusta.Add(megusta);
+                    db.SaveChanges();
                 }
             }
         }
