@@ -1,8 +1,59 @@
-﻿@model Ol4RentAPI.Model.Bien
+﻿@model Ol4RentAPI.DTO.BienEdicionDTO
 
 @{
     ViewBag.Title = "Details";
 }
+
+<div class="float-right">
+    <div>
+        <!-- Mapa -->
+        <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR_JcEyolVGeSAWZsQ4g8cIuOLBnDD2l4&sensor=false"></script>
+        <script type="text/javascript">
+            var map;
+            function initialize() {
+
+                var mapOptions = {
+                    center: new google.maps.LatLng(-34.887057, -56.171036),
+                    panControl: true,
+                    zoomControl: true,
+                    mapTypeControl: true,
+                    scaleControl: true,
+                    streetViewControl: true,
+                    overviewMapControl: true,
+                    zoom: 12,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+                google.maps.Map.prototype.marker = new google.maps.Marker();
+
+                crearPunto();
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            function crearPunto() {
+                var lat = $("#Latitud").val().toString().replace(",", ".");
+                var lng = $("#Longitud").val().toString().replace(",", ".");
+                var location = new google.maps.LatLng(lat, lng);
+                gLocation = location;
+                google.maps.Map.prototype.marker.setMap(null);
+
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+
+                google.maps.Map.prototype.marker = marker;
+                map.setCenter(location);
+                map.setZoom(15);
+            }
+            
+        </script>
+        <h3>Ubicación</h3>
+        <br />
+        <div id="map-canvas" style="width: 450px; height: 300px"></div>
+    </div>
+</div>
 
 <h2>Details</h2>
 
@@ -10,13 +61,71 @@
     <legend>Bien</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Titulo)
+        @Html.DisplayNameFor(model => model.Titulo)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Titulo)
     </div>
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Descripcion)
+    </div>
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Direccion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Direccion)
+    </div>
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Capacidad)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Capacidad)
+    </div>
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Precio)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Precio)
+    </div>
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Normas)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Normas)
+    </div>
+    <div>
+        @Html.HiddenFor(m => m.Latitud)
+        @Html.HiddenFor(m => m.Longitud)
+    </div>
+    <ol>
+        @if (Model.ValoresCaracteristicas != null && Model.ValoresCaracteristicas.Count() > 0){
+            foreach (Ol4RentAPI.DTO.ValorCaracteristicaListadoDTO item in Model.ValoresCaracteristicas)
+            {
+            <li>
+                @Html.DisplayName(item.Caracteristica.Nombre):
+                @if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
+                {
+                    if (item.Valor.AsBool())
+                    {
+                        @Html.DisplayName("Si")
+                    }else
+                    {
+                        @Html.DisplayName("No")
+                    }
+                }else
+                {
+                    @Html.DisplayName(item.Valor)
+                }
+            </li>
+            
+            }
+        }
+    </ol>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Back", "Index", "Home")
+    @Html.ActionLink("Editar", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Volver a Mis Bienes", "MisBienes")
 </p>

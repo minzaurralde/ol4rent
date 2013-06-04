@@ -13,26 +13,34 @@ namespace Ol4RentAPI.Facades
 {
     class BienFacadeImpl : IBienFacade
     {
-        public Model.Bien Obtener(int id)
+        public BienEdicionDTO Obtener(int id)
         {
             using (ModelContainer db = new ModelContainer())
             {
-                return db.Bienes.Find(id);
+                IQueryable<Bien> queryBien =
+                    from b in db.Bienes
+                    where b.Id == id
+                    select b;
+                if (queryBien.Count() > 0)
+                {
+                    return AutoMapperUtils<Bien, BienEdicionDTO>.Map(queryBien.First());
+                }else
+                {
+                    return null;
+                }
             }
         }
 
-        public bool Crear(BienAltaDTO bienDTO, int idSitio, String nombreUsuario)
+        public bool Crear(BienAltaDTO bienDTO)
         {
 
             using (ModelContainer db = new ModelContainer())
             {
-                // Obtengo el sitio
-                Sitio sitio = db.Sitios.Find(idSitio);
-                if (sitio == null) return false;
                 // Obtengo el usuario
-                IQueryable<Usuario> usuarios = from u in db.Usuarios
-                                               where u.NombreUsuario == nombreUsuario
-                                               select u;
+                IQueryable<Usuario> usuarios = 
+                    from u in db.Usuarios
+                    where u.NombreUsuario == bienDTO.Usuario
+                    select u;
                 Usuario usuario = null;
                 if (usuarios.Count() > 0)
                 {
@@ -52,11 +60,19 @@ namespace Ol4RentAPI.Facades
                     Normas = bienDTO.Normas,
                     Capacidad = bienDTO.Capacidad,
                     Precio = bienDTO.Precio,
-                    TipoBien = sitio.TipoBien,
+                    TipoBien = db.TiposBienes.Find(bienDTO.TipoBien),
                     Usuario = usuario,
-                    FechaAlta = DateTime.Now
-                    //, ValoresCaracteristicas = AutoMapperUtils<ValorCaracteristicaAltaDTO, ValorCaracteristica>.Map(bienDTO.ValoresCaracteristicas.ToList())
+                    FechaAlta = DateTime.Now,
+                    ValoresCaracteristicas = new List<ValorCaracteristica>()
                 };
+                foreach (ValorCaracteristicaAltaDTO valorCaracteristicaDTO in bienDTO.ValoresCaracteristicas)
+                {
+                    bien.ValoresCaracteristicas.Add(new ValorCaracteristica()
+                    {
+                        Valor = valorCaracteristicaDTO.Valor,
+                        Caracteristica = db.Caracteristicas.Find(valorCaracteristicaDTO.IdCaracteristica)
+                    });
+                }
                 try
                 {
                     db.Bienes.Add(bien);
@@ -71,20 +87,21 @@ namespace Ol4RentAPI.Facades
             }
         }
 
-        public Model.Bien Editar(Model.Bien bien)
+        public bool Editar(BienEdicionDTO bien)
         {
+            //TODO
             try
             {
                 using (ModelContainer db = new ModelContainer())
                 {
                     db.Entry(bien).State = EntityState.Modified;
                     db.SaveChanges();
-                    return bien;
+                    return true;
                 }
             }
             catch
             {
-                return null;
+                return false;
             }
         }
 
@@ -93,11 +110,14 @@ namespace Ol4RentAPI.Facades
             using (ModelContainer db = new ModelContainer())
             {
                 Bien bien = db.Bienes.Find(id);
-                if (bien != null)
+                List<ValorCaracteristica> valores = new List<ValorCaracteristica>(bien.ValoresCaracteristicas);
+                foreach (ValorCaracteristica vc in valores)
                 {
-                    db.Bienes.Remove(bien);
-                    db.SaveChanges();
+                    db.ValoresCaracteristicas.Remove(vc);
                 }
+                bien.ValoresCaracteristicas.Clear();
+                db.Bienes.Remove(bien);
+                db.SaveChanges();
             }
         }
 
@@ -177,21 +197,27 @@ namespace Ol4RentAPI.Facades
             }
         }
 
-        public List<Model.Bien> Wishlist(Model.Usuario usuario)
+        public List<BienListadoDTO> MisBienes(string usuario, int sitio)
         {
-            // TODO implementar
-            throw new NotImplementedException();
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Bien> queryBien =
+                    from b in db.Bienes
+                    where b.Usuario.NombreUsuario == usuario && b.TipoBien.Sitio.Id == sitio
+                    select b;
+                if (queryBien.Count() > 0)
+                {
+                    return AutoMapperUtils<Bien, BienListadoDTO>.Map(queryBien.ToList());
+                }
+                else
+                {
+                    return new List<BienListadoDTO>();
+                }
+            }
         }
 
-        public List<Model.Bien> MisBienes(Model.Usuario usuario)
+        public List<BienListadoDTO> BienesPopulares()
         {
-            // TODO implementar
-            throw new NotImplementedException();
-        }
-
-        public List<Bien> BienesPopulares
-        {
-            get
             {
                 using (ModelContainer db = new ModelContainer())
                 {
@@ -208,7 +234,7 @@ namespace Ol4RentAPI.Facades
                             select mgg.Key;
                         if (query.Count() > 0)
                         {
-                            return query.ToList();
+                            return AutoMapperUtils<Bien, BienListadoDTO>.Map(query.ToList());
                         }
                         else
                         {
@@ -219,26 +245,25 @@ namespace Ol4RentAPI.Facades
                             where b.TipoBien.Sitio.Id == sitio.Id
                             select b;
                             if (query.Count() > 0)
-                                return query.ToList();
+                                return AutoMapperUtils<Bien, BienListadoDTO>.Map(query.ToList());
                             else
-                                return new List<Bien>();
+                                return new List<BienListadoDTO>();
                         }
                     }
                     catch
                     {
-                        return new List<Bien>();
+                        return new List<BienListadoDTO>();
                     }
                 }
             }
         }
 
-        public List<Bien> Todos
+        public List<BienListadoDTO> Todos()
         {
-            get
             {
                 using (ModelContainer db = new ModelContainer())
                 {
-                    return db.Bienes.ToList();
+                    return AutoMapperUtils<Bien,BienListadoDTO>.Map(db.Bienes.ToList());
                 }
             }
         }

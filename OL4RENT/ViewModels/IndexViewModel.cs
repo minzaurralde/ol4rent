@@ -9,7 +9,7 @@ namespace OL4RENT.ViewModels
 {
     public class IndexViewModel
     {
-        public List<Bien> BienesPopulares { get; set; }
+        public List<BienListadoDTO> BienesPopulares { get; set; }
         public List<NovedadDTO> ListaNovedades { get; set; }
     }
 }

@@ -10,18 +10,17 @@ namespace Ol4RentAPI.Facades
 {
     public interface IBienFacade
     {
-        List<Bien> BienesPopulares { get; }
-        List<Bien> Todos { get; }
-        Bien Obtener(int id);
-        bool Crear(BienAltaDTO bien, int idSitio, String nombreUsuario);
-        Bien Editar(Bien bien);
+        List<BienListadoDTO> BienesPopulares();
+        List<BienListadoDTO> Todos();
+        BienEdicionDTO Obtener(int id);
+        bool Crear(BienAltaDTO bien);
+        bool Editar(BienEdicionDTO bien);
         void Eliminar(int id);
         List<Bien> Buscar(string query);
-        List<Bien> BusquedaAvanzada(Bien templateBien);
-        List<Bien> Wishlist(Usuario usuario);
-        List<Bien> MisBienes(Usuario usuario);
+        List<BienListadoDTO> MisBienes(string usuario, int sitio);
         BienEdicionDTO ObtenerBienParaContenido(int idContenido);
         List<ContenidoDTO> ContenidosInadecuadosPorSitio(int idSitio);
         RegistroBienDTO RegistroDeBienesEnTiempo(int idSitio, DateTime fechaInicio, DateTime fechaFin);
+        List<Model.Bien> BusquedaAvanzada(Model.Bien templateBien);
     }
 }
