@@ -16,7 +16,7 @@ namespace OL4RENT.Controllers
     public class ChatController : Controller
     {
         //
-        // GET: /Chat/        
+        // GET: /Chat/
 
         public ActionResult Index()
         {

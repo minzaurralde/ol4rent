@@ -100,7 +100,15 @@ namespace OL4RENT.Controllers
                 }
                 else
                 {
-                    wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
+                    if (caracteristica.Tipo == TipoDato.BOOLEANO)
+                    {
+                        bool boolean = Request[id].ToString() != "false";
+                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = boolean.ToString(), IdCaracteristica = caracteristica.Id });
+                    }
+                    else
+                    {
+                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaAltaDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
+                    }
                 }
             }
             wishDTO.Usuario = User.Identity.Name;
@@ -142,26 +150,36 @@ namespace OL4RENT.Controllers
             foreach (CaracteristicaEdicionDTO caracteristica in caracteristicas)
             {
                 string id = "car-" + caracteristica.Id.ToString();
+                int idValor;
+                try
+                {
+                    idValor = Convert.ToInt32(Request["itemid-" + caracteristica.Id.ToString()]);
+                }
+                catch
+                {
+                    idValor = 0;
+                }
                 if (Request[id] == null)
                 {
                     if (caracteristica.Tipo == TipoDato.BOOLEANO)
                     {
-                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = "false", IdCaracteristica = caracteristica.Id });
+                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = "false", IdCaracteristica = caracteristica.Id, Caracteristica = caracteristica, Id = idValor });
                     }
                     else
                     {
-                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = "", IdCaracteristica = caracteristica.Id });
+                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = "", IdCaracteristica = caracteristica.Id, Caracteristica = caracteristica, Id = idValor });
                     }
                 }
                 else
                 {
                     if (caracteristica.Tipo == TipoDato.BOOLEANO)
                     {
-                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = "true", IdCaracteristica = caracteristica.Id });
+                        bool boolean = Request[id].ToString() != "false";
+                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = boolean.ToString(), IdCaracteristica = caracteristica.Id, Caracteristica = caracteristica, Id = idValor });
                     }
                     else
                     {
-                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id });
+                        wishDTO.ValoresCaracteristicas.Add(new ValorCaracteristicaListadoDTO() { Valor = Request[id], IdCaracteristica = caracteristica.Id, Caracteristica = caracteristica, Id = idValor });
                     }
                 }
             }

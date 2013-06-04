@@ -154,6 +154,7 @@
     <Property Name="CantMarcasXCont" Type="smallint" Nullable="false" />
     <Property Name="CantContBloqXUsu" Type="smallint" Nullable="false" />
     <Property Name="CantNovedadesHome" Type="int" Nullable="false" />
+    <Property Name="AproximacionWish" Type="smallint" Nullable="false" />
     <Property Name="UsuarioSitio_Sitio_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="OrigenesDatos">
@@ -840,6 +841,7 @@
           <Property Type="Int16" Name="CantMarcasXCont" Nullable="false" />
           <Property Type="Int16" Name="CantContBloqXUsu" Nullable="false" />
           <Property Type="Int32" Name="CantNovedadesHome" Nullable="false" />
+          <Property Type="Int16" Name="AproximacionWish" Nullable="false" />
         </EntityType>
         <EntityType Name="OrigenDatos">
           <Key>
@@ -1180,6 +1182,7 @@
           <ScalarProperty Name="CantMarcasXCont" ColumnName="CantMarcasXCont" />
           <ScalarProperty Name="CantContBloqXUsu" ColumnName="CantContBloqXUsu" />
           <ScalarProperty Name="CantNovedadesHome" ColumnName="CantNovedadesHome" />
+          <ScalarProperty Name="AproximacionWish" ColumnName="AproximacionWish" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

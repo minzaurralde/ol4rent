@@ -1,5 +1,6 @@
 ﻿using Ol4RentAPI.DTO;
 using Ol4RentAPI.Model;
+using Ol4RentAPI.Facades;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -59,7 +60,8 @@ namespace Ol4RentAPI.Facades
                 try
                 {
                     db.Bienes.Add(bien);
-                    db.SaveChanges();
+                    db.SaveChanges();                    
+                    ServiceFacadeFactory.Instance.EspecificacionBienFacade.BuscarCoincidencias(bien.Id);
                     return true;
                 }
                 catch
