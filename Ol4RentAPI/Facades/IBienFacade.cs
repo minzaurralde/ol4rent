@@ -23,5 +23,6 @@ namespace Ol4RentAPI.Facades
         List<BienListadoDTO> BusquedaAvanzada(BusquedaAvanzadaDTO templateBien);
 
         void Like(string nombreUsuario, int idBien);
+        byte[] Foto(int idBien);
     }
 }

@@ -387,7 +387,6 @@ namespace Ol4RentAPI.Facades
             }
         }
 
-
         public void Like(string nombreUsuario, int idBien)
         {
             using (ModelContainer db = new ModelContainer())
@@ -399,6 +398,22 @@ namespace Ol4RentAPI.Facades
                     MeGusta megusta = new MeGusta() { Fecha = DateTime.Now, Usuario = usuario, Bien = bien };
                     db.MeGusta.Add(megusta);
                     db.SaveChanges();
+				}
+			}
+		}
+
+        public byte[] Foto(int idBien)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Bien bien = db.Bienes.Find(idBien);
+                if (bien != null)
+                {
+                    return bien.Foto;
+                }
+                else
+                {
+                    return null;
                 }
             }
         }
