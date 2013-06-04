@@ -313,5 +313,22 @@ namespace Ol4RentAPI.Facades
                 }
             }
         }
+
+
+        public byte[] Css(int idSitio)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Sitio sitio = db.Sitios.Find(idSitio);
+                if (sitio == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return sitio.CSS;
+                }
+            }
+        }
     }
 }
