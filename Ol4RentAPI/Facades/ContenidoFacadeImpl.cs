@@ -33,5 +33,15 @@ namespace Ol4RentAPI.Facades
                 }
             }
         }
+
+        public void Eliminar(int id)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Contenido cont = db.Contenidos.Find(id);
+                db.Contenidos.Remove(cont);
+                db.SaveChanges();
+            }
+        }
     }
 }
