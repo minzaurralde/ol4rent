@@ -174,7 +174,6 @@ namespace OL4RENT.Controllers
         // GET: /Bien/Mapa
         public ActionResult Mapa()
         {
-            // TODO Implementar la vista de Mapa
             return View(ServiceFacadeFactory.Instance.BienFacade.BienesPopulares());
         }
 
@@ -295,6 +294,21 @@ namespace OL4RENT.Controllers
                 return new FileContentResult(ServiceFacadeFactory.Instance.BienFacade.Foto(idBien), "image/jpeg");
             }
             return null;
+        }
+
+        //
+        // GET: /Bien/Comentarios/5
+        public ActionResult Comentarios(int id)
+        {
+            return PartialView(ServiceFacadeFactory.Instance.BienFacade.ObtenerComentariosBien(id));
+        }
+
+        //
+        // GET: /Bien/MarcarContenidoInadecuado/5
+        public ActionResult MarcarContenidoInadecuado(int id)
+        {
+             ServiceFacadeFactory.Instance.ContenidoFacade.MarcarInadecuado(id);
+             return PartialView("Comentarios");
         }
     }
 }

@@ -74,6 +74,8 @@
     <Compile Include="DTO\ValorAtributoDTO.cs" />
     <Compile Include="DTO\ValorCaracteristicaAltaDTO.cs" />
     <Compile Include="Facades\CaracteristicasFacadeImpl.cs" />
+    <Compile Include="Facades\ContenidoFacadeImpl.cs" />
+    <Compile Include="Facades\IContenidoFacade.cs" />
     <Compile Include="Facades\IAccountFacade.cs" />
     <Compile Include="Facades\AccountFacadeImpl.cs" />
     <Compile Include="Facades\BienFacadeImpl.cs" />

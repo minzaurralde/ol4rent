@@ -24,5 +24,6 @@ namespace Ol4RentAPI.Facades
 
         void Like(string nombreUsuario, int idBien);
         byte[] Foto(int idBien);
+        List<ContenidoDTO> ObtenerComentariosBien(int idBien);
     }
 }
