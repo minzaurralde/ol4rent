@@ -362,6 +362,7 @@ namespace OL4RENT.Controllers
         // GET: /Bien/Comentarios/5
         public ActionResult Comentarios(int id)
         {
+            ViewBag.IdBien = id;
             return PartialView(ServiceFacadeFactory.Instance.BienFacade.ObtenerComentariosBien(id));
         }
 
@@ -371,6 +372,26 @@ namespace OL4RENT.Controllers
         {
              ServiceFacadeFactory.Instance.ContenidoFacade.MarcarInadecuado(id);
              return PartialView("Comentarios");
+        }
+
+        [HttpPost]
+        public RedirectResult AgregarComentario(int idBien, string texto, List<HttpPostedFileBase> adjuntos)
+        {
+            ComentarioAltaDTO dto = new ComentarioAltaDTO() { IdBien = idBien, Texto = texto, NombreUsuario = User.Identity.Name, Adjuntos = new List<AdjuntoDTO>() };
+            if (adjuntos != null)
+            {
+                foreach (HttpPostedFileBase postedFile in adjuntos)
+                {
+                    if (postedFile != null)
+                    {
+                        byte[] buffer = new byte[postedFile.ContentLength];
+                        postedFile.InputStream.Read(buffer, 0, postedFile.ContentLength);
+                        dto.Adjuntos.Add(new AdjuntoDTO() { Nombre = postedFile.FileName, Contenido = buffer });
+                    }
+                }
+            }
+            ServiceFacadeFactory.Instance.ContenidoFacade.Agregar(dto); 
+            return new RedirectResult(Request.UrlReferrer.AbsoluteUri);
         }
     }
 }

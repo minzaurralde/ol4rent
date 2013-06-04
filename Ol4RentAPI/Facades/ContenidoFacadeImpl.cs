@@ -33,5 +33,40 @@ namespace Ol4RentAPI.Facades
                 }
             }
         }
+
+
+        public void Agregar(ComentarioAltaDTO dto)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Bien bien = db.Bienes.Find(dto.IdBien);
+                Usuario usuario = (from usu in db.Usuarios where usu.NombreUsuario == dto.NombreUsuario select usu).First();
+                Contenido cont = new Contenido() { CantMarcas = 0, Mensaje = dto.Texto, Usuario = usuario, Adjuntos = new List<Adjunto>() };
+                db.Contenidos.Add(cont);
+                if (bien.Contenidos == null)
+                {
+                    bien.Contenidos = new List<Contenido>();
+                }
+                bien.Contenidos.Add(cont);
+                db.SaveChanges();
+                foreach (AdjuntoDTO adjunto in dto.Adjuntos)
+                {
+                    string extension = System.IO.Path.GetExtension(adjunto.Nombre).ToLower();
+                    TipoAdjunto tipo;
+                    if (extension == "jpg" || extension == "jpeg" || extension == "png" || extension == "gif" || extension == "bmp")
+                    {
+                        tipo = TipoAdjunto.IMAGEN;
+                    }
+                    else
+                    {
+                        tipo = TipoAdjunto.VIDEO;
+                    }
+                    Adjunto adj = new Adjunto() { Data = adjunto.Contenido, NombreArchivo = adjunto.Nombre, Formato = extension, Tipo = tipo };
+                    cont.Adjuntos.Add(adj);
+                    db.Adjuntos.Add(adj);
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 }

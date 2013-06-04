@@ -12,5 +12,7 @@ namespace Ol4RentAPI.Facades
     {
         ContenidoDTO Obtener(int id);
         void MarcarInadecuado(int id);
+
+        void Agregar(ComentarioAltaDTO dto);
     }
 }
