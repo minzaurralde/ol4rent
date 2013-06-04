@@ -23,5 +23,6 @@ namespace Ol4RentAPI.Facades
         RegistroBienDTO RegistroDeBienesEnTiempo(int idSitio, DateTime fechaInicio, DateTime fechaFin);
         List<Model.Bien> BusquedaAvanzada(Model.Bien templateBien);
         byte[] Foto(int idBien);
+        List<ContenidoDTO> ObtenerComentariosBien(int idBien);
     }
 }

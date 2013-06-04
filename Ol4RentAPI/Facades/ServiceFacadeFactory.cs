@@ -100,5 +100,13 @@ namespace Ol4RentAPI.Facades
                 return new CaracteristicasFacadeImpl();
             }
         }
+
+        public IContenidoFacade ContenidoFacade
+        {
+            get
+            {
+                return new ContenidoFacadeImpl();
+            }
+        }
     }
 }

@@ -24,7 +24,8 @@ namespace Ol4RentAPI.Facades
                 if (queryBien.Count() > 0)
                 {
                     return AutoMapperUtils<Bien, BienEdicionDTO>.Map(queryBien.First());
-                }else
+                }
+                else
                 {
                     return null;
                 }
@@ -37,7 +38,7 @@ namespace Ol4RentAPI.Facades
             using (ModelContainer db = new ModelContainer())
             {
                 // Obtengo el usuario
-                IQueryable<Usuario> usuarios = 
+                IQueryable<Usuario> usuarios =
                     from u in db.Usuarios
                     where u.NombreUsuario == bienDTO.Usuario
                     select u;
@@ -76,7 +77,7 @@ namespace Ol4RentAPI.Facades
                 try
                 {
                     db.Bienes.Add(bien);
-                    db.SaveChanges();                    
+                    db.SaveChanges();
                     ServiceFacadeFactory.Instance.EspecificacionBienFacade.BuscarCoincidencias(bien.Id);
                     return true;
                 }
@@ -263,7 +264,7 @@ namespace Ol4RentAPI.Facades
             {
                 using (ModelContainer db = new ModelContainer())
                 {
-                    return AutoMapperUtils<Bien,BienListadoDTO>.Map(db.Bienes.ToList());
+                    return AutoMapperUtils<Bien, BienListadoDTO>.Map(db.Bienes.ToList());
                 }
             }
         }
@@ -306,6 +307,15 @@ namespace Ol4RentAPI.Facades
                 {
                     return new List<ContenidoDTO>();
                 }
+            }
+        }
+
+        public List<ContenidoDTO> ObtenerComentariosBien(int idBien)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Bien bien = db.Bienes.Find(idBien);
+                return AutoMapperUtils<Contenido, ContenidoDTO>.Map(bien.Contenidos.ToList());
             }
         }
 
