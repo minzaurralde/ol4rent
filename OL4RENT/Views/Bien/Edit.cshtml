@@ -1,8 +1,93 @@
-﻿@model Ol4RentAPI.Model.Bien
+﻿@model Ol4RentAPI.DTO.BienEdicionDTO
 
 @{
     ViewBag.Title = "Edit";
 }
+
+<div class="float-right">
+    <div>
+        <!-- Mapa -->
+        <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR_JcEyolVGeSAWZsQ4g8cIuOLBnDD2l4&sensor=false"></script>
+        <script type="text/javascript">
+            var map;
+            function initialize() {
+
+                var mapOptions = {
+                    center: new google.maps.LatLng(-34.887057, -56.171036),
+                    panControl: true,
+                    zoomControl: true,
+                    mapTypeControl: true,
+                    scaleControl: true,
+                    streetViewControl: true,
+                    overviewMapControl: true,
+                    zoom: 12,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+                google.maps.Map.prototype.marker = new google.maps.Marker();
+
+                google.maps.event.addListener(map, "click", function (event) { esperaClick(event.latLng); });
+
+                CrearPunto();
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            function esperaClick(location) {
+                $("#Direccion").val("");
+                creaMarca(location);
+            }
+
+            function CrearPunto() {
+                var lat = $("#Latitud").val().toString().replace(",", ".");
+                var lng = $("#Longitud").val().toString().replace(",", ".");
+                var location = new google.maps.LatLng(lat, lng);
+                gLocation = location;
+                google.maps.Map.prototype.marker.setMap(null);
+
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+
+                google.maps.Map.prototype.marker = marker;
+                map.setCenter(location);
+            }
+
+
+            function creaMarca(location) {
+                google.maps.Map.prototype.marker.setMap(null);
+
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+
+                google.maps.Map.prototype.marker = marker;
+                map.setCenter(location);
+                map.setZoom(15);
+                var lat = location.lat().toString().replace(".", ",");
+                var lng = location.lng().toString().replace(".", ",");
+                $("#Latitud").val(lat);
+                $("#Longitud").val(lng);
+            }
+
+            function crearPuntoDireccion() {
+                var address = $("#Direccion").val();
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ 'address': address }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        creaMarca(results[0].geometry.location);
+                    }
+                });
+            }
+
+        </script>
+        <h3>Ubicación</h3>
+        <br />
+        <div id="map-canvas" style="width: 400px; height: 350px"></div>
+    </div>
+</div>
 
 <h2>Edit</h2>
 
@@ -13,6 +98,8 @@
         <legend>Bien</legend>
 
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Latitud)
+        @Html.HiddenFor(model => model.Longitud)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Titulo)
@@ -21,17 +108,109 @@
             @Html.EditorFor(model => model.Titulo)
             @Html.ValidationMessageFor(model => model.Titulo)
         </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Descripcion)
+        </div>
+        <div class="editor-label">
+            @Html.EditorFor(model => model.Descripcion)
+            @Html.ValidationMessageFor(model => model.Descripcion)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Foto)
+            <input type="file" id="imagen" name="imagen" />
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Direccion)
+        </div>
+        <div class="editor-label">
+            @Html.EditorFor(model => model.Direccion)
+            @Html.ValidationMessageFor(model => model.Direccion)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Capacidad)
+        </div>
+        <div class="editor-label">
+            @Html.EditorFor(model => model.Capacidad)
+            @Html.ValidationMessageFor(model => model.Capacidad)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Precio)
+        </div>
+        <div class="editor-label">
+            @Html.EditorFor(model => model.Precio)
+            @Html.ValidationMessageFor(model => model.Precio)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Normas)
+        </div>
+        <div class="editor-label">
+            @Html.EditorFor(model => model.Normas)
+            @Html.ValidationMessageFor(model => model.Normas)
+        </div>
+        <div>
+            @Html.HiddenFor(m => m.Latitud)
+            @Html.HiddenFor(m => m.Longitud)
+        </div>
+
+        <ol >
+            @if (Model.ValoresCaracteristicas != null && Model.ValoresCaracteristicas.Count() > 0){
+                foreach (Ol4RentAPI.DTO.ValorCaracteristicaListadoDTO item in Model.ValoresCaracteristicas)
+                {
+                <li >
+                    @Html.Hidden("itemid-" + item.Caracteristica.Id.ToString(), item.Id.ToString())
+                    @Html.Label("car-" + item.Caracteristica.Id.ToString(), item.Caracteristica.Nombre)
+                    @if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
+                        {
+                        @Html.CheckBox("car-" + item.Caracteristica.Id.ToString(), item.Valor.AsBool());
+                        }
+                        else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.FECHA)
+                        {
+                        @Html.TextBox("car-" + item.Caracteristica.Id.ToString(), item.Valor);
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#car-@item.Caracteristica.Id.ToString()").datepicker
+                                        ({
+                                            dateFormat: 'dd/mm/yy',
+                                            showStatus: true,
+                                            showWeeks: true,
+                                            highlightWeek: true,
+                                            numberOfMonths: 1,
+                                            showAnim: "scale",
+                                            showOptions: {
+                                                origin: ["top", "left"]
+                                            }
+                                        });
+                            });
+                        </script>
+                    }
+                    else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.ENTERO)
+                    {
+                        @Html.TextBox("car-" + item.Caracteristica.Id.ToString(), 0, item.Valor);
+                    }
+                    else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.DECIMAL)
+                    {
+                        @Html.TextBox("car-" + item.Caracteristica.Id.ToString(), 0, item.Valor);
+                    }
+                    else
+                    {
+                        @Html.TextBox("car-" + item.Caracteristica.Id.ToString(), item.Valor);
+                    }
+                    </li>
+                }
+            }
+        </ol>
 
         <p>
-            <input type="submit" value="Save" />
+            <input type="submit" value="Guardar" />
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver a Mis Bienes", "MisBienes")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/crearBien.js")
 }

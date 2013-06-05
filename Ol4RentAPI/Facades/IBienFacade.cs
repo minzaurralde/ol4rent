@@ -1,5 +1,4 @@
 ﻿using Ol4RentAPI.DTO;
-using Ol4RentAPI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +9,23 @@ namespace Ol4RentAPI.Facades
 {
     public interface IBienFacade
     {
-        List<Bien> BienesPopulares { get; }
-        List<Bien> Todos { get; }
-        Bien Obtener(int id);
-        bool Crear(BienAltaDTO bien, int idSitio, String nombreUsuario);
-        Bien Editar(Bien bien);
+        List<BienListadoDTO> BienesPopulares();
+        List<BienListadoDTO> Todos();
+        BienEdicionDTO Obtener(int id);
+        BienArrendarDTO ObtenerArrendar(int id);
+        bool Arrendar(BienArrendarDTO bienDTO, string usuario);
+        bool Crear(BienAltaDTO bien);
+        bool Editar(BienEdicionDTO bienDTO);
         void Eliminar(int id);
-        List<Bien> Buscar(string query);
-        List<Bien> BusquedaAvanzada(Bien templateBien);
-        List<Bien> Wishlist(Usuario usuario);
-        List<Bien> MisBienes(Usuario usuario);
+        List<BienListadoDTO> Buscar(string query);
+        List<BienListadoDTO> MisBienes(string usuario, int sitio);
         BienEdicionDTO ObtenerBienParaContenido(int idContenido);
         List<ContenidoDTO> ContenidosInadecuadosPorSitio(int idSitio);
         RegistroBienDTO RegistroDeBienesEnTiempo(int idSitio, DateTime fechaInicio, DateTime fechaFin);
+        List<BienListadoDTO> BusquedaAvanzada(BusquedaAvanzadaDTO templateBien);
+
+        void Like(string nombreUsuario, int idBien);
+        byte[] Foto(int idBien);
+        List<ContenidoDTO> ObtenerComentariosBien(int idBien);
     }
 }

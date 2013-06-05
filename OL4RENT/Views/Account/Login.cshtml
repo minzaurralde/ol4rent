@@ -1,4 +1,6 @@
 ﻿@model Ol4RentAPI.Model.LoginModel
+@using Ol4RentAPI.DTO;
+@{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
 
 @{
     ViewBag.Title = "Inicio de Sesión";
@@ -32,6 +34,7 @@
                 @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
             </li>
         </ol>
+        @Html.Hidden("IdSitio",  (sitio!=null?sitio.Id:-1))
         <input type="submit" value="Iniciar sesión" />
     </fieldset>
 }

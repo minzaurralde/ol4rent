@@ -1,18 +1,94 @@
-﻿@model Ol4RentAPI.Model.Bien
+﻿@model Ol4RentAPI.DTO.BusquedaAvanzadaDTO
+@{Ol4RentAPI.DTO.SitioListadoDTO sitio = (Ol4RentAPI.DTO.SitioListadoDTO)@Session["sitio"];}
+
 @{
-    ViewBag.Title = "BusquedaAvanzada";
+    String nombreTipoBien = "Bien";
+    if (sitio != null)
+    {
+        nombreTipoBien = @sitio.NombreTipoBien;
+    }
+    ViewBag.Title = "Busqueda Avanzada de " + nombreTipoBien;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>BusquedaAvanzada</h2>
+<h2>@ViewBag.Title</h2>
 @using (Html.BeginForm()) {
-    <div>
-        @Html.LabelFor(model => model.Titulo)
-        @Html.TextBox("Nombre")
-    </div>
-    <div>
-        @Html.LabelFor(model => model.Descripcion)
-        @Html.TextBox("Descripcion")
-    </div>
+    <ol>
+        <li>
+            @Html.LabelFor(model => model.Titulo)
+            @Html.TextBoxFor(model => model.Titulo)
+        </li>
+        <li>
+            @Html.LabelFor(model => model.Descripcion)
+            @Html.TextBoxFor(model => model.Descripcion)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.CapacidadMinima)
+            @Html.TextBoxFor(m => m.CapacidadMinima)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.CapacidadMaxima)
+            @Html.TextBoxFor(m => m.CapacidadMaxima)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.PrecioMinimo)
+            @Html.TextBoxFor(m => m.PrecioMinimo)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.PrecioMaximo)
+            @Html.TextBoxFor(m => m.PrecioMaximo)
+        </li>
+            @foreach (Ol4RentAPI.DTO.CaracteristicaEdicionDTO caracteristica in ViewBag.Caracteristicas)
+            {
+            <li>
+                @Html.Label("car-" + caracteristica.Id.ToString(), caracteristica.Nombre)
+                @if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
+                {
+                    @Html.CheckBox("car-" + caracteristica.Id.ToString());
+                }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.FECHA)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString());
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $("#car-@caracteristica.Id.ToString()").datepicker
+                                ({
+                                    dateFormat: 'dd/mm/yy',
+                                    showStatus: true,
+                                    showWeeks: true,
+                                    highlightWeek: true,
+                                    numberOfMonths: 1,
+                                    showAnim: "scale",
+                                    showOptions: {
+                                        origin: ["top", "left"]
+                                    }
+                                });
+                        });
+                    </script>
+                }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.HORA)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString());
+                }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.ENTERO)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString());
+                }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.DECIMAL)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString());
+                }
+                else
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString());
+                }
+            </li>
+            }
+
+    </ol>
     <input type="submit" value="Buscar" />
+}
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-1.7.1.js")
+    @Scripts.Render("~/Scripts/meGusta.js")
 }

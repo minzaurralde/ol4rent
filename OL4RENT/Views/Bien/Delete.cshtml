@@ -1,4 +1,4 @@
-﻿@model Ol4RentAPI.Model.Bien
+﻿@model Ol4RentAPI.DTO.BienEdicionDTO
 
 @{
     ViewBag.Title = "Delete";
@@ -20,6 +20,6 @@
 @using (Html.BeginForm()) {
     <p>
         <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Volver a Mis Bienes", "MisBienes")
     </p>
 }

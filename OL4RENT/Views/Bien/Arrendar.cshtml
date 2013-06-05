@@ -1,0 +1,48 @@
+﻿@model Ol4RentAPI.DTO.BienArrendarDTO
+
+@{
+    ViewBag.Title = "Arrendar";
+}
+
+<h2>Arrendar</h2>
+
+@using (Html.BeginForm("Arrendar", "Bien", FormMethod.Post, new { name = "RegisterForm", id = "RegisterForm", encType = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Periodo a arrendar</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.FechaAlquiler)
+                @Html.TextBoxFor(m => m.FechaAlquiler)
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#FechaAlquiler").datepicker
+                                ({
+                                    dateFormat: 'dd/mm/yy',
+                                    showStatus: true,
+                                    showWeeks: true,
+                                    highlightWeek: true,
+                                    numberOfMonths: 1,
+                                    showAnim: "scale",
+                                    showOptions: {
+                                        origin: ["top", "left"]
+                                    }
+                                });
+                        });
+                    </script>
+            </li>
+            <li>
+                @Html.LabelFor(m => m.DuracionAlquiler)
+                @Html.TextBoxFor(m => m.DuracionAlquiler)
+            </li>
+        </ol>
+        <input type="submit" value="Arrendar" /> |
+         @Html.ActionLink("Principal", "Index","Home")
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
+}

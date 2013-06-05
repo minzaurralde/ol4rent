@@ -72,6 +72,10 @@
                         });
                     </script>
                 }
+                else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.HORA)
+                {
+                    @Html.TextBox("car-" + caracteristica.Id.ToString(), String.Format("{HH:mm}", DateTime.Now), "HH:mm");
+                }
                 else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.ENTERO)
                 {
                     @Html.TextBox("car-" + caracteristica.Id.ToString(), 0, "0");

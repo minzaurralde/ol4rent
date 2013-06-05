@@ -244,6 +244,7 @@
     <Content Include="App_Code\TwitterGoodies.cshtml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\twitter.png" />
+    <Content Include="Scripts\crearBien.js" />
     <Content Include="Scripts\crearWish.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -258,6 +259,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\meGusta.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -335,6 +337,8 @@
     <Content Include="Views\Shared\_Layout.iPhone.cshtml" />
     <Content Include="Views\Shared\_HeaderPartialIPhone.cshtml" />
     <Content Include="Views\Wish\Mapa.cshtml" />
+    <Content Include="Views\Bien\Arrendar.cshtml" />
+    <Content Include="Views\Bien\Comentarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

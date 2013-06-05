@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Ol4RentAPI.Model.Bien>
+﻿@model IEnumerable<Ol4RentAPI.DTO.BienListadoDTO>
 @using Ol4RentAPI.DTO;
 @{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
 
@@ -20,10 +20,16 @@
     <li>
         <div>
             @Html.ActionLink(item.Titulo, "Details", "Bien", new { id=item.Id }, null)
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Borrar", "Delete", new { id=item.Id })
         </div>
         <div>
             @Html.DisplayFor(modelItem => item.Descripcion)
-        </div>
+        </div>        
     </li>
 }
 </ul>
+
+<div>
+    @Html.ActionLink("Principal", "Index","Home")
+</div>

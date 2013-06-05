@@ -15,14 +15,15 @@ namespace Ol4RentAPI.Facades
     {
         public List<Model.Usuario> Todos
         {
-            get {
+            get
+            {
                 using (ModelContainer db = new ModelContainer())
                 {
                     return db.Usuarios.ToList();
                 }
             }
         }
-        
+
         public UsuarioDTO Obtener(int id)
         {
             using (ModelContainer db = new ModelContainer())
@@ -76,7 +77,7 @@ namespace Ol4RentAPI.Facades
             }
 
         }
-        
+
         public bool Editar(UsuarioDTO usuarioDTO)
         {
             try
@@ -159,6 +160,12 @@ namespace Ol4RentAPI.Facades
             }
         }
 
+        public void DeshabilitarUsuarioEnSitio(String nombreUsuario, int idSitio)
+        {
+            Usuario u = ObtenerPorNombre(nombreUsuario);
+            DeshabilitarUsuarioEnSitio(u.Id, idSitio);
+        }
+
         /// <summary>
         /// Habilita el acceso de un usuario a un sitio
         /// </summary>
@@ -206,6 +213,31 @@ namespace Ol4RentAPI.Facades
             }
         }
 
+        public Boolean UsuarioHabilitadoEnSitio(int idUsuario, int idSitio)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<HabilitacionUsuario> habilitaciones =
+                    from hu in db.HabilitacionesUsuarios
+                    where hu.Sitio.Id == idSitio
+                        && hu.Usuario.Id == idUsuario
+                    select hu;
+                if (habilitaciones.Count<HabilitacionUsuario>() > 0)
+                {
+                    return habilitaciones.First().Habilitado;
+                }
+                // Si no hay elemento en habilitaciones, significa que no esta deshabilitado ni tiene contenidos bloqueados
+                return true;
+            }
+        }
+
+        public Boolean UsuarioHabilitadoEnSitio(String nombreUsuario, int idSitio)
+        {
+            Usuario u = ObtenerPorNombre(nombreUsuario);
+            return UsuarioHabilitadoEnSitio(u.Id, idSitio);
+        }
+
+
 
         public List<UsuarioDTO> Buscar(string query)
         {
@@ -235,17 +267,45 @@ namespace Ol4RentAPI.Facades
                 DateTime fechaTope = DateTime.Now.Date.AddMinutes(-1 * minutosValidezSesion);
 
                 IQueryable<Usuario> usuarios = from grupousuarios in db.Usuarios
-                               from sesiones in db.Sesiones
-                               where grupousuarios.Id != idUsuarioActual
-                               where sesiones.Usuario.Id == grupousuarios.Id
-                               where sesiones.FechaCierre == null
-                               where sesiones.UltimoUso > fechaTope
-                               select grupousuarios;
+                                               from sesiones in db.Sesiones
+                                               where grupousuarios.Id != idUsuarioActual
+                                               where sesiones.Usuario.Id == grupousuarios.Id
+                                               where sesiones.FechaCierre == null
+                                               where sesiones.UltimoUso > fechaTope
+                                               select grupousuarios;
 
                 return AutoMapperUtils<Usuario, UsuarioDTO>.Map(usuarios.ToList());
             }
         }
+
+        public int IncrementarCantContBloqUsuarioEnSitio(int idUsuario, int idSitio)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<HabilitacionUsuario> habilitaciones =
+                    from hu in db.HabilitacionesUsuarios
+                    where hu.Sitio.Id == idSitio
+                        && hu.Usuario.Id == idUsuario
+                    select hu;
+                if (habilitaciones.Count<HabilitacionUsuario>() > 0)
+                {
+                    habilitaciones.First().CantContBloq++;
+                    db.Entry<HabilitacionUsuario>(habilitaciones.First()).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return habilitaciones.First().CantContBloq;
+                }
+            }
+            return 0;
+        }
+
+        public int IncrementarCantContBloqUsuarioEnSitio(String nombreUsuario, int idSitio)
+        {
+            Usuario u = ObtenerPorNombre(nombreUsuario);
+            return IncrementarCantContBloqUsuarioEnSitio(u.Id, idSitio);
+        }
     }
+
+
 }
 
 

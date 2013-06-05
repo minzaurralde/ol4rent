@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Ol4RentAPI.DTO.ContenidoDTO>
+@using Ol4RentAPI.DTO;
+@{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
+
+@{
+    String nombreTipoBien = "Bien";
+    if (sitio != null)
+    {
+        nombreTipoBien = @sitio.NombreTipoBien.Trim();
+    }
+    String plural = nombreTipoBien.ToLower().EndsWith("a") || nombreTipoBien.ToLower().EndsWith("e") ||
+        nombreTipoBien.ToLower().EndsWith("i") || nombreTipoBien.ToLower().EndsWith("o") ||
+        nombreTipoBien.ToLower().EndsWith("u") ? "s" : "es";
+    ViewBag.Title = "Mis " + nombreTipoBien + plural;
+}
+
+<h2>Comentarios</h2>
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            <div>
+                @Html.DisplayFor(modelItem => item.Mensaje)
+            </div>
+            <div>
+                <small>@Html.DisplayFor(modelItem => item.NombreUsuario)</small>
+            </div>
+            <div>@Html.ActionLink("Inadecuado", "MarcarContenidoInadecuado", "Bien", new { id=item.Id }, null)</div>
+        </li>
+    }
+</ul>
+<h3>Agregar comentario</h3>
+@using (Html.BeginForm("AgregarComentario", "Bien", FormMethod.Post)) {
+
+<fieldset>
+    <legend>Agregar Comentario</legend>
+    @Html.Hidden("idBien", (int) ViewBag.IdBien)
+    <div>
+        @Html.Label("texto", "Comentario")
+        @Html.TextArea("texto")
+    </div>
+    <div>
+        @Html.Label("adjuntos", "Adjuntos")
+        <input type="file" multiple="multiple" name="adjuntos" />
+    </div>
+    <input type="submit" value="Agregar" />
+</fieldset>
+
+}

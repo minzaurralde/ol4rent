@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 05/31/2013 19:35:58
--- Generated from EDMX file: C:\Users\Naty\Documents\Visual Studio 2012\Projects\ol4rent\Ol4RentAPI\Model\Model.edmx
+-- Date Created: 06/04/2013 02:18:10
+-- Generated from EDMX file: C:\Users\Usuario\Documents\Visual Studio 2012\Projects\ol4rent\Ol4RentAPI\Model\Model.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -222,8 +222,8 @@ CREATE TABLE [dbo].[Bienes] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Titulo] nvarchar(64)  NOT NULL,
     [Foto] varbinary(max)  NULL,
-    [Latitud] decimal(18,0)  NOT NULL,
-    [Longitud] decimal(18,0)  NOT NULL,
+    [Latitud] decimal(18,15)  NOT NULL,
+    [Longitud] decimal(18,15)  NOT NULL,
     [Direccion] nvarchar(128)  NULL,
     [Normas] nvarchar(4000)  NOT NULL,
     [Capacidad] smallint  NOT NULL,

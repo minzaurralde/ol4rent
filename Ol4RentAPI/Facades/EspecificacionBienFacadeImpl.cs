@@ -6,7 +6,6 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.Net.Mail;
 using System.Net.Mime;
 
@@ -191,23 +190,29 @@ namespace Ol4RentAPI.Facades
                         {
                             EspecificacionBien wish = queryWish.First();
                             Usuario usuario = wish.Usuario;
-                            //if (distance(Convert.ToDouble(wish.Latitud), Convert.ToDouble(wish.Longitud), Convert.ToDouble(bien.Latitud), Convert.ToDouble(bien.Longitud)) <= wish.Rango)
-                            //{
-                                //Envio de mail
-                                MailMessage mail = new MailMessage();
-                                SmtpClient sc = new SmtpClient();
-                                mail.From = new MailAddress("gr6tsi1@gmail.com", "Ol4Rent");
-                                mail.To.Add(new MailAddress(usuario.Mail, usuario.Nombre + " " + usuario.Apellido));
-                                //m.CC.Add(new MailAddress("CC@yahoo.com", "Display name CC"));
-                                //similarly BCC
-                                mail.Subject = "Concidencia con Wish";
-                                mail.Body = "Estimado Cliente, se a encontrado una coincidencia con su Wish";
-                                sc.Host = "smtp.gmail.com";
-                                sc.Port = 587;
-                                sc.Credentials = new System.Net.NetworkCredential("gr6tsi1@gmail.com", "gr643210");
-                                sc.EnableSsl = true; // runtime encrypt the SMTP communications using SSL
-                                sc.Send(mail);
-                            //}
+                            if (distance(Convert.ToDouble(wish.Latitud), Convert.ToDouble(wish.Longitud), Convert.ToDouble(bien.Latitud), Convert.ToDouble(bien.Longitud)) <= wish.Rango)
+                            {
+                                if (compatibilidad(wish.ValoresCaracteristicas.ToList(), bien.ValoresCaracteristicas.ToList(), wish.TipoBien.Sitio.Id))
+                                {
+                                   //Envio de mail
+                                    MailMessage mail = new MailMessage();
+                                    SmtpClient sc = new SmtpClient();
+                                    mail.From = new MailAddress("gr6tsi1@gmail.com", "Ol4Rent");
+                                    mail.To.Add(new MailAddress(usuario.Mail, usuario.Nombre + " " + usuario.Apellido));
+                                    //m.CC.Add(new MailAddress("CC@yahoo.com", "Display name CC"));
+                                    //similarly BCC
+                                    mail.Subject = "Concidencia con Wish";
+                                    var body = "Estimado Cliente, se a encontrado una coincidencia con su Wish";
+                                    body = body + "\n La dirección del " + wish.TipoBien.Nombre + ": ";
+                                    body = body + wish.TipoBien.Sitio.URL + "/Bien/Details/" + bien.Id;
+                                    mail.Body = body;
+                                    sc.Host = "smtp.gmail.com";
+                                    sc.Port = 587;
+                                    sc.Credentials = new System.Net.NetworkCredential("gr6tsi1@gmail.com", "gr643210");
+                                    sc.EnableSsl = true; // runtime encrypt the SMTP communications using SSL
+                                    sc.Send(mail);
+                                }
+                            }
                         }
                     }
                 }
@@ -231,6 +236,37 @@ namespace Ol4RentAPI.Facades
         private double rad2deg(double rad)
         {
             return (rad / Math.PI * 180.0);
+        }
+
+        private bool compatibilidad(List<ValorCaracteristica> vWish, List<ValorCaracteristica> vBien, int idSitio)
+        {
+            var total = vWish.Count();
+            var cont = 0;
+            foreach (ValorCaracteristica vcW in vWish)
+            {
+                ValorCaracteristica vcB = vBien.Where(item => item.Caracteristica.Id == vcW.Caracteristica.Id).First();
+                if (vcW.Valor == vcB.Valor)
+                {
+                    cont++;
+                }
+            }
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Sitio> querySitio =
+                    from s in db.Sitios
+                    where s.Id == idSitio
+                    select s;
+                if (querySitio.Count() > 0)
+                {
+                    Sitio sitio = querySitio.First();
+                    var porsentaje = cont * 100 / total;
+                    if (porsentaje >= sitio.AproximacionWish)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return true;
         }
     }
 }
