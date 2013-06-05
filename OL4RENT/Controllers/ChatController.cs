@@ -98,7 +98,7 @@ namespace OL4RENT.Controllers
                 {
                     textomensaje = "<BR>";
                 }
-                textomensaje = textomensaje + "Recibido de " + Nombre + " " + Apellido + ": " + m.Texto + "<BR><font size=2><b>Fecha: " + m.FechaHora.ToString() + "</b></font>";
+                textomensaje = textomensaje + "<b>Recibido de " + Nombre + " " + Apellido + ":</b> " + m.Texto + "<BR><font size=1>Fecha: " + m.FechaHora.ToString() + "</font>";
 
                 if (primerorec == 1)
                 {

@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="DTO\AtributoDTO.cs" />
     <Compile Include="DTO\AutoMapperUtils.cs" />
+    <Compile Include="DTO\BienListadoDTO.cs" />
     <Compile Include="DTO\CaracteristicaAltaDTO.cs" />
     <Compile Include="DTO\ConfiguracionOrigenDatosAltaDTO.cs" />
     <Compile Include="DTO\EspecificacionBienDTO.cs" />

@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using Ol4RentAPI.DTO;
 
 namespace OL4RENTServices
 {
@@ -23,11 +24,10 @@ namespace OL4RENTServices
         [WebGet(UriTemplate = "/BienesCercanos/{Latitud}/{Longitud}", RequestFormat = WebMessageFormat.Json,
                                                      ResponseFormat = WebMessageFormat.Json
                                                      )]
-        string ObtenerBienesCercanos(string latitud, string longitud);
+        List<BienListadoDTO> ObtenerBienesCercanos(string latitud, string longitud);
     
     }
-
-
+    
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
     public class CompositeType
