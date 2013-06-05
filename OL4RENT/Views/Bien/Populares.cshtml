@@ -9,7 +9,7 @@
     <li>
         <div>
             @Html.ActionLink(item.Titulo, "Details", "Bien", new { id=item.Id }, null)
-            @Html.Action("Me Gusta", "Bien", new { id = item.Id })
+            @Html.Action("MeGusta", "Bien", new { id = item.Id })
         </div>
         <div>
             @Html.DisplayFor(modelItem => item.Descripcion)
