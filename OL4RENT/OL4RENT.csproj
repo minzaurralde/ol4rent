@@ -339,6 +339,7 @@
     <Content Include="Views\Wish\Mapa.cshtml" />
     <Content Include="Views\Bien\Arrendar.cshtml" />
     <Content Include="Views\Bien\Comentarios.cshtml" />
+    <Content Include="Views\Bien\MeGusta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

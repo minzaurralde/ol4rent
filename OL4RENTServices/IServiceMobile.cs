@@ -24,7 +24,7 @@ namespace OL4RENTServices
         [WebGet(UriTemplate = "/BienesCercanos/{Latitud}/{Longitud}", RequestFormat = WebMessageFormat.Json,
                                                      ResponseFormat = WebMessageFormat.Json
                                                      )]
-        List<BienListadoDTO> ObtenerBienesCercanos(string latitud, string longitud);
+        List<BienCercanoDTO> ObtenerBienesCercanos(string latitud, string longitud);
     
     }
     

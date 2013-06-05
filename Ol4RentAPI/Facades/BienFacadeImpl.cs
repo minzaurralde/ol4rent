@@ -79,7 +79,7 @@ namespace Ol4RentAPI.Facades
                         //similarly BCC
                         mail.Subject = "Se arrendo un bien suyo";
                         var body = "Estimado Cliente, se a Arrendado el Bien: " + bien.Titulo + "\n";
-                        body = body + "Desde la fehca: " + bien.FechaAlquiler.ToString() + "\n";
+                        body = body + "Desde la fecha: " + bien.FechaAlquiler.ToString() + "\n";
                         body = body + "Por un periodo: " + bien.DuracionAlquiler.ToString();
                         mail.Body = body;
                         sc.Host = "smtp.gmail.com";
@@ -557,6 +557,55 @@ namespace Ol4RentAPI.Facades
                 {
                     return null;
                 }
+            }
+        }
+
+
+        public bool PuedeMostrarMeGusta(string nombreUsuario, int idBien)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Usuario usuario = (from usu in db.Usuarios where usu.NombreUsuario == nombreUsuario select usu).First();
+                if (usuario == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    Bien bien = db.Bienes.Find(idBien);
+                    if (bien == null)
+                    {
+                        return false;
+                    } 
+                    else if (bien.Usuario.Id.Equals(usuario.Id))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        IQueryable<MeGusta> query =
+                            from mg in db.MeGusta
+                            where mg.Usuario.NombreUsuario == nombreUsuario
+                            where mg.Bien.Id == idBien
+                            select mg;
+                        return query.Count() == 0;
+                    }
+                }
+            }
+        }
+
+        public List<BienCercanoDTO> ObtenerBienesCercanos(double longitud, double latitud)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Bien> bienescer = 
+                    (
+                        from bienescerc in db.Bienes
+                        orderby Math.Pow((double)((double)bienescerc.Longitud - longitud), 2) - Math.Pow((double)((double)bienescerc.Latitud - latitud), 2)
+                        select bienescerc
+                    ).Take(10);
+
+                return AutoMapperUtils<Bien, BienCercanoDTO>.Map(bienescer.ToList());
             }
         }
     }

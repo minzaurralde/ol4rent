@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ol4RentAPI.DTO
 {
-    public class BienListadoDTO
+    public class BienCercanoDTO
     {
         [Display(Name = "Identificador del bien")]
         public int Id { get; set; }

@@ -71,7 +71,7 @@
     <legend>Bien</legend>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Titulo) <input type="button" value="Me Gusta" onclick="javascript: like(@Model.Id);" />
+        @Html.DisplayNameFor(model => model.Titulo) 
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Titulo)
@@ -145,14 +145,11 @@
     @Html.ActionLink("Arrendar", "Arrendar", new { id=Model.Id}) |
     @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Volver a Mis " + nombreTipoBien + plural, "MisBienes")
+    @Html.Action("Me Gusta", "Bien", new { id = Model.Id })
 </p>
 
 <div>
     @Html.Action("Comentarios", "Bien", new { id = Model.Id })
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/Scripts/jquery-1.7.1.js")
-    @Scripts.Render("~/Scripts/meGusta.js")
-}
 

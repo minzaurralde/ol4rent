@@ -75,19 +75,15 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.Fecha, dat => dat.MapFrom(src => src.FechaHora));
             Mapper.CreateMap<Dependencia, DependenciaDTO>();
             Mapper.CreateMap<DependenciaDTO, Dependencia>();
-            Mapper.CreateMap<Bien, BienListadoDTO>()
-                 .ForMember(dest => dest.Id, dat => dat.MapFrom(src => src.Id))
-                 .ForMember(dest => dest.TipoDeBien, dat => dat.MapFrom(src => src.TipoBien))
-                 .ForMember(dest => dest.Titulo, dat => dat.MapFrom(src => src.Titulo))
-                 .ForMember(dest => dest.Latitud, dat => dat.MapFrom(src => src.Latitud))
-                 .ForMember(dest => dest.Longitud, dat => dat.MapFrom(src => src.Longitud));
+            Mapper.CreateMap<Bien, BienListadoDTO>();
             Mapper.CreateMap<Bien, BienAltaDTO>()
                 .ForMember(dest => dest.TipoBien, dat => dat.MapFrom(src => src.TipoBien.Id))
                 .ForMember(dest => dest.Usuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario));
             Mapper.CreateMap<Bien, BienEdicionDTO>()
                 .ForMember(dest => dest.TipoBien, dat => dat.MapFrom(src => src.TipoBien.Id))
                 .ForMember(dest => dest.Usuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario));
-            Mapper.CreateMap<Bien, BienListadoDTO>();
+            Mapper.CreateMap<Bien, BienCercanoDTO>()
+                 .ForMember(dest => dest.TipoDeBien, dat => dat.MapFrom(src => src.TipoBien.Nombre));
             Mapper.CreateMap<Bien, BienArrendarDTO>();
             Mapper.AssertConfigurationIsValid();
         }

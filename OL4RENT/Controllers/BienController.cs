@@ -29,6 +29,7 @@ namespace OL4RENT.Controllers
             {
                 return HttpNotFound();
             }
+            ChequearSiLePuedeGustar(id);
             return View(bien);
         }
 
@@ -318,7 +319,16 @@ namespace OL4RENT.Controllers
             }
             return RedirectToAction("Index", "Home");
 		}
-		
+
+
+        [HttpGet]
+        public ActionResult MeGusta(int id)
+        {
+            ViewBag.IdBien = id;
+            ChequearSiLePuedeGustar(id);
+            return View();
+        }
+
         [HttpGet]
         public RedirectResult Like(int id)
         {
@@ -392,6 +402,12 @@ namespace OL4RENT.Controllers
             }
             ServiceFacadeFactory.Instance.ContenidoFacade.Agregar(dto); 
             return new RedirectResult(Request.UrlReferrer.AbsoluteUri);
+        }
+
+        private void ChequearSiLePuedeGustar(int idBien)
+        {
+            bool puedeGustarle = User.Identity.IsAuthenticated && ServiceFacadeFactory.Instance.BienFacade.PuedeMostrarMeGusta(User.Identity.Name, idBien);
+            ViewBag.MostrarMeGusta = puedeGustarle;
         }
     }
 }
