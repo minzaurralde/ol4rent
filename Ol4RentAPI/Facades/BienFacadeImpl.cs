@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Data.Objects.SqlClient;
 
 namespace Ol4RentAPI.Facades
 {
@@ -490,13 +491,15 @@ namespace Ol4RentAPI.Facades
                 IQueryable<Bien> query =
                     from b in db.Bienes
                     where b.TipoBien.Sitio.Id == idSitio
+                    where b.FechaAlta >= fechaInicio
+                    where b.FechaAlta <= fechaFin
                     select b;
                 if (diff.Days > 750)
                 {
                     return new RegistroBienDTO()
                     {
                         Valores = query
-                            .GroupBy(b => b.FechaAlquiler.Value.ToString("yyyy"))
+                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Year))
                             .Select(mes => new ValorRegistroBienDTO() { Etiqueta = mes.Key, Cantidad = mes.Count() })
                             .ToList(),
                         Tipo = "Año"
@@ -507,7 +510,7 @@ namespace Ol4RentAPI.Facades
                     return new RegistroBienDTO()
                     {
                         Valores = query
-                            .GroupBy(b => b.FechaAlquiler.Value.ToString("MMMM yyyy"))
+                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Month) + "/" + SqlFunctions.StringConvert((decimal)b.FechaAlta.Year))
                             .Select(mes => new ValorRegistroBienDTO() { Etiqueta = mes.Key, Cantidad = mes.Count() })
                             .ToList(),
                         Tipo = "Mes"
@@ -518,7 +521,7 @@ namespace Ol4RentAPI.Facades
                     return new RegistroBienDTO()
                     {
                         Valores = query
-                            .GroupBy(b => b.FechaAlquiler.Value.ToString("dd MMMM"))
+                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Day) + "/" + SqlFunctions.StringConvert((decimal)b.FechaAlta.Month))
                             .Select(dia => new ValorRegistroBienDTO() { Etiqueta = dia.Key, Cantidad = dia.Count() })
                             .ToList(),
                         Tipo = "Día"
