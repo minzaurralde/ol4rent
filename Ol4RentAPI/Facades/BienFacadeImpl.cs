@@ -294,26 +294,12 @@ namespace Ol4RentAPI.Facades
                     huboBusqueda = true;
                     bienes = bienes.Where(b => b.Normas.ToLower().Contains(templateBien.Normas.ToLower())).ToList();
                 }
-                // busco por capacidad
-                int capacidadMinima = int.MinValue;
-                int capacidadMaxima = int.MaxValue;
-                try
+                // busco por propietario
+                if (templateBien.Propietario != null && templateBien.Propietario.Trim() != "")
                 {
-                    capacidadMinima = int.Parse(templateBien.CapacidadMinima);
                     huboBusqueda = true;
+                    bienes = bienes.Where(b => b.Usuario.NombreUsuario.ToLower().Contains(templateBien.Propietario.ToLower())).ToList();
                 }
-                catch
-                {
-                }
-                try
-                {
-                    capacidadMaxima = int.Parse(templateBien.CapacidadMaxima);
-                    huboBusqueda = true;
-                }
-                catch
-                {
-                }
-                bienes = bienes.Where(b => b.Capacidad <= capacidadMaxima && b.Capacidad >= capacidadMinima).ToList();
                 // busco por precio
                 decimal precioMinimo = decimal.MinValue;
                 decimal precioMaximo = decimal.MaxValue;
@@ -348,6 +334,7 @@ namespace Ol4RentAPI.Facades
                         {
                             bienes = bienes.Where(b => b.ValoresCaracteristicas.Where(vc => vc.Caracteristica.Id == valorCaracteristica.IdCaracteristica && vc.Valor == valorCaracteristica.Valor).Count() > 0).ToList();
                         }
+                        huboBusqueda = true;
                     }
                 }
                 // retorno

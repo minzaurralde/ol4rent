@@ -320,7 +320,6 @@ namespace OL4RENT.Controllers
             return RedirectToAction("Index", "Home");
 		}
 
-
         [HttpGet]
         public ActionResult MeGusta(int id)
         {

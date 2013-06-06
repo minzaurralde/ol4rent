@@ -144,7 +144,7 @@
 <p>
     @Html.ActionLink("Arrendar", "Arrendar", new { id=Model.Id}) |
     @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Volver a Mis " + nombreTipoBien + plural, "MisBienes")
+    @Html.ActionLink("Volver a Mis " + nombreTipoBien + plural, "MisBienes") |
     @Html.Action("MeGusta", "Bien", new { id = Model.Id })
 </p>
 
