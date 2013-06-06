@@ -1,9 +1,8 @@
-﻿@model List<Ol4RentAPI.DTO.BienListadoDTO>
+﻿@model IEnumerable<Ol4RentAPI.DTO.BienListadoDTO>
 
 @{
     ViewBag.Title = "Buscar";
 }
-
 <h2>Resultados de la búsqueda</h2>
 @if(Model.Count() > 0) {
 <ul>
@@ -11,7 +10,10 @@
     <li>
         <div>
             @Html.ActionLink(item.Titulo, "Details", "Bien", new { id=item.Id }, null)
-            @Html.Action("MeGusta", "Bien", new { id = item.Id })
+            @if (item.MostrarMeGusta)
+            {
+            <input type="button" value="Me Gusta" id="like-@item.Id" onclick="javascript: like(@item.Id);" />
+            }
         </div>
         <div>
             @Html.DisplayFor(modelItem => item.Descripcion)
@@ -21,5 +23,9 @@
 </ul>
 }
 else {
-    <p>No existen resultados para su búsqueda</p>
+<p>No existen resultados para su búsqueda</p>
 }
+@section Scripts {
+    @Scripts.Render("~/Scripts/meGusta.js")
+}
+

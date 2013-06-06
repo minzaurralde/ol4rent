@@ -12,7 +12,6 @@ using OL4RENTBackOffice.Filters;
 using Ol4RentAPI.Model;
 using Ol4RentAPI.Facades;
 using Ol4RentAPI.DTO;
-using OL4RENTBackOffice.ViewModels;
 
 namespace OL4RENTBackOffice.Controllers
 {

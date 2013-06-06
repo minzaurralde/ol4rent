@@ -5,7 +5,8 @@
         processData: false,
         dataType: "json",
         success: function (data, status, xhr) {
-            // no hago nada
+            // alert($("#like-" + id));
+            $("#like-" + id).remove();
         }
     });
 }

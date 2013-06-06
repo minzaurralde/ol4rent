@@ -330,6 +330,17 @@ namespace Ol4RentAPI.Facades
                         {
                             bienes = bienes.Where(b => b.ValoresCaracteristicas.Where(vc => vc.Caracteristica.Id == valorCaracteristica.IdCaracteristica && vc.Valor.ToLower().Contains(valorCaracteristica.Valor.ToLower())).Count() > 0).ToList();
                         }
+                        else if (caracteristica.Tipo == TipoDato.BOOLEANO)
+                        {
+                            bool valor;
+                            if (bool.TryParse(valorCaracteristica.Valor, out valor))
+                            {
+                                if (valor)
+                                {
+                                    bienes = bienes.Where(b => b.ValoresCaracteristicas.Where(vc => vc.Caracteristica.Id == valorCaracteristica.IdCaracteristica && vc.Valor == valorCaracteristica.Valor).Count() > 0).ToList();
+                                }
+                            }
+                        }
                         else
                         {
                             bienes = bienes.Where(b => b.ValoresCaracteristicas.Where(vc => vc.Caracteristica.Id == valorCaracteristica.IdCaracteristica && vc.Valor == valorCaracteristica.Valor).Count() > 0).ToList();
@@ -386,18 +397,18 @@ namespace Ol4RentAPI.Facades
                             select mgg.Key;
                         if (query.Count() > 0)
                         {
-                            return AutoMapperUtils<Bien, BienListadoDTO>.Map(query.ToList());
+                            return AutoMapperUtils<Bien, BienListadoDTO>.Map(query.Take(maximaCantidadPopulares).ToList());
                         }
                         else
                         {
                             // Si la query es vacia, es porque ningun bien tiene marcas de me gusta
                             // Devuelvo todos
                             query =
-                            from b in db.Bienes
-                            where b.TipoBien.Sitio.Id == sitio.Id
-                            select b;
+                                from b in db.Bienes
+                                where b.TipoBien.Sitio.Id == sitio.Id
+                                select b;
                             if (query.Count() > 0)
-                                return AutoMapperUtils<Bien, BienListadoDTO>.Map(query.ToList());
+                                return AutoMapperUtils<Bien, BienListadoDTO>.Map(query.Take(maximaCantidadPopulares).ToList());
                             else
                                 return new List<BienListadoDTO>();
                         }
@@ -520,14 +531,22 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
-                Usuario usuario = (from usu in db.Usuarios where usu.NombreUsuario == nombreUsuario select usu).First();
-                Bien bien = db.Bienes.Find(idBien);
-                if (bien.Usuario.NombreUsuario != nombreUsuario)
+                IQueryable<MeGusta> queryVerificacion =
+                    from mg in db.MeGusta
+                    where mg.Usuario.NombreUsuario == nombreUsuario
+                    where mg.Bien.Id == idBien
+                    select mg;
+                if (queryVerificacion.Count() == 0)
                 {
-                    MeGusta megusta = new MeGusta() { Fecha = DateTime.Now, Usuario = usuario, Bien = bien };
-                    db.MeGusta.Add(megusta);
-                    db.SaveChanges();
-				}
+                    Usuario usuario = (from usu in db.Usuarios where usu.NombreUsuario == nombreUsuario select usu).First();
+                    Bien bien = db.Bienes.Find(idBien);
+                    if (bien.Usuario.NombreUsuario != nombreUsuario)
+                    {
+                        MeGusta megusta = new MeGusta() { Fecha = DateTime.Now, Usuario = usuario, Bien = bien };
+                        db.MeGusta.Add(megusta);
+                        db.SaveChanges();
+                    }
+                }
 			}
 		}
 
@@ -548,34 +567,44 @@ namespace Ol4RentAPI.Facades
         }
 
 
-        public bool PuedeMostrarMeGusta(string nombreUsuario, int idBien)
+        public bool PuedeMostrarMeGusta(int idBien)
         {
             using (ModelContainer db = new ModelContainer())
             {
-                Usuario usuario = (from usu in db.Usuarios where usu.NombreUsuario == nombreUsuario select usu).First();
-                if (usuario == null)
+                string nombreUsuario = HttpContext.Current.User.Identity.Name;
+                IQueryable<Usuario> queryUsuario =
+                    from usu in db.Usuarios where usu.NombreUsuario == nombreUsuario select usu;
+                if (queryUsuario.Count() == 0)
                 {
                     return false;
                 }
                 else
                 {
-                    Bien bien = db.Bienes.Find(idBien);
-                    if (bien == null)
-                    {
-                        return false;
-                    } 
-                    else if (bien.Usuario.Id.Equals(usuario.Id))
+                    Usuario usuario = queryUsuario.First();
+                    if (usuario == null)
                     {
                         return false;
                     }
                     else
                     {
-                        IQueryable<MeGusta> query =
-                            from mg in db.MeGusta
-                            where mg.Usuario.NombreUsuario == nombreUsuario
-                            where mg.Bien.Id == idBien
-                            select mg;
-                        return query.Count() == 0;
+                        Bien bien = db.Bienes.Find(idBien);
+                        if (bien == null)
+                        {
+                            return false;
+                        }
+                        else if (bien.Usuario.Id.Equals(usuario.Id))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            IQueryable<MeGusta> query =
+                                from mg in db.MeGusta
+                                where mg.Usuario.NombreUsuario == nombreUsuario
+                                where mg.Bien.Id == idBien
+                                select mg;
+                            return query.Count() == 0;
+                        }
                     }
                 }
             }

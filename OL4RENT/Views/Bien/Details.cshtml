@@ -145,7 +145,10 @@
     @Html.ActionLink("Arrendar", "Arrendar", new { id=Model.Id}) |
     @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Volver a Mis " + nombreTipoBien + plural, "MisBienes") |
-    @Html.Action("MeGusta", "Bien", new { id = Model.Id })
+    @if (ViewBag.MostrarMeGusta)
+    {
+    <input type="button" value="Me Gusta" id="like-@Model.Id" onclick="javascript:like(@Model.Id);" />
+    }
 </p>
 
 <div>

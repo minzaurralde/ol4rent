@@ -66,6 +66,7 @@
     <Compile Include="DTO\BienAltaDTO.cs" />
     <Compile Include="DTO\OrigenDatosAltaDTO.cs" />
     <Compile Include="DTO\OrigenDatosListaDTO.cs" />
+    <Compile Include="DTO\Pair.cs" />
     <Compile Include="DTO\RegistroBienDTO.cs" />
     <Compile Include="DTO\SitioAltaDTO.cs" />
     <Compile Include="DTO\SitioListadoDTO.cs" />

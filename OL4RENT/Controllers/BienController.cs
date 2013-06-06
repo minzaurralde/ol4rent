@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Ol4RentAPI.Model;
 using Ol4RentAPI.Facades;
 using Ol4RentAPI.DTO;
+using System.Collections;
 
 namespace OL4RENT.Controllers
 {
@@ -224,7 +225,8 @@ namespace OL4RENT.Controllers
         [HttpPost]
         public ActionResult Buscar(string query)
         {
-            return View(ServiceFacadeFactory.Instance.BienFacade.Buscar(query));
+            List<BienListadoDTO> bienes = ServiceFacadeFactory.Instance.BienFacade.Buscar(query);
+            return View(bienes);
         }
 
         //
@@ -272,7 +274,8 @@ namespace OL4RENT.Controllers
                     }
                 }
             }
-            return View("Buscar", ServiceFacadeFactory.Instance.BienFacade.BusquedaAvanzada(bienDTO));
+            List<BienListadoDTO> bienes = ServiceFacadeFactory.Instance.BienFacade.BusquedaAvanzada(bienDTO);
+            return View("Buscar", bienes);
         }
 
         //
@@ -319,14 +322,6 @@ namespace OL4RENT.Controllers
             }
             return RedirectToAction("Index", "Home");
 		}
-
-        [HttpGet]
-        public ActionResult MeGusta(int id)
-        {
-            ViewBag.IdBien = id;
-            ChequearSiLePuedeGustar(id);
-            return View();
-        }
 
         [HttpGet]
         public RedirectResult Like(int id)
@@ -405,8 +400,12 @@ namespace OL4RENT.Controllers
 
         private void ChequearSiLePuedeGustar(int idBien)
         {
-            bool puedeGustarle = User.Identity.IsAuthenticated && ServiceFacadeFactory.Instance.BienFacade.PuedeMostrarMeGusta(User.Identity.Name, idBien);
-            ViewBag.MostrarMeGusta = puedeGustarle;
+            ViewBag.MostrarMeGusta = VerificarSiMuestroMeGusta(idBien);
+        }
+
+        private bool VerificarSiMuestroMeGusta(int idBien)
+        {
+            return User.Identity.IsAuthenticated && ServiceFacadeFactory.Instance.BienFacade.PuedeMostrarMeGusta(idBien);
         }
     }
 }

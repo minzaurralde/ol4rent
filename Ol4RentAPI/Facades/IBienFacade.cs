@@ -28,7 +28,7 @@ namespace Ol4RentAPI.Facades
         byte[] Foto(int idBien);
         List<ContenidoDTO> ObtenerComentariosBien(int idBien);
 
-        bool PuedeMostrarMeGusta(string nombreUsuario, int idBien);
+        bool PuedeMostrarMeGusta(int idBien);
 
         List<BienCercanoDTO> ObtenerBienesCercanos(double longitud, double latitud);
     }
