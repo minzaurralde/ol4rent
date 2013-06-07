@@ -499,7 +499,7 @@ namespace Ol4RentAPI.Facades
                     return new RegistroBienDTO()
                     {
                         Valores = query
-                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Year))
+                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Year).Trim())
                             .Select(mes => new ValorRegistroBienDTO() { Etiqueta = mes.Key, Cantidad = mes.Count() })
                             .ToList(),
                         Tipo = "Año"
@@ -510,7 +510,7 @@ namespace Ol4RentAPI.Facades
                     return new RegistroBienDTO()
                     {
                         Valores = query
-                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Month) + "/" + SqlFunctions.StringConvert((decimal)b.FechaAlta.Year))
+                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Month).Trim() + "-" + SqlFunctions.StringConvert((decimal)b.FechaAlta.Year).Trim())
                             .Select(mes => new ValorRegistroBienDTO() { Etiqueta = mes.Key, Cantidad = mes.Count() })
                             .ToList(),
                         Tipo = "Mes"
@@ -521,7 +521,7 @@ namespace Ol4RentAPI.Facades
                     return new RegistroBienDTO()
                     {
                         Valores = query
-                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Day) + "/" + SqlFunctions.StringConvert((decimal)b.FechaAlta.Month))
+                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Day).Trim() + "-" + SqlFunctions.StringConvert((decimal)b.FechaAlta.Month).Trim())
                             .Select(dia => new ValorRegistroBienDTO() { Etiqueta = dia.Key, Cantidad = dia.Count() })
                             .ToList(),
                         Tipo = "Día"
