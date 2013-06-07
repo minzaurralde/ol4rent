@@ -116,6 +116,8 @@ namespace Ol4RentAPI.DTO
         [Display(Name = "Longitud")]
         public decimal Longitud { get; set; }
         public bool MostrarMeGusta { get; set; }
+        public int CantidadLikes { get; set; }
+        public string Propietario { get; set; }
     }
     public class BienArrendarDTO
     {

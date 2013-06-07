@@ -627,6 +627,21 @@ namespace Ol4RentAPI.Facades
                 return AutoMapperUtils<Bien, BienCercanoDTO>.Map(bienescer.ToList());
             }
         }
+
+        public int CantidadLikes(int idBien)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<MeGusta> query =
+                    (
+                        from mg in db.MeGusta
+                        where mg.Bien.Id == idBien
+                        select mg
+                    );
+
+                return query.Count();
+            }
+        }
     }
 }
 

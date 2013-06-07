@@ -4,18 +4,18 @@
     ViewBag.Title = "Populares";
 }
 <h2>Bienes Populares</h2>
-<ul>
+<ul class="listado-bienes">
 @foreach (Ol4RentAPI.DTO.BienListadoDTO item in Model) {
     <li>
         <div>
+            <img src="/Bien/Foto?idBien=@item.Id" height="100" width="120" />
             @Html.ActionLink(item.Titulo, "Details", "Bien", new { id=item.Id }, null)
             @if (item.MostrarMeGusta)
             {
             <input type="button" value="Me Gusta" id="like-@item.Id" onclick="javascript:like(@item.Id);" />
             }
-        </div>
-        <div>
-            @Html.DisplayFor(modelItem => item.Descripcion)
+            <p>&nbsp;Likes: @item.CantidadLikes</p>
+            <p>@Html.DisplayFor(modelItem => item.Descripcion)</p>
         </div>
     </li>
 }

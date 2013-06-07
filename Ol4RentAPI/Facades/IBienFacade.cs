@@ -31,5 +31,7 @@ namespace Ol4RentAPI.Facades
         bool PuedeMostrarMeGusta(int idBien);
 
         List<BienCercanoDTO> ObtenerBienesCercanos(double longitud, double latitud);
+
+        int CantidadLikes(int idBien);
     }
 }

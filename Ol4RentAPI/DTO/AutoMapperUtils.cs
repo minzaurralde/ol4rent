@@ -76,7 +76,9 @@ namespace Ol4RentAPI.DTO
             Mapper.CreateMap<Dependencia, DependenciaDTO>();
             Mapper.CreateMap<DependenciaDTO, Dependencia>();
             Mapper.CreateMap<Bien, BienListadoDTO>()
-                .ForMember(dest => dest.MostrarMeGusta, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.BienFacade.PuedeMostrarMeGusta(src.Id)));
+                .ForMember(dest => dest.MostrarMeGusta, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.BienFacade.PuedeMostrarMeGusta(src.Id)))
+                .ForMember(dest => dest.CantidadLikes, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.BienFacade.CantidadLikes(src.Id)))
+                .ForMember(dest => dest.Propietario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario));
             Mapper.CreateMap<Bien, BienAltaDTO>()
                 .ForMember(dest => dest.TipoBien, dat => dat.MapFrom(src => src.TipoBien.Id))
                 .ForMember(dest => dest.Usuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario));
