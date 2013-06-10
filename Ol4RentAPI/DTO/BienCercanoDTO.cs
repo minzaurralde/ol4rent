@@ -17,7 +17,15 @@ namespace Ol4RentAPI.DTO
         public string Titulo { get; set; }
         [Display(Name = "Latitud")]
         public decimal Latitud { get; set; }
-        [Display(Name = "Logitud")]
+        [Display(Name = "Longitud")]
         public decimal Longitud { get; set; }
+        [Display(Name = "Direccion")]
+        public string Direccion { get; set; }
+        [Display(Name = "Capacidad")]
+        public int Capacidad { get; set; }
+        [Display(Name = "Precio")]
+        public decimal Precio { get; set; }
+        [Display(Name = "Normas")]
+        public string Normas { get; set; }
     }
 }

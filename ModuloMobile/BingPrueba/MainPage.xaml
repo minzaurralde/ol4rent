@@ -30,27 +30,29 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,-23">
             <my:Map Mode="AerialWithLabels" Height="543" HorizontalAlignment="Left" Name="map1" VerticalAlignment="Top" Width="480" Margin="-12,0,0,0" />
 
-            <TextBlock Height="58" HorizontalAlignment="Left" Margin="12,549,0,0" Name="statusTextBlock" Text="Status TextBlock w/TextWrapping=&quot;Wrap&quot; turned on" VerticalAlignment="Top" Width="347" TextWrapping="Wrap" />
+            <TextBlock Height="58" HorizontalAlignment="Left" Margin="12,539,0,0" Name="statusTextBlock" Text="Status TextBlock w/TextWrapping=&quot;Wrap&quot; turned on" VerticalAlignment="Top" Width="347" TextWrapping="Wrap" />
 
-            <TextBlock Height="30" HorizontalAlignment="Left" Margin="12,603,0,0" Name="longitudeTextblock" Text="Long (Float)" VerticalAlignment="Top" />
-            <TextBlock Height="30" HorizontalAlignment="Left" Margin="272,603,0,0" Name="latitudeTextblock" Text="Lat (Float)" VerticalAlignment="Top" />
-            <Button Content="Track Me On Map" Height="72" HorizontalAlignment="Left" Margin="-12,471,0,0" Name="trackMe" VerticalAlignment="Top" Width="259" Click="trackMe_Click" />
-            <Button Content="Stop LocServ" Height="72" HorizontalAlignment="Right" Margin="0,471,0,0" Name="startStop" VerticalAlignment="Top" Width="218" Click="startStop_Click" />
+            <TextBlock Height="30" HorizontalAlignment="Left" Margin="335,480,0,0" Name="longitudeTextblock" Text="Long (Float)" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" />
+            <TextBlock Height="30" HorizontalAlignment="Left" Margin="317,460,0,0" Name="latitudeTextblock" Text="Lat (Float)" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" />
+            <!--<Button Content="Acercar" Height="72" HorizontalAlignment="Left" Margin="101,464,0,0" Name="trackMe" VerticalAlignment="Top" Width="259" Click="trackMe_Click" />-->
+            <!--<Button Content="Stop LocServ" Height="72" HorizontalAlignment="Right" Margin="0,471,0,0" Name="startStop" VerticalAlignment="Top" Width="218" Click="startStop_Click" />-->
             <!--<Button Content="Bienes Cercanos:" Height="68" HorizontalAlignment="Left" Margin="0,409,0,0" Name="button1" VerticalAlignment="Top" Width="247" Click="btnAdd_Click" />-->
-            <TextBlock Height="30" HorizontalAlignment="Left" Margin="250,430,0,0" Name="rescerc" Text="rescerc" VerticalAlignment="Top" />
+            <TextBlock Height="30" HorizontalAlignment="Left" Margin="39,513,0,0" Name="rescerc" Text="" VerticalAlignment="Top" />
+            <TextBlock Height="30" HorizontalAlignment="Left" Margin="245,480,0,0" Name="textBlock1" Text="Longitud:" VerticalAlignment="Top" OpacityMask="Black" Foreground="White" FontWeight="Bold" DataContext="{Binding}" />
+            <TextBlock Foreground="White" Height="30" HorizontalAlignment="Left" Margin="245,460,0,0" Name="textBlock2" OpacityMask="Black" Text="Latitud:" VerticalAlignment="Top" FontWeight="Bold" />
         </Grid>
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Opacity="0.9">
-            <shell:ApplicationBarIconButton IconUri="/Icons/plus.png" Text="Zoom In" Click="zoomIn_click"/>
-            <shell:ApplicationBarIconButton IconUri="/Icons/minus.png" Text="Zoom out" Click="zoomOut_click"/>
-            <shell:ApplicationBarIconButton IconUri="/Icons/A.png" Text="Aerial mode" Click="Aerial_click"/>
-            <shell:ApplicationBarIconButton IconUri="/Icons/R.png" Text="Road mode" Click="Road_click"/>
+            <shell:ApplicationBarIconButton IconUri="/Icons/plus.png" Text="Acercar" Click="zoomIn_click"/>
+            <shell:ApplicationBarIconButton IconUri="/Icons/minus.png" Text="Alejar" Click="zoomOut_click"/>
+            <shell:ApplicationBarIconButton IconUri="/Icons/A.png" Text="Modo Aereo" Click="Aerial_click"/>
+            <shell:ApplicationBarIconButton IconUri="/Icons/R.png" Text="Modo urbano" Click="Road_click"/>
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="Choose my position" Click="chooseMyPosition_click"/>
-                <shell:ApplicationBarMenuItem Text="Locate Me" Click="locateMe_click"/>
+                <shell:ApplicationBarMenuItem Text="Elegir mi posición" Click="chooseMyPosition_click"/>
+                <shell:ApplicationBarMenuItem Text="Localizarme" Click="locateMe_click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

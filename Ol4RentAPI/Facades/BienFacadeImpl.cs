@@ -620,7 +620,7 @@ namespace Ol4RentAPI.Facades
                 IQueryable<Bien> bienescer = 
                     (
                         from bienescerc in db.Bienes
-                        orderby Math.Pow((double)((double)bienescerc.Longitud - longitud), 2) - Math.Pow((double)((double)bienescerc.Latitud - latitud), 2)
+                        orderby Math.Pow((double)((double)bienescerc.Longitud - longitud), 2) + Math.Pow((double)((double)bienescerc.Latitud - latitud), 2)
                         select bienescerc
                     ).Take(10);
 
