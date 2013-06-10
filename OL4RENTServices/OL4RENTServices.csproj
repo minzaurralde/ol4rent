@@ -60,6 +60,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Global.asax" />
     <Content Include="NovedadesService.svc" />
     <Content Include="ServiceMobile.svc" />
     <Content Include="Web.config">
@@ -71,6 +72,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>bienescercanos.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="INovedadesService.cs" />
     <Compile Include="NovedadesService.svc.cs">
