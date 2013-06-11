@@ -6,16 +6,18 @@
 <h2>Resultados de la búsqueda</h2>
 @if(Model.Count() > 0) {
 <ul class="listado-bienes">
-@foreach (var item in Model) {
+@foreach (Ol4RentAPI.DTO.BienListadoDTO item in Model) {
     <li>
-        <div>
-            <img src="/Bien/Foto?idBien=@item.Id" height="100" width="120" />
+        <div class="bien-first">
+            <img src="@Url.Action("Foto", "Bien", new { idBien = @item.Id })" alt="@item.Titulo" />
+        </div>
+        <div class="bien-second">
             @Html.ActionLink(item.Titulo, "Details", "Bien", new { id=item.Id }, null)
             @if (item.MostrarMeGusta)
             {
-            <input type="button" value="Me Gusta" id="like-@item.Id" onclick="javascript: like(@item.Id);" />
+                <a href="" onclick="javascript:like(@item.Id,@item.CantidadLikes);" id="like-@item.Id"><img src="~/Images/like.png" width="25" height="25" /></a>
             }
-            <p>&nbsp;Likes: @item.CantidadLikes</p>
+            <span id="likes-@item.Id" class="likes">Likes: @item.CantidadLikes</span>
             <p>@Html.DisplayFor(modelItem => item.Descripcion)</p>
         </div>
     </li>

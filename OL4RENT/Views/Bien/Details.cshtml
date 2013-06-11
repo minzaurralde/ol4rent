@@ -84,7 +84,7 @@
         &nbsp;&nbsp;
     @if (ViewBag.MostrarMeGusta)
     {
-        <input type="button" value="Me Gusta" id="like-@Model.Id" onclick="javascript:like(@Model.Id,@Model.CantidadLikes);" />
+        <a href="" onclick="javascript:like(@Model.Id,@Model.CantidadLikes);" id="like-@Model.Id"><img src="~/Images/like.png" width="25" height="25" /></a>
     }
     </p>
 

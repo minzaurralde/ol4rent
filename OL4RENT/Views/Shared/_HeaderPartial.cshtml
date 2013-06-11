@@ -1,20 +1,28 @@
 ﻿@using Ol4RentAPI.DTO;
 @{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
 
-<p class="site-title">
+<div class="site-logo">
     <a href="@Url.Action("Index", "Home")">
         @if (sitio != null)
         {
-            @Html.Label(sitio.Nombre)
             <img src="@Url.Action("logo", "Sitio", new { idSitio = sitio.Id })" alt="@sitio.Nombre" /> 
         }
         else
         {
             <img src="~/Images/logo.png" alt="OL4RENT" />
-            
         }
     </a>
-</p>
+</div>
+<div class="site-title">
+    @if (sitio != null)
+    {
+        <a href="@Url.Action("Index", "Home")" class="title">
+            <span>@Html.Label(sitio.Nombre)</span>
+        </a>
+    } else {
+        <span>OL4RENT</span>
+    }
+</div>
 
 
 
