@@ -5,7 +5,7 @@
         processData: false,
         dataType: "json",
         success: function (data, status, xhr) {
-            // no hago nada
+            $("#inadecuado-" + id).text("Se ha marcado el contenido como inadecuado.");
         }
     });
 }

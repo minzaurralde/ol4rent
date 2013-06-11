@@ -234,7 +234,14 @@ namespace Ol4RentAPI.Facades
         public Boolean UsuarioHabilitadoEnSitio(String nombreUsuario, int idSitio)
         {
             Usuario u = ObtenerPorNombre(nombreUsuario);
-            return UsuarioHabilitadoEnSitio(u.Id, idSitio);
+            if (u == null)
+            {
+                return true;
+            }
+            else
+            {
+                return UsuarioHabilitadoEnSitio(u.Id, idSitio);
+            }
         }
 
 

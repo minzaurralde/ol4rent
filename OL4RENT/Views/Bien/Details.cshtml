@@ -71,13 +71,22 @@
     <legend>Bien</legend>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Titulo) <input type="button" value="Me Gusta" onclick="javascript: like(@Model.Id);" />
+        @Html.DisplayNameFor(model => model.Titulo)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Titulo)
     </div>
 
     <img src="@Url.Action("Foto", "Bien", new { idBien = @Model.Id })" alt="@Model.Titulo" />
+
+    <p id="likes-@Model.Id">
+        Likes: @Model.CantidadLikes
+        &nbsp;&nbsp;
+    @if (ViewBag.MostrarMeGusta)
+    {
+        <input type="button" value="Me Gusta" id="like-@Model.Id" onclick="javascript:like(@Model.Id,@Model.CantidadLikes);" />
+    }
+    </p>
 
     <div class="display-label">
         @Html.DisplayNameFor(model => model.Descripcion)
@@ -142,8 +151,11 @@
     </ol>
 </fieldset>
 <p>
-    @Html.ActionLink("Arrendar", "Arrendar", new { id=Model.Id}) |
-    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Arrendar", "Arrendar", new { id = Model.Id }) |
+    @if (@Model.Usuario == User.Identity.Name)
+    {
+        @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) <text> | </text>
+    }
     @Html.ActionLink("Volver a Mis " + nombreTipoBien + plural, "MisBienes")
 </p>
 
@@ -156,4 +168,3 @@
     @Scripts.Render("~/Scripts/meGusta.js")
     @Scripts.Render("~/Scripts/marcarInadecuado.js")
 }
-

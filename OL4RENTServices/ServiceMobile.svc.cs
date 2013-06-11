@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using Ol4RentAPI.DTO;
+using Ol4RentAPI.Facades;
 
 namespace OL4RENTServices
 {
@@ -30,41 +32,18 @@ namespace OL4RENTServices
             return composite;
         }
 
-        // Coneccion con la base de datos
-        bienescercanosDataContext dbc = new bienescercanosDataContext();
-
         /// <summary>
         /// Obtener Bienes Cercanos desde la ubicacion actual en el mobile
         /// </summary>
         /// <param name="latitud"></param>
         /// <param name="longitud"></param>
         /// <returns></returns>
-        public string ObtenerBienesCercanos(string latitud, string longitud)
+        public List<BienCercanoDTO> ObtenerBienesCercanos(string latitud, string longitud)
         {
+            double latd = double.Parse(latitud);
+            double longd = double.Parse(longitud);
 
-            decimal latd = decimal.Parse(latitud);
-            decimal longd = decimal.Parse(longitud);
-
-            var bienescercanosstr = "";
-            var bienescer = (from bienescerc in dbc.Bienes
-                             orderby Math.Pow((double)(bienescerc.Longitud - longd), 2) - Math.Pow((double)(bienescerc.Latitud - latd), 2)
-                             select Math.Pow((double)(bienescerc.Longitud - longd), 2) - Math.Pow((double)(bienescerc.Latitud - latd), 2)
-                            ).Take(10);
-
-            //// devuelve en uan lista los ids. de lso bienes cercanos
-            bienescercanosstr = "";
-
-            foreach (var bienesmin in bienescer)
-            {
-                bienescercanosstr = bienescercanosstr + bienesmin.ToString() + "-";
-            }
-
-            //// Mientras no hallan bienes ingresados
-            //// Por el momento retorna lista fija de pruebas
-            bienescercanosstr = bienescercanosstr + "1010-1020-1030-1040-1050";
-
-            return bienescercanosstr;
-
+            return ServiceFacadeFactory.Instance.BienFacade.ObtenerBienesCercanos(longd, latd);
         }
 
     }

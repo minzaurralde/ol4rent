@@ -100,6 +100,7 @@ namespace Ol4RentAPI.DTO
         //Propiedades del Tipo de Bien
         [Display(Name = "Características esecíficas del bien")]
         public virtual List<ValorCaracteristicaListadoDTO> ValoresCaracteristicas { get; set; }
+        public int CantidadLikes { get; set; }
     }
     public class BienListadoDTO
     {
@@ -115,6 +116,9 @@ namespace Ol4RentAPI.DTO
         public decimal Latitud { get; set; }
         [Display(Name = "Longitud")]
         public decimal Longitud { get; set; }
+        public bool MostrarMeGusta { get; set; }
+        public int CantidadLikes { get; set; }
+        public string Propietario { get; set; }
     }
     public class BienArrendarDTO
     {

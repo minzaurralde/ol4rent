@@ -25,27 +25,30 @@
             <div>
                 <small>@Html.DisplayFor(modelItem => item.NombreUsuario)</small>
             </div>
-            <input type="button" value="Inadecuado" onclick="javascript: inadecuado(@item.Id);" />
-           
+            <p id="inadecuado-@item.Id">
+                <input type="button" value="Inadecuado" onclick="javascript: inadecuado(@item.Id);" />
+            </p>
+
         </li>
     }
 </ul>
 <h3>Agregar comentario</h3>
-@using (Html.BeginForm("AgregarComentario", "Bien", FormMethod.Post)) {
+@using (Html.BeginForm("AgregarComentario", "Bien", FormMethod.Post))
+{
 
-<fieldset>
-    <legend>Agregar Comentario</legend>
-    @Html.Hidden("idBien", (int) ViewBag.IdBien)
-    <div>
-        @Html.Label("texto", "Comentario")
-        @Html.TextArea("texto")
-    </div>
-    <div>
-        @Html.Label("adjuntos", "Adjuntos")
-        <input type="file" multiple="multiple" name="adjuntos" />
-    </div>
-    <input type="submit" value="Agregar" />
-</fieldset>
+    <fieldset>
+        <legend>Agregar Comentario</legend>
+        @Html.Hidden("idBien", (int)ViewBag.IdBien)
+        <div>
+            @Html.Label("texto", "Comentario")
+            @Html.TextArea("texto")
+        </div>
+        <div>
+            @Html.Label("adjuntos", "Adjuntos")
+            <input type="file" multiple="multiple" name="adjuntos" />
+        </div>
+        <input type="submit" value="Agregar" />
+    </fieldset>
 
 }
 

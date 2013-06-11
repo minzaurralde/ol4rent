@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Data.Objects.SqlClient;
 
 namespace Ol4RentAPI.Facades
 {
@@ -79,7 +80,7 @@ namespace Ol4RentAPI.Facades
                         //similarly BCC
                         mail.Subject = "Se arrendo un bien suyo";
                         var body = "Estimado Cliente, se a Arrendado el Bien: " + bien.Titulo + "\n";
-                        body = body + "Desde la fehca: " + bien.FechaAlquiler.ToString() + "\n";
+                        body = body + "Desde la fecha: " + bien.FechaAlquiler.ToString() + "\n";
                         body = body + "Por un periodo: " + bien.DuracionAlquiler.ToString();
                         mail.Body = body;
                         sc.Host = "smtp.gmail.com";
@@ -294,26 +295,12 @@ namespace Ol4RentAPI.Facades
                     huboBusqueda = true;
                     bienes = bienes.Where(b => b.Normas.ToLower().Contains(templateBien.Normas.ToLower())).ToList();
                 }
-                // busco por capacidad
-                int capacidadMinima = int.MinValue;
-                int capacidadMaxima = int.MaxValue;
-                try
+                // busco por propietario
+                if (templateBien.Propietario != null && templateBien.Propietario.Trim() != "")
                 {
-                    capacidadMinima = int.Parse(templateBien.CapacidadMinima);
                     huboBusqueda = true;
+                    bienes = bienes.Where(b => b.Usuario.NombreUsuario.ToLower().Contains(templateBien.Propietario.ToLower())).ToList();
                 }
-                catch
-                {
-                }
-                try
-                {
-                    capacidadMaxima = int.Parse(templateBien.CapacidadMaxima);
-                    huboBusqueda = true;
-                }
-                catch
-                {
-                }
-                bienes = bienes.Where(b => b.Capacidad <= capacidadMaxima && b.Capacidad >= capacidadMinima).ToList();
                 // busco por precio
                 decimal precioMinimo = decimal.MinValue;
                 decimal precioMaximo = decimal.MaxValue;
@@ -344,10 +331,22 @@ namespace Ol4RentAPI.Facades
                         {
                             bienes = bienes.Where(b => b.ValoresCaracteristicas.Where(vc => vc.Caracteristica.Id == valorCaracteristica.IdCaracteristica && vc.Valor.ToLower().Contains(valorCaracteristica.Valor.ToLower())).Count() > 0).ToList();
                         }
+                        else if (caracteristica.Tipo == TipoDato.BOOLEANO)
+                        {
+                            bool valor;
+                            if (bool.TryParse(valorCaracteristica.Valor, out valor))
+                            {
+                                if (valor)
+                                {
+                                    bienes = bienes.Where(b => b.ValoresCaracteristicas.Where(vc => vc.Caracteristica.Id == valorCaracteristica.IdCaracteristica && vc.Valor == valorCaracteristica.Valor).Count() > 0).ToList();
+                                }
+                            }
+                        }
                         else
                         {
                             bienes = bienes.Where(b => b.ValoresCaracteristicas.Where(vc => vc.Caracteristica.Id == valorCaracteristica.IdCaracteristica && vc.Valor == valorCaracteristica.Valor).Count() > 0).ToList();
                         }
+                        huboBusqueda = true;
                     }
                 }
                 // retorno
@@ -399,18 +398,18 @@ namespace Ol4RentAPI.Facades
                             select mgg.Key;
                         if (query.Count() > 0)
                         {
-                            return AutoMapperUtils<Bien, BienListadoDTO>.Map(query.ToList());
+                            return AutoMapperUtils<Bien, BienListadoDTO>.Map(query.Take(maximaCantidadPopulares).ToList());
                         }
                         else
                         {
                             // Si la query es vacia, es porque ningun bien tiene marcas de me gusta
                             // Devuelvo todos
                             query =
-                            from b in db.Bienes
-                            where b.TipoBien.Sitio.Id == sitio.Id
-                            select b;
+                                from b in db.Bienes
+                                where b.TipoBien.Sitio.Id == sitio.Id
+                                select b;
                             if (query.Count() > 0)
-                                return AutoMapperUtils<Bien, BienListadoDTO>.Map(query.ToList());
+                                return AutoMapperUtils<Bien, BienListadoDTO>.Map(query.Take(maximaCantidadPopulares).ToList());
                             else
                                 return new List<BienListadoDTO>();
                         }
@@ -492,13 +491,15 @@ namespace Ol4RentAPI.Facades
                 IQueryable<Bien> query =
                     from b in db.Bienes
                     where b.TipoBien.Sitio.Id == idSitio
+                    where b.FechaAlta >= fechaInicio
+                    where b.FechaAlta <= fechaFin
                     select b;
                 if (diff.Days > 750)
                 {
                     return new RegistroBienDTO()
                     {
                         Valores = query
-                            .GroupBy(b => b.FechaAlquiler.Value.ToString("yyyy"))
+                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Year).Trim())
                             .Select(mes => new ValorRegistroBienDTO() { Etiqueta = mes.Key, Cantidad = mes.Count() })
                             .ToList(),
                         Tipo = "Año"
@@ -509,7 +510,7 @@ namespace Ol4RentAPI.Facades
                     return new RegistroBienDTO()
                     {
                         Valores = query
-                            .GroupBy(b => b.FechaAlquiler.Value.ToString("MMMM yyyy"))
+                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Month).Trim() + "-" + SqlFunctions.StringConvert((decimal)b.FechaAlta.Year).Trim())
                             .Select(mes => new ValorRegistroBienDTO() { Etiqueta = mes.Key, Cantidad = mes.Count() })
                             .ToList(),
                         Tipo = "Mes"
@@ -520,7 +521,7 @@ namespace Ol4RentAPI.Facades
                     return new RegistroBienDTO()
                     {
                         Valores = query
-                            .GroupBy(b => b.FechaAlquiler.Value.ToString("dd MMMM"))
+                            .GroupBy(b => SqlFunctions.StringConvert((decimal)b.FechaAlta.Day).Trim() + "-" + SqlFunctions.StringConvert((decimal)b.FechaAlta.Month).Trim())
                             .Select(dia => new ValorRegistroBienDTO() { Etiqueta = dia.Key, Cantidad = dia.Count() })
                             .ToList(),
                         Tipo = "Día"
@@ -533,14 +534,22 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
-                Usuario usuario = (from usu in db.Usuarios where usu.NombreUsuario == nombreUsuario select usu).First();
-                Bien bien = db.Bienes.Find(idBien);
-                if (bien.Usuario.NombreUsuario != nombreUsuario)
+                IQueryable<MeGusta> queryVerificacion =
+                    from mg in db.MeGusta
+                    where mg.Usuario.NombreUsuario == nombreUsuario
+                    where mg.Bien.Id == idBien
+                    select mg;
+                if (queryVerificacion.Count() == 0)
                 {
-                    MeGusta megusta = new MeGusta() { Fecha = DateTime.Now, Usuario = usuario, Bien = bien };
-                    db.MeGusta.Add(megusta);
-                    db.SaveChanges();
-				}
+                    Usuario usuario = (from usu in db.Usuarios where usu.NombreUsuario == nombreUsuario select usu).First();
+                    Bien bien = db.Bienes.Find(idBien);
+                    if (bien.Usuario.NombreUsuario != nombreUsuario)
+                    {
+                        MeGusta megusta = new MeGusta() { Fecha = DateTime.Now, Usuario = usuario, Bien = bien };
+                        db.MeGusta.Add(megusta);
+                        db.SaveChanges();
+                    }
+                }
 			}
 		}
 
@@ -557,6 +566,80 @@ namespace Ol4RentAPI.Facades
                 {
                     return null;
                 }
+            }
+        }
+
+
+        public bool PuedeMostrarMeGusta(int idBien)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                string nombreUsuario = HttpContext.Current.User.Identity.Name;
+                IQueryable<Usuario> queryUsuario =
+                    from usu in db.Usuarios where usu.NombreUsuario == nombreUsuario select usu;
+                if (queryUsuario.Count() == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    Usuario usuario = queryUsuario.First();
+                    if (usuario == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        Bien bien = db.Bienes.Find(idBien);
+                        if (bien == null)
+                        {
+                            return false;
+                        }
+                        else if (bien.Usuario.Id.Equals(usuario.Id))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            IQueryable<MeGusta> query =
+                                from mg in db.MeGusta
+                                where mg.Usuario.NombreUsuario == nombreUsuario
+                                where mg.Bien.Id == idBien
+                                select mg;
+                            return query.Count() == 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        public List<BienCercanoDTO> ObtenerBienesCercanos(double longitud, double latitud)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Bien> bienescer = 
+                    (
+                        from bienescerc in db.Bienes
+                        orderby Math.Pow((double)((double)bienescerc.Longitud - longitud), 2) + Math.Pow((double)((double)bienescerc.Latitud - latitud), 2)
+                        select bienescerc
+                    ).Take(10);
+
+                return AutoMapperUtils<Bien, BienCercanoDTO>.Map(bienescer.ToList());
+            }
+        }
+
+        public int CantidadLikes(int idBien)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<MeGusta> query =
+                    (
+                        from mg in db.MeGusta
+                        where mg.Bien.Id == idBien
+                        select mg
+                    );
+
+                return query.Count();
             }
         }
     }

@@ -478,6 +478,15 @@ textarea {
         margin-right: 4px;
     }
 
+#listado-bienes {
+    list-style-image: none;
+}
+
+    #listado-bienes li {
+        list-style: none;
+        list-style-type: none;
+    }
+
 /* info and errors */
 .message-info {
     border: 1px solid;
@@ -888,7 +897,7 @@ tr.pager td {
     {
         float: left;
         width: 285px;
-        font-size: 7px;
+        font-size: 11px;
         border-color: blue;
     }
 

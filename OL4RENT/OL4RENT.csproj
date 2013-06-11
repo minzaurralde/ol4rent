@@ -243,8 +243,10 @@
     <Content Include="Global.asax" />
     <Content Include="App_Code\TwitterGoodies.cshtml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Images\sinfoto.png" />
     <Content Include="Images\twitter.png" />
     <Content Include="Scripts\marcarInadecuado.js" />
+    <Content Include="Scripts\busquedaAvanzada.js" />
     <Content Include="Scripts\crearBien.js" />
     <Content Include="Scripts\crearWish.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
