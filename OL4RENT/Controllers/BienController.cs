@@ -393,5 +393,27 @@ namespace OL4RENT.Controllers
             ServiceFacadeFactory.Instance.ContenidoFacade.Agregar(dto); 
             return new RedirectResult(Request.UrlReferrer.AbsoluteUri);
         }
+
+        [HttpGet]
+        public RedirectResult Inadecuado(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                ServiceFacadeFactory.Instance.ContenidoFacade.MarcarInadecuado(id);
+            }
+            return Redirect(Request.UrlReferrer.AbsoluteUri);
+        }
+
+        [HttpPost]
+        [ActionName("Inadecuado")]
+        public JsonResult InadecuadoPost(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                ServiceFacadeFactory.Instance.ContenidoFacade.MarcarInadecuado(id);
+            }
+            return new JsonResult() { Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
     }
 }
