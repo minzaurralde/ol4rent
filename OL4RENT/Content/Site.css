@@ -46,19 +46,15 @@ mark {
 }
 
     .busqueda-avanzada {
-        font-size:0.7em;
-    }
-
-    .busqueda-avanzada {
         text-align:right;
         font-size:0.8em;
     }
 
 .header {
-    display:block;
+    display: block;
     text-align: center;
     vertical-align: central;
-    float:left;
+    float: left;
 }
 
     .header a img {
@@ -124,17 +120,19 @@ h5, h6 {
 ----------------------------------------------------------*/
 .content-wrapper {
     margin: 0 auto;
-    max-width: 960px;
+    width: 950px;
 }
 
 #body {
-    background-color: #efeeef;
     clear: both;
+}
+
+#body .content-wrapper {
+    background-color: #efeeef;
     padding-bottom: 35px;
 }
 
     .main-content {
-        padding-left: 10px;
         padding-top: 30px;
     }
 
@@ -143,11 +141,14 @@ header .content-wrapper {
 
 footer {
     clear: both;
-    background-color: #e2e2e2;
     font-size: .8em;
     height: 100px;
 }
 
+footer .content-wrapper {
+    background-color: #e2e2e2;
+    height:100%;
+}
 
 /* site title
 ----------------------------------------------------------*/
@@ -283,7 +284,6 @@ hgroup.title h2 {
 
 /* features */
 section.feature {
-    width: 300px;
     float: left;
     padding: 10px;
 }
@@ -511,7 +511,7 @@ textarea {
     list-style-image: none;
     list-style-type: none;
     list-style: none;
-    width:420px;
+    width:400px;
 }
     .listado-bienes li {
         height: 150px;
@@ -557,13 +557,14 @@ textarea {
     list-style-image: none;
     list-style-type: none;
     list-style: none;
-    max-width: 450px;
+    max-width: 440px;
 }
 
     .listado-novedades li {
         margin-top: 10px;
         margin-left: -20px;
         border-bottom: 1px solid #908B8B;
+        max-width: 430px;
     }
 
     .listado-novedades li:last-of-type {
@@ -581,6 +582,17 @@ textarea {
         color: #908B8B;
         display:inline;
     }
+
+    .listado-novedades li div p {
+        width: 420px;
+    }
+
+/* Mapa */
+
+#map-canvas {
+    width: 400px;
+    height: 200px;
+}
 
 /* info and errors */
 .message-info {
