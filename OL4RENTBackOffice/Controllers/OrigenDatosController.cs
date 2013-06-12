@@ -215,7 +215,10 @@ namespace OL4RENTBackOffice.Controllers
         // GET: /OrigenDatos/Configurar
         public ActionResult EliminarConfiguracion(int id)
         {
-            return View(ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerConfiguracionParaEdicion(id));
+            ConfiguracionOrigenDatosEdicionDTO config = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerConfiguracionParaEdicion(id);
+            int siteid = config.IdSitio;
+            ServiceFacadeFactory.Instance.OrigenDatosFacade.EliminarConfiguracion(id);
+            return RedirectToAction("ListarPorSitio", "OrigenDatos", new { idSitio = siteid });
         }
 
         //
@@ -224,8 +227,10 @@ namespace OL4RENTBackOffice.Controllers
         [ActionName("EliminarConfiguracion")]
         public ActionResult EliminarConfiguracionConfirm(int id)
         {
+            ConfiguracionOrigenDatosEdicionDTO config = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerConfiguracionParaEdicion(id);
+            int siteid = config.IdSitio;
             ServiceFacadeFactory.Instance.OrigenDatosFacade.EliminarConfiguracion(id);
-            return RedirectToAction("ListarPorSitio", "OrigenDatos");
+            return RedirectToAction("ListarPorSitio", "OrigenDatos", new { idSitio = siteid });
         }
 
         // GET: /OrigenDatos/Atributos/5
