@@ -408,8 +408,21 @@ aside {
     }
 
 #socialLoginList button {
-    margin-bottom: 12px;
+    margin-bottom: 0px;
+    padding:0;
+    border: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -khtml-border-radius: 0px;
+    border-radius: 0px;
+    width: 34px;
+    height: 34px;
 }
+
+    #socialLoginList button img {
+        width: 34px;
+        height: 34px;
+    }
 
 #logoutForm {
     display: inline;
@@ -467,6 +480,10 @@ input, textarea {
     margin: 5px 0 6px 0;
     padding: 5px;
     width: 300px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    border-radius: 3px;
 }
 
 textarea {
@@ -490,11 +507,15 @@ textarea {
         background-color: #d3dce0;
         border: 1px solid #787878;
         cursor: pointer;
-        font-size: 1.2em;
+        font-size: 1em;
         font-weight: 600;
-        padding: 7px;
+        padding: 6px;
         margin-right: 8px;
         width: auto;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -khtml-border-radius: 3px;
+        border-radius: 3px;
     }
 
     td input[type="submit"],
