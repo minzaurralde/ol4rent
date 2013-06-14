@@ -7,14 +7,18 @@
     {
         nombreTipoBien = @sitio.NombreTipoBien;
     }
-    ViewBag.Title = "Busqueda Avanzada de " + nombreTipoBien;
+    
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
-@using (Html.BeginForm()) {
-    <ul>
-        <li>
+<h2>Busqueda Avanzada de<BR>@nombreTipoBien</h2>
+@using (Html.BeginForm())
+{
+    
+    <fieldset>
+       <legend>Inicio de sesión</legend>
+       <ol>
+       <li>
             @Html.LabelFor(model => model.Titulo)
             @Html.TextBoxFor(model => model.Titulo)
         </li>
@@ -80,8 +84,9 @@
                 }
             </li>
             }
+            </ol>
+    </fieldset>   
 
-    </ul>
     <input type="submit" value="Buscar" />
 }
 @section Scripts {

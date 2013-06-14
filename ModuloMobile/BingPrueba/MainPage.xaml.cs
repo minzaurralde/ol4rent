@@ -129,7 +129,7 @@ namespace BingPrueba
                        new DownloadStringCompletedEventHandler(proxy_DownloadStringCompleted);
             proxy.DownloadStringAsync(new Uri(ServiceUri));
 
-            this.ubicarenmapa(SharedInformation.myLatitude, SharedInformation.myLongitude, SharedInformation.myZoom);
+            this.ubicarenmapa(SharedInformation.myLatitude, SharedInformation.myLongitude, SharedInformation.myZoom,"");
 
             // update the map if the user has asked to be tracked.
             if (trackingOn)
@@ -183,13 +183,19 @@ namespace BingPrueba
             this.map1.Children.Add(pin);          
         }
 
-        private void ubicarenmapa(double latitude, double longitud, int zoom)
+        private void ubicarenmapa(double latitude, double longitud, int zoom, string agregadoComentario)
         {
             Pushpin p = new Pushpin();
             p.Background = new SolidColorBrush(Colors.Yellow);
             p.Foreground = new SolidColorBrush(Colors.Black);
             p.Location = new GeoCoordinate(latitude, longitud);
             p.Content = "Coordenadas actuales";
+
+            if (agregadoComentario.Trim() != "")
+            {
+                p.Content = p.Content + "\n" + agregadoComentario;
+            }
+
             map1.Children.Add(p);
             map1.SetView(new GeoCoordinate(latitude, longitud, 200), zoom);
             map1.ZoomLevel = zoom;
@@ -197,7 +203,7 @@ namespace BingPrueba
 
         private void locateMe_click(object sender, EventArgs e)
         {
-            this.ubicarenmapa(SharedInformation.myLatitude, SharedInformation.myLongitude, SharedInformation.myZoom);
+            this.ubicarenmapa(SharedInformation.myLatitude, SharedInformation.myLongitude, SharedInformation.myZoom,"");
         }
 
         public class workspace
@@ -219,78 +225,87 @@ namespace BingPrueba
 
             //// Primero borrar todos los puntos del mapa
             map1.Children.Clear();
-            //// Marco la coordenada actual
-            this.ubicarenmapa(SharedInformation.myLatitude, SharedInformation.myLongitude, SharedInformation.myZoom);
 
+            //// Se toma el resultado de la llamada remota
             string result = e.Result;
-            result = result.Replace("[", "");
-            result = result.Replace("]", "");
-            result = result.Replace(",\"", "#\"");
 
-            double latituda = 0, longituda = 0;
-            string datosbiendesp = "";
-
-            //// Recorrida de cada bien
-            string[] partes = Regex.Split(result, "},{");
-            foreach (string line in partes)
+            if ((result.Trim() == "") || (result.Trim() == "[]"))
             {
-                datosbiendesp = "";
-
-                string lineaactual = line.Replace("{","");
-                lineaactual = lineaactual.Replace("}", "");
-                lineaactual = lineaactual.Replace("\"", "");
-
-                //// cada campo
-                string titulobien = "";
-                string[] campos = Regex.Split(lineaactual,"#");
-                string tipodebien = "";
-                string direccion = "", normas = "";
-                int capacidad = 0;
-                double precio = 0;
-                foreach (string subcampo in campos)
-                {
-                    //// los valores
-                    string[] atributos = Regex.Split(subcampo, ":");
-                    string atibutobien = atributos[0];
-                    string valorbien = atributos[1];
-
-                    switch (atibutobien)
-                    {
-                        case "Titulo":
-                            titulobien = valorbien;
-                            break;
-                        case "Latitud":
-                            latituda = double.Parse(valorbien);
-                            break;
-                        case "Longitud":
-                            longituda = double.Parse(valorbien);
-                            break;     
-                        case "TipoDeBien":
-                            tipodebien = valorbien;
-                            break;
-                        case "Direccion":
-                            direccion = valorbien;
-                            break;
-                        case "Normas":
-                            normas = valorbien;
-                            break;
-                        case "Capacidad":
-                            capacidad = int.Parse(valorbien);
-                            break;
-                        case "Precio":
-                            precio = double.Parse(valorbien);
-                            break;
-                        case "Id":
-                            break;
-                        default:                            
-                            break;
-                    }                   
-
-                }
-
-                marcarpunto(latituda, longituda, titulobien + "\nTipo: " + tipodebien + "\n\nDirección: " + direccion + "\nCapacidad: " + capacidad + "\nPrecio: " + precio + "\nNormas: " + normas);
-
+                this.ubicarenmapa(SharedInformation.myLatitude, SharedInformation.myLongitude, SharedInformation.myZoom, "No hay bienes ingresados al momento !!!");
             }
+            else 
+            {
+                //// Marco la coordenada actual
+                this.ubicarenmapa(SharedInformation.myLatitude, SharedInformation.myLongitude, SharedInformation.myZoom,"");
+
+                result = result.Replace("[", "");
+                result = result.Replace("]", "");
+                result = result.Replace(",\"", "#\"");
+
+                double latituda = 0, longituda = 0;
+
+                //// Recorrida de cada bien
+                string[] partes = Regex.Split(result, "},{");
+                foreach (string line in partes)
+                {
+                    string lineaactual = line.Replace("{", "");
+                    lineaactual = lineaactual.Replace("}", "");
+                    lineaactual = lineaactual.Replace("\"", "");
+
+                    //// cada campo
+                    string titulobien = "";
+                    string[] campos = Regex.Split(lineaactual, "#");
+                    string tipodebien = "";
+                    string direccion = "", normas = "";
+                    int capacidad = 0;
+                    double precio = 0;
+                    foreach (string subcampo in campos)
+                    {
+                        //// los valores
+                        string[] atributos = Regex.Split(subcampo, ":");
+                        string atibutobien = atributos[0];
+                        string valorbien = atributos[1];
+
+                        switch (atibutobien)
+                        {
+                            case "Titulo":
+                                titulobien = valorbien;
+                                break;
+                            case "Latitud":
+                                latituda = double.Parse(valorbien);
+                                break;
+                            case "Longitud":
+                                longituda = double.Parse(valorbien);
+                                break;
+                            case "TipoDeBien":
+                                tipodebien = valorbien;
+                                break;
+                            case "Direccion":
+                                direccion = valorbien;
+                                break;
+                            case "Normas":
+                                normas = valorbien;
+                                break;
+                            case "Capacidad":
+                                capacidad = int.Parse(valorbien);
+                                break;
+                            case "Precio":
+                                precio = double.Parse(valorbien);
+                                break;
+                            case "Id":
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }
+
+                    /// su ubica el bien en el mapa
+                    marcarpunto(latituda, longituda, titulobien + "\nTipo: " + tipodebien + "\n\nDirección: " + direccion + "\nCapacidad: " + capacidad + "\nPrecio: " + precio + "\nNormas: " + normas);
+
+                } /// fin del for de la recorrida
+
+            } /// Si hay al menos un bien ingresado
 
 
         }

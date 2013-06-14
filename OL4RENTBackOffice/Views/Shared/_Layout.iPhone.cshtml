@@ -2,37 +2,31 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Ol4RENT - @ViewBag.Title</title>
+        <title>@ViewBag.Title - OL4RENT - BackOffice</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" /
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
-        @Scripts.Render("~/Scripts/jquery-1.7.1.js")
-        @Styles.Render("~/Content/Siteip.css")
     </head>
     <body>
         <header>
             <div class="content-wrapper">
-                <div class="header">
-                    @Html.Partial("_HeaderPartialIPhone")                    
-                </div>
                 <div class="float-left">
-                    <section id="login">
-                        @Html.Partial("_LoginPartialMobile")
-                    </section>
+                    <p class="site-title"><a href="@Url.Action("Index", "Home")"><img src="~/Images/logo.png" alt="OL4RENT" /></a></p>
                 </div>
+
+                <div class="header">
+                    <label style="font-size: 25px; color: #7F7F7F; text-align: center">
+                        <b>EDICIÓN IPHONE</B>
+                    </label>
+                </div>
+
                 <div class="float-right">
-                    <!-- Form de Busqueda -->
-                    <div>
-                    @using (Html.BeginForm("Buscar", "Bien")) {
-                        @Html.ValidationSummary(true)
-                        @Html.TextBox("query")
-                        <input type="submit" value="Buscar" name="Buscar" id="buscar" />
-                    }
-                    </div>
-                    <div class="busqueda-avanzada">
-                        @Html.ActionLink("Búsqueda avanzada", "BusquedaAvanzada", "Bien")
-                    </div>
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    @Html.Partial("Menu")
                 </div>
             </div>
         </header>
@@ -45,7 +39,7 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - OL4RENT - TSI1, Grupo 6 - Edición Mobile iPhone</p>
+                    <p>&copy; @DateTime.Now.Year - OL4RENT - BackOffice - Edición IPhone</p>
                 </div>
             </div>
         </footer>

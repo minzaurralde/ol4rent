@@ -6,7 +6,7 @@
 
 body {
     /*background-color: #fff;*/
-    background-color: #00ff00;
+    background-color: #a6dbed;
     border-top: solid 10px #000;
     color: #333;
     font-size: .85em;
@@ -40,16 +40,52 @@ mark {
 }
 
 #busqueda {
-    padding-top: 90px;
+
+    position: relative;    
+    left: -180px;     
+
+    padding-top: 180px;
     display: block;
-    float: right;
+    float: left;
     vertical-align: bottom;
 }
 
     .busqueda-avanzada {
-        text-align:right;
+        text-align:left;
         font-size:0.8em;
     }
+
+#query
+{
+    width: 280px;
+    
+}
+#Nombre
+{
+    width: 280px;
+}
+#Apellido
+{
+    width: 280px;
+}
+#Mail
+{
+    width: 280px;
+}
+#NombreUsuario
+{
+    width: 280px;
+}
+#ConfirmPassword
+{
+    width: 280px;
+}
+
+input[type='text'], input[type='password']
+{
+    width: 280px;
+}
+
 
 .header {
     display: block;
@@ -72,7 +108,7 @@ mark {
     float: left;
 }
 
-.float-right {
+.float-right {   
     float: right;
 }
 
@@ -141,28 +177,41 @@ header .content-wrapper {
 }
 
 footer {
+    background-color: #e2e2e2;
     clear: both;
     font-size: .8em;
     height: 100px;
+    
 }
 
 footer .content-wrapper {
     background-color: #e2e2e2;
     height:100%;
+    width: 300px;
+    text-align: center;
 }
 
 /* site title
 ----------------------------------------------------------*/
-.site-logo {
-    display:inline;  
+.site-logo {    
+    flex-align: center;    
 }
 .site-title {
-    display:inline;
-    color: #3D5E3A;
+    /*display:inline;*/
+    color: #3D5E3A;      
     font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
-    font-size: 2.3em;
+    font-size: 1.6em;    
     margin: 0;
-    vertical-align: central;
+    vertical-align: central;   
+
+    position: absolute;
+    padding-top: 88px;
+
+    /*padding-top: 150px;
+    display: block;
+    float: left;
+    vertical-align: bottom;*/
+
 }
 
 .site-title a, .site-title a:hover, .site-title a:active {
@@ -172,7 +221,7 @@ footer .content-wrapper {
 }
 
     .site-title span, .site-title a span {
-        padding-top: 60px;
+        /*padding-top: 60px;*/
     }
 
 
@@ -201,10 +250,12 @@ footer .content-wrapper {
     }
 
     #login ul {
-        background-color: #A2A5A2;
+        background-color: #FFFFFF;
         margin: 0;
         padding: 10px;
-        padding: 5px 5px 5px 5px;
+        /*padding: 5px 5px 5px 5px;*/
+        width: 300px;
+        text-align: center;
     }
 
     #login li {

@@ -4,6 +4,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.WebPages;
 
 namespace OL4RENTBackOffice
 {
@@ -20,6 +21,35 @@ namespace OL4RENTBackOffice
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //////// Deteccion de dispositivo móbil            
+
+            DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("WindowsPhone")
+            {
+                ContextCondition = (context => context.GetOverriddenUserAgent().IndexOf
+                    ("Windows Phone OS", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            });
+
+            DisplayModeProvider.Instance.Modes.Insert(1, new DefaultDisplayMode("iPhone")
+            {
+                ContextCondition = (context => context.GetOverriddenUserAgent().IndexOf
+                    ("iPhone", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            });
+
+            DisplayModeProvider.Instance.Modes.Insert(2, new DefaultDisplayMode("Android")
+            {
+                ContextCondition = (context => context.GetOverriddenUserAgent().IndexOf
+                    ("Android", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            });
+
+            DisplayModeProvider.Instance.Modes.Insert(3, new DefaultDisplayMode("Mobile")
+            {
+                ContextCondition = (context => context.GetOverriddenUserAgent().IndexOf
+                    ("Mobile", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            });
+
+            //////// Fin Deteccion de dispositivo móbil
+
             AuthConfig.RegisterAuth();
 
             AutoMapperInitializer.Inicializar();

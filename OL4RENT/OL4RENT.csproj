@@ -183,6 +183,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Bundles\register-validations.js" />
+    <Content Include="Content\Sitean.css" />
+    <Content Include="Content\Siteip.css" />
+    <Content Include="Content\Sitewp.css" />
     <Content Include="Images\facebook.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -335,13 +338,13 @@
     <Content Include="Views\Shared\_Layout.Android.cshtml" />
     <Content Include="Views\Shared\_HeaderPartialAndroid.cshtml" />
     <Content Include="Views\Shared\_Layout.WindowsPhone.cshtml" />
-    <Content Include="Views\Shared\_HeaderPartialWindowsPhone.cshtml" />
-    <Content Include="Views\Shared\_LoginPartialWindowsPhone.cshtml" />
     <Content Include="Views\Shared\_Layout.iPhone.cshtml" />
     <Content Include="Views\Shared\_HeaderPartialIPhone.cshtml" />
     <Content Include="Views\Wish\Mapa.cshtml" />
     <Content Include="Views\Bien\Arrendar.cshtml" />
     <Content Include="Views\Bien\Comentarios.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialWindowsPhone.cshtml" />
+    <Content Include="Views\Shared\_HeaderPartialWindowsPhone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

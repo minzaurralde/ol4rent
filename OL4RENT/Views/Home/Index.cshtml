@@ -8,7 +8,25 @@
                 <!-- Vista de bienes populares -->
                 @Html.Partial("../Bien/Populares", Model.BienesPopulares)
             </div>
-            <div class="float-right">
+
+            @{
+                
+            string estiloc = "<div class='float-right'>";
+            string estilof = "</div>";
+            string userAgentActual = Request.UserAgent.ToLower();
+            bool esDispositivoMovil = false;
+            if (userAgentActual.Contains("iphone") || userAgentActual.Contains("android") || userAgentActual.Contains("windows phone") || userAgentActual.Contains("mobile"))
+            {
+                esDispositivoMovil = true;
+                estiloc = "<br><br><br><br>";
+                estilof = "";
+            }
+            
+            }              
+
+            @if (esDispositivoMovil) { <br><br><br><br> }
+            
+
                 <div>
                     <!-- Mapa -->
                     @Html.Partial("../Bien/Mapa", Model.BienesPopulares)
@@ -17,7 +35,10 @@
                     <!-- Novedades -->
                     @Html.Partial("../Novedad/List", Model.ListaNovedades)
                 </div>
-            </div>
+            @if (esDispositivoMovil) { }
+               
+            
+
         </div>
 }
 
