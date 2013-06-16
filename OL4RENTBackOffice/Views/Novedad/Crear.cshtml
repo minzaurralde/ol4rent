@@ -1,0 +1,69 @@
+﻿@model Ol4RentAPI.DTO.NovedadAltaDTO
+
+@{
+    Ol4RentAPI.DTO.SitioEdicionDTO sitio = ViewBag.Sitio;
+    ViewBag.Title = "Crear nueva novedad local";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Novedad</legend>
+
+        @Html.Hidden("idSitio", sitio.Id)
+
+        <div class="editor-label">  
+            @Html.LabelFor(model => model.Nombre)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nombre)
+            @Html.ValidationMessageFor(model => model.Nombre)
+        </div>
+
+        <div class="editor-label">  
+            @Html.LabelFor(model => model.Contenido)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Contenido)
+            @Html.ValidationMessageFor(model => model.Contenido)
+        </div>
+
+        <div class="editor-label">  
+            @Html.LabelFor(model => model.FechaHora)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FechaHora)
+            @Html.ValidationMessageFor(model => model.FechaHora)
+        </div>
+
+        <div class="editor-label">  
+            @Html.LabelFor(model => model.Prioridad)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Prioridad)
+            @Html.ValidationMessageFor(model => model.Prioridad)
+        </div>
+
+        <div class="editor-label">  
+            @Html.LabelFor(model => model.IdConfiguracionOrigenDeDatos)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("IdConfiguracionOrigenDeDatos", ViewBag.ConfiguracionesOrigenDeDatosDDL)
+        </div>
+
+        <p>
+            <input type="submit" value="Crear" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Volver", "ListarPorSitio", new { idSitio = sitio.Id })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/crearNovedad.js")
+}

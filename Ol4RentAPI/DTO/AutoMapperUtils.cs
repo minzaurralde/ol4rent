@@ -74,6 +74,14 @@ namespace Ol4RentAPI.DTO
             Mapper.CreateMap<Novedad, NovedadExternaDTO>()
                 .ForMember(dest => dest.Fecha, dat => dat.MapFrom(src => src.FechaHora))
                 .ForMember(dest => dest.Proveedor, dat => dat.MapFrom(src => src.Configuracion.OrigenDatos.Nombre));
+            Mapper.CreateMap<Novedad, NovedadListadoDTO>();
+            Mapper.CreateMap<NovedadAltaDTO, Novedad>()
+                .ForMember(dest => dest.Id, dat => dat.UseValue(-1))
+                .ForMember(dest => dest.Configuracion, dat => dat.NullSubstitute(null));
+            Mapper.CreateMap<Novedad, NovedadEdicionDTO>()
+                .ForMember(dest => dest.IdConfiguracionOrigenDeDatos, dat => dat.MapFrom(src => src.Configuracion.Id));
+            Mapper.CreateMap<NovedadEdicionDTO, Novedad>()
+                .ForMember(dest => dest.Configuracion, dat => dat.NullSubstitute(null));
             Mapper.CreateMap<Dependencia, DependenciaDTO>();
             Mapper.CreateMap<DependenciaDTO, Dependencia>();
             Mapper.CreateMap<Bien, BienListadoDTO>()

@@ -14,5 +14,15 @@ namespace Ol4RentAPI.Facades
         List<NovedadDTO> ListaNovedades();
 
         List<NovedadExternaDTO> ObtenerNovedadesPorSitio(int idSitio);
+
+        List<NovedadListadoDTO> ObtenerNovedadesParaBOPorSitio(int idSitio);
+
+        void Crear(NovedadAltaDTO dto);
+
+        void Eliminar(int id);
+
+        NovedadEdicionDTO ObtenerNovedadParaEdicion(int id);
+
+        void Editar(NovedadEdicionDTO dto);
     }
 }
