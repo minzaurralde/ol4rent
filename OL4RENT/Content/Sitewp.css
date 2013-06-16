@@ -5,7 +5,6 @@
 }
 
 body {
-    /*background-color: #fff;*/
     background-color: #a6dbed;
     border-top: solid 10px #000;
     color: #333;
@@ -42,23 +41,22 @@ mark {
 #busqueda {
 
     position: relative;    
-    left: -180px;     
+    left: -355px;
 
-    padding-top: 180px;
+    padding-top: 210px;
     display: block;
     float: left;
     vertical-align: bottom;
 }
 
-    .busqueda-avanzada {
-        text-align:left;
-        font-size:0.8em;
-    }
+.busqueda-avanzada {
+    text-align:left;
+    font-size:0.8em;
+}
 
 #query
 {
-    width: 280px;
-    
+    width: 280px;    
 }
 #Nombre
 {
@@ -205,12 +203,7 @@ footer .content-wrapper {
     vertical-align: central;   
 
     position: absolute;
-    padding-top: 88px;
-
-    /*padding-top: 150px;
-    display: block;
-    float: left;
-    vertical-align: bottom;*/
+    padding-top: 130px;
 
 }
 
@@ -246,23 +239,24 @@ footer .content-wrapper {
         text-decoration: underline;
         font-weight: bold;
         font-size: 0.9em;
-        color: white;
+        color: #333;
     }
 
     #login ul {
         background-color: #FFFFFF;
         margin: 0;
-        padding: 10px;
-        /*padding: 5px 5px 5px 5px;*/
+        padding: 10px;        
         width: 300px;
-        text-align: center;
+        text-align: center;    
     }
 
     #login li {
         display: inline;
         list-style: none;
-        color: white;
+        font-weight: bold;
+        color: #333;
         font-size: 0.9em;
+        text-align: center; 
     }
 
 
@@ -273,13 +267,13 @@ ul#menu {
     font-weight: 600;
     margin: 0 0 0px;
     padding: 0;
-    text-align: right;
+    text-align: center;     
 }
 
     ul#menu li {
-        display: inline;
+        /*display: inline;*/
         list-style: none;
-        padding-left: 15px;
+        padding-left: 0px;        
     }
 
         ul#menu li a {
@@ -1071,6 +1065,7 @@ tr.pager td {
     {
         width: 85%;
         float: none;
+        padding-top: 456px;
     }
 
     #BandejaMensajes
@@ -1080,13 +1075,6 @@ tr.pager td {
         font-size: 11px;
         border-color: blue;
     }
-
-    /*#BandejaMensajes {
-    font-size: 15px;
-    margin: 0 0 15px;
-    text-align: left;
-    border-color: black;
-    }*/
 
     #posmensaje
     {
