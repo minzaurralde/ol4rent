@@ -345,6 +345,8 @@
     <Content Include="Views\Bien\Comentarios.cshtml" />
     <Content Include="Views\Shared\_LoginPartialWindowsPhone.cshtml" />
     <Content Include="Views\Shared\_HeaderPartialWindowsPhone.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialAndroid.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialIPhone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

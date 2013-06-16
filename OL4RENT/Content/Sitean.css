@@ -5,7 +5,6 @@
 }
 
 body {
-    /*background-color: #fff;*/
     background-color: #7d0727;
     border-top: solid 10px #000;
     color: #333;
@@ -16,7 +15,8 @@ body {
 }
 
 a {
-    color: #333;
+    /*color: #333;*/
+    color: #0000FF;
     outline: none;
     padding-left: 3px;
     padding-right: 3px;
@@ -25,9 +25,10 @@ a {
 
     a:link, a:visited,
     a:active, a:hover {
-        color: #333;
+        color: #edda06;  
+        
     }
-
+    
 header, footer, hgroup,
 nav, section {
     display: block;
@@ -40,16 +41,51 @@ mark {
 }
 
 #busqueda {
-    padding-top: 90px;
+
+    position: relative;    
+    left: -350px;     
+
+    padding-top: 210px;
     display: block;
-    float: right;
+    float: left;
     vertical-align: bottom;
 }
 
-    .busqueda-avanzada {
-        text-align:right;
-        font-size:0.8em;
-    }
+.busqueda-avanzada {
+    text-align:left;
+    font-size:0.8em;
+}
+
+#query
+{
+    width: 280px;    
+}
+#Nombre
+{
+    width: 280px;
+}
+#Apellido
+{
+    width: 280px;
+}
+#Mail
+{
+    width: 280px;
+}
+#NombreUsuario
+{
+    width: 280px;
+}
+#ConfirmPassword
+{
+    width: 280px;
+}
+
+input[type='text'], input[type='password']
+{
+    width: 280px;
+}
+
 
 .header {
     display: block;
@@ -72,7 +108,7 @@ mark {
     float: left;
 }
 
-.float-right {
+.float-right {   
     float: right;
 }
 
@@ -141,28 +177,36 @@ header .content-wrapper {
 }
 
 footer {
+    background-color: #e2e2e2;
     clear: both;
     font-size: .8em;
     height: 100px;
+    
 }
 
 footer .content-wrapper {
     background-color: #e2e2e2;
     height:100%;
+    width: 300px;
+    text-align: center;
 }
 
 /* site title
 ----------------------------------------------------------*/
-.site-logo {
-    display:inline;  
+.site-logo {    
+    flex-align: center;    
 }
 .site-title {
-    display:inline;
-    color: #3D5E3A;
+    /*display:inline;*/
+    color: #3D5E3A;      
     font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
-    font-size: 2.3em;
+    font-size: 1.6em;    
     margin: 0;
-    vertical-align: central;
+    vertical-align: central;   
+
+    position: absolute;
+    padding-top: 175px;
+
 }
 
 .site-title a, .site-title a:hover, .site-title a:active {
@@ -172,7 +216,7 @@ footer .content-wrapper {
 }
 
     .site-title span, .site-title a span {
-        padding-top: 60px;
+        /*padding-top: 60px;*/
     }
 
 
@@ -197,21 +241,24 @@ footer .content-wrapper {
         text-decoration: underline;
         font-weight: bold;
         font-size: 0.9em;
-        color: white;
+        color: #333;
     }
 
     #login ul {
-        background-color: #A2A5A2;
+        background-color: #FFFFFF;
         margin: 0;
         padding: 10px;
-        padding: 5px 5px 5px 5px;
+        width: 300px;
+        text-align: center;
     }
 
     #login li {
         display: inline;
         list-style: none;
-        color: white;
+        font-weight: bold;
+        color: #333;
         font-size: 0.9em;
+        text-align: center; 
     }
 
 
@@ -1020,6 +1067,7 @@ tr.pager td {
     {
         width: 85%;
         float: none;
+        padding-top: 56px;
     }
 
     #BandejaMensajes
@@ -1029,13 +1077,6 @@ tr.pager td {
         font-size: 11px;
         border-color: blue;
     }
-
-    /*#BandejaMensajes {
-    font-size: 15px;
-    margin: 0 0 15px;
-    text-align: left;
-    border-color: black;
-    }*/
 
     #posmensaje
     {
