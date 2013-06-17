@@ -368,7 +368,6 @@ namespace OL4RENT.Controllers
             {
                 return new FilePathResult("~/Images/sinfoto.png", "image/png");
             }
-            return null;
         }
 
         //

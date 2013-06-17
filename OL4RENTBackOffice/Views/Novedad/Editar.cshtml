@@ -1,4 +1,4 @@
-﻿@model Ol4RentAPI.DTO.NovedadAltaDTO
+﻿@model Ol4RentAPI.DTO.NovedadEdicionDTO
 
 @{
     Ol4RentAPI.DTO.SitioEdicionDTO sitio = ViewBag.Sitio;
@@ -14,6 +14,7 @@
         <legend>Novedad</legend>
 
         @Html.Hidden("idSitio", sitio.Id)
+        @Html.Hidden("Id", Model.Id)
 
         <div class="editor-label">  
             @Html.LabelFor(model => model.Titulo)

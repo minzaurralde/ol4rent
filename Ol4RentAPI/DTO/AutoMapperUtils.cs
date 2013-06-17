@@ -73,15 +73,17 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.Caracteristica, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.CaracteristicaFacade.Obtener(src.Caracteristica.Id)));
             Mapper.CreateMap<Novedad, NovedadExternaDTO>()
                 .ForMember(dest => dest.Fecha, dat => dat.MapFrom(src => src.FechaHora))
-                .ForMember(dest => dest.Proveedor, dat => dat.MapFrom(src => src.Configuracion.OrigenDatos.Nombre));
-            Mapper.CreateMap<Novedad, NovedadListadoDTO>();
+                .ForMember(dest => dest.Proveedor, dat => dat.MapFrom(src => src.Configuracion.ValoresAtributo.Where(va => va.Atributo.Nombre.ToLower() == "nombre").DefaultIfEmpty(new ValorAtributo() { Valor = src.Configuracion.OrigenDatos.Nombre }).FirstOrDefault().Valor));
+            Mapper.CreateMap<Novedad, NovedadListadoDTO>()
+                .ForMember(dest => dest.Fecha, dat => dat.MapFrom(src => src.FechaHora))
+                .ForMember(dest => dest.Proveedor, dat => dat.MapFrom(src => src.Configuracion.ValoresAtributo.Where(va => va.Atributo.Nombre.ToLower() == "nombre").DefaultIfEmpty(new ValorAtributo() { Valor = src.Configuracion.OrigenDatos.Nombre }).FirstOrDefault().Valor));
             Mapper.CreateMap<NovedadAltaDTO, Novedad>()
                 .ForMember(dest => dest.Id, dat => dat.UseValue(-1))
-                .ForMember(dest => dest.Configuracion, dat => dat.NullSubstitute(null));
+                .ForMember(dest => dest.Configuracion, dat => dat.Ignore());
             Mapper.CreateMap<Novedad, NovedadEdicionDTO>()
                 .ForMember(dest => dest.IdConfiguracionOrigenDeDatos, dat => dat.MapFrom(src => src.Configuracion.Id));
             Mapper.CreateMap<NovedadEdicionDTO, Novedad>()
-                .ForMember(dest => dest.Configuracion, dat => dat.NullSubstitute(null));
+                .ForMember(dest => dest.Configuracion, dat => dat.Ignore());
             Mapper.CreateMap<Dependencia, DependenciaDTO>();
             Mapper.CreateMap<DependenciaDTO, Dependencia>();
             Mapper.CreateMap<Bien, BienListadoDTO>()

@@ -55,6 +55,7 @@ mark {
     text-align: center;
     vertical-align: central;
     float: left;
+    width: 512px;
 }
 
     .header a img {
@@ -539,6 +540,11 @@ textarea {
         margin-top: 10px;
         margin-left: -20px;
         border-bottom: 1px solid #908B8B;
+    }
+
+    .listado-bienes li:last-of-type {
+        margin-left: -20px;
+        border-bottom: 0px;
     }
 
     .listado-bienes li .bien-first {

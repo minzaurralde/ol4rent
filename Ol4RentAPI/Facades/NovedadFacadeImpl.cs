@@ -54,12 +54,16 @@ namespace Ol4RentAPI.Facades
                     List<NovedadDTO> novedades = new List<NovedadDTO>();
                     foreach (ConfiguracionOrigenDatos config in configuraciones)
                     {
-                        IProveedorNoticias proveedor = NovedadesExternasFactory.Instance.ObtenerProveedor(config);
-                        List<NovedadExternaDTO> novedadesConfig = proveedor.ObtenerNovedades(maximaCantidadNovedadesHome);
-                        foreach (NovedadExternaDTO novedadExterna in novedadesConfig)
+                        try
                         {
-                            novedades.Add(new NovedadDTO() { ContenidoRecortado = novedadExterna.Contenido.Count() > 130 ? novedadExterna.Contenido.Substring(0, 130) + "..." : novedadExterna.Contenido, Contenido = novedadExterna.Contenido, Titulo = novedadExterna.Titulo, Fecha = novedadExterna.Fecha, Proveedor = string.IsNullOrEmpty(novedadExterna.Proveedor) ? config.OrigenDatos.Nombre : novedadExterna.Proveedor });
+                            IProveedorNoticias proveedor = NovedadesExternasFactory.Instance.ObtenerProveedor(config);
+                            List<NovedadExternaDTO> novedadesConfig = proveedor.ObtenerNovedades(maximaCantidadNovedadesHome);
+                            foreach (NovedadExternaDTO novedadExterna in novedadesConfig)
+                            {
+                                novedades.Add(new NovedadDTO() { ContenidoRecortado = novedadExterna.Contenido.Count() > 130 ? novedadExterna.Contenido.Substring(0, 130) + "..." : novedadExterna.Contenido, Contenido = novedadExterna.Contenido, Titulo = novedadExterna.Titulo, Fecha = novedadExterna.Fecha, Proveedor = string.IsNullOrEmpty(novedadExterna.Proveedor) ? config.OrigenDatos.Nombre : novedadExterna.Proveedor });
+                            }
                         }
+                        catch { }
                     }
                     novedades.Sort(new NovedadComparer());
                     return novedades.Take(sitio.CantNovedadesHome).ToList();

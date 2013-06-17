@@ -306,13 +306,7 @@
     <Content Include="Views\Sitio\Crear.cshtml" />
     <Content Include="Views\Shared\Menu.cshtml" />
     <Content Include="Views\Novedad\Crear.cshtml" />
-    <Content Include="Views\Novedad\Delete.cshtml" />
-    <Content Include="Views\Novedad\Details.cshtml" />
-    <Content Include="Views\Novedad\Edit.cshtml" />
-    <Content Include="Views\Novedad\Index.cshtml" />
-    <Content Include="Views\Novedad\List.cshtml" />
-    <Content Include="Views\Novedad\NovedadesRSS.cshtml" />
-    <Content Include="Views\Novedad\NovedadesTwitter.cshtml" />
+    <Content Include="Views\Novedad\Editar.cshtml" />
     <Content Include="Views\Sitio\Listar.cshtml" />
     <Content Include="Views\Sitio\Editar.cshtml" />
     <Content Include="Views\Usuario\ListarPorSitio.cshtml" />
@@ -343,6 +337,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DatosExternosDACAPI\DatosExternosDACAPI.csproj">
+      <Project>{bef574b0-0e83-4d3c-90bd-1d89dfb9ca4e}</Project>
+      <Name>DatosExternosDACAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ol4RentAPI\Ol4RentAPI.csproj">
       <Project>{519c0d15-3fb5-418e-bd48-53bbafeca19e}</Project>
       <Name>Ol4RentAPI</Name>

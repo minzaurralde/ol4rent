@@ -27,11 +27,11 @@
             @if (esDispositivoMovil) { <br><br><br><br><br><br><br> }
             
 
-                <div>
+                <div class="float-right">
                     <!-- Mapa -->
                     @Html.Partial("../Bien/Mapa", Model.BienesPopulares)
                 </div>
-                <div>
+                <div class="float-right">
                     <!-- Novedades -->
                     @Html.Partial("../Novedad/List", Model.ListaNovedades)
                 </div>
