@@ -41,11 +41,11 @@ mark {
 #busqueda {
 
     position: relative;    
-    left: -355px;
+    left: 0px;
 
     padding-top: 210px;
-    display: block;
-    float: left;
+    /*display: block;*/
+    /*float: left;*/
     vertical-align: bottom;
 }
 
