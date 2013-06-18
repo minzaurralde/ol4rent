@@ -5,7 +5,7 @@
     ViewBag.Title = "Crear nueva novedad local";
 }
 
-<h2>Create</h2>
+<h2>Crear</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
@@ -35,7 +35,9 @@
             @Html.LabelFor(model => model.FechaHora)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.FechaHora)
+            @Html.TextBox("Fecha", Model.FechaHora.ToString("dd-MM-yyyy"))
+            @Html.TextBox("Hora", Model.FechaHora.ToString("HH:mm"))
+            <span class="timeEntry_control" style="display: inline-block; background-image: url(/Images/spinnerDefault.png); width: 20px; height: 20px; background-position: 0px 0px; background-repeat: no-repeat no-repeat;" title="Previous field"></span>
             @Html.ValidationMessageFor(model => model.FechaHora)
         </div>
 
@@ -61,9 +63,12 @@
 }
 
 <div>
-    @Html.ActionLink("Volver", "ListarPorSitio", new { idSitio = sitio.Id })
+    @Html.ActionLink("Volver", "ListarPorSitio", new { idSitio = sitio.Id }, null)
 </div>
 
 @section Scripts {
+    @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
+    @Scripts.Render("~/Scripts/jquery.timepicker.js")
+    @Scripts.Render("~/Scripts/jquery.timepicker.timeentry.js")
     @Scripts.Render("~/Scripts/crearNovedad.js")
 }

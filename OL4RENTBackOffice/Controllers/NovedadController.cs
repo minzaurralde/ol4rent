@@ -39,7 +39,7 @@ namespace OL4RENT.Controllers
         {
             GuardarSitioView(idSitio);
             ArmarComboConfiugracionesOrigienesDatos(idSitio, null);
-            return View(new NovedadAltaDTO());
+            return View(new NovedadAltaDTO() { FechaHora = DateTime.Now });
         }
 
         private void ArmarComboConfiugracionesOrigienesDatos(int idSitio, int? idConfiguracion)
@@ -49,8 +49,10 @@ namespace OL4RENT.Controllers
             ViewBag.ConfiguracionesOrigenDeDatosDDL = configuracionesSV;
         }
 
-        public ActionResult Crear(int idSitio, NovedadAltaDTO dto)
+        [HttpPost]
+        public ActionResult Crear(int idSitio, NovedadAltaDTO dto, string Hora, string Fecha)
         {
+            dto.FechaHora = DateTime.Parse(Fecha + " " + Hora);
             if (ModelState.IsValid)
             {
                 ServiceFacadeFactory.Instance.NovedadFacade.Crear(dto);
@@ -95,8 +97,9 @@ namespace OL4RENT.Controllers
         //
         // POST: /Novedad/Editar
         [HttpPost]
-        public ActionResult Editar(int idSitio, NovedadEdicionDTO dto)
+        public ActionResult Editar(int idSitio, NovedadEdicionDTO dto, string Hora, string Fecha)
         {
+            dto.FechaHora = DateTime.Parse(Fecha + " " + Hora);
             if (ModelState.IsValid)
             {
                 ServiceFacadeFactory.Instance.NovedadFacade.Editar(dto);
