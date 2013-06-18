@@ -18,12 +18,14 @@ namespace OL4RENTBackOffice.Controllers
             return View();
         }
 
+        [Authorize(Roles = "SITE_ADMIN")]
         public ActionResult ContenidosInadecuadosPorSitio()
         {
             ArmarComboSitios(null);
             return View(new List<ContenidoDTO>());
         }
 
+        [Authorize(Roles = "SITE_ADMIN")]
         [HttpPost]
         public ActionResult ContenidosInadecuadosPorSitio(int idSitio)
         {
@@ -32,6 +34,7 @@ namespace OL4RENTBackOffice.Controllers
             return View(contenidos);
         }
 
+        [Authorize(Roles = "SITE_ADMIN")]
         public ActionResult RegistroDeBienesEnTiempo()
         {
             ArmarFiltroFechas(null, null);
@@ -39,6 +42,7 @@ namespace OL4RENTBackOffice.Controllers
             return View(new RegistroBienDTO() { Tipo = "", Valores = new List<ValorRegistroBienDTO>() });
         }
 
+        [Authorize(Roles = "SITE_ADMIN")]
         [HttpPost]
         public ActionResult RegistroDeBienesEnTiempo(int idSitio, DateTime fechaInicio, DateTime fechaFin)
         {

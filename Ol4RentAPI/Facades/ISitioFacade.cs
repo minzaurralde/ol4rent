@@ -40,5 +40,7 @@ namespace Ol4RentAPI.Facades
         int ObtenerIdTipoBien (int id);
 
         byte[] Css(int idSitio);
+
+        List<SitioListadoDTO> ObtenerTodos();
     }
 }

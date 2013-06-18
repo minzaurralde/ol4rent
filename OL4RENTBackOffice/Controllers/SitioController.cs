@@ -13,6 +13,7 @@ namespace OL4RENTBackOffice.Controllers
     {
         //
         // GET: /Sitio/
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         public ActionResult Index()
         {
             return RedirectToAction("Listar", "Sitio");
@@ -20,7 +21,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /Sitio/Crear
-//        [Authorize(Roles = "SUPER_ADMIN")]
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         public ActionResult Crear()
         {
             ArmarComboTipoDatos();
@@ -31,7 +32,7 @@ namespace OL4RENTBackOffice.Controllers
         // POST: /Sitio/Crear
         [HttpPost]
         [ValidateInput(true)]
-  //      [Authorize(Roles = "SUPER_ADMIN")]
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         public ActionResult Crear(int maxid, SitioAltaDTO sitio, HttpPostedFileBase imagen, HttpPostedFileBase estilo)
         {
             if (sitio.Caracteristicas == null)
@@ -65,13 +66,14 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /Sitio/Listar
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         public ActionResult Listar()
         {
             if (User.IsInRole(RolEnum.SUPER_ADMIN.ToString()))
             {
                 // return View(ServiceFacadeFactory.Instance.SitioFacade.Todos);
                 // TODO Ver que pasa en este caso cuando debo retornar el listado para un superadmin
-                return View(ServiceFacadeFactory.Instance.SitioFacade.ObtenerPorUsuario(User.Identity.Name));
+                return View(ServiceFacadeFactory.Instance.SitioFacade.ObtenerTodos());
             }
             else if (User.IsInRole(RolEnum.SITE_ADMIN.ToString()))
             {
@@ -85,6 +87,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /Sitio/Editar
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         public ActionResult Editar(int id)
         {
             ArmarComboTipoDatos();
@@ -94,6 +97,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // POST: /Sitio/Editar
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         [HttpPost]
         public ActionResult Editar(int maxid, SitioEdicionDTO sitioDTO, HttpPostedFileBase imagen, HttpPostedFileBase estilo)
         {
@@ -132,6 +136,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /Sitio/Eliminar
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         public ActionResult Eliminar(int id)
         {
             return View(ServiceFacadeFactory.Instance.SitioFacade.ObtenerParaEdicion(id));
@@ -139,6 +144,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // POST: /Sitio/Eliminar
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         [HttpPost]
         [ActionName("Eliminar")]
         public ActionResult EliminarConfirm(int id)

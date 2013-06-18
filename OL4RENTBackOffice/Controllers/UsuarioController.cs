@@ -49,6 +49,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /Usuario/ListarPorSitio
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         public ActionResult ListarPorSitio(int? idSitio)
         {
             int id = ArmarComboSitios();
@@ -70,6 +71,7 @@ namespace OL4RENTBackOffice.Controllers
         // POST: /Usuario/ListarPorSitio
         [HttpPost]
         [ActionName("ListarPorSitio")]
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         public ActionResult ListarPorSitioFiltrado(int idSitio)
         {
             ArmarComboSitios();
@@ -79,6 +81,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /Usuario/DeshabilitarEnSitio
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         public ActionResult DeshabilitarEnSitio(int idUsuario, int idSitio)
         {
             ServiceFacadeFactory.Instance.AccountFacade.DeshabilitarUsuarioEnSitio(idUsuario, idSitio);
@@ -87,6 +90,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /Usuario/HabilitarEnSitio
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         public ActionResult HabilitarEnSitio(int idUsuario, int idSitio)
         {
             ServiceFacadeFactory.Instance.AccountFacade.HabilitarUsuarioEnSitio(idUsuario, idSitio);
@@ -95,6 +99,7 @@ namespace OL4RENTBackOffice.Controllers
         
         //
         // GET: /Usuario/ResetearEnSitio
+        [Authorize(Roles = "SUPER_ADMIN,SITE_ADMIN")]
         public ActionResult ResetearEnSitio(int idUsuario, int idSitio)
         {
             ServiceFacadeFactory.Instance.AccountFacade.ResetearUsuarioEnSitio(idUsuario, idSitio);

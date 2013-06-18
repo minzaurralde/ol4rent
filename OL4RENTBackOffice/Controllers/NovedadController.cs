@@ -17,9 +17,10 @@ namespace OL4RENT.Controllers
         {
             base.Dispose(disposing);
         }
-
+        
         //
         // GET: /Novedad/ListarPorSitio
+        [Authorize(Roles="SITE_ADMIN")]
         public ActionResult ListarPorSitio(int idSitio)
         {
             List<NovedadListadoDTO> novedades = ServiceFacadeFactory.Instance.NovedadFacade.ObtenerNovedadesParaBOPorSitio(idSitio);
@@ -35,6 +36,7 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Novedad/Crear
+        [Authorize(Roles = "SITE_ADMIN")]
         public ActionResult Crear(int idSitio)
         {
             GuardarSitioView(idSitio);
@@ -49,6 +51,7 @@ namespace OL4RENT.Controllers
             ViewBag.ConfiguracionesOrigenDeDatosDDL = configuracionesSV;
         }
 
+        [Authorize(Roles = "SITE_ADMIN")]
         [HttpPost]
         public ActionResult Crear(int idSitio, NovedadAltaDTO dto, string Hora, string Fecha)
         {
@@ -68,6 +71,7 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Novedad/Eliminar
+        [Authorize(Roles = "SITE_ADMIN")]
         public ActionResult Eliminar(int id, int idSitio)
         {
             ServiceFacadeFactory.Instance.NovedadFacade.Eliminar(id);
@@ -76,6 +80,7 @@ namespace OL4RENT.Controllers
 
         //
         // POST: /Novedad/Eliminar
+        [Authorize(Roles = "SITE_ADMIN")]
         [HttpPost]
         [ActionName("Eliminar")]
         public ActionResult EliminarConfirm(int id, int idSitio)
@@ -86,6 +91,7 @@ namespace OL4RENT.Controllers
 
         //
         // GET: /Novedad/Editar
+        [Authorize(Roles = "SITE_ADMIN")]
         public ActionResult Editar(int id, int idSitio)
         {
             GuardarSitioView(idSitio);
@@ -96,6 +102,7 @@ namespace OL4RENT.Controllers
 
         //
         // POST: /Novedad/Editar
+        [Authorize(Roles = "SITE_ADMIN")]
         [HttpPost]
         public ActionResult Editar(int idSitio, NovedadEdicionDTO dto, string Hora, string Fecha)
         {

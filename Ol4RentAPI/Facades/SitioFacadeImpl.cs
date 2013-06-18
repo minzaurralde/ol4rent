@@ -335,5 +335,24 @@ namespace Ol4RentAPI.Facades
                 }
             }
         }
+
+
+        public List<SitioListadoDTO> ObtenerTodos()
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Sitio> query =
+                    from s in db.Sitios
+                    select s;
+                if (query.Count() > 0)
+                {
+                    return AutoMapperUtils<Sitio, SitioListadoDTO>.Map(query.ToList());
+                }
+                else
+                {
+                    return new List<SitioListadoDTO>();
+                }
+            }
+        }
     }
 }

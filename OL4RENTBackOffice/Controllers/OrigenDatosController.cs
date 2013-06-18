@@ -12,6 +12,7 @@ namespace OL4RENTBackOffice.Controllers
     {
         //
         // GET: /OrigenDatos/Listar/5
+        [Authorize(Roles = "SITE_ADMIN")]
         public ActionResult ListarPorSitio(int idSitio)
         {
             ViewBag.IdSitio = idSitio;
@@ -21,6 +22,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /OrigenDatos/Listar
+        [Authorize(Roles = "SUPER_ADMIN")]
         public ActionResult Listar()
         {
             List<OrigenDatosListaDTO> origenesDatos = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerTodos();
@@ -29,6 +31,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /OrigenDatos/Crear
+        [Authorize(Roles = "SUPER_ADMIN")]
         public ActionResult Crear()
         {
             return View(new OrigenDatosAltaDTO());
@@ -36,6 +39,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // POST: /OrigenDatos/Crear
+        [Authorize(Roles = "SUPER_ADMIN")]
         [HttpPost]
         public ActionResult Crear(int maxid, OrigenDatosAltaDTO dto, HttpPostedFileBase dll, IEnumerable<HttpPostedFileBase> dependencias)
         {
@@ -75,6 +79,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /OrigenDatos/Editar
+        [Authorize(Roles = "SUPER_ADMIN")]
         public ActionResult Editar(int id)
         {
             OrigenDatosEdicionDTO dto = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerParaEdicion(id);
@@ -83,6 +88,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // POST: /OrigenDatos/Crear
+        [Authorize(Roles = "SUPER_ADMIN")]
         [HttpPost]
         public ActionResult Editar(int maxid, OrigenDatosEdicionDTO dto, HttpPostedFileBase dll, IEnumerable<HttpPostedFileBase> dependencias)
         {
@@ -125,6 +131,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /OrigenDatos/Eliminar
+        [Authorize(Roles = "SUPER_ADMIN")]
         public ActionResult Eliminar(int id)
         {
             ServiceFacadeFactory.Instance.OrigenDatosFacade.Eliminar(id);
@@ -135,6 +142,7 @@ namespace OL4RENTBackOffice.Controllers
         // POST: /OrigenDatos/Eliminar
         [HttpPost]
         [ActionName("Eliminar")]
+        [Authorize(Roles = "SUPER_ADMIN")]
         public ActionResult EliminarConfirm(int id)
         {
             ServiceFacadeFactory.Instance.OrigenDatosFacade.Eliminar(id);
@@ -143,6 +151,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /OrigenDatos/Configurar
+        [Authorize(Roles = "SITE_ADMIN")]
         public ActionResult Configurar(int idSitio)
         {
             ViewBag.Sitio = ServiceFacadeFactory.Instance.SitioFacade.Obtener(idSitio);
@@ -152,6 +161,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // POST: /OrigenDatos/Configurar
+        [Authorize(Roles = "SITE_ADMIN")]
         [HttpPost]
         public ActionResult Configurar(ConfiguracionOrigenDatosAltaDTO dto)
         {
@@ -176,6 +186,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /OrigenDatos/ModificarConfiguracion
+        [Authorize(Roles = "SITE_ADMIN")]
         public ActionResult ModificarConfiguracion(int id)
         {
             ConfiguracionOrigenDatosEdicionDTO dto = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerConfiguracionParaEdicion(id);
@@ -185,6 +196,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // POST: /OrigenDatos/ModificarConfiguracion
+        [Authorize(Roles = "SITE_ADMIN")]
         [HttpPost]
         public ActionResult ModificarConfiguracion(ConfiguracionOrigenDatosEdicionDTO dto)
         {
@@ -213,6 +225,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // GET: /OrigenDatos/Configurar
+        [Authorize(Roles = "SITE_ADMIN")]
         public ActionResult EliminarConfiguracion(int id)
         {
             ConfiguracionOrigenDatosEdicionDTO config = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerConfiguracionParaEdicion(id);
@@ -223,6 +236,7 @@ namespace OL4RENTBackOffice.Controllers
 
         //
         // POST: /OrigenDatos/Configurar
+        [Authorize(Roles = "SITE_ADMIN")]
         [HttpPost]
         [ActionName("EliminarConfiguracion")]
         public ActionResult EliminarConfiguracionConfirm(int id)
@@ -234,6 +248,7 @@ namespace OL4RENTBackOffice.Controllers
         }
 
         // GET: /OrigenDatos/Atributos/5
+        [AllowAnonymous]
         public JsonResult Atributos(int id)
         {
             List<AtributoEdicionDTO> atributos = ObtenerListaAtributos(id);
