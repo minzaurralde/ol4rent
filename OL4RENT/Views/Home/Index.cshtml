@@ -24,19 +24,28 @@
             
             }              
 
-            @if (esDispositivoMovil) { <br><br><br><br><br><br><br> }
-            
-
-                <div class="float-right">
+            @if (esDispositivoMovil) { 
+                <br><br><br><br><br><br><br> 
+                <div>
                     <!-- Mapa -->
                     @Html.Partial("../Bien/Mapa", Model.BienesPopulares)
                 </div>
-                <div class="float-right">
+                <div>
                     <!-- Novedades -->
                     @Html.Partial("../Novedad/List", Model.ListaNovedades)
                 </div>
-            @if (esDispositivoMovil) { }
-               
+            } else {
+                <div class="float-right">
+                    <div>
+                        <!-- Mapa -->
+                        @Html.Partial("../Bien/Mapa", Model.BienesPopulares)
+                    </div>
+                    <div>
+                        <!-- Novedades -->
+                        @Html.Partial("../Novedad/List", Model.ListaNovedades)
+                    </div>
+                </div>
+            }
             
 
         </div>
