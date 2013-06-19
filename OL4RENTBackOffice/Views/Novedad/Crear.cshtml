@@ -1,0 +1,74 @@
+﻿@model Ol4RentAPI.DTO.NovedadAltaDTO
+
+@{
+    Ol4RentAPI.DTO.SitioEdicionDTO sitio = ViewBag.Sitio;
+    ViewBag.Title = "Crear nueva novedad local";
+}
+
+<h2>Crear</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Novedad</legend>
+
+        @Html.Hidden("idSitio", sitio.Id)
+
+        <div class="editor-label">  
+            @Html.LabelFor(model => model.Titulo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Titulo)
+            @Html.ValidationMessageFor(model => model.Titulo)
+        </div>
+
+        <div class="editor-label">  
+            @Html.LabelFor(model => model.Contenido)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Contenido)
+            @Html.ValidationMessageFor(model => model.Contenido)
+        </div>
+
+        <div class="editor-label">  
+            @Html.LabelFor(model => model.FechaHora)
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("Fecha", Model.FechaHora.ToString("dd-MM-yyyy"))
+            @Html.TextBox("Hora", Model.FechaHora.ToString("HH:mm"))
+            <span class="timeEntry_control" style="display: inline-block; background-image: url(/Images/spinnerDefault.png); width: 20px; height: 20px; background-position: 0px 0px; background-repeat: no-repeat no-repeat;" title="Previous field"></span>
+            @Html.ValidationMessageFor(model => model.FechaHora)
+        </div>
+
+        <div class="editor-label">  
+            @Html.LabelFor(model => model.Prioridad)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Prioridad)
+            @Html.ValidationMessageFor(model => model.Prioridad)
+        </div>
+
+        <div class="editor-label">  
+            @Html.LabelFor(model => model.IdConfiguracionOrigenDeDatos)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("IdConfiguracionOrigenDeDatos", (List<SelectListItem>)ViewBag.ConfiguracionesOrigenDeDatosDDL)
+        </div>
+
+        <p>
+            <input type="submit" value="Crear" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Volver", "ListarPorSitio", new { idSitio = sitio.Id }, null)
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
+    @Scripts.Render("~/Scripts/jquery.timepicker.js")
+    @Scripts.Render("~/Scripts/jquery.timepicker.timeentry.js")
+    @Scripts.Render("~/Scripts/crearNovedad.js")
+}

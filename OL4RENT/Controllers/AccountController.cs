@@ -346,6 +346,13 @@ namespace OL4RENT.Controllers
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
         }
 
+        public JsonResult Buscar(string query)
+        {
+            List<UsuarioDTO> usuarios = ServiceFacadeFactory.Instance.AccountFacade.Buscar(query);
+            List<Pair> nombresUsuario = usuarios.Select(u => new Pair() { Key = u.NombreUsuario, Value = u.NombreUsuario }).ToList<Pair>();
+            return new JsonResult() { Data = nombresUsuario, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {

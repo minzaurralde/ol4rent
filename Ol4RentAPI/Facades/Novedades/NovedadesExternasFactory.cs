@@ -132,11 +132,38 @@ namespace Ol4RentAPI.Facades.Novedades
                 properties.Add(valor.Atributo.Nombre.Trim().Replace(" ", ""), valor.Valor);
             }
             // Una vez armada la tabla de propiedades, se configura la instacia del proveedor
-            instancia.Configurar(properties);
+            instancia.Configurar(properties, ObtenerPropiedad(properties, "Filtro") as string, ObtenerPropiedad(properties, "Nombre") as string);
             // Se agrega la instancia al caché de instancias
             AgregarInstancia(cod.Id, instancia);
             // Se retorna la instancia
             return instancia;
+        }
+
+        private object ObtenerPropiedad(Hashtable tabla, string nombre)
+        {
+            if (tabla.ContainsKey(nombre))
+            {
+                return tabla[nombre];
+            }
+            else if (tabla.ContainsKey(nombre.ToLower()))
+            {
+                return tabla[nombre.ToLower()];
+            }
+            else if (tabla.ContainsKey(nombre.ToUpper()))
+            {
+                return tabla[nombre.ToUpper()];
+            }
+            else
+            {
+                foreach (string key in tabla.Keys)
+                {
+                    if (key.ToLower() == nombre.ToLower())
+                    {
+                        return tabla[key];
+                    }
+                }
+            }
+            return null;
         }
 
         private bool TieneInstanciaValida(int id)

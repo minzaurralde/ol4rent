@@ -183,6 +183,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Bundles\register-validations.js" />
+    <Content Include="Content\Sitean.css" />
+    <Content Include="Content\Siteip.css" />
+    <Content Include="Content\Sitewp.css" />
     <Content Include="Images\facebook.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -243,7 +246,10 @@
     <Content Include="Global.asax" />
     <Content Include="App_Code\TwitterGoodies.cshtml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Images\sinfoto.png" />
     <Content Include="Images\twitter.png" />
+    <Content Include="Scripts\marcarInadecuado.js" />
+    <Content Include="Scripts\busquedaAvanzada.js" />
     <Content Include="Scripts\crearBien.js" />
     <Content Include="Scripts\crearWish.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -333,8 +339,6 @@
     <Content Include="Views\Shared\_Layout.Android.cshtml" />
     <Content Include="Views\Shared\_HeaderPartialAndroid.cshtml" />
     <Content Include="Views\Shared\_Layout.WindowsPhone.cshtml" />
-    <Content Include="Views\Shared\_HeaderPartialWindowsPhone.cshtml" />
-    <Content Include="Views\Shared\_LoginPartialWindowsPhone.cshtml" />
     <Content Include="Views\Shared\_Layout.iPhone.cshtml" />
     <Content Include="Views\Shared\_HeaderPartialIPhone.cshtml" />
     <Content Include="Views\Wish\Mapa.cshtml" />
@@ -342,6 +346,10 @@
     <Content Include="Views\Bien\Comentarios.cshtml" />
     <Content Include="Views\Bien\PagoArriendo.cshtml" />
     <Content Include="Views\Bien\ConfirmaPago.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialWindowsPhone.cshtml" />
+    <Content Include="Views\Shared\_HeaderPartialWindowsPhone.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialAndroid.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialIPhone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

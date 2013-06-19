@@ -72,16 +72,33 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.IdCaracteristica, dat => dat.MapFrom(src => src.Caracteristica.Id))
                 .ForMember(dest => dest.Caracteristica, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.CaracteristicaFacade.Obtener(src.Caracteristica.Id)));
             Mapper.CreateMap<Novedad, NovedadExternaDTO>()
-                .ForMember(dest => dest.Fecha, dat => dat.MapFrom(src => src.FechaHora));
+                .ForMember(dest => dest.Fecha, dat => dat.MapFrom(src => src.FechaHora))
+                .ForMember(dest => dest.Proveedor, dat => dat.MapFrom(src => src.Configuracion.ValoresAtributo.Where(va => va.Atributo.Nombre.ToLower() == "nombre").DefaultIfEmpty(new ValorAtributo() { Valor = src.Configuracion.OrigenDatos.Nombre }).FirstOrDefault().Valor));
+            Mapper.CreateMap<Novedad, NovedadListadoDTO>()
+                .ForMember(dest => dest.Fecha, dat => dat.MapFrom(src => src.FechaHora))
+                .ForMember(dest => dest.Proveedor, dat => dat.MapFrom(src => src.Configuracion.ValoresAtributo.Where(va => va.Atributo.Nombre.ToLower() == "nombre").DefaultIfEmpty(new ValorAtributo() { Valor = src.Configuracion.OrigenDatos.Nombre }).FirstOrDefault().Valor));
+            Mapper.CreateMap<NovedadAltaDTO, Novedad>()
+                .ForMember(dest => dest.Id, dat => dat.UseValue(-1))
+                .ForMember(dest => dest.Configuracion, dat => dat.Ignore());
+            Mapper.CreateMap<Novedad, NovedadEdicionDTO>()
+                .ForMember(dest => dest.IdConfiguracionOrigenDeDatos, dat => dat.MapFrom(src => src.Configuracion.Id));
+            Mapper.CreateMap<NovedadEdicionDTO, Novedad>()
+                .ForMember(dest => dest.Configuracion, dat => dat.Ignore());
             Mapper.CreateMap<Dependencia, DependenciaDTO>();
             Mapper.CreateMap<DependenciaDTO, Dependencia>();
+            Mapper.CreateMap<Bien, BienListadoDTO>()
+                .ForMember(dest => dest.MostrarMeGusta, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.BienFacade.PuedeMostrarMeGusta(src.Id)))
+                .ForMember(dest => dest.CantidadLikes, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.BienFacade.CantidadLikes(src.Id)))
+                .ForMember(dest => dest.Propietario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario));
             Mapper.CreateMap<Bien, BienAltaDTO>()
                 .ForMember(dest => dest.TipoBien, dat => dat.MapFrom(src => src.TipoBien.Id))
                 .ForMember(dest => dest.Usuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario));
             Mapper.CreateMap<Bien, BienEdicionDTO>()
                 .ForMember(dest => dest.TipoBien, dat => dat.MapFrom(src => src.TipoBien.Id))
-                .ForMember(dest => dest.Usuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario));
-            Mapper.CreateMap<Bien, BienListadoDTO>();
+                .ForMember(dest => dest.Usuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario))
+                .ForMember(dest => dest.CantidadLikes, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.BienFacade.CantidadLikes(src.Id)));
+            Mapper.CreateMap<Bien, BienCercanoDTO>()
+                 .ForMember(dest => dest.TipoDeBien, dat => dat.MapFrom(src => src.TipoBien.Nombre));
             Mapper.CreateMap<Bien, BienArrendarDTO>();
             Mapper.AssertConfigurationIsValid();
         }

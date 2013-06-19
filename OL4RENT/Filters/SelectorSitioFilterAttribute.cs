@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 namespace OL4RENT.Filters
 {
@@ -18,6 +19,13 @@ namespace OL4RENT.Filters
             if (sitio != null)
             {
                 filterContext.HttpContext.Session["sitio"] = sitio;
+                if (!ServiceFacadeFactory.Instance.AccountFacade.UsuarioHabilitadoEnSitio(filterContext.HttpContext.User.Identity.Name, sitio.Id))
+                {
+                    WebSecurity.Logout();
+                    filterContext.HttpContext.Response.StatusCode = 403;
+                    filterContext.HttpContext.Response.SuppressContent = true;
+                    filterContext.HttpContext.ApplicationInstance.CompleteRequest();
+                }
             }
             this.OnActionExecuting(filterContext);
         }

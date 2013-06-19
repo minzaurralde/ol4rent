@@ -21,7 +21,7 @@
         <ol>
             @foreach (Ol4RentAPI.DTO.AtributoEdicionDTO atributo in ViewBag.Atributos)
             {
-                Ol4RentAPI.DTO.ValorAtributoEdicionDTO valorAtributo = Model.ValoresAtributo == null ? null : ((List<Ol4RentAPI.DTO.ValorAtributoEdicionDTO>)Model.ValoresAtributo).Find(val => val.IdAtributo == atributo.Id);
+                Ol4RentAPI.DTO.ValorAtributoEdicionDTO valorAtributo = Model.ValoresAtributo == null ? null : ((List<Ol4RentAPI.DTO.ValorAtributoEdicionDTO>)Model.ValoresAtributo).Where(val => val.IdAtributo == atributo.Id).First();
                 string strValor = valorAtributo == null ? "" : valorAtributo.Valor;
                 <li id="atr-@atributo.Id">
                     @Html.Label("val-" + atributo.Id.ToString(), atributo.Nombre)

@@ -11,6 +11,6 @@ namespace OL4RENT.DatosExternosDACAPI
     {
         List<NovedadExternaDTO> ObtenerNovedades(int cantidad);
 
-        void Configurar(Hashtable properties);
+        void Configurar(Hashtable properties, string filtro, string nombre);
     }
 }

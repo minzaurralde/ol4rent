@@ -1,8 +1,8 @@
 ﻿@{
     ViewBag.Title = "ChatUsuario";
 }
-\
-<h2>Sala de Chat con Usuarios on-line</h2>
+
+<h2>Sala de Chat con Usuarios <br>on-line</h2>
 
 <script type="text/javascript">
     
@@ -145,7 +145,7 @@
                     success: function (result) {
                         if (result == "1") {
                             fechaenvio = darFechaActual();
-                            agregaralpanael("<b>Enviado a " + nomusuenvio + "</b>: " + mensajeenvio + "<BR><font size=2>Fecha: " + fechaenvio + "</font>");                            
+                            agregaralpanael("<b>Enviado a " + nomusuenvio + ":</b> " + mensajeenvio + "<BR><font size=1>Fecha: " + fechaenvio + "</font>");                            
                         }
                         else {
                             mensajeenvio = "Mal Enviado";
@@ -154,7 +154,7 @@
 
                     },
                     error: function (req, status, error) {
-                        $("#BandejaMensajes").text("<font color='#FF0000' size=3><b>No se pudo invocar enviar</b></font>");
+                        agregaralpanael("<font color='#FF0000' size=3><b>No se pudo invocar enviar</b></font>");
                     }
                 });
 
@@ -177,7 +177,7 @@
                     }
                 },
                 error: function (req, status, error) {
-                    $("#BandejaMensajes").text("<font color='#FF0000' size=3><b>No se encuentra logueado</b></font>");
+                    agregaralpanael("<font color='#FF0000' size=3><b>No se encuentra logueado</b></font>");
                 }
             });
     }
@@ -199,7 +199,7 @@
                     }
                 },
                 error: function (req, status, error) {
-                    $("#BandejaMensajes").text("<font color='#FF0000' size=3><b>No se pudo invocar recibir inicial</b></font>");
+                    agregaralpanael("<font color='#FF0000' size=3><b>No se pudo invocar recibir inicial</b></font>");                    
                 }
             });
         }
@@ -222,7 +222,7 @@
                         }
                     },
                     error: function (req, status, error) {
-                        $("#BandejaMensajes").text("<font color='#FF0000' size=3><b>No se pudo invocar recibir</b></font>");
+                        agregaralpanael("<font color='#FF0000' size=3><b>No se pudo invocar recibir</b></font>");
                     }
                 });
 
@@ -252,7 +252,7 @@
                             $('#iniciochat').val(0);
                     },
                     error: function (req, status, error) {
-                        $("#BandejaMensajes").text("<font color='#FF0000' size=3><b>No se pudo obtener los usuarios</b></font>");
+                        agregaralpanael("<font color='#FF0000' size=3><b>No se pudo obtener los usuarios</b></font>");
                     }
                 });
 
@@ -292,7 +292,7 @@
 @Html.Hidden("iniciochat", 1)
 
 <p>
-    Seleccione una de los Usuarios de la lista y proceda a enviar mensaje.
+    Seleccione uno de los Usuarios de la lista y <br>proceda a enviar mensajes.
 </p>
 
 <div id="posusuarios">

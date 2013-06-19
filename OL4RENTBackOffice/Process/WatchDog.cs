@@ -1,4 +1,7 @@
-﻿using Quartz;
+﻿using Ol4RentAPI.DTO;
+using Ol4RentAPI.Facades;
+using Ol4RentAPI.Model;
+using Quartz;
 using Quartz.Impl;
 using Quartz.Impl.Triggers;
 using System;
@@ -17,7 +20,30 @@ namespace OL4RENTBackOffice.Process
 
         public void Execute(IJobExecutionContext context)
         {
-            Debug.WriteLine("WatchDog is executing." + DateTimeOffset.Now);
+            Debug.WriteLine("WatchDog ejecutando - " + DateTimeOffset.Now);
+            using (ModelContainer db = new ModelContainer())
+            {
+                foreach (Sitio sitio in db.Sitios.ToList())
+                {
+                    List<ContenidoDTO> contenidos = ServiceFacadeFactory.Instance.BienFacade.ContenidosInadecuadosPorSitio(sitio.Id);
+                    foreach (ContenidoDTO cont in contenidos)
+                    {
+                        if (cont.CantMarcas > sitio.CantMarcasXCont)
+                        {
+                            String nombreUsuario = cont.NombreUsuario;
+                            // Elimino el comentario
+                            ServiceFacadeFactory.Instance.ContenidoFacade.Eliminar(cont.Id);
+                            int cantContBloq = ServiceFacadeFactory.Instance.AccountFacade.IncrementarCantContBloqUsuarioEnSitio(nombreUsuario, sitio.Id);
+                            if (cantContBloq > sitio.CantContBloqXUsu)
+                            {
+                                // Deshabilito el usuario
+                                ServiceFacadeFactory.Instance.AccountFacade.DeshabilitarUsuarioEnSitio(nombreUsuario, sitio.Id);
+                            }
+                        }
+                    }
+                }
+
+            }
         }
 
         public static void IniciarWatchDog()

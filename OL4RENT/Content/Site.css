@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: #fff;
+    background-color: #F4F4F4;
     border-top: solid 10px #000;
     color: #333;
     font-size: .85em;
@@ -27,10 +27,6 @@ a {
         color: #333;
     }
 
-    a:hover {
-        background-color: #c7d1d6;
-    }
-
 header, footer, hgroup,
 nav, section {
     display: block;
@@ -42,14 +38,35 @@ mark {
     padding-right: 5px;
 }
 
-.busqueda-avanzada {
-    text-align:right;
-    font-size:8px;
+#busqueda {
+    padding-top: 90px;
+    display: block;
+    float: right;
+    vertical-align: bottom;
 }
 
+    .busqueda-avanzada {
+        text-align:right;
+        font-size:0.8em;
+    }
+
 .header {
+    display: block;
     text-align: center;
+    vertical-align: central;
+    float: left;
+    width: 512px;
 }
+
+    .header a img {
+        float:left;
+    }
+
+    .header a span {
+        float: right;
+        display: inline;
+        margin-left: 30px;
+    }
 
 .float-left {
     float: left;
@@ -75,11 +92,11 @@ h4, h5, h6 {
 }
 
 h1 {
-    font-size: 2em;
+    font-size: 1.75em;
 }
 
 h2 {
-    font-size: 1.75em;
+    font-size: 1.5em;
 }
 
 h3 {
@@ -104,67 +121,73 @@ h5, h6 {
 ----------------------------------------------------------*/
 .content-wrapper {
     margin: 0 auto;
-    max-width: 960px;
+    width: 950px;
 }
 
 #body {
-    background-color: #efeeef;
     clear: both;
+}
+
+#body .content-wrapper {
+    background-color: #efeeef;
     padding-bottom: 35px;
 }
 
     .main-content {
-        background: url("../Images/accent.png") no-repeat;
-        padding-left: 10px;
         padding-top: 30px;
     }
 
-    .featured + .main-content {
-        background: url("../Images/heroAccent.png") no-repeat;
-    }
-
 header .content-wrapper {
-    padding-top: 20px; 
 }
 
 footer {
     clear: both;
-    background-color: #e2e2e2;
     font-size: .8em;
     height: 100px;
 }
 
+footer .content-wrapper {
+    background-color: #e2e2e2;
+    height:100%;
+}
 
 /* site title
 ----------------------------------------------------------*/
+.site-logo {
+    display:inline;  
+}
 .site-title {
-    color: #c8c8c8;
+    display:inline;
+    color: #3D5E3A;
     font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
     font-size: 2.3em;
     margin: 0;
+    vertical-align: central;
 }
 
 .site-title a, .site-title a:hover, .site-title a:active {
     background: none;
-    color: #c8c8c8;
     outline: none;
     text-decoration: none;
 }
+
+    .site-title span, .site-title a span {
+        padding-top: 60px;
+    }
 
 
 /* login
 ----------------------------------------------------------*/
 #login {
-    background-color: #d3dce0;
-    display: block;
-    font-size: 1em;
-    text-align: left;
+    display: inline;
+    text-align: right;
 }
 
     #login a {
         text-decoration: none;
-        padding: 1px;
-        margin-left: 10px;
+        padding: 10px;
+        font-size: 0.9em;
+        color: white;
     }
 
     #login a.username {
@@ -173,16 +196,22 @@ footer {
         padding: 0;
         text-decoration: underline;
         font-weight: bold;
+        font-size: 0.9em;
+        color: white;
     }
 
     #login ul {
+        background-color: #A2A5A2;
         margin: 0;
         padding: 10px;
+        padding: 5px 5px 5px 5px;
     }
 
     #login li {
-        display: compact;
+        display: inline;
         list-style: none;
+        color: white;
+        font-size: 0.9em;
     }
 
 
@@ -256,7 +285,6 @@ hgroup.title h2 {
 
 /* features */
 section.feature {
-    width: 300px;
     float: left;
     padding: 10px;
 }
@@ -381,8 +409,21 @@ aside {
     }
 
 #socialLoginList button {
-    margin-bottom: 12px;
+    margin-bottom: 0px;
+    padding:0;
+    border: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -khtml-border-radius: 0px;
+    border-radius: 0px;
+    width: 34px;
+    height: 34px;
 }
+
+    #socialLoginList button img {
+        width: 34px;
+        height: 34px;
+    }
 
 #logoutForm {
     display: inline;
@@ -440,6 +481,10 @@ input, textarea {
     margin: 5px 0 6px 0;
     padding: 5px;
     width: 300px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    border-radius: 3px;
 }
 
 textarea {
@@ -463,11 +508,15 @@ textarea {
         background-color: #d3dce0;
         border: 1px solid #787878;
         cursor: pointer;
-        font-size: 1.2em;
+        font-size: 1em;
         font-weight: 600;
-        padding: 7px;
+        padding: 6px;
         margin-right: 8px;
         width: auto;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -khtml-border-radius: 3px;
+        border-radius: 3px;
     }
 
     td input[type="submit"],
@@ -477,6 +526,100 @@ textarea {
         padding: 4px;
         margin-right: 4px;
     }
+
+/* Listado de bienes */
+
+.listado-bienes {
+    list-style-image: none;
+    list-style-type: none;
+    list-style: none;
+    width:400px;
+}
+    .listado-bienes li {
+        height: 150px;
+        margin-top: 10px;
+        margin-left: -20px;
+        border-bottom: 1px solid #908B8B;
+    }
+
+    .listado-bienes li:last-of-type {
+        margin-left: -20px;
+        border-bottom: 0px;
+    }
+
+    .listado-bienes li .bien-first {
+        float:left;
+        width: 132px;
+    }
+
+    .listado-bienes li .bien-first img {
+        width: 122px;
+        max-height: 150px;
+    }
+
+    .listado-bienes li .bien-second {
+    }
+
+    .listado-bienes li .bien-second a {
+        background-color:transparent;
+    }
+
+    .listado-bienes li .bien-second a:first-child {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .listado-bienes li .bien-second .likes {
+        font-size: 0.7em;
+        color: #908B8B;
+        display:inline;
+    }
+
+    .listado-bienes li .bien-second p {
+    }
+
+/* Listado de novedades */
+
+.listado-novedades {
+    list-style-image: none;
+    list-style-type: none;
+    list-style: none;
+    max-width: 440px;
+}
+
+    .listado-novedades li {
+        margin-top: 10px;
+        margin-left: -20px;
+        border-bottom: 1px solid #908B8B;
+        max-width: 430px;
+    }
+
+    .listado-novedades li:last-of-type {
+        margin-left: -20px;
+        border-bottom: 0px;
+    }
+
+    .listado-novedades li div h3 {
+        display:inline;
+    }
+
+    .listado-novedades li div .detail {
+        margin-left: 10px;
+        font-size: 0.7em;
+        color: #908B8B;
+        display:inline;
+    }
+
+    .listado-novedades li div p {
+        width: 420px;
+    }
+
+/* Mapa */
+
+#map-canvas {
+    width: 400px;
+    height: 200px;
+}
 
 /* info and errors */
 .message-info {
@@ -888,7 +1031,7 @@ tr.pager td {
     {
         float: left;
         width: 285px;
-        font-size: 7px;
+        font-size: 11px;
         border-color: blue;
     }
 

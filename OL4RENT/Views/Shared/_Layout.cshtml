@@ -9,24 +9,23 @@
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Sitio/Css");
+        @Styles.Render("~/Content/Site.css")
+        @Styles.Render("~/Sitio/Css")
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/Scripts/jquery-1.7.1.js")
     </head>
     <body>
         <header>
             <div class="content-wrapper">
+                <section id="login">
+                    @Html.Partial("_LoginPartial")
+                </section>
                 <div class="header">
                     @Html.Partial("_HeaderPartial")
                 </div>
-                <div class="float-left">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                </div>
-                <div class="float-right">
+                <section id="busqueda">
                     <!-- Form de Busqueda -->
-                    <div>
+                    <div class="busqueda-basica">
                     @using (Html.BeginForm("Buscar", "Bien")) {
                         @Html.ValidationSummary(true)
                         @Html.TextBox("query")
@@ -36,7 +35,7 @@
                     <div class="busqueda-avanzada">
                         @Html.ActionLink("Búsqueda avanzada", "BusquedaAvanzada", "Bien")
                     </div>
-                </div>
+                </section>
             </div>
         </header>
         <div id="body">

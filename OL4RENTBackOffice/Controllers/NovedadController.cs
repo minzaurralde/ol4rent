@@ -5,9 +5,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Ol4RentAPI.Model;
 using System.Collections;
 using Ol4RentAPI.Facades;
+using Ol4RentAPI.DTO;
 
 namespace OL4RENT.Controllers
 {
@@ -17,13 +17,107 @@ namespace OL4RENT.Controllers
         {
             base.Dispose(disposing);
         }
-
+        
         //
         // GET: /Novedad/ListarPorSitio
+        [Authorize(Roles="SITE_ADMIN")]
         public ActionResult ListarPorSitio(int idSitio)
         {
-            // TODO Implementar
-            return View();
+            List<NovedadListadoDTO> novedades = ServiceFacadeFactory.Instance.NovedadFacade.ObtenerNovedadesParaBOPorSitio(idSitio);
+            GuardarSitioView(idSitio);
+            return View(novedades);
+        }
+
+        private void GuardarSitioView(int idSitio)
+        {
+            SitioEdicionDTO sitio = ServiceFacadeFactory.Instance.SitioFacade.ObtenerParaEdicion(idSitio);
+            ViewBag.Sitio = sitio;
+        }
+
+        //
+        // GET: /Novedad/Crear
+        [Authorize(Roles = "SITE_ADMIN")]
+        public ActionResult Crear(int idSitio)
+        {
+            GuardarSitioView(idSitio);
+            ArmarComboConfiugracionesOrigienesDatos(idSitio, null);
+            return View(new NovedadAltaDTO() { FechaHora = DateTime.Now });
+        }
+
+        private void ArmarComboConfiugracionesOrigienesDatos(int idSitio, int? idConfiguracion)
+        {
+            List<ConfiguracionOrigenDatosEdicionDTO> configuraciones = ServiceFacadeFactory.Instance.OrigenDatosFacade.ObtenerPorSitio(idSitio);
+            List<SelectListItem> configuracionesSV = configuraciones.Select(c => new SelectListItem() { Selected = idConfiguracion.HasValue ? idConfiguracion.Value == c.Id : false, Text = c.NombreOrigenDatos, Value = c.Id.ToString() }).ToList();
+            ViewBag.ConfiguracionesOrigenDeDatosDDL = configuracionesSV;
+        }
+
+        [Authorize(Roles = "SITE_ADMIN")]
+        [HttpPost]
+        public ActionResult Crear(int idSitio, NovedadAltaDTO dto, string Hora, string Fecha)
+        {
+            dto.FechaHora = DateTime.Parse(Fecha + " " + Hora);
+            if (ModelState.IsValid)
+            {
+                ServiceFacadeFactory.Instance.NovedadFacade.Crear(dto);
+                return RedirectToAction("ListarPorSitio", "Novedad", new { idSitio = idSitio });
+            }
+            else
+            {
+                GuardarSitioView(idSitio);
+                ArmarComboConfiugracionesOrigienesDatos(idSitio, dto.IdConfiguracionOrigenDeDatos);
+                return View(dto);
+            }
+        }
+
+        //
+        // GET: /Novedad/Eliminar
+        [Authorize(Roles = "SITE_ADMIN")]
+        public ActionResult Eliminar(int id, int idSitio)
+        {
+            ServiceFacadeFactory.Instance.NovedadFacade.Eliminar(id);
+            return RedirectToAction("ListarPorSitio", "Novedad", new { idSitio = idSitio });
+        }
+
+        //
+        // POST: /Novedad/Eliminar
+        [Authorize(Roles = "SITE_ADMIN")]
+        [HttpPost]
+        [ActionName("Eliminar")]
+        public ActionResult EliminarConfirm(int id, int idSitio)
+        {
+            ServiceFacadeFactory.Instance.NovedadFacade.Eliminar(id);
+            return RedirectToAction("ListarPorSitio", "Novedad", new { idSitio = idSitio });
+        }
+
+        //
+        // GET: /Novedad/Editar
+        [Authorize(Roles = "SITE_ADMIN")]
+        public ActionResult Editar(int id, int idSitio)
+        {
+            GuardarSitioView(idSitio);
+            NovedadEdicionDTO novedad = ServiceFacadeFactory.Instance.NovedadFacade.ObtenerNovedadParaEdicion(id);
+            ArmarComboConfiugracionesOrigienesDatos(idSitio, novedad.IdConfiguracionOrigenDeDatos);
+            return View(novedad);
+        }
+
+        //
+        // POST: /Novedad/Editar
+        [Authorize(Roles = "SITE_ADMIN")]
+        [HttpPost]
+        public ActionResult Editar(int idSitio, NovedadEdicionDTO dto, string Hora, string Fecha)
+        {
+            dto.FechaHora = DateTime.Parse(Fecha + " " + Hora);
+            if (ModelState.IsValid)
+            {
+                ServiceFacadeFactory.Instance.NovedadFacade.Editar(dto);
+                return RedirectToAction("ListarPorSitio", "Novedad", new { idSitio = idSitio });
+            }
+            else
+            {
+                GuardarSitioView(idSitio);
+                ArmarComboConfiugracionesOrigienesDatos(idSitio, dto.IdConfiguracionOrigenDeDatos);
+                return View(dto);
+            }
         }
     }
 }

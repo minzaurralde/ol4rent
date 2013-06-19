@@ -7,14 +7,18 @@
     {
         nombreTipoBien = @sitio.NombreTipoBien;
     }
-    ViewBag.Title = "Busqueda Avanzada de " + nombreTipoBien;
+    
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
-@using (Html.BeginForm()) {
-    <ol>
-        <li>
+<h2>Busqueda Avanzada de<BR>@nombreTipoBien</h2>
+@using (Html.BeginForm())
+{
+    
+    <fieldset>
+       <legend>Inicio de sesión</legend>
+       <ol>
+       <li>
             @Html.LabelFor(model => model.Titulo)
             @Html.TextBoxFor(model => model.Titulo)
         </li>
@@ -23,12 +27,8 @@
             @Html.TextBoxFor(model => model.Descripcion)
         </li>
         <li>
-            @Html.LabelFor(m => m.CapacidadMinima)
-            @Html.TextBoxFor(m => m.CapacidadMinima)
-        </li>
-        <li>
-            @Html.LabelFor(m => m.CapacidadMaxima)
-            @Html.TextBoxFor(m => m.CapacidadMaxima)
+            @Html.LabelFor(m => m.Propietario)
+            @Html.TextBoxFor(m => m.Propietario)
         </li>
         <li>
             @Html.LabelFor(m => m.PrecioMinimo)
@@ -84,11 +84,13 @@
                 }
             </li>
             }
+            </ol>
+    </fieldset>   
 
-    </ol>
     <input type="submit" value="Buscar" />
 }
 @section Scripts {
-    @Scripts.Render("~/Scripts/jquery-1.7.1.js")
+    @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
     @Scripts.Render("~/Scripts/meGusta.js")
+    @Scripts.Render("~/Scripts/busquedaAvanzada.js")
 }

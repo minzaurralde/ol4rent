@@ -20,6 +20,7 @@ namespace Ol4RentAPI.Facades
         List<UsuarioSitioDTO> ObtenerPorSitio(int idSitio);
 
         void DeshabilitarUsuarioEnSitio(int idUsuario, int idSitio);
+        void DeshabilitarUsuarioEnSitio(String nombreUsuario, int idSitio);
 
         void HabilitarUsuarioEnSitio(int idUsuario, int idSitio);
 
@@ -30,7 +31,9 @@ namespace Ol4RentAPI.Facades
         List<UsuarioDTO> ObtenerUsuariosConectados(int idUsuarioActual);
 
         Boolean UsuarioHabilitadoEnSitio(int idUsuario, int idSitio);
-
         Boolean UsuarioHabilitadoEnSitio(String nombreUsuario, int idSitio);
+
+        int IncrementarCantContBloqUsuarioEnSitio(int idUsuario, int idSitio);
+        int IncrementarCantContBloqUsuarioEnSitio(String nombreUsuario, int idSitio);
     }
 }

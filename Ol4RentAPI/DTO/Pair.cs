@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace OL4RENTBackOffice.ViewModels
+namespace Ol4RentAPI.DTO
 {
     public class Pair
     {

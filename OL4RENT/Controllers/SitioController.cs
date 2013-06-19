@@ -33,12 +33,25 @@ namespace OL4RENT.Controllers
         [HttpGet]
         public FileContentResult Css()
         {
-            SitioListadoDTO sitio = (SitioListadoDTO)Session["sitio"];
-            byte[] bytes = null;
-            if (sitio != null)
+            ///// Verificar si es un dispositivo mobil o no
+            string userAgentActual = Request.UserAgent.ToLower();
+            bool esDispositivoMovil = false;
+            if (userAgentActual.Contains("iphone") || userAgentActual.Contains("android") || userAgentActual.Contains("windows phone") || userAgentActual.Contains("mobile"))
             {
-                bytes = ServiceFacadeFactory.Instance.SitioFacade.Css(sitio.Id);
+                esDispositivoMovil = true;
             }
+           
+            byte[] bytes = null;
+
+            if (!esDispositivoMovil)
+            {
+                SitioListadoDTO sitio = (SitioListadoDTO)Session["sitio"];
+                if (sitio != null)
+                {
+                    bytes = ServiceFacadeFactory.Instance.SitioFacade.Css(sitio.Id);
+                }
+            }
+
             if (bytes == null)
             {
                 FileStream stream = System.IO.File.OpenRead(Server.MapPath("/Content/Site.css"));
@@ -47,7 +60,9 @@ namespace OL4RENT.Controllers
                 stream.Read(bytes, 0, tam);
                 stream.Close();
             }
+
             return new FileContentResult(bytes, "text/css");
+
         }
 
         protected override void Dispose(bool disposing)

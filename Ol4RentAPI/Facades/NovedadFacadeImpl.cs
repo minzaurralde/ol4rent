@@ -15,58 +15,6 @@ namespace Ol4RentAPI.Facades
 {
     class NovedadFacadeImpl: INovedadFacade
     {
-        public List<Novedad> Todas
-        {
-            get
-            {
-                using (ModelContainer db = new ModelContainer())
-                {
-                    return db.Novedades.ToList();
-                }
-            }
-        }
-
-        public Novedad Obtener(int id)
-        {
-            using (ModelContainer db = new ModelContainer())
-            {
-                return db.Novedades.Find(id);
-            }
-        }
-        public Novedad Crear(Novedad novedad)
-        {
-            try
-            {
-                using (ModelContainer db = new ModelContainer())
-                {
-                    db.Novedades.Add(novedad);
-                    db.SaveChanges();
-                    return novedad;
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public Novedad Editar(Novedad novedad)
-        {
-            try
-            {
-                using (ModelContainer db = new ModelContainer())
-                {
-                    db.Entry(novedad).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return novedad;
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
         public void Eliminar(int id)
         {
             using (ModelContainer db = new ModelContainer())
@@ -106,15 +54,19 @@ namespace Ol4RentAPI.Facades
                     List<NovedadDTO> novedades = new List<NovedadDTO>();
                     foreach (ConfiguracionOrigenDatos config in configuraciones)
                     {
-                        IProveedorNoticias proveedor = NovedadesExternasFactory.Instance.ObtenerProveedor(config);
-                        List<NovedadExternaDTO> novedadesConfig = proveedor.ObtenerNovedades(maximaCantidadNovedadesHome);
-                        foreach (NovedadExternaDTO novedadExterna in novedadesConfig)
+                        try
                         {
-                            novedades.Add(new NovedadDTO() { ContenidoRecortado = novedadExterna.Contenido.Count() > 130 ? novedadExterna.Contenido.Substring(0, 130) + "..." : novedadExterna.Contenido, Contenido = novedadExterna.Contenido, Titulo = novedadExterna.Titulo, Fecha = novedadExterna.Fecha, Proveedor = config.OrigenDatos.Nombre });
+                            IProveedorNoticias proveedor = NovedadesExternasFactory.Instance.ObtenerProveedor(config);
+                            List<NovedadExternaDTO> novedadesConfig = proveedor.ObtenerNovedades(maximaCantidadNovedadesHome);
+                            foreach (NovedadExternaDTO novedadExterna in novedadesConfig)
+                            {
+                                novedades.Add(new NovedadDTO() { ContenidoRecortado = novedadExterna.Contenido.Count() > 130 ? novedadExterna.Contenido.Substring(0, 130) + "..." : novedadExterna.Contenido, Contenido = novedadExterna.Contenido, Titulo = novedadExterna.Titulo, Fecha = novedadExterna.Fecha, Proveedor = string.IsNullOrEmpty(novedadExterna.Proveedor) ? config.OrigenDatos.Nombre : novedadExterna.Proveedor });
+                            }
                         }
+                        catch { }
                     }
                     novedades.Sort(new NovedadComparer());
-                    return novedades;
+                    return novedades.Take(sitio.CantNovedadesHome).ToList();
                 }
             }
         }
@@ -136,6 +88,57 @@ namespace Ol4RentAPI.Facades
                 {
                     return new List<NovedadExternaDTO>();
                 }
+            }
+        }
+
+
+        public List<NovedadListadoDTO> ObtenerNovedadesParaBOPorSitio(int idSitio)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<Novedad> queryNovedades =
+                    from nov in db.Novedades
+                    where nov.Configuracion.Sitio.Id == idSitio
+                    select nov;
+                if (queryNovedades.Count() > 0)
+                {
+                    return AutoMapperUtils<Novedad, NovedadListadoDTO>.Map(queryNovedades.ToList());
+                }
+                else
+                {
+                    return new List<NovedadListadoDTO>();
+                }
+            }
+        }
+
+        public void Crear(NovedadAltaDTO dto)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Novedad novedad = AutoMapperUtils<NovedadAltaDTO, Novedad>.Map(dto);
+                novedad.Configuracion = db.ConfiguracionesOrigenesDatos.Find(dto.IdConfiguracionOrigenDeDatos);
+                db.Novedades.Add(novedad);
+                db.SaveChanges();
+            }
+        }
+
+        public NovedadEdicionDTO ObtenerNovedadParaEdicion(int id)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Novedad novedad = db.Novedades.Find(id);
+                return AutoMapperUtils<Novedad, NovedadEdicionDTO>.Map(novedad);
+            }
+        }
+
+        public void Editar(NovedadEdicionDTO dto)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Novedad novedad = AutoMapperUtils<NovedadEdicionDTO, Novedad>.Map(dto);
+                novedad.Configuracion = db.ConfiguracionesOrigenesDatos.Find(dto.IdConfiguracionOrigenDeDatos);
+                db.Entry<Novedad>(novedad).State = EntityState.Modified;
+                db.SaveChanges();
             }
         }
     }

@@ -160,6 +160,12 @@ namespace Ol4RentAPI.Facades
             }
         }
 
+        public void DeshabilitarUsuarioEnSitio(String nombreUsuario, int idSitio)
+        {
+            Usuario u = ObtenerPorNombre(nombreUsuario);
+            DeshabilitarUsuarioEnSitio(u.Id, idSitio);
+        }
+
         /// <summary>
         /// Habilita el acceso de un usuario a un sitio
         /// </summary>
@@ -228,7 +234,14 @@ namespace Ol4RentAPI.Facades
         public Boolean UsuarioHabilitadoEnSitio(String nombreUsuario, int idSitio)
         {
             Usuario u = ObtenerPorNombre(nombreUsuario);
-            return UsuarioHabilitadoEnSitio(u.Id, idSitio);
+            if (u == null)
+            {
+                return true;
+            }
+            else
+            {
+                return UsuarioHabilitadoEnSitio(u.Id, idSitio);
+            }
         }
 
 
@@ -271,7 +284,35 @@ namespace Ol4RentAPI.Facades
                 return AutoMapperUtils<Usuario, UsuarioDTO>.Map(usuarios.ToList());
             }
         }
+
+        public int IncrementarCantContBloqUsuarioEnSitio(int idUsuario, int idSitio)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<HabilitacionUsuario> habilitaciones =
+                    from hu in db.HabilitacionesUsuarios
+                    where hu.Sitio.Id == idSitio
+                        && hu.Usuario.Id == idUsuario
+                    select hu;
+                if (habilitaciones.Count<HabilitacionUsuario>() > 0)
+                {
+                    habilitaciones.First().CantContBloq++;
+                    db.Entry<HabilitacionUsuario>(habilitaciones.First()).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return habilitaciones.First().CantContBloq;
+                }
+            }
+            return 0;
+        }
+
+        public int IncrementarCantContBloqUsuarioEnSitio(String nombreUsuario, int idSitio)
+        {
+            Usuario u = ObtenerPorNombre(nombreUsuario);
+            return IncrementarCantContBloqUsuarioEnSitio(u.Id, idSitio);
+        }
     }
+
+
 }
 
 

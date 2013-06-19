@@ -1,38 +1,42 @@
-﻿<!DOCTYPE html>
+﻿@using Ol4RentAPI.DTO;
+@{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
+
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Ol4RENT - @ViewBag.Title</title>
+        <title>@(sitio != null ? sitio.Nombre : "Ol4RENT") - @ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/Sitewp.css")
+
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/Scripts/jquery-1.7.1.js")
     </head>
     <body>
         <header>
             <div class="content-wrapper">
+                <section id="login">
+                    @Html.Partial("_LoginPartialWindowsPhone")
+                </section>
                 <div class="header">
-                    @Html.Partial("_HeaderPartialWindowsPhone")                    
+                    @Html.Partial("_HeaderPartialWindowsPhone")
                 </div>
-                <div class="float-left">
-                    <section id="login">
-                        @Html.Partial("_LoginPartialWindowsPhone")
-                    </section>
-                </div>
-                <div class="float-right">
+                <section id="busqueda">
                     <!-- Form de Busqueda -->
-                    <div>
+                    <div class="busqueda-basica">
                     @using (Html.BeginForm("Buscar", "Bien")) {
                         @Html.ValidationSummary(true)
                         @Html.TextBox("query")
+                        <BR>
                         <input type="submit" value="Buscar" name="Buscar" id="buscar" />
                     }
                     </div>
                     <div class="busqueda-avanzada">
                         @Html.ActionLink("Búsqueda avanzada", "BusquedaAvanzada", "Bien")
                     </div>
-                </div>
+                </section>
             </div>
         </header>
         <div id="body">

@@ -8,6 +8,7 @@ namespace OL4RENTBackOffice.Controllers
 {
     public class HomeController : Controller
     {
+        [AllowAnonymous]
         public ActionResult Index()
         {
             ViewBag.Message = "";

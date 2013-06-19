@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Ol4RentAPI.Model;
 using Ol4RentAPI.Facades;
 using Ol4RentAPI.DTO;
+using System.Collections;
 
 namespace OL4RENT.Controllers
 {
@@ -29,6 +30,7 @@ namespace OL4RENT.Controllers
             {
                 return HttpNotFound();
             }
+            ChequearSiLePuedeGustar(id);
             return View(bien);
         }
 
@@ -113,7 +115,7 @@ namespace OL4RENT.Controllers
             bienDTO.Usuario = User.Identity.Name;
             SitioListadoDTO sitio = Session["sitio"] as SitioListadoDTO;
             bienDTO.TipoBien = ServiceFacadeFactory.Instance.SitioFacade.ObtenerIdTipoBien(sitio.Id);
-            if (sitio !=null && ModelState.IsValid)
+            if (sitio != null && ModelState.IsValid)
             {
                 if (ServiceFacadeFactory.Instance.BienFacade.Crear(bienDTO))
                 {
@@ -140,7 +142,7 @@ namespace OL4RENT.Controllers
         //
         // POST: /Bien/Edit/5
         [HttpPost]
-        public ActionResult Edit(BienEdicionDTO bienDTO)
+        public ActionResult Edit(BienEdicionDTO bienDTO, HttpPostedFileBase imagen)
         {
             if (bienDTO.ValoresCaracteristicas == null)
             {
@@ -183,6 +185,11 @@ namespace OL4RENT.Controllers
                     }
                 }
             }
+            if (imagen != null)
+            {
+                bienDTO.Foto = new byte[imagen.ContentLength];
+                imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
+            }
             if (ServiceFacadeFactory.Instance.BienFacade.Editar(bienDTO))
             {
                 return RedirectToAction("MisBienes");
@@ -223,7 +230,8 @@ namespace OL4RENT.Controllers
         [HttpPost]
         public ActionResult Buscar(string query)
         {
-            return View(ServiceFacadeFactory.Instance.BienFacade.Buscar(query));
+            List<BienListadoDTO> bienes = ServiceFacadeFactory.Instance.BienFacade.Buscar(query);
+            return View(bienes);
         }
 
         //
@@ -271,7 +279,8 @@ namespace OL4RENT.Controllers
                     }
                 }
             }
-            return View("Buscar", ServiceFacadeFactory.Instance.BienFacade.BusquedaAvanzada(bienDTO));
+            List<BienListadoDTO> bienes = ServiceFacadeFactory.Instance.BienFacade.BusquedaAvanzada(bienDTO);
+            return View("Buscar", bienes);
         }
 
         //
@@ -357,14 +366,17 @@ namespace OL4RENT.Controllers
         //
         // GET: /Bien/Foto
         [HttpGet]
-        public FileContentResult Foto(int idBien)
+        public ActionResult Foto(int idBien)
         {
             byte[] bytes = ServiceFacadeFactory.Instance.BienFacade.Foto(idBien);
             if (bytes != null)
             {
-                return new FileContentResult(ServiceFacadeFactory.Instance.BienFacade.Foto(idBien), "image/jpeg");
+                return new FileContentResult(bytes, "image/jpeg");
             }
-            return null;
+            else
+            {
+                return new FilePathResult("~/Images/sinfoto.png", "image/png");
+            }
         }
 
         //
@@ -373,14 +385,6 @@ namespace OL4RENT.Controllers
         {
             ViewBag.IdBien = id;
             return PartialView(ServiceFacadeFactory.Instance.BienFacade.ObtenerComentariosBien(id));
-        }
-
-        //
-        // GET: /Bien/MarcarContenidoInadecuado/5
-        public ActionResult MarcarContenidoInadecuado(int id)
-        {
-             ServiceFacadeFactory.Instance.ContenidoFacade.MarcarInadecuado(id);
-             return PartialView("Comentarios");
         }
 
         [HttpPost]
@@ -399,8 +403,40 @@ namespace OL4RENT.Controllers
                     }
                 }
             }
-            ServiceFacadeFactory.Instance.ContenidoFacade.Agregar(dto); 
+            ServiceFacadeFactory.Instance.ContenidoFacade.Agregar(dto);
             return new RedirectResult(Request.UrlReferrer.AbsoluteUri);
         }
+
+        [HttpGet]
+        public RedirectResult Inadecuado(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                ServiceFacadeFactory.Instance.ContenidoFacade.MarcarInadecuado(id);
+            }
+            return Redirect(Request.UrlReferrer.AbsoluteUri);
+        }
+
+        [HttpPost]
+        [ActionName("Inadecuado")]
+        public JsonResult InadecuadoPost(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                ServiceFacadeFactory.Instance.ContenidoFacade.MarcarInadecuado(id);
+            }
+            return new JsonResult() { Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        private void ChequearSiLePuedeGustar(int idBien)
+        {
+            ViewBag.MostrarMeGusta = VerificarSiMuestroMeGusta(idBien);
+        }
+
+        private bool VerificarSiMuestroMeGusta(int idBien)
+        {
+            return User.Identity.IsAuthenticated && ServiceFacadeFactory.Instance.BienFacade.PuedeMostrarMeGusta(idBien);
+        }
+
     }
 }

@@ -1,28 +1,33 @@
-﻿@model List<Ol4RentAPI.DTO.BienListadoDTO>
+﻿@model IEnumerable<Ol4RentAPI.DTO.BienListadoDTO>
 
 @{
     ViewBag.Title = "Buscar";
 }
-
 <h2>Resultados de la búsqueda</h2>
 @if(Model.Count() > 0) {
-<ul>
-@foreach (var item in Model) {
+<ul class="listado-bienes">
+@foreach (Ol4RentAPI.DTO.BienListadoDTO item in Model) {
     <li>
-        <div>
-            @Html.ActionLink(item.Titulo, "Details", "Bien", new { id=item.Id }, null) <input type="button" value="Me Gusta"  onclick="javascript: like(@item.Id);" />
+        <div class="bien-first">
+            <img src="@Url.Action("Foto", "Bien", new { idBien = @item.Id })" alt="@item.Titulo" />
         </div>
-        <div>
-            @Html.DisplayFor(modelItem => item.Descripcion)
+        <div class="bien-second">
+            @Html.ActionLink(item.Titulo, "Details", "Bien", new { id=item.Id }, null)
+            @if (item.MostrarMeGusta)
+            {
+                <a href="" onclick="javascript:like(@item.Id,@item.CantidadLikes);" id="like-@item.Id"><img src="~/Images/like.png" width="25" height="25" /></a>
+            }
+            <span id="likes-@item.Id" class="likes">Likes: @item.CantidadLikes</span>
+            <p>@Html.DisplayFor(modelItem => item.Descripcion)</p>
         </div>
     </li>
 }
 </ul>
 }
 else {
-    <p>No existen resultados para su búsqueda</p>
+<p>No existen resultados para su búsqueda</p>
 }
 @section Scripts {
-    @Scripts.Render("~/Scripts/jquery-1.7.1.js")
     @Scripts.Render("~/Scripts/meGusta.js")
 }
+

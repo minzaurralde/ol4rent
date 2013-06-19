@@ -36,6 +36,10 @@
     {
         <p>No se registraron bienes entre @(((DateTime)ViewBag.FechaInicio).ToString("dd-MM-yyyy")) y @(((DateTime)ViewBag.FechaFin).ToString("dd-MM-yyyy"))</p>
     } else {
+    <div>
+        <img src="@ViewBag.ChartUrl" alt="Registro de bienes entre @(((DateTime)ViewBag.FechaInicio).ToString("dd-MM-yyyy")) y @(((DateTime)ViewBag.FechaFin).ToString("dd-MM-yyyy"))" />
+    </div>
+    <div>
         <table>
             <thead>
                 <tr>
@@ -70,6 +74,7 @@
                 </tr>
             </tfoot>
         </table>
+    </div>
     }
 </div>
 

@@ -9,7 +9,7 @@ using System.Data;
 
 namespace Ol4RentAPI.Facades
 {
-    class ContenidoFacadeImpl: IContenidoFacade
+    class ContenidoFacadeImpl : IContenidoFacade
     {
         public ContenidoDTO Obtener(int id)
         {
@@ -19,21 +19,31 @@ namespace Ol4RentAPI.Facades
             }
         }
 
-       
-        public  void MarcarInadecuado(int id)
+
+        public void MarcarInadecuado(int id)
         {
             using (ModelContainer db = new ModelContainer())
             {
-                Contenido cont =  db.Contenidos.Find(id) ;
+                Contenido cont = db.Contenidos.Find(id);
                 if (cont != null)
                 {
-                    cont.CantMarcas++; 
-                        db.Entry(cont).State = EntityState.Modified; 
-                        db.SaveChanges();
+                    cont.CantMarcas++;
+                    db.Entry(cont).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
             }
         }
 
+
+        public void Eliminar(int id)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Contenido cont = db.Contenidos.Find(id);
+                db.Contenidos.Remove(cont);
+                db.SaveChanges();
+            }
+        }
 
         public void Agregar(ComentarioAltaDTO dto)
         {

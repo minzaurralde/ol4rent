@@ -46,30 +46,7 @@ namespace Ol4RentAPI.Facades
                     List<Dependencia> aAgregar = new List<Dependencia>();
                     foreach (Dependencia d in origenDatos.Dependencias)
                     {
-                        IQueryable<Dependencia> queryDependencia =
-                            from dep in db.Dependencias
-                            where dep.Nombre == d.Nombre
-                            select dep;
-                        if (queryDependencia.Count() > 0)
-                        {
-                            aBorrar.Add(d);
-                            Dependencia vieja = queryDependencia.First();
-                            aAgregar.Add(vieja);
-                            vieja.Dll = d.Dll;
-                            db.Entry<Dependencia>(vieja).State = System.Data.EntityState.Modified;
-                        }
-                        else
-                        {
-                            db.Dependencias.Add(d);
-                        }
-                    }
-                    foreach (Dependencia d in aBorrar)
-                    {
-                        origenDatos.Dependencias.Remove(d);
-                    }
-                    foreach (Dependencia d in aAgregar)
-                    {
-                        origenDatos.Dependencias.Add(d);
+                        db.Dependencias.Add(d);
                     }
                     db.SaveChanges();
                     return true;
@@ -119,10 +96,7 @@ namespace Ol4RentAPI.Facades
                     // Se obtiene de la coleccion de atributos pasada por parametro, la lista de los Ids
                     List<int> idsAtributosNuevos = dto.Atributos.Select(a => a.Id).ToList();
                     // Se obtiene una lista de los atributos que deben ser eliminados
-                    IQueryable<Atributo> atributosBorrables =
-                        from at in db.Atributos
-                        where !idsAtributosNuevos.Contains(at.Id)
-                        select at;
+                    List<Atributo> atributosBorrables = origenDatos.Atributos.Where(a => !idsAtributosNuevos.Contains(a.Id)).ToList();
                     // Se eliminan los atributos
                     bool seEliminaAlguno = false;
                     foreach (Atributo atributoBorrable in atributosBorrables)
@@ -141,11 +115,14 @@ namespace Ol4RentAPI.Facades
                     foreach (Atributo atributoViejo in origenDatos.Atributos)
                     {
                         AtributoEdicionDTO atributoDto = dto.Atributos.Where(a => a.Id == atributoViejo.Id).First();
-                        if (!atributoViejo.Nombre.Equals(atributoDto.Nombre))
+                        if (atributoDto != null)
                         {
-                            atributoViejo.Nombre = atributoDto.Nombre;
-                            db.Entry<Atributo>(atributoViejo).State = System.Data.EntityState.Modified;
-                            seModificoAlguno = true;
+                            if (!atributoViejo.Nombre.Equals(atributoDto.Nombre))
+                            {
+                                atributoViejo.Nombre = atributoDto.Nombre;
+                                db.Entry<Atributo>(atributoViejo).State = System.Data.EntityState.Modified;
+                                seModificoAlguno = true;
+                            }
                         }
                     }
                     // Se guardan los cambios en caso que corresponda
@@ -163,38 +140,31 @@ namespace Ol4RentAPI.Facades
                         origenDatos.Atributos.Add(atributo);
                         seAgregoAlguno = true;
                     }
-                    List<Dependencia> aBorrar = new List<Dependencia>();
-                    List<Dependencia> aAgregar = new List<Dependencia>();
-                    foreach (Dependencia d in origenDatos.Dependencias)
+                    List<string> nombresDependenciasNuevas = dto.Dependencias.Select(d => d.Nombre).ToList();
+                    List<Dependencia> aModificar = origenDatos.Dependencias.Where(d => nombresDependenciasNuevas.Contains(d.Nombre)).ToList();
+                    List<string> nombresAModificar = aModificar.Select(d => d.Nombre).ToList();
+                    List<Dependencia> aAgregar = AutoMapperUtils<DependenciaDTO, Dependencia>.Map(dto.Dependencias.Where(d => !nombresAModificar.Contains(d.Nombre)).ToList());
+                    foreach (Dependencia d in aModificar)
+                    {
+                        DependenciaDTO dependenciaDto = dto.Dependencias.Where(ddto => ddto.Nombre == d.Nombre).First();
+                        if (dependenciaDto != null)
+                        {
+                            if (!seAgregoAlguno)
+                            {
+                                seAgregoAlguno = true;
+                            }
+                            d.Dll = dependenciaDto.Dll;
+                            db.Entry<Dependencia>(d).State = System.Data.EntityState.Modified;
+                        }
+                    }
+                    foreach (Dependencia d in aAgregar)
                     {
                         if (!seAgregoAlguno)
                         {
                             seAgregoAlguno = true;
                         }
-                        IQueryable<Dependencia> queryDependencia =
-                            from dep in db.Dependencias
-                            where dep.Nombre == d.Nombre
-                            select dep;
-                        if (queryDependencia.Count() > 0)
-                        {
-                            aBorrar.Add(d);
-                            Dependencia vieja = queryDependencia.First();
-                            aAgregar.Add(vieja);
-                            vieja.Dll = d.Dll;
-                            db.Entry<Dependencia>(vieja).State = System.Data.EntityState.Modified;
-                        }
-                        else
-                        {
-                            db.Dependencias.Add(d);
-                        }
-                    }
-                    foreach (Dependencia d in aBorrar)
-                    {
-                        origenDatos.Dependencias.Remove(d);
-                    }
-                    foreach (Dependencia d in aAgregar)
-                    {
                         origenDatos.Dependencias.Add(d);
+                        db.Dependencias.Add(d);
                     }
 
                     // Se guardan los cambios en la base en caso que corresponda
@@ -223,6 +193,12 @@ namespace Ol4RentAPI.Facades
                     db.Atributos.Remove(a);
                 }
                 od.Atributos.Clear();
+                List<Dependencia> dependencias = new List<Dependencia>(od.Dependencias);
+                foreach (Dependencia d in dependencias)
+                {
+                    db.Dependencias.Remove(d);
+                }
+                od.Dependencias.Clear();
                 db.OrigenesDatos.Remove(od);
                 db.SaveChanges();
             }
@@ -340,7 +316,14 @@ namespace Ol4RentAPI.Facades
             using (ModelContainer db = new ModelContainer())
             {
                 Novedades.NovedadesExternasFactory.Instance.ResetearCacheInstanciaDeConfiguracion(id);
-                db.ConfiguracionesOrigenesDatos.Remove(db.ConfiguracionesOrigenesDatos.Find(id));
+                ConfiguracionOrigenDatos configuracion = db.ConfiguracionesOrigenesDatos.Find(id);
+                List<ValorAtributo> valores = new List<ValorAtributo>(configuracion.ValoresAtributo);
+                foreach (ValorAtributo va in valores)
+                {
+                    db.ValoresAtributos.Remove(va);
+                }
+                configuracion.ValoresAtributo.Clear();
+                db.ConfiguracionesOrigenesDatos.Remove(configuracion);
                 db.SaveChanges();
             }
         }
