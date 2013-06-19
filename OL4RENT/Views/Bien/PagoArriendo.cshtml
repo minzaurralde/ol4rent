@@ -1,0 +1,46 @@
+﻿@model Ol4RentAPI.DTO.BienArrendarDTO
+@using Ol4RentAPI.DTO;
+
+@{
+    ViewBag.Title = "PagoArriendo";
+}
+
+<h2>Pago Arriendo</h2>
+
+
+<fieldset>
+    <legend>Bien</legend>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Titulo):
+         @Html.DisplayFor(model => model.Titulo)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FechaAlquiler):
+         @Html.DisplayFor(model => model.FechaAlquiler)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DuracionAlquiler):
+         @Html.DisplayFor(model => model.DuracionAlquiler)
+    </div>
+    @Html.HiddenFor(model => model.Precio)
+</fieldset>
+@{
+    Decimal monto = Model.Precio * Model.DuracionAlquiler;
+    SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];
+}
+
+
+<script src="/Scripts/paypal-button.min.js?merchant=gr6tsi1@gmail.com"
+    data-button="buynow"
+    data-name="Ol4Rent"
+    data-quantity="1"
+    data-amount=@monto.ToString()
+    data-currency="USD"
+    data-shipping="0"
+    data-tax="0"
+    data-callback="http://localhost:5311/Bien/ConfirmaPago.cshtml"
+    data-env="sandbox"></script>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/paypal-button.min.js")
+}

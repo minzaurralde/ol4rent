@@ -314,7 +314,7 @@ namespace OL4RENT.Controllers
         {
             if (ServiceFacadeFactory.Instance.BienFacade.Arrendar(bienDTO, User.Identity.Name))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("PagoArriendo", bienDTO);
             }
             return RedirectToAction("Index", "Home");
 		}
@@ -329,6 +329,10 @@ namespace OL4RENT.Controllers
             return Redirect(Request.UrlReferrer.AbsoluteUri);
         }
 
+        public ActionResult PagoArriendo(BienArrendarDTO bienDTO)
+        {
+            return View(bienDTO);
+        }
         [HttpPost]
         [ActionName("Like")]
         public JsonResult LikePost(int id)
@@ -338,6 +342,11 @@ namespace OL4RENT.Controllers
                 ServiceFacadeFactory.Instance.BienFacade.Like(User.Identity.Name, id);
             }
             return new JsonResult() { Data = "ok" , JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public ActionResult ConfirmaPago()
+        {
+            return View();
         }
 
         protected override void Dispose(bool disposing)

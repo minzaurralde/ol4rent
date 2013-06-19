@@ -37,9 +37,11 @@
                 @Html.LabelFor(m => m.DuracionAlquiler)
                 @Html.TextBoxFor(m => m.DuracionAlquiler)
             </li>
+            @Html.HiddenFor(m => m.Titulo)
+            @Html.HiddenFor(m => m.Precio)
         </ol>
         <input type="submit" value="Arrendar" /> |
-         @Html.ActionLink("Principal", "Index","Home")
+         @Html.ActionLink("Principal", "Index","Home") 
     </fieldset>
 }
 

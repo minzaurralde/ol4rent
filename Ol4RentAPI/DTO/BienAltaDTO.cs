@@ -126,5 +126,7 @@ namespace Ol4RentAPI.DTO
         public Nullable<System.DateTime> FechaAlquiler { get; set; }
         [Display(Name = "Duración Alquiler")]
         public short DuracionAlquiler { get; set; }
+        [Display(Name = "Precio")]
+        public decimal Precio { get; set; }
     }
 }

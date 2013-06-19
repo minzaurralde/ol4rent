@@ -61,7 +61,7 @@ namespace Ol4RentAPI.Facades
                 {
                     IQueryable<Bien> queryBien =
                         from b in db.Bienes
-                        where b.Id == bienDTO.Id && b.Usuario.NombreUsuario != usuario && b.FechaAlquiler == null && b.DuracionAlquiler == null
+                        where b.Id == bienDTO.Id && b.Usuario.NombreUsuario != usuario && b.FechaAlquiler == null
                         select b;
                     if (queryBien.Count() > 0)
                     {

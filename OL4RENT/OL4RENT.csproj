@@ -261,6 +261,7 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\meGusta.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\paypal-button.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -339,6 +340,8 @@
     <Content Include="Views\Wish\Mapa.cshtml" />
     <Content Include="Views\Bien\Arrendar.cshtml" />
     <Content Include="Views\Bien\Comentarios.cshtml" />
+    <Content Include="Views\Bien\PagoArriendo.cshtml" />
+    <Content Include="Views\Bien\ConfirmaPago.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
