@@ -13,6 +13,7 @@ namespace OL4RENTBackOffice.Controllers
     {
         //
         // GET: /Reporte/
+        [Authorize(Roles = "SITE_ADMIN")]
         public ActionResult Index()
         {
             return View();

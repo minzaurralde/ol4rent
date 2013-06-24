@@ -1,12 +1,14 @@
 ﻿@if (Request.IsAuthenticated) {
 <nav>
     <ul id="menu">
+        @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString()) || User.IsInRole(Ol4RentAPI.Model.RolEnum.SITE_ADMIN.ToString()))
+        {
         <li>@Html.ActionLink("Sitios", "Listar", "Sitio")</li>
-        <li>@Html.ActionLink("Usuarios", "ListarPorSitio", "Usuario")</li>
+        }
         @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString())) {
         <li>@Html.ActionLink("Orígenes de Datos", "Listar", "OrigenDatos")</li>
-        }
         <li>@Html.ActionLink("Reportes", "Index", "Reporte")</li>
+        }
     </ul>
 </nav>
 }
