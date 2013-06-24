@@ -33,9 +33,6 @@
             @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SITE_ADMIN.ToString())) {
             @Html.ActionLink("Modificar", "Editar", "Sitio", new { id=item.Id }, null) 
             }
-            @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString())) {
-            @Html.ActionLink("Eliminar", "Eliminar", "Sitio", new { id=item.Id }, null)
-            }
             @Html.ActionLink("Ver usuarios", "ListarPorSitio", "Usuario", new { idSitio=item.Id }, null)
             @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SITE_ADMIN.ToString())) {
             @Html.ActionLink("Ver novedades", "ListarPorSitio", "Novedad", new { idSitio=item.Id }, null)

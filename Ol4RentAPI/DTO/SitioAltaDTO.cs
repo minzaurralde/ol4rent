@@ -34,6 +34,7 @@ namespace Ol4RentAPI.DTO
         [DataType(DataType.EmailAddress, ErrorMessage="La dirección de correo del administrador debe ser una dirección de correo válida")]
         [StringLength(128, ErrorMessage = "La dirección de correo del administrador del sitio debe tener como máximo {0} caracteres")]
         [Display(Name = "Correo electrónico del Administrador")]
+        [RegularExpression(@"^([a-zA-Z0-9]+[a-zA-Z0-9._%-]*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4})$", ErrorMessage = "La dirección de correo del administrador debe ser una dirección de correo válida")]
         public string MailAdmin { get; set; }
         [Required(ErrorMessage = "El dominio es un campo obligatorio")]
         [DataType(DataType.Text)]
@@ -107,6 +108,7 @@ namespace Ol4RentAPI.DTO
         [DataType(DataType.EmailAddress, ErrorMessage = "La dirección de correo del administrador debe ser una dirección de correo válida")]
         [StringLength(128, ErrorMessage = "La dirección de correo del administrador del sitio debe tener como máximo {0} caracteres")]
         [Display(Name = "Correo electrónico del Administrador")]
+        [RegularExpression(@"^([a-zA-Z0-9]+[a-zA-Z0-9._%-]*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4})$", ErrorMessage = "La dirección de correo del administrador debe ser una dirección de correo válida")]
         public string MailAdmin { get; set; }
         [Required(ErrorMessage = "El dominio es un campo obligatorio")]
         [DataType(DataType.Text)]

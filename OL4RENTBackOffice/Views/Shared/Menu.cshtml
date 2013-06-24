@@ -7,6 +7,8 @@
         }
         @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString())) {
         <li>@Html.ActionLink("Orígenes de Datos", "Listar", "OrigenDatos")</li>
+        }
+        @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SITE_ADMIN.ToString())) {
         <li>@Html.ActionLink("Reportes", "Index", "Reporte")</li>
         }
     </ul>
