@@ -13,6 +13,7 @@ namespace OL4RENTBackOffice.Controllers
     {
         //
         // GET: /Reporte/
+        [Authorize(Roles = "SITE_ADMIN")]
         public ActionResult Index()
         {
             return View();
@@ -68,19 +69,22 @@ namespace OL4RENTBackOffice.Controllers
 
         private void ArmarGraficaRegistroDeBienesEnTiempo(RegistroBienDTO registro)
         {
-            int maximo = registro.Valores.Select(v => v.Cantidad).Max();
-            int[] eje = new int[maximo + 1];
-            for (int i = 0; i <= maximo; i++)
+            if (registro.Valores.Count() > 0)
             {
-                eje[i] = i;
+                int maximo = registro.Valores.Select(v => v.Cantidad).Max();
+                int[] eje = new int[maximo + 1];
+                for (int i = 0; i <= maximo; i++)
+                {
+                    eje[i] = i;
+                }
+                //LineChart chart = new LineChart(200, 150, LineChartType.SingleDataSet);
+                BarChart chart = new BarChart(200, 150, BarChartOrientation.Vertical, BarChartStyle.Stacked);
+                chart.AddAxis(new ChartAxis(ChartAxisType.Left, eje.Select(i => i.ToString()).ToArray()) { FontSize = 10 });
+                chart.AddAxis(new ChartAxis(ChartAxisType.Bottom, registro.Valores.Select(val => val.Etiqueta).ToArray()) { FontSize = 10 });
+                chart.SetData(registro.Valores.Select(val => Convert.ToSingle(val.Cantidad * 100 / maximo)).ToArray());
+                string url = chart.GetUrl();
+                ViewBag.ChartUrl = url;
             }
-            //LineChart chart = new LineChart(200, 150, LineChartType.SingleDataSet);
-            BarChart chart = new BarChart(200, 150, BarChartOrientation.Vertical, BarChartStyle.Stacked);
-            chart.AddAxis(new ChartAxis(ChartAxisType.Left, eje.Select(i => i.ToString()).ToArray()) { FontSize = 10 });
-            chart.AddAxis(new ChartAxis(ChartAxisType.Bottom, registro.Valores.Select(val => val.Etiqueta).ToArray()) { FontSize = 10 });
-            chart.SetData(registro.Valores.Select(val => Convert.ToSingle(val.Cantidad * 100 / maximo)).ToArray());
-            string url = chart.GetUrl();
-            ViewBag.ChartUrl = url;
         }
     }
 }

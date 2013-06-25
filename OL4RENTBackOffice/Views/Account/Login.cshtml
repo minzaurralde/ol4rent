@@ -8,7 +8,7 @@
     <h1>@ViewBag.Title.</h1>
 </hgroup>
 
-<h2>Utilice su cuenta local para inciar sesión.</h2>
+<h2>Utilice su cuenta local para iniciar sesión.</h2>
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
