@@ -70,22 +70,23 @@ namespace Ol4RentAPI.Facades
 
                     string extension = System.IO.Path.GetExtension(adjunto.Nombre).ToLower().Replace(".", "");
 
-                    //// Inicializar con tipo de adjunto igual a cero
-                    TipoAdjunto tipo = TipoAdjunto.OTRO;
-
+                    Boolean tipoCorrecto = false;
+                    TipoAdjunto tipo = TipoAdjunto.IMAGEN;
                     //// Extensiones valida de imagen: "jpg","jpeg", "png","gif", "bmp"
                     if (extension == "jpg" || extension == "jpeg" || extension == "png" || extension == "gif" || extension == "bmp")
                     {
                         tipo = TipoAdjunto.IMAGEN;
+                        tipoCorrecto = true;
                     }
 
                     //// Opciones para formato de video "mpg" , "mpeg", "avi","flv","mp4"
                     if (extension == "mpg" || extension == "mpeg" || extension == "avi" || extension == "flv" || extension == "mp4")
                     {
                         tipo = TipoAdjunto.VIDEO;
+                        tipoCorrecto=true;
                     }
 
-                    if (tipo != TipoAdjunto.OTRO)
+                    if (tipoCorrecto)
                     {
 
                         if (tipo == TipoAdjunto.VIDEO)
@@ -110,8 +111,10 @@ namespace Ol4RentAPI.Facades
                             // Parametros para FFMEPG - conversion a swf
                             String filargs = "-i " + "\"" + inputfile + "\"" + " -ar 22050 " + "\"" + outputfile + "\"";
 
-                            //// Problema en la ruta, verificar mejor entre el equipo del desarrollador y el de testeo
-                            String PathFFMPEG = AppDomain.CurrentDomain.BaseDirectory.TrimEnd("OL4RENT\\".ToCharArray()) + "\\ext\\ffmpeg\\ffmpeg.exe";
+                            String dirBase = AppDomain.CurrentDomain.BaseDirectory;
+                            // Saco el "OL4RENT\\" del final
+                            dirBase = dirBase.Substring(0, dirBase.Length - 8);
+                            String PathFFMPEG = dirBase + "ext\\ffmpeg\\ffmpeg.exe";
                             
                             Process proc;
                             proc = new Process();
