@@ -13,6 +13,7 @@ namespace Ol4RentAPI.Model
     
     public enum TipoAdjunto : int
     {
+        OTRO = 0,
         IMAGEN = 1,
         VIDEO = 2
     }
