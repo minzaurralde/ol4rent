@@ -10,6 +10,7 @@ using Ol4RentAPI.Facades;
 using Ol4RentAPI.DTO;
 using System.Collections;
 using System.Web.UI.WebControls;
+using System.IO;
 
 namespace OL4RENT.Controllers
 {
@@ -110,8 +111,15 @@ namespace OL4RENT.Controllers
             }
             if (imagen != null)
             {
-                bienDTO.Foto = new byte[imagen.ContentLength];
-                imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
+                if (Path.GetExtension(imagen.FileName).ToLower().EndsWith("jpg"))
+                {
+                    bienDTO.Foto = new byte[imagen.ContentLength];
+                    imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
+                }
+                else
+                {
+                    ModelState.AddModelError("imagen", "La extensión de la imagen debe ser .jpg");
+                }
             }
             bienDTO.Usuario = User.Identity.Name;
             SitioListadoDTO sitio = Session["sitio"] as SitioListadoDTO;
@@ -188,12 +196,22 @@ namespace OL4RENT.Controllers
             }
             if (imagen != null)
             {
-                bienDTO.Foto = new byte[imagen.ContentLength];
-                imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
+                if (Path.GetExtension(imagen.FileName).ToLower().EndsWith("jpg"))
+                {
+                    bienDTO.Foto = new byte[imagen.ContentLength];
+                    imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
+                }
+                else
+                {
+                    ModelState.AddModelError("Foto", "La extensión de la imagen debe ser .jpg");
+                }
             }
-            if (ServiceFacadeFactory.Instance.BienFacade.Editar(bienDTO))
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("MisBienes");
+                if (ServiceFacadeFactory.Instance.BienFacade.Editar(bienDTO))
+                {
+                    return RedirectToAction("MisBienes");
+                }
             }
             ArmarListadoCaracteristicas();
             return View(bienDTO);
@@ -322,13 +340,22 @@ namespace OL4RENT.Controllers
         [ValidateInput(true)]
         public ActionResult Arrendar(BienArrendarDTO bienDTO)
         {
-            if (ServiceFacadeFactory.Instance.BienFacade.Arrendar(bienDTO, User.Identity.Name))
+            if (bienDTO.FechaAlquiler < DateTime.Today || bienDTO.FechaAlquiler > DateTime.MaxValue)
             {
-                return RedirectToAction("PagoArriendo", bienDTO);
+                ModelState.AddModelError("FechaAlquiler", "Debe ingresar una fecha mayo o igual a hoy");
+                return View(bienDTO);
+            }
+            else
+            {
+                if (ServiceFacadeFactory.Instance.BienFacade.Arrendar(bienDTO, User.Identity.Name))
+                {
+                    return RedirectToAction("PagoArriendo", bienDTO);
+                }
+                return RedirectToAction("Index", "Home");
             }
             return RedirectToAction("Index", "Home");
         }
-
+		
         [HttpGet]
         public RedirectResult Like(int id)
         {
@@ -351,6 +378,7 @@ namespace OL4RENT.Controllers
             {
                 ServiceFacadeFactory.Instance.BienFacade.Like(User.Identity.Name, id);
             }
+
             return new JsonResult() { Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

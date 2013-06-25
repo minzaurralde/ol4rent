@@ -259,7 +259,6 @@ namespace Ol4RentAPI.Facades
         {
             if (query != null)
             {
-                // TODO pasar a linq
                 using (ModelContainer db = new ModelContainer())
                 {
                     return AutoMapperUtils<Bien, BienListadoDTO>.Map(db.Bienes.Where(b => b.Descripcion.ToLower().Contains(query.ToLower()) || b.Titulo.ToLower().Contains(query.ToLower())).ToList());
@@ -486,8 +485,9 @@ namespace Ol4RentAPI.Facades
         {
             using (ModelContainer db = new ModelContainer())
             {
+                fechaInicio = new DateTime(fechaInicio.Year, fechaInicio.Month, fechaInicio.Day, 0, 0, 0);
+                fechaFin = new DateTime(fechaFin.Year, fechaFin.Month, fechaFin.Day, 23, 59, 59);
                 TimeSpan diff = fechaFin - fechaInicio;
-                // TODO falta la fecha de alta en el bien
                 IQueryable<Bien> query =
                     from b in db.Bienes
                     where b.TipoBien.Sitio.Id == idSitio

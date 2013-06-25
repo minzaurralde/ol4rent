@@ -3,6 +3,7 @@ using Ol4RentAPI.Facades;
 using Ol4RentAPI.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -46,13 +47,44 @@ namespace OL4RENTBackOffice.Controllers
                     sitio.Caracteristicas.Add(new CaracteristicaAltaDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]) });
                 }
             }
-            // TODO validar los formatos de los archivos
+            if (sitio.Caracteristicas.Count < 1)
+            {
+                ModelState.AddModelError("caracteristicas", "Debe ingresar al menos una caracteristica para el bien.");
+            }
             // estilo = Request.Files["estilo"];
-            sitio.CSS = new byte[estilo.ContentLength];
-            estilo.InputStream.Read(sitio.CSS, 0, estilo.ContentLength);
+            if (estilo == null)
+            {
+                sitio.CSS = null;
+            }
+            else
+            {
+                if (Path.GetExtension(estilo.FileName).ToLower().EndsWith("css"))
+                {
+                    sitio.CSS = new byte[estilo.ContentLength];
+                    estilo.InputStream.Read(sitio.CSS, 0, estilo.ContentLength);
+                }
+                else
+                {
+                    ModelState.AddModelError("estilo", "La extensión del CSS debe ser .css");
+                }
+            }
             // imagen = Request.Files["imagen"];
-            sitio.Logo = new byte[imagen.ContentLength];
-            imagen.InputStream.Read(sitio.Logo, 0, imagen.ContentLength);
+            if (imagen == null)
+            {
+                sitio.Logo = null;
+            }
+            else
+            {
+                if (Path.GetExtension(imagen.FileName).ToLower().EndsWith("jpg") || Path.GetExtension(imagen.FileName).ToLower().EndsWith("gif") || Path.GetExtension(imagen.FileName).ToLower().EndsWith("png"))
+                {
+                    sitio.Logo = new byte[imagen.ContentLength];
+                    imagen.InputStream.Read(sitio.Logo, 0, imagen.ContentLength);
+                }
+                else
+                {
+                    ModelState.AddModelError("imagen", "La extensión del logo debe ser .jpg, .gif o .png");
+                }
+            }
             if (ModelState.IsValid)
             {
                 if (ServiceFacadeFactory.Instance.SitioFacade.Crear(sitio))
@@ -71,8 +103,6 @@ namespace OL4RENTBackOffice.Controllers
         {
             if (User.IsInRole(RolEnum.SUPER_ADMIN.ToString()))
             {
-                // return View(ServiceFacadeFactory.Instance.SitioFacade.Todos);
-                // TODO Ver que pasa en este caso cuando debo retornar el listado para un superadmin
                 return View(ServiceFacadeFactory.Instance.SitioFacade.ObtenerTodos());
             }
             else if (User.IsInRole(RolEnum.SITE_ADMIN.ToString()))
@@ -109,19 +139,38 @@ namespace OL4RENTBackOffice.Controllers
             {
                 if (Request["nombre" + i.ToString()] != null)
                 {
-                    sitioDTO.Caracteristicas.Add(new CaracteristicaEdicionDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]) });
+                    int id = -1;
+                    int.TryParse(Request["id" + i.ToString()], out id);
+                    sitioDTO.Caracteristicas.Add(new CaracteristicaEdicionDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]), Id = id });
                 }
             }
-            // TODO validar los formatos de los archivos
+            if (sitioDTO.Caracteristicas.Count < 1)
+            {
+                ModelState.AddModelError("caracteristicas", "Debe ingresar al menos una caracteristica para el bien.");
+            }
             if (estilo != null)
             {
-                sitioDTO.CSS = new byte[estilo.ContentLength];
-                estilo.InputStream.Read(sitioDTO.CSS, 0, estilo.ContentLength);
+                if (Path.GetExtension(estilo.FileName).ToLower().EndsWith("css"))
+                {
+                    sitioDTO.CSS = new byte[estilo.ContentLength];
+                    estilo.InputStream.Read(sitioDTO.CSS, 0, estilo.ContentLength);
+                }
+                else
+                {
+                    ModelState.AddModelError("estilo", "La extensión del CSS debe ser .css");
+                }
             }
             if (imagen != null)
             {
-                sitioDTO.Logo = new byte[imagen.ContentLength];
-                imagen.InputStream.Read(sitioDTO.Logo, 0, imagen.ContentLength);
+                if (Path.GetExtension(imagen.FileName).ToLower().EndsWith("jpg") || Path.GetExtension(imagen.FileName).ToLower().EndsWith("gif") || Path.GetExtension(imagen.FileName).ToLower().EndsWith("png"))
+                {
+                    sitioDTO.Logo = new byte[imagen.ContentLength];
+                    imagen.InputStream.Read(sitioDTO.Logo, 0, imagen.ContentLength);
+                }
+                else
+                {
+                    ModelState.AddModelError("imagen", "La extensión del logo debe ser .jpg, .gif o .png");
+                }
             }
             if (ModelState.IsValid)
             {

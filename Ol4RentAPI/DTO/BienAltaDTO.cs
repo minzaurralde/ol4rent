@@ -10,7 +10,7 @@ namespace Ol4RentAPI.DTO
     public class BienAltaDTO
     {
         // propiedades para el bien
-        [Required]
+        [Required(ErrorMessage="El titulo es obligatorio")]
         [StringLength(64, ErrorMessage = "El titulo del bien debe tener como máximo {0} caracteres")]
         [DataType(DataType.Text)]
         [Display(Name = "Titulo")]
@@ -23,22 +23,28 @@ namespace Ol4RentAPI.DTO
         [DataType(DataType.Text)]
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
+        [Required(ErrorMessage="Debe seleccionar un punto en el mapa o ingresar una Dirección")]
         [Display(Name = "Latitud")]
         [DataType(DataType.Text)]
         public decimal Latitud { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar un punto en el mapa o ingresar una Dirección")]
         [Display(Name = "Longitud")]
         [DataType(DataType.Text)]
         public decimal Longitud { get; set; }
+        [Required(ErrorMessage = "Debe ingresar normas")]
         [StringLength(128, ErrorMessage = "Las normas deben tener como máximo {0} caracteres")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Normas")]
         public string Normas { get; set; }
+        [Required(ErrorMessage = "Debe ingresar una capacidad")]
+        [Range(1, int.MaxValue,ErrorMessage="Debe ingresar una capacidad")]
         [Display(Name = "Capacidad")]
-        [DataType(DataType.Text)]
         public short Capacidad { get; set; }
+        [Required(ErrorMessage = "Debe ingresar un precio")]
+        [Range(0d, double.MaxValue, ErrorMessage = "Debe ingresar un precio correcto")]
         [Display(Name = "Precio")]
-        [DataType(DataType.Text)]
         public decimal Precio { get; set; }
+        [Required(ErrorMessage = "Debe ingresar una descripción")]
         [StringLength(128, ErrorMessage = "La descripción debe tener como máximo {0} caracteres")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Descripción")]
@@ -58,7 +64,7 @@ namespace Ol4RentAPI.DTO
     {
         public int Id { get; set; }
         // propiedades para el bien
-        [Required]
+        [Required(ErrorMessage = "El titulo es obligatorio")]
         [StringLength(64, ErrorMessage = "El titulo del bien debe tener como máximo {0} caracteres")]
         [DataType(DataType.Text)]
         [Display(Name = "Titulo")]
@@ -71,26 +77,38 @@ namespace Ol4RentAPI.DTO
         [DataType(DataType.Text)]
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar un punto en el mapa o ingresar una Dirección")]
         [Display(Name = "Latitud")]
         [DataType(DataType.Text)]
         public decimal Latitud { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar un punto en el mapa o ingresar una Dirección")]
         [Display(Name = "Longitud")]
         [DataType(DataType.Text)]
         public decimal Longitud { get; set; }
+        [Required(ErrorMessage = "Debe ingresar normas")]
         [StringLength(128, ErrorMessage = "Las normas deben tener como máximo {0} caracteres")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Normas")]
         public string Normas { get; set; }
+        [Required(ErrorMessage = "Debe ingresar una capacidad")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debe ingresar una capacidad")]
         [Display(Name = "Capacidad")]
         [DataType(DataType.Text)]
         public short Capacidad { get; set; }
+        [Required(ErrorMessage = "Debe ingresar un precio")]
+        [Range(0d, double.MaxValue, ErrorMessage = "Debe ingresar un precio correcto")]
         [Display(Name = "Precio")]
         [DataType(DataType.Text)]
         public decimal Precio { get; set; }
+        [Required(ErrorMessage = "Debe ingresar una descripción")]
         [StringLength(128, ErrorMessage = "La descripción debe tener como máximo {0} caracteres")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
+        [Display(Name = "Fecha Alquilar")]
+        public Nullable<System.DateTime> FechaAlquiler { get; set; }
+        [Display(Name = "Duración Alquiler")]
+        public short DuracionAlquiler { get; set; }
         //Usuario propietario
         [Display(Name = "Usuario")]
         public string Usuario { get; set; }
@@ -126,8 +144,11 @@ namespace Ol4RentAPI.DTO
         public int Id { get; set; }
         [Display(Name = "Titulo")]
         public string Titulo { get; set; }
+        [Required(ErrorMessage="Debe ingresar una fecha")]
         [Display(Name = "Fecha Alquilar")]
         public Nullable<System.DateTime> FechaAlquiler { get; set; }
+        [Required(ErrorMessage="Debe ingresar una duración")]
+        [Range(1,int.MaxValue,ErrorMessage="La dauración debe ser por lo menos un día")]
         [Display(Name = "Duración Alquiler")]
         public short DuracionAlquiler { get; set; }
         [Display(Name = "Precio")]

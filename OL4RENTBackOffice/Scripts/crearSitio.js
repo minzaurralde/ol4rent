@@ -15,8 +15,9 @@
             var nuevomax = parseInt(maxid) + 1;
             var hiddenNombre = "<input type=\"hidden\" id=\"nombre" + maxid.toString() + "\" name=\"nombre" + maxid.toString() + "\" value=\"" + nombre + "\" />";
             var hiddenTipo = "<input type=\"hidden\" name=\"tipo" + maxid.toString() + "\" value=\"" + tipo + "\" />";
+            var hiddenId = "<input type=\"hidden\" name=\"id" + maxid.toString() + "\" id=\"id" + maxid.toString() + "\" value=\"-1\" />";
             var linkEliminar = "<a onclick='javascript:$(\"#tr" + maxid.toString() + "\").remove();return false;'>Eliminar</a>";
-            $("#caracteristicas tbody").append("<tr id=\"tr" + maxid.toString() + "\"><td>" + nombre + hiddenNombre + "</td><td>" + tipo + hiddenTipo + "</td><td>" + linkEliminar + "</td></tr>");
+            $("#caracteristicas tbody").append("<tr id=\"tr" + maxid.toString() + "\"><td>" + hiddenId + nombre + hiddenNombre + "</td><td>" + tipo + hiddenTipo + "</td><td>" + linkEliminar + "</td></tr>");
         } else {
             var nuevomax = parseInt(maxid);
             alert("Ya ha agregado la caracteristica de bien ingresada. Por favor, utilice otro nombre.");
