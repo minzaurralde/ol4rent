@@ -103,8 +103,6 @@ namespace OL4RENTBackOffice.Controllers
         {
             if (User.IsInRole(RolEnum.SUPER_ADMIN.ToString()))
             {
-                // return View(ServiceFacadeFactory.Instance.SitioFacade.Todos);
-                // TODO Ver que pasa en este caso cuando debo retornar el listado para un superadmin
                 return View(ServiceFacadeFactory.Instance.SitioFacade.ObtenerTodos());
             }
             else if (User.IsInRole(RolEnum.SITE_ADMIN.ToString()))
@@ -141,7 +139,9 @@ namespace OL4RENTBackOffice.Controllers
             {
                 if (Request["nombre" + i.ToString()] != null)
                 {
-                    sitioDTO.Caracteristicas.Add(new CaracteristicaEdicionDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]) });
+                    int id = -1;
+                    int.TryParse(Request["id" + i.ToString()], out id);
+                    sitioDTO.Caracteristicas.Add(new CaracteristicaEdicionDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]), Id = id });
                 }
             }
             if (sitioDTO.Caracteristicas.Count < 1)

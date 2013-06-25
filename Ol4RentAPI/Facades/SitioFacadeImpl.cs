@@ -65,6 +65,7 @@ namespace Ol4RentAPI.Facades
                 CantBienesPopulares = sitioDTO.CantBienesPopulares,
                 CantMarcasXCont = sitioDTO.CantMarcasXCont,
                 CantContBloqXUsu = sitioDTO.CantContBloqXUsu,
+                CantNovedadesHome = sitioDTO.CantNovedadesHome,
                 AproximacionWish = sitioDTO.AproximacionWish,
                 TipoBien = tipoBien
             };
@@ -183,7 +184,61 @@ namespace Ol4RentAPI.Facades
                         db.Entry(sitio.TipoBien).State = EntityState.Modified;
                         salvar = true;
                     }
-                    // TODO edicion de sitio: faltan modificar los atributos del tipo de bien y el usuario
+                    // Se verifica si se tiene que cambiar el usuario propietario
+                    Usuario usuarioActual = (from usu in db.Usuarios where usu.SitiosAdministrados.Where(s => s.Id == sitio.Id).Count() > 0 select usu).First();
+                    if (usuarioActual == null || usuarioActual.NombreUsuario != sitioDTO.NombreUsuarioPropietario)
+                    {
+                        Usuario usuarioNuevo = (from usu in db.Usuarios where usu.NombreUsuario == sitioDTO.NombreUsuarioPropietario select usu).First();
+                        if (usuarioNuevo != null)
+                        {
+                            usuarioNuevo.SitiosAdministrados.Add(sitio);
+                            db.Entry<Usuario>(usuarioNuevo).State = EntityState.Modified;
+                            salvar = true;
+                        }
+                    }
+                    // Se modifican las caracteristicas del tipo de bien
+                    List<int> idsCaracteristicasNuevas = sitioDTO.Caracteristicas.Select(a => a.Id).ToList();
+                    List<Caracteristica> caracteristicasBorrables = sitio.TipoBien.Caracteristicas.Where(a => !idsCaracteristicasNuevas.Contains(a.Id)).ToList();
+                    bool seEliminaAlguno = false;
+                    foreach (Caracteristica caracteristicaBorrable in caracteristicasBorrables)
+                    {
+                        sitio.TipoBien.Caracteristicas.Remove(caracteristicaBorrable);
+                        db.Caracteristicas.Remove(caracteristicaBorrable);
+                        seEliminaAlguno = true;
+                    }
+                    // Se recorren todos los atributos viejos que no se eliminaron en busca de modificaciones
+                    bool seModificoAlguno = false;
+                    foreach (Caracteristica caracteristicaVieja in sitio.TipoBien.Caracteristicas)
+                    {
+                        CaracteristicaEdicionDTO caracteristicaDto = sitioDTO.Caracteristicas.Where(a => a.Id == caracteristicaVieja.Id).First();
+                        if (caracteristicaDto != null)
+                        {
+                            if (!caracteristicaVieja.Nombre.Equals(caracteristicaDto.Nombre))
+                            {
+                                caracteristicaVieja.Nombre = caracteristicaDto.Nombre;
+                                db.Entry<Caracteristica>(caracteristicaVieja).State = System.Data.EntityState.Modified;
+                                seModificoAlguno = true;
+                            }
+                            if (!caracteristicaVieja.Tipo.Equals(caracteristicaDto.Tipo))
+                            {
+                                caracteristicaVieja.Tipo = caracteristicaDto.Tipo;
+                                db.Entry<Caracteristica>(caracteristicaVieja).State = System.Data.EntityState.Modified;
+                                seModificoAlguno = true;
+                            }
+                        }
+                    }
+                    // Se obtiene una lista de los atributos nuevos y se agregan
+                    bool seAgregoAlguno = false;
+                    List<CaracteristicaEdicionDTO> caracteristicasNuevos = sitioDTO.Caracteristicas.Where(a => a.Id <= 0).ToList();
+                    foreach (CaracteristicaEdicionDTO caracteristicaNueva in caracteristicasNuevos)
+                    {
+                        Caracteristica caracteristica = new Caracteristica() { Nombre = caracteristicaNueva.Nombre, Tipo = caracteristicaNueva.Tipo };
+                        db.Caracteristicas.Add(caracteristica);
+                        sitio.TipoBien.Caracteristicas.Add(caracteristica);
+                        seAgregoAlguno = true;
+                    }
+                    salvar = salvar || seAgregoAlguno || seEliminaAlguno || seModificoAlguno;
+
                     if (seModifico)
                     {
                         db.Entry(sitio).State = EntityState.Modified;
