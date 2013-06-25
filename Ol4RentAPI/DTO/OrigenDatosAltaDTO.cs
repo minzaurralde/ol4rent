@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Ol4RentAPI.Model.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Ol4RentAPI.DTO
 {
+
     public class OrigenDatosAltaDTO
     {
         [Required(ErrorMessage = "El nombre del origen de datos es un campo obligatorio")]
@@ -16,7 +19,30 @@ namespace Ol4RentAPI.DTO
         public string Nombre { get; set; }
 
         [DataType(DataType.Upload)]
-        [FileExtensions(Extensions = ".dll", ErrorMessage = "El archivo debe ser .dll")]
+        [PostedFileBaseFileExtensions(Extensions = ".dll", ErrorMessage = "El archivo con el manejador debe ser .dll")]
+        [Display(Name = "DLL que contiene la clase que obtiene las novedades")]
+        [Required(ErrorMessage = "El manejador es un archivo obligatorio")]
+        public HttpPostedFileBase Manejador { get; set; }
+
+        [Display(Name = "Atributos configurables por sitio")]
+        public List<AtributoAltaDTO> Atributos { get; set; }
+
+        [DataType(DataType.Upload)]
+        [PostedFileBaseFileExtensions(Extensions = ".dll", ErrorMessage = "El archivo de dependencias debe ser .dll")]
+        [Display(Name = "DLLs de las dependencias de la DLL del manejador")]
+        public List<HttpPostedFileBase> Dependencias { get; set; }
+    }
+
+    public class OrigenDatosAltaDTOOLD
+    {
+        [Required(ErrorMessage = "El nombre del origen de datos es un campo obligatorio")]
+        [DataType(DataType.Text)]
+        [StringLength(64, ErrorMessage = "El nombre del origen de datos puede contener como máximo {0} caracteres.")]
+        [Display(Name = "Nombre del origen de datos")]
+        public string Nombre { get; set; }
+
+        [DataType(DataType.Upload)]
+        [FileExtensions(Extensions = "dll", ErrorMessage = "El archivo con el manejador debe ser .dll")]
         [Display(Name = "DLL que contiene la clase que obtiene las novedades")]
         [MinLength(1, ErrorMessage = "El manejador es un archivo obligatorio")]
         public byte[] Manejador { get; set; }

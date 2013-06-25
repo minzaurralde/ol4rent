@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -43,6 +44,8 @@ namespace Ol4RentAPI.DTO
             Mapper.CreateMap<OrigenDatos, OrigenDatosListaDTO>();
             Mapper.CreateMap<OrigenDatos, OrigenDatosEdicionDTO>();
             Mapper.CreateMap<OrigenDatosAltaDTO, OrigenDatos>()
+                .ForMember(dest => dest.Manejador, dat => dat.MapFrom(src => Read(src.Manejador.InputStream)))
+                .ForMember(dest => dest.Dependencias, dat => dat.MapFrom(src => src.Dependencias.Select(d => new Dependencia() { Id = -1, Dll = Read(d.InputStream), Nombre = d.FileName } ).ToList()))
                 .ForMember(dest => dest.Id, dat => dat.Ignore());
             Mapper.CreateMap<ConfiguracionOrigenDatos, ConfiguracionOrigenDatosEdicionDTO>()
                 .ForMember(dest => dest.IdOrigenDatos, dat => dat.MapFrom(src => src.OrigenDatos.Id))
@@ -105,6 +108,13 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.Nombre, dat => dat.MapFrom(src => src.NombreArchivo));
             Mapper.AssertConfigurationIsValid();
         }
+
+        public static byte[] Read(Stream stream)
+        {
+            byte[] res = new byte[Convert.ToInt32(stream.Length)];
+            stream.Read(res, 0, Convert.ToInt32(stream.Length));
+            return res;
+        }
     }
 
     public class AutoMapperUtils<TOrigen, TDestino>
@@ -119,4 +129,5 @@ namespace Ol4RentAPI.DTO
             return Mapper.Map<List<TOrigen>, List<TDestino>>(lista);
         }
     }
+
 }

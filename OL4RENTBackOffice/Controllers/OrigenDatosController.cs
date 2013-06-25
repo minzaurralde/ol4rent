@@ -42,25 +42,8 @@ namespace OL4RENTBackOffice.Controllers
         // POST: /OrigenDatos/Crear
         [Authorize(Roles = "SUPER_ADMIN")]
         [HttpPost]
-        public ActionResult Crear(int maxid, OrigenDatosAltaDTO dto, HttpPostedFileBase dll, IEnumerable<HttpPostedFileBase> dependencias)
+        public ActionResult Crear(int maxid, OrigenDatosAltaDTO dto)
         {
-            dto.Dependencias = new List<DependenciaDTO>();
-            foreach (HttpPostedFileBase fileDepedencia in dependencias)
-            {
-                if (fileDepedencia != null)
-                {
-                    if (Path.GetExtension(fileDepedencia.FileName).ToLower().EndsWith("dll"))
-                    {
-                        byte[] buffer = new byte[fileDepedencia.ContentLength];
-                        fileDepedencia.InputStream.Read(buffer, 0, fileDepedencia.ContentLength);
-                        dto.Dependencias.Add(new DependenciaDTO() { Id = -1, Nombre = fileDepedencia.FileName, Dll = buffer });
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("dll", "El archivo dependencia \"" + fileDepedencia.FileName + "\" del manejador del origen de datos debe tener extension .dll");
-                    }
-                }
-            }
             if (dto.Atributos == null)
             {
                 dto.Atributos = new List<AtributoAltaDTO>();
@@ -72,25 +55,8 @@ namespace OL4RENTBackOffice.Controllers
                     dto.Atributos.Add(new AtributoAltaDTO() { Nombre = Request["nombre" + i.ToString()] });
                 }
             }
-            if (dll == null)
-            {
-                dto.Manejador = null;
-                ModelState.AddModelError("dll", "La dll que contiene el manejador del origen de datos es un campo obligatorio");
-            }
-            else
-            {
-                if (Path.GetExtension(dll.FileName).ToLower().EndsWith("dll"))
-                {
-                    dto.Manejador = new byte[dll.ContentLength];
-                    dll.InputStream.Read(dto.Manejador, 0, dll.ContentLength);
-                }
-                else
-                {
-                    ModelState.AddModelError("dll", "El archivo que contiene el manejador del origen de datos debe tener extension .dll");
-                }
-            }
-            //if (ModelState.IsValid)
-            if (true)
+            if (ModelState.IsValid)
+            // if (true)
             {
                 if (ServiceFacadeFactory.Instance.OrigenDatosFacade.Crear(dto))
                 {
