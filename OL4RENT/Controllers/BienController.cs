@@ -202,12 +202,15 @@ namespace OL4RENT.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("imagen", "La extensión de la imagen debe ser .jpg");
+                    ModelState.AddModelError("Foto", "La extensión de la imagen debe ser .jpg");
                 }
             }
-            if (ServiceFacadeFactory.Instance.BienFacade.Editar(bienDTO))
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("MisBienes");
+                if (ServiceFacadeFactory.Instance.BienFacade.Editar(bienDTO))
+                {
+                    return RedirectToAction("MisBienes");
+                }
             }
             ArmarListadoCaracteristicas();
             return View(bienDTO);
