@@ -35,5 +35,7 @@ namespace Ol4RentAPI.Facades
         OrigenDatos Obtener(int id);
 
         Atributo ObtenerAtributo(int id);
+
+        bool ChequearEliminacion(int id);
     }
 }
