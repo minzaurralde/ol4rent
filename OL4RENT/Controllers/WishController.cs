@@ -43,10 +43,12 @@ namespace OL4RENT.Controllers
         {
              if (Session["sitio"] == null)
             {
+                ViewBag.Click = false;
                 return RedirectToAction("Index", "Home");
             }
             else
-            {
+             {
+                ViewBag.Click = false;
                 ArmarListadoCaracteristicas();
                 return View(new EspecificacionBienAltaDTO());
             }            
@@ -77,8 +79,9 @@ namespace OL4RENT.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(EspecificacionBienAltaDTO wishDTO)
+        public ActionResult Create(EspecificacionBienAltaDTO wishDTO, bool click)
         {
+            ViewBag.Click = click;
             if (wishDTO.ValoresCaracteristicas == null)
             {
                 wishDTO.ValoresCaracteristicas = new List<ValorCaracteristicaAltaDTO>();
@@ -114,12 +117,24 @@ namespace OL4RENT.Controllers
             wishDTO.Usuario = User.Identity.Name;
             SitioListadoDTO sitio = Session["sitio"] as SitioListadoDTO;
             wishDTO.TipoBien = ServiceFacadeFactory.Instance.SitioFacade.ObtenerIdTipoBien(sitio.Id);
-            if ((ServiceFacadeFactory.Instance.EspecificacionBienFacade.Crear(wishDTO)))
+            if (ViewBag.Click)
             {
-                return RedirectToAction("Wishlist");
+                if ((ServiceFacadeFactory.Instance.EspecificacionBienFacade.Crear(wishDTO)))
+                {
+                    return RedirectToAction("Wishlist");
+                }
+                else
+                {
+                    ArmarListadoCaracteristicas();
+                    return View(wishDTO);
+                }
             }
-            ArmarListadoCaracteristicas();
-            return View(wishDTO);
+            else
+            {
+                ModelState.AddModelError("Rango", "Debe seleccionar un punto del mapa");
+                ArmarListadoCaracteristicas();
+                return View(wishDTO);
+            }
         }
 
         //

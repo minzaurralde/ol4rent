@@ -41,10 +41,12 @@ namespace OL4RENT.Controllers
         {
             if (Session["sitio"] == null)
             {
+                ViewBag.Click = false;
                 return RedirectToAction("Index", "Home");
             }
             else
             {
+                ViewBag.Click = false;
                 ArmarListadoCaracteristicas();
                 return View(new BienAltaDTO());
             }
@@ -74,8 +76,9 @@ namespace OL4RENT.Controllers
         // POST: /Bien/Create
         [HttpPost]
         [ValidateInput(true)]
-        public ActionResult Create(BienAltaDTO bienDTO, HttpPostedFileBase imagen)
+        public ActionResult Create(BienAltaDTO bienDTO, HttpPostedFileBase imagen, bool click)
         {
+            ViewBag.Click = click;
             if (bienDTO.ValoresCaracteristicas == null)
             {
                 bienDTO.ValoresCaracteristicas = new List<ValorCaracteristicaAltaDTO>();
@@ -123,15 +126,24 @@ namespace OL4RENT.Controllers
             bienDTO.Usuario = User.Identity.Name;
             SitioListadoDTO sitio = Session["sitio"] as SitioListadoDTO;
             bienDTO.TipoBien = ServiceFacadeFactory.Instance.SitioFacade.ObtenerIdTipoBien(sitio.Id);
-            if (sitio != null && ModelState.IsValid)
+            if (ViewBag.Click)
             {
-                if (ServiceFacadeFactory.Instance.BienFacade.Crear(bienDTO))
+                if (sitio != null && ModelState.IsValid && ViewBag.Click)
                 {
-                    return RedirectToAction("MisBienes", "Bien");
+                    if (ServiceFacadeFactory.Instance.BienFacade.Crear(bienDTO))
+                    {
+                        return RedirectToAction("MisBienes", "Bien");
+                    }
                 }
+                ArmarListadoCaracteristicas();
+                return View(bienDTO);
             }
-            ArmarListadoCaracteristicas();
-            return View(bienDTO);
+            else
+            {
+                ModelState.AddModelError("click", "Debe seleccionar un punto del mapa o ingresar una dirección");
+                ArmarListadoCaracteristicas();
+                return View(bienDTO);
+            }
         }
 
         //
