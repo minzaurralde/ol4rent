@@ -119,8 +119,6 @@ namespace OL4RENT.Controllers
                 {
                     ModelState.AddModelError("imagen", "La extensión de la imagen debe ser .jpg");
                 }
-                bienDTO.Foto = new byte[imagen.ContentLength];
-                imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
             }
             bienDTO.Usuario = User.Identity.Name;
             SitioListadoDTO sitio = Session["sitio"] as SitioListadoDTO;
@@ -197,8 +195,15 @@ namespace OL4RENT.Controllers
             }
             if (imagen != null)
             {
-                bienDTO.Foto = new byte[imagen.ContentLength];
-                imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
+                if (Path.GetExtension(imagen.FileName).ToLower().EndsWith("jpg"))
+                {
+                    bienDTO.Foto = new byte[imagen.ContentLength];
+                    imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
+                }
+                else
+                {
+                    ModelState.AddModelError("imagen", "La extensión de la imagen debe ser .jpg");
+                }
             }
             if (ServiceFacadeFactory.Instance.BienFacade.Editar(bienDTO))
             {
@@ -331,11 +336,19 @@ namespace OL4RENT.Controllers
         [ValidateInput(true)]
         public ActionResult Arrendar(BienArrendarDTO bienDTO)
         {
-            if (ServiceFacadeFactory.Instance.BienFacade.Arrendar(bienDTO, User.Identity.Name))
+            if (bienDTO.FechaAlquiler < DateTime.Today || bienDTO.FechaAlquiler > DateTime.MaxValue)
             {
-                return RedirectToAction("PagoArriendo", bienDTO);
+                ModelState.AddModelError("FechaAlquiler", "Debe ingresar una fecha mayo o igual a hoy");
+                return View(bienDTO);
             }
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                if (ServiceFacadeFactory.Instance.BienFacade.Arrendar(bienDTO, User.Identity.Name))
+                {
+                    return RedirectToAction("PagoArriendo", bienDTO);
+                }
+                return RedirectToAction("Index", "Home");
+            }
 		}
 		
         [HttpGet]
