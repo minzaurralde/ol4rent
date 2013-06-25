@@ -85,7 +85,6 @@
                 @Html.TextBoxFor(m => m.NombreTipoBien)
             </li>
             <li>
-                <!-- TODO Caracteristicas -->
                 @Html.LabelFor(m => m.Caracteristicas)
                 <table id="caracteristicas" >
                     <thead>
@@ -108,10 +107,11 @@
                                     <td>
                                         @item.Nombre
                                         @Html.Hidden("nombre" + i.ToString(), item.Nombre)
+                                        @Html.Hidden("id" + i.ToString(), item.Id)
                                     </td>
                                     <td>
-                                        @item.Tipo
-                                        @Html.Hidden("tipo" + i.ToString(), item.Tipo)
+                                        @item.Tipo.ToString()
+                                        @Html.Hidden("tipo" + i.ToString(), item.Tipo.ToString())
                                     </td>
                                     <td>
                                         <a onclick='javascript:$("#tr@(i.ToString())").remove();return false;'>Eliminar</a>
@@ -122,6 +122,11 @@
                         }
                     </tbody>
                     <tfoot>
+                        <tr>
+                            <td colspan="3">
+                                &nbsp;
+                            </td>
+                        </tr>
                         <tr>
                             <td colspan="3">
                                 Agregar nueva caracteristica:
@@ -148,6 +153,7 @@
 }
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery-1.7.1.js")
+    @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
     @Scripts.Render("~/Scripts/jquery.validate.js")
     @Scripts.Render("~/Scripts/crearSitio.js")
 }
