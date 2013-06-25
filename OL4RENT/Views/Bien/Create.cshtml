@@ -62,9 +62,11 @@
                 var lng = location.lng().toString().replace(".", ",");
                 $("#Latitud").val(lat);
                 $("#Longitud").val(lng);
+                $("#click").val(true);
             }
 
             function crearPuntoDireccion() {
+                $("#click").val(true);
                 var address = $("#Direccion").val();
                 var geocoder = new google.maps.Geocoder();
                 geocoder.geocode({ 'address': address }, function (results, status) {
@@ -121,6 +123,7 @@
             <li>
                 @Html.HiddenFor(m => m.Latitud)
                 @Html.HiddenFor(m => m.Longitud)
+                @Html.Hidden("click", ((bool)ViewBag.Click).ToString())
             </li>
 
             @foreach (Ol4RentAPI.DTO.CaracteristicaEdicionDTO caracteristica in ViewBag.Caracteristicas)

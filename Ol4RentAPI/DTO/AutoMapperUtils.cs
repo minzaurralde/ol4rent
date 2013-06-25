@@ -59,7 +59,7 @@ namespace Ol4RentAPI.DTO
             Mapper.CreateMap<Usuario, UsuarioDTO>();
             Mapper.CreateMap<Contenido, ContenidoDTO>()
                 .ForMember(dest => dest.NombreUsuario, dat => dat.MapFrom(src => src.Usuario.NombreUsuario))
-                .ForMember(dest => dest.TieneAdjuntos, dat => dat.MapFrom(src => src.Adjuntos.Count > 0))
+                .ForMember(dest => dest.CantAdjuntos, dat => dat.MapFrom(src => src.Adjuntos.Count))
                 .ForMember(dest => dest.Bien, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.BienFacade.ObtenerBienParaContenido(src.Id)));
             Mapper.CreateMap<Mensaje, MensajeDTO>();
             Mapper.CreateMap<EspecificacionBien, EspecificacionBienDTO>()
@@ -103,6 +103,9 @@ namespace Ol4RentAPI.DTO
             Mapper.CreateMap<Bien, BienCercanoDTO>()
                  .ForMember(dest => dest.TipoDeBien, dat => dat.MapFrom(src => src.TipoBien.Nombre));
             Mapper.CreateMap<Bien, BienArrendarDTO>();
+            Mapper.CreateMap<Adjunto, AdjuntoDTO>()
+                .ForMember(dest => dest.Contenido, dat => dat.MapFrom(src => src.Data))
+                .ForMember(dest => dest.Nombre, dat => dat.MapFrom(src => src.NombreArchivo));
             Mapper.AssertConfigurationIsValid();
         }
 

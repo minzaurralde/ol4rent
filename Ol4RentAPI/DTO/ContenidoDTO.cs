@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ol4RentAPI.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Ol4RentAPI.DTO
         [Display(Name = "Cantidad de marcas")]
         public short CantMarcas { get; set; }
         [Display(Name = "Tiene adjuntos")]
-        public bool TieneAdjuntos { get; set; }
+        public int CantAdjuntos { get; set; }
         [Display(Name="Nombre de usuario")]
         public string NombreUsuario { get; set; }
         public BienEdicionDTO Bien { get; set; }
@@ -34,5 +35,7 @@ namespace Ol4RentAPI.DTO
     {
         public string Nombre { get; set; }
         public byte[] Contenido { get; set; }
+        public TipoAdjunto Tipo { get; set; }
     }
+
 }
