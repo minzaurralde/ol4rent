@@ -41,7 +41,8 @@ namespace Ol4RentAPI.DTO
                 .ForMember(dest => dest.Correo, dat => dat.MapFrom(src => src.Usuario.Mail))
                 .ForMember(dest => dest.NombreCompleto, dat => dat.MapFrom(src => src.Usuario.Nombre + " " + src.Usuario.Apellido))
                 .ForMember(dest => dest.CantidadContenidosBloqueados, dat => dat.MapFrom(src => src.CantContBloq));
-            Mapper.CreateMap<OrigenDatos, OrigenDatosListaDTO>();
+            Mapper.CreateMap<OrigenDatos, OrigenDatosListaDTO>()
+                .ForMember(dest => dest.SePuedeEliminar, dat => dat.MapFrom(src => ServiceFacadeFactory.Instance.OrigenDatosFacade.ChequearEliminacion(src.Id)));
             Mapper.CreateMap<OrigenDatos, OrigenDatosEdicionDTO>();
             Mapper.CreateMap<OrigenDatosAltaDTO, OrigenDatos>()
                 .ForMember(dest => dest.Manejador, dat => dat.MapFrom(src => Read(src.Manejador.InputStream)))
