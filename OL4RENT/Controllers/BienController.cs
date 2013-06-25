@@ -9,6 +9,7 @@ using Ol4RentAPI.Model;
 using Ol4RentAPI.Facades;
 using Ol4RentAPI.DTO;
 using System.Collections;
+using System.IO;
 
 namespace OL4RENT.Controllers
 {
@@ -109,6 +110,15 @@ namespace OL4RENT.Controllers
             }
             if (imagen != null)
             {
+                if (Path.GetExtension(imagen.FileName).ToLower().EndsWith("jpg"))
+                {
+                    bienDTO.Foto = new byte[imagen.ContentLength];
+                    imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
+                }
+                else
+                {
+                    ModelState.AddModelError("imagen", "La extensión de la imagen debe ser .jpg");
+                }
                 bienDTO.Foto = new byte[imagen.ContentLength];
                 imagen.InputStream.Read(bienDTO.Foto, 0, imagen.ContentLength);
             }
