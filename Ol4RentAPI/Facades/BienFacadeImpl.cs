@@ -642,6 +642,15 @@ namespace Ol4RentAPI.Facades
                 return query.Count();
             }
         }
+
+        public List<AdjuntoDTO> ObtenerAdjuntos(int idContenido)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                Contenido contenido = db.Contenidos.Find(idContenido);
+                return AutoMapperUtils<Adjunto, AdjuntoDTO>.Map(contenido.Adjuntos.ToList());
+            }
+        }
     }
 }
 

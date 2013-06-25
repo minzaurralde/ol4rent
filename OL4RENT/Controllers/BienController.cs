@@ -9,6 +9,7 @@ using Ol4RentAPI.Model;
 using Ol4RentAPI.Facades;
 using Ol4RentAPI.DTO;
 using System.Collections;
+using System.Web.UI.WebControls;
 using System.IO;
 
 namespace OL4RENT.Controllers
@@ -364,7 +365,8 @@ namespace OL4RENT.Controllers
                 }
                 return RedirectToAction("Index", "Home");
             }
-		}
+            return RedirectToAction("Index", "Home");
+        }
 		
         [HttpGet]
         public RedirectResult Like(int id)
@@ -388,7 +390,8 @@ namespace OL4RENT.Controllers
             {
                 ServiceFacadeFactory.Instance.BienFacade.Like(User.Identity.Name, id);
             }
-            return new JsonResult() { Data = "ok" , JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+            return new JsonResult() { Data = "ok", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public ActionResult ConfirmaPago()
@@ -474,6 +477,38 @@ namespace OL4RENT.Controllers
         private bool VerificarSiMuestroMeGusta(int idBien)
         {
             return User.Identity.IsAuthenticated && ServiceFacadeFactory.Instance.BienFacade.PuedeMostrarMeGusta(idBien);
+        }
+
+        // GET: /Bien/AdjuntoImagen
+        [HttpGet]
+        public ActionResult AdjuntoImagen(int idContenido, int nroAdjunto)
+        {
+            List<AdjuntoDTO> adjuntos = ServiceFacadeFactory.Instance.BienFacade.ObtenerAdjuntos(idContenido);
+            AdjuntoDTO adj = adjuntos[nroAdjunto];
+            if (adj != null)
+            {
+                byte[] bytes = adj.Contenido;
+                if (bytes != null)
+                {
+                    return new FileContentResult(bytes, "image/jpeg");
+                }
+            }
+            return null;
+        }
+
+        // GET: /Bien/AdjuntoImagen
+        [HttpGet]
+        public ActionResult AdjuntoURI(int idContenido, int nroAdjunto)
+        {
+            List<AdjuntoDTO> adjuntos = ServiceFacadeFactory.Instance.BienFacade.ObtenerAdjuntos(idContenido);
+            AdjuntoDTO adj = adjuntos[nroAdjunto];
+            if (adj != null)
+            {
+                String path = "Upload/" + (adj.Tipo == TipoAdjunto.IMAGEN ? "Image" : "Video/swf") + "/" + adj.Nombre;
+
+                return Content(path);
+            }
+            return null;
         }
 
     }
