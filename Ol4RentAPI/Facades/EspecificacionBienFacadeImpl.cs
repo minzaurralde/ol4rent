@@ -188,7 +188,7 @@ namespace Ol4RentAPI.Facades
                         var cant = queryWish.Count();
                         for (int i = 0; i < cant; i++)
                         {
-                            EspecificacionBien wish = queryWish.First();
+                            EspecificacionBien wish = queryWish.ToList()[i];
                             Usuario usuario = wish.Usuario;
                             if (distance(Convert.ToDouble(wish.Latitud), Convert.ToDouble(wish.Longitud), Convert.ToDouble(bien.Latitud), Convert.ToDouble(bien.Longitud)) <= wish.Rango)
                             {

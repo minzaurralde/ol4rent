@@ -39,17 +39,19 @@ namespace Ol4RentAPI.DTO
     public class EspecificacionBienAltaDTO
     {
         // Propiedades para la EspecificacionBien
-        [Required]
+        [Required(ErrorMessage="Titulo obligatorio")]
         [DataType(DataType.Text)]
         [Display(Name = "Titulo")]
         public string Titulo { get; set; }
+        [Required(ErrorMessage="Debe ingresar un punto en el mapa")]
         [DataType(DataType.Text)]
         [Display(Name = "Latitud")]
         public decimal Latitud { get; set; }
+        [Required(ErrorMessage = "Debe ingresar un punto en el mapa")]
         [DataType(DataType.Text)]
         [Display(Name = "Longitud")]
         public decimal Longitud { get; set; }
-        [Required]
+        [Required(ErrorMessage="Debe ingresar un Rango")]
         [DataType(DataType.Text)]
         [Display(Name = "Rango")]
         public short Rango { get; set; }

@@ -23,22 +23,30 @@ namespace Ol4RentAPI.DTO
         [DataType(DataType.Text)]
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
+        [Required(ErrorMessage="Debe seleccionar un punto en el mapa o ingresar una Dirección")]
         [Display(Name = "Latitud")]
         [DataType(DataType.Text)]
         public decimal Latitud { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar un punto en el mapa o ingresar una Dirección")]
         [Display(Name = "Longitud")]
         [DataType(DataType.Text)]
         public decimal Longitud { get; set; }
+        [Required(ErrorMessage = "Debe ingresar normas")]
         [StringLength(128, ErrorMessage = "Las normas deben tener como máximo {0} caracteres")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Normas")]
         public string Normas { get; set; }
+        [Required(ErrorMessage = "Debe ingresar una capacidad")]
+        [Range(1, int.MaxValue,ErrorMessage="Debe ingresar una capacidad")]
         [Display(Name = "Capacidad")]
         [DataType(DataType.Text)]
         public short Capacidad { get; set; }
+        [Required(ErrorMessage = "Debe ingresar un precio")]
+        [Range(0d, double.MaxValue, ErrorMessage = "Debe ingresar un precio correcto")]
         [Display(Name = "Precio")]
         [DataType(DataType.Text)]
         public decimal Precio { get; set; }
+        [Required(ErrorMessage = "Debe ingresar una descripción")]
         [StringLength(128, ErrorMessage = "La descripción debe tener como máximo {0} caracteres")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Descripción")]
