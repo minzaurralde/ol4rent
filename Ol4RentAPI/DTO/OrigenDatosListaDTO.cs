@@ -10,5 +10,6 @@ namespace Ol4RentAPI.DTO
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
+        public bool SePuedeEliminar { get; set; }
     }
 }
