@@ -47,6 +47,10 @@ namespace OL4RENTBackOffice.Controllers
                     sitio.Caracteristicas.Add(new CaracteristicaAltaDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]) });
                 }
             }
+            if (sitio.Caracteristicas.Count < 1)
+            {
+                ModelState.AddModelError("caracteristicas", "Debe ingresar al menos una caracteristica para el bien.");
+            }
             // estilo = Request.Files["estilo"];
             if (estilo == null)
             {
@@ -139,6 +143,10 @@ namespace OL4RENTBackOffice.Controllers
                 {
                     sitioDTO.Caracteristicas.Add(new CaracteristicaEdicionDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]) });
                 }
+            }
+            if (sitioDTO.Caracteristicas.Count < 1)
+            {
+                ModelState.AddModelError("caracteristicas", "Debe ingresar al menos una caracteristica para el bien.");
             }
             if (estilo != null)
             {
