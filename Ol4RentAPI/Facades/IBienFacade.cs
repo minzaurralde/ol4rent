@@ -33,5 +33,7 @@ namespace Ol4RentAPI.Facades
         List<BienCercanoDTO> ObtenerBienesCercanos(double longitud, double latitud);
 
         int CantidadLikes(int idBien);
+
+        List<AdjuntoDTO> ObtenerAdjuntos(int idContenido);
     }
 }

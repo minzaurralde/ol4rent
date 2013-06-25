@@ -2,6 +2,8 @@
 @using Ol4RentAPI.DTO;
 @{SitioListadoDTO sitio = (SitioListadoDTO)@Session["sitio"];}
 
+
+
 @{
     String nombreTipoBien = "Bien";
     if (sitio != null)
@@ -22,6 +24,24 @@
             <div>
                 @Html.DisplayFor(modelItem => item.Mensaje)
             </div>
+
+            @if (item.CantAdjuntos > 0)
+            {
+                <div>
+                    @for (int nro = 0; nro < item.CantAdjuntos; nro++)
+                    {
+                        <script>
+                            var uri = "@Html.Action("AdjuntoURI", "Bien", new { idContenido = @item.Id, nroAdjunto = nro })";
+                            if(uri.indexOf("Upload/Image")==0){
+                                document.write("<a href='/"+uri+"' rel='prettyPhoto[flash]' title='Imagen'>");
+                            }else{
+                                document.write("<a href='/"+uri+"?' rel='prettyPhoto[flash]' title='Video'>");
+                            }
+                            document.write("<img src='@Url.Action("AdjuntoImagen", "Bien", new { idContenido = @item.Id, nroAdjunto = nro })'  width='50'/></a>");
+                        </script>
+                    }
+                </div>   
+            }
             <div>
                 <small>@Html.DisplayFor(modelItem => item.NombreUsuario)</small>
             </div>
@@ -33,8 +53,11 @@
     }
 </ul>
 <h3>Agregar comentario</h3>
-@using (Html.BeginForm("AgregarComentario", "Bien", FormMethod.Post))
+
+@if (User.Identity.IsAuthenticated)
 {
+    using (Html.BeginForm("AgregarComentario", "Bien", FormMethod.Post, new { name = "RegisterForm", id = "RegisterForm", encType = "multipart/form-data" }))
+    {
 
     <fieldset>
         <legend>Agregar Comentario</legend>
@@ -45,11 +68,15 @@
         </div>
         <div>
             @Html.Label("adjuntos", "Adjuntos")
-            <input type="file" multiple="multiple" name="adjuntos" />
+            <input type="file" multiple="multiple" name="adjuntos" id="adjuntos" />
         </div>
         <input type="submit" value="Agregar" />
     </fieldset>
-
+    }
+}
+else
+{
+    @Html.ActionLink("Inice Sesión", "Login", "Account")<text>Para Agregar Comentarios</text>
 }
 
 @section Scripts {
