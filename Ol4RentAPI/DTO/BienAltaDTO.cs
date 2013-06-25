@@ -39,12 +39,10 @@ namespace Ol4RentAPI.DTO
         [Required(ErrorMessage = "Debe ingresar una capacidad")]
         [Range(1, int.MaxValue,ErrorMessage="Debe ingresar una capacidad")]
         [Display(Name = "Capacidad")]
-        [DataType(DataType.Text)]
         public short Capacidad { get; set; }
         [Required(ErrorMessage = "Debe ingresar un precio")]
         [Range(0d, double.MaxValue, ErrorMessage = "Debe ingresar un precio correcto")]
         [Display(Name = "Precio")]
-        [DataType(DataType.Text)]
         public decimal Precio { get; set; }
         [Required(ErrorMessage = "Debe ingresar una descripción")]
         [StringLength(128, ErrorMessage = "La descripción debe tener como máximo {0} caracteres")]
@@ -99,6 +97,10 @@ namespace Ol4RentAPI.DTO
         [DataType(DataType.MultilineText)]
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
+        [Display(Name = "Fecha Alquilar")]
+        public Nullable<System.DateTime> FechaAlquiler { get; set; }
+        [Display(Name = "Duración Alquiler")]
+        public short DuracionAlquiler { get; set; }
         //Usuario propietario
         [Display(Name = "Usuario")]
         public string Usuario { get; set; }
@@ -134,8 +136,11 @@ namespace Ol4RentAPI.DTO
         public int Id { get; set; }
         [Display(Name = "Titulo")]
         public string Titulo { get; set; }
+        [Required(ErrorMessage="Debe ingresar una fecha")]
         [Display(Name = "Fecha Alquilar")]
         public Nullable<System.DateTime> FechaAlquiler { get; set; }
+        [Required(ErrorMessage="Debe ingresar una duración")]
+        [Range(1,int.MaxValue,ErrorMessage="La dauración debe ser por lo menos un día")]
         [Display(Name = "Duración Alquiler")]
         public short DuracionAlquiler { get; set; }
         [Display(Name = "Precio")]

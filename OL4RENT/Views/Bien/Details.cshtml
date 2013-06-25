@@ -151,7 +151,10 @@
     </ol>
 </fieldset>
 <p>
-    @Html.ActionLink("Arrendar", "Arrendar", new { id = Model.Id }) |
+    @if (@Model.FechaAlquiler == null)
+    {
+        @Html.ActionLink("Arrendar", "Arrendar", new { id = Model.Id }) <text> | </text>
+    }
     @if (@Model.Usuario == User.Identity.Name)
     {
         @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) <text> | </text>
