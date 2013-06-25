@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $("#fechaInicio").datepicker({
-        dateFormat: "dd-mm-yyyy",
+        dateFormat: "dd-mm-yy",
         dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
         dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
         dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
@@ -10,7 +10,7 @@
         prevText: "Anterior"
     });
     $("#fechaFin").datepicker({
-        dateFormat: "dd-mm-yyyy",
+        dateFormat: "dd-mm-yy",
         dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
         dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
         dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
