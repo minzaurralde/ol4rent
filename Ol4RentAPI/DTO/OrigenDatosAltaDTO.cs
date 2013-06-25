@@ -9,13 +9,12 @@ namespace Ol4RentAPI.DTO
 {
     public class OrigenDatosAltaDTO
     {
-        [Required]
+        [Required(ErrorMessage = "El nombre del origen de datos es un campo obligatorio")]
         [DataType(DataType.Text)]
         [StringLength(64, ErrorMessage="El nombre del origen de datos puede contener como máximo {0} caracteres.")]
         [Display(Name="Nombre del origen de datos")]
         public string Nombre { get; set; }
-        [DataType(DataType.Upload)]
-        [FileExtensions(Extensions="dll")]
+        [Required(ErrorMessage = "La dll que contiene el manejador del origen de datos es un campo obligatorio")]
         [Display(Name="DLL que contiene la clase que obtiene las novedades")]
         public byte[] Manejador { get; set; }
         [Display(Name = "Atributos configurables por sitio")]
@@ -27,12 +26,11 @@ namespace Ol4RentAPI.DTO
     public class OrigenDatosEdicionDTO 
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "El nombre del origen de datos es un campo obligatorio")]
         [DataType(DataType.Text)]
         [StringLength(64, ErrorMessage = "El nombre del origen de datos puede contener como máximo {0} caracteres.")]
         [Display(Name = "Nombre del origen de datos")]
         public string Nombre { get; set; }
-        [DataType(DataType.Upload)]
         [FileExtensions(Extensions = "dll")]
         [Display(Name = "DLL que contiene la clase que obtiene las novedades")]
         public byte[] Manejador { get; set; }

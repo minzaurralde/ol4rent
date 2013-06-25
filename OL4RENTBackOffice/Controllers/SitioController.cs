@@ -47,7 +47,6 @@ namespace OL4RENTBackOffice.Controllers
                     sitio.Caracteristicas.Add(new CaracteristicaAltaDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]) });
                 }
             }
-            // TODO validar los formatos de los archivos
             // estilo = Request.Files["estilo"];
             if (estilo == null)
             {
@@ -55,14 +54,14 @@ namespace OL4RENTBackOffice.Controllers
             }
             else
             {
-                if (Path.GetExtension(estilo.FileName).ToLower() == "css")
+                if (Path.GetExtension(estilo.FileName).ToLower().EndsWith("css"))
                 {
                     sitio.CSS = new byte[estilo.ContentLength];
                     estilo.InputStream.Read(sitio.CSS, 0, estilo.ContentLength);
                 }
                 else
                 {
-                    ModelState.AddModelError("sitio.css.extension", "La extensión del CSS debe ser .css");
+                    ModelState.AddModelError("estilo", "La extensión del CSS debe ser .css");
                 }
             }
             // imagen = Request.Files["imagen"];
@@ -72,14 +71,14 @@ namespace OL4RENTBackOffice.Controllers
             }
             else
             {
-                if (Path.GetExtension(imagen.FileName).ToLower() == "jpg" || Path.GetExtension(imagen.FileName).ToLower() == "gif" || Path.GetExtension(imagen.FileName).ToLower() == "png")
+                if (Path.GetExtension(imagen.FileName).ToLower().EndsWith("jpg") || Path.GetExtension(imagen.FileName).ToLower().EndsWith("gif") || Path.GetExtension(imagen.FileName).ToLower().EndsWith("png"))
                 {
                     sitio.Logo = new byte[imagen.ContentLength];
                     imagen.InputStream.Read(sitio.Logo, 0, imagen.ContentLength);
                 }
                 else
                 {
-                    ModelState.AddModelError("sitio.logo.extension", "La extensión del logo debe ser .jpg, .gif o .png");
+                    ModelState.AddModelError("imagen", "La extensión del logo debe ser .jpg, .gif o .png");
                 }
             }
             if (ModelState.IsValid)
@@ -141,29 +140,28 @@ namespace OL4RENTBackOffice.Controllers
                     sitioDTO.Caracteristicas.Add(new CaracteristicaEdicionDTO() { Nombre = Request["nombre" + i.ToString()], Tipo = (TipoDato)Enum.Parse(typeof(TipoDato), Request["tipo" + i.ToString()]) });
                 }
             }
-            // TODO validar los formatos de los archivos
             if (estilo != null)
             {
-                if (Path.GetExtension(estilo.FileName).ToLower() == "css")
+                if (Path.GetExtension(estilo.FileName).ToLower().EndsWith("css"))
                 {
                     sitioDTO.CSS = new byte[estilo.ContentLength];
                     estilo.InputStream.Read(sitioDTO.CSS, 0, estilo.ContentLength);
                 }
                 else
                 {
-                    ModelState.AddModelError("sitio.css.extension", "La extensión del CSS debe ser .css");
+                    ModelState.AddModelError("estilo", "La extensión del CSS debe ser .css");
                 }
             }
             if (imagen != null)
             {
-                if (Path.GetExtension(imagen.FileName).ToLower() == "jpg" || Path.GetExtension(imagen.FileName).ToLower() == "gif" || Path.GetExtension(imagen.FileName).ToLower() == "png")
+                if (Path.GetExtension(imagen.FileName).ToLower().EndsWith("jpg") || Path.GetExtension(imagen.FileName).ToLower().EndsWith("gif") || Path.GetExtension(imagen.FileName).ToLower().EndsWith("png"))
                 {
                     sitioDTO.Logo = new byte[imagen.ContentLength];
                     imagen.InputStream.Read(sitioDTO.Logo, 0, imagen.ContentLength);
                 }
                 else
                 {
-                    ModelState.AddModelError("sitio.logo.extension", "La extensión del logo debe ser .jpg, .gif o .png");
+                    ModelState.AddModelError("imagen", "La extensión del logo debe ser .jpg, .gif o .png");
                 }
             }
             if (ModelState.IsValid)

@@ -2,6 +2,7 @@
 using Ol4RentAPI.Facades;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -43,15 +44,21 @@ namespace OL4RENTBackOffice.Controllers
         [HttpPost]
         public ActionResult Crear(int maxid, OrigenDatosAltaDTO dto, HttpPostedFileBase dll, IEnumerable<HttpPostedFileBase> dependencias)
         {
-            // TODO crear origen de datos: falta probar todo lo que tiene que ver con las Dlls "Dependencias" de la dll del OD
             dto.Dependencias = new List<DependenciaDTO>();
             foreach (HttpPostedFileBase fileDepedencia in dependencias)
             {
                 if (fileDepedencia != null)
                 {
-                    byte[] buffer = new byte[fileDepedencia.ContentLength];
-                    fileDepedencia.InputStream.Read(buffer, 0, fileDepedencia.ContentLength);
-                    dto.Dependencias.Add(new DependenciaDTO() { Id = -1, Nombre = fileDepedencia.FileName, Dll = buffer });
+                    if (Path.GetExtension(fileDepedencia.FileName).ToLower().EndsWith("dll"))
+                    {
+                        byte[] buffer = new byte[fileDepedencia.ContentLength];
+                        fileDepedencia.InputStream.Read(buffer, 0, fileDepedencia.ContentLength);
+                        dto.Dependencias.Add(new DependenciaDTO() { Id = -1, Nombre = fileDepedencia.FileName, Dll = buffer });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("dll", "El archivo dependencia \"" + fileDepedencia.FileName + "\" del manejador del origen de datos debe tener extension .dll");
+                    }
                 }
             }
             if (dto.Atributos == null)
@@ -65,15 +72,31 @@ namespace OL4RENTBackOffice.Controllers
                     dto.Atributos.Add(new AtributoAltaDTO() { Nombre = Request["nombre" + i.ToString()] });
                 }
             }
-            dto.Manejador = new byte[dll.ContentLength];
-            dll.InputStream.Read(dto.Manejador, 0, dll.ContentLength);
-            //if (ModelState.IsValid)
-            //{
+            if (dll == null)
+            {
+                dto.Manejador = null;
+                ModelState.AddModelError("dll", "La dll que contiene el manejador del origen de datos es un campo obligatorio");
+            }
+            else
+            {
+                if (Path.GetExtension(dll.FileName).ToLower().EndsWith("dll"))
+                {
+                    dto.Manejador = new byte[dll.ContentLength];
+                    dll.InputStream.Read(dto.Manejador, 0, dll.ContentLength);
+                }
+                else
+                {
+                    ModelState.AddModelError("dll", "El archivo que contiene el manejador del origen de datos debe tener extension .dll");
+                }
+            }
+            // if (ModelState.IsValid)
+            if (true)
+            {
                 if (ServiceFacadeFactory.Instance.OrigenDatosFacade.Crear(dto))
                 {
                     return RedirectToAction("Listar", "OrigenDatos");
                 }
-            //}
+            }
             return View(dto);
         }
 
@@ -92,15 +115,21 @@ namespace OL4RENTBackOffice.Controllers
         [HttpPost]
         public ActionResult Editar(int maxid, OrigenDatosEdicionDTO dto, HttpPostedFileBase dll, IEnumerable<HttpPostedFileBase> dependencias)
         {
-            // TODO editar origen de datos: falta probar todo lo que tiene que ver con las Dlls "Dependencias" de la dll del OD
             dto.Dependencias = new List<DependenciaDTO>();
             foreach (HttpPostedFileBase fileDepedencia in dependencias)
             {
                 if (fileDepedencia != null)
                 {
-                    byte[] buffer = new byte[fileDepedencia.ContentLength];
-                    fileDepedencia.InputStream.Read(buffer, 0, fileDepedencia.ContentLength);
-                    dto.Dependencias.Add(new DependenciaDTO() { Id = -1, Nombre = fileDepedencia.FileName, Dll = buffer });
+                    if (Path.GetExtension(fileDepedencia.FileName).ToLower().EndsWith("dll"))
+                    {
+                        byte[] buffer = new byte[fileDepedencia.ContentLength];
+                        fileDepedencia.InputStream.Read(buffer, 0, fileDepedencia.ContentLength);
+                        dto.Dependencias.Add(new DependenciaDTO() { Id = -1, Nombre = fileDepedencia.FileName, Dll = buffer });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("dll", "El archivo dependencia \"" + fileDepedencia.FileName + "\" del manejador del origen de datos debe tener extension .dll");
+                    }
                 }
             }
             if (dto.Atributos == null)
@@ -116,8 +145,15 @@ namespace OL4RENTBackOffice.Controllers
             }
             if (dll != null)
             {
-                dto.Manejador = new byte[dll.ContentLength];
-                dll.InputStream.Read(dto.Manejador, 0, dll.ContentLength);
+                if (Path.GetExtension(dll.FileName).ToLower().EndsWith("dll"))
+                {
+                    dto.Manejador = new byte[dll.ContentLength];
+                    dll.InputStream.Read(dto.Manejador, 0, dll.ContentLength);
+                }
+                else
+                {
+                    ModelState.AddModelError("dll", "El archivo que contiene el manejador del origen de datos debe tener extension .dll");
+                }
             }
             if (ModelState.IsValid)
             {
