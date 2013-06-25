@@ -66,14 +66,16 @@
             }
 
             function crearPuntoDireccion() {
-                $("#click").val(true);
-                var address = $("#Direccion").val();
-                var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({ 'address': address }, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        creaMarca(results[0].geometry.location);
-                    }
-                });
+                if ($("#Direccion").val() != null && $.trim($("#Direccion").val().toString()) != "") {
+                    $("#click").val(true);
+                    var address = $("#Direccion").val();
+                    var geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({ 'address': address }, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            creaMarca(results[0].geometry.location);
+                        }
+                    });
+                }
             }
 
         </script>
