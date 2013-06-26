@@ -11,3 +11,7 @@ OL4RENTServices/obj/*
 *.suo
 ModuloMobile/BingPrueba/Bin/*
 ModuloMobile/BingPrueba/obj/*
+OL4RENT/Upload/swf/*
+OL4RENT/Upload/Image/*
+OL4RENT/Upload/Video/swf/*
+OL4RENT/Upload/Video/thumb/*
