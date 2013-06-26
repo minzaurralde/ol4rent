@@ -22,7 +22,7 @@ namespace OL4RENTBackOffice
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //////// Deteccion de dispositivo móbil            
+            //////// Deteccion de dispositivo móvil            
 
             DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("WindowsPhone")
             {
@@ -48,7 +48,7 @@ namespace OL4RENTBackOffice
                     ("Mobile", System.StringComparison.OrdinalIgnoreCase) >= 0)
             });
 
-            //////// Fin Deteccion de dispositivo móbil
+            //////// Fin Deteccion de dispositivo móvil
 
             AuthConfig.RegisterAuth();
 

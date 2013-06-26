@@ -8,6 +8,7 @@ using Ol4RentAPI.Model;
 using System.Data;
 using System.IO;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace Ol4RentAPI.Facades
 {
@@ -42,8 +43,26 @@ namespace Ol4RentAPI.Facades
             using (ModelContainer db = new ModelContainer())
             {
                 Contenido cont = db.Contenidos.Find(id);
+                // Borro los Adjuntos
+                ICollection<Adjunto> adjuntos = new Collection<Adjunto>();
+                foreach (Adjunto adj in cont.Adjuntos)
+                {
+                    adjuntos.Add(adj);
+                }
+                foreach (Adjunto adj in adjuntos)
+                {
+                    db.Adjuntos.Remove(adj);
+                }
+                // Borro el contenido
                 db.Contenidos.Remove(cont);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                }
             }
         }
 
@@ -83,7 +102,7 @@ namespace Ol4RentAPI.Facades
                     if (extension == "mpg" || extension == "mpeg" || extension == "avi" || extension == "flv" || extension == "mp4")
                     {
                         tipo = TipoAdjunto.VIDEO;
-                        tipoCorrecto=true;
+                        tipoCorrecto = true;
                     }
 
                     if (tipoCorrecto)
@@ -115,7 +134,7 @@ namespace Ol4RentAPI.Facades
                             // Saco el "OL4RENT\\" del final
                             dirBase = dirBase.Substring(0, dirBase.Length - 8);
                             String PathFFMPEG = dirBase + "ext\\ffmpeg\\ffmpeg.exe";
-                            
+
                             Process proc;
                             proc = new Process();
                             proc.StartInfo.FileName = PathFFMPEG;
