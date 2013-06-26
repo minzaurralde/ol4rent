@@ -357,5 +357,18 @@ namespace Ol4RentAPI.Facades
                 return a;
             }
         }
+
+
+        public bool ChequearEliminacion(int id)
+        {
+            using (ModelContainer db = new ModelContainer())
+            {
+                IQueryable<ConfiguracionOrigenDatos> query =
+                    from cfg in db.ConfiguracionesOrigenesDatos
+                    where cfg.OrigenDatos.Id == id
+                    select cfg;
+                return query.Count() == 0;
+            }
+        }
     }
 }

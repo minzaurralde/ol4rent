@@ -66,16 +66,11 @@
     </div>
 </div>
 
-<h2>Detalles</h2>
-
 <fieldset>
     <legend>Bien</legend>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Titulo)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Titulo)
+       
+    <div class="display-field">        
+        <h2>Detalles<BR>@Html.DisplayFor(model => model.Titulo)</h2>
     </div>
 
     <img src="@Url.Action("Foto", "Bien", new { idBien = @Model.Id })" alt="@Model.Titulo" />
@@ -90,34 +85,19 @@
     </p>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Descripcion)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Descripcion)
+        @Html.DisplayNameFor(model => model.Descripcion):&nbsp;@Html.DisplayFor(model => model.Descripcion) 
     </div>
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Direccion)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Direccion)
+        @Html.DisplayNameFor(model => model.Direccion):&nbsp;@Html.DisplayFor(model => model.Direccion)
     </div>
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Capacidad)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Capacidad)
+        @Html.DisplayNameFor(model => model.Capacidad):&nbsp;@Html.DisplayFor(model => model.Capacidad)
     </div>
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Precio)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Precio)
+        @Html.DisplayNameFor(model => model.Precio):&nbsp;@Html.DisplayFor(model => model.Precio)
     </div>
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Normas)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Normas)
+        @Html.DisplayNameFor(model => model.Normas):&nbsp;@Html.DisplayFor(model => model.Normas)
     </div>
     <div>
         @Html.HiddenFor(m => m.Latitud)

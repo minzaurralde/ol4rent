@@ -27,7 +27,7 @@
             {
             @Html.ActionLink("Modificar", "Editar", "OrigenDatos", new { id=item.Id }, null) 
             }
-            @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString()))
+            @if (User.IsInRole(Ol4RentAPI.Model.RolEnum.SUPER_ADMIN.ToString()) && item.SePuedeEliminar)
             {
             @Html.ActionLink("Eliminar", "Eliminar", "OrigenDatos", new { id=item.Id }, null)
             }
