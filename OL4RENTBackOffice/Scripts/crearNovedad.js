@@ -9,5 +9,5 @@
         nextText: "Siguiente",
         prevText: "Anterior"
     });
-    $('#Hora').timeEntry({ spinnerImage: '/Images/spinnerDefault.png', show24Hours: true });
+    $('#Hora').timeEntry({ show24Hours: true });
 });
