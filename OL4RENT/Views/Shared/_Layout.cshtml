@@ -27,7 +27,6 @@
                     <!-- Form de Busqueda -->
                     <div class="busqueda-basica">
                     @using (Html.BeginForm("Buscar", "Bien")) {
-                        @Html.ValidationSummary(true)
                         @Html.TextBox("query")
                         <input type="submit" value="Buscar" name="Buscar" id="buscar" />
                     }
