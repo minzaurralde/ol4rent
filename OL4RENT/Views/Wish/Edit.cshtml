@@ -93,7 +93,8 @@
 
 <h2>Editar</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -121,18 +122,19 @@
         </div>
 
         <ol >
-            @if (Model.ValoresCaracteristicas != null && Model.ValoresCaracteristicas.Count() > 0){
+            @if (Model.ValoresCaracteristicas != null && Model.ValoresCaracteristicas.Count() > 0)
+            {
                 foreach (Ol4RentAPI.DTO.ValorCaracteristicaListadoDTO item in Model.ValoresCaracteristicas)
                 {
                 <li >
                     @Html.Hidden("itemid-" + item.Caracteristica.Id.ToString(), item.Id.ToString())
                     @Html.Label("car-" + item.Caracteristica.Id.ToString(), item.Caracteristica.Nombre)
                     @if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.BOOLEANO)
-                        {
+                    {
                         @Html.CheckBox("car-" + item.Caracteristica.Id.ToString(), item.Valor.AsBool());
-                        }
-                        else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.FECHA)
-                        {
+                    }
+                    else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.FECHA)
+                    {
                         @Html.TextBox("car-" + item.Caracteristica.Id.ToString(), item.Valor);
                         <script type="text/javascript">
                             $(document).ready(function () {
@@ -149,6 +151,13 @@
                                             }
                                         });
                                 });
+                        </script>
+                    }
+                    else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.HORA)
+                    {
+                        @Html.TextBox("car-" + item.Caracteristica.Id.ToString(), String.Format("{0: HH:mm}", DateTime.Now), item.Valor);
+                        <script type="text/javascript">
+                            $(document).ready(function () { $('#car-@item.Caracteristica.Id.ToString()').timeEntry({ show24Hours: true }); });
                         </script>
                     }
                     else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.ENTERO)
@@ -182,4 +191,6 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/crearWish.js")
     @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
+    @Scripts.Render("~/Scripts/jquery.timepicker.js")
+    @Scripts.Render("~/Scripts/jquery.timepicker.timeentry.js")
 }

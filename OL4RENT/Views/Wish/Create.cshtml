@@ -73,7 +73,11 @@
                 }
                 else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.HORA)
                 {
-                    @Html.TextBox("car-" + caracteristica.Id.ToString(), String.Format("{HH:mm}", DateTime.Now), "HH:mm");
+                    @Html.TextBox("car-" + caracteristica.Id.ToString(), String.Format("{0: HH:mm}", DateTime.Now), DateTime.Now.ToString("HH:mm"));
+                    <!--<span class="timeEntry_control" style="display: inline-block; background-image: url(/Images/spinnerDefault.png); width: 20px; height: 20px; background-position: 0px 0px; background-repeat: no-repeat no-repeat;" title="Previous field"></span>-->
+                    <script type="text/javascript">
+                        $(document).ready(function () { $('#car-@caracteristica.Id.ToString()').timeEntry({ show24Hours: true }); });
+                    </script>
                 }
                 else if (caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.ENTERO)
                 {
@@ -104,4 +108,6 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/crearWish.js")
     @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
+    @Scripts.Render("~/Scripts/jquery.timepicker.js")
+    @Scripts.Render("~/Scripts/jquery.timepicker.timeentry.js")
 }

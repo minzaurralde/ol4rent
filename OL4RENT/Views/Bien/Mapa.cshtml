@@ -51,7 +51,7 @@
             // agrego el marker
             <text>addM(null, lat, lng, '@item.Titulo', '/Bien/Details/@item.Id');</text>
         }
-        else if (item.Direccion!=null & item.Direccion.Length>0) {
+        else if (item.Direccion!=null && item.Direccion.Length>0) {
             // Hago el geocoding
             <text>geocode('@item.Direccion', '@item.Titulo', '/Bien/Details/@item.Id');</text>
         }

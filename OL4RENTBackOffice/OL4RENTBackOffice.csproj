@@ -241,6 +241,7 @@
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\facebook.png" />
+    <Content Include="Images\spinnerDefault.png" />
     <Content Include="Images\twitter.png" />
     <Content Include="Scripts\configurarODSitio.js" />
     <Content Include="Scripts\crearNovedad.js" />

@@ -178,6 +178,13 @@
                             });
                         </script>
                     }
+                    else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.HORA)
+                    {
+                        @Html.TextBox("car-" + item.Caracteristica.Id.ToString(), String.Format("{0: HH:mm}", DateTime.Now), item.Valor);
+                        <script type="text/javascript">
+                            $(document).ready(function () { $('#car-@item.Caracteristica.Id.ToString()').timeEntry({ show24Hours: true }); });
+                        </script>
+                    }
                     else if (item.Caracteristica.Tipo == Ol4RentAPI.Model.TipoDato.ENTERO)
                     {
                         @Html.TextBox("car-" + item.Caracteristica.Id.ToString(), 0, item.Valor);
@@ -208,4 +215,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/crearBien.js")
+    @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
+    @Scripts.Render("~/Scripts/jquery.timepicker.js")
+    @Scripts.Render("~/Scripts/jquery.timepicker.timeentry.js")
 }

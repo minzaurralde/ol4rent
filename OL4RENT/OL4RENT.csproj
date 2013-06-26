@@ -286,8 +286,11 @@
     <Content Include="Images\prettyPhoto\light_square\loader.gif" />
     <Content Include="Images\prettyPhoto\light_square\sprite.png" />
     <Content Include="Images\sinfoto.png" />
+    <Content Include="Images\spinnerDefault.png" />
     <Content Include="Images\twitter.png" />
     <Content Include="Scripts\jquery.prettyPhoto.js" />
+    <Content Include="Scripts\jquery.timepicker.js" />
+    <Content Include="Scripts\jquery.timepicker.timeentry.js" />
     <Content Include="Scripts\marcarInadecuado.js" />
     <Content Include="Scripts\busquedaAvanzada.js" />
     <Content Include="Scripts\crearBien.js" />
