@@ -240,6 +240,7 @@ namespace Ol4RentAPI.Facades.Novedades
                 CacheTipos.Remove(idOrigenDatos);
                 ValidezTipos.Remove(idOrigenDatos);
             }
+            ResetearCache();
         }
 
         public void ResetearCacheInstanciaDeConfiguracion(int idConfiguracion)
@@ -249,6 +250,7 @@ namespace Ol4RentAPI.Facades.Novedades
                 CacheInstancias.Remove(idConfiguracion);
                 ValidezInstancias.Remove(idConfiguracion);
             }
+            ResetearCache();
         }
     }
 }

@@ -8,9 +8,8 @@ DatosExternosDACAPI/bin/*
 DatosExternosDACAPI/obj/*
 OL4RENTServices/bin/*
 OL4RENTServices/obj/*
-*.suo
-ModuloMobile/BingPrueba/Bin/*
-ModuloMobile/BingPrueba/obj/*
+ModuloMobile/Ol4Rent4Phone/Bin/*
+ModuloMobile/Ol4Rent4Phone/obj/*
 OL4RENT/Upload/swf/*
 OL4RENT/Upload/Image/*
 OL4RENT/Upload/Video/swf/*
